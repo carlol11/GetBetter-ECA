@@ -1,12 +1,7 @@
-package com.geebeelicious.models;
+package models.visualacuity;
 
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.content.Context;
-import android.app.Activity;
 import android.widget.ImageView;
-
-import com.geebeelicious.visualacuity.MainActivity;
 
 /**
  * Created by Kate on 02/23/2016.
@@ -28,17 +23,17 @@ public class DistanceCalculator {
     public float getUserDistance(Context context, ImageView imageView){
         getDisplaySize(imageView);
         float height = convertPixelsToMillimeter(displayHeight, context.getResources().getDisplayMetrics().xdpi);
-        float distance = (height/88) * 6;
-        System.out.println("user distance: " + distance);
-        return distance;
+        float distanceMeters = (height/88) * 6;
+        System.out.println("user distance: " + distanceMeters);
+        return distanceMeters;
     }
 
     private float convertPixelsToMillimeter(int pixels, float dpi){
-        float height = pixels / dpi * 25.4f;
-        return height;
+        return pixels / dpi * 25.4f;
     }
 
-    private float convertMetersToFeet(int meters){
+    private float convertMetersToFeet(float meters){
         return meters * 3.28084f;
     }
+
 }

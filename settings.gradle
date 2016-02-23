@@ -1,1 +1,1 @@
-include ':app', ':visualacuity'
+include ':app'

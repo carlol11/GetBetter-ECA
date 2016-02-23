@@ -20,6 +20,8 @@ public class ChartHelper {
     private ChartLine[] chart;
     private int currentLineNumber;
     private ImageView chartView;
+    private ChartLine result;
+    private boolean isDone;
 
     public ChartHelper(ImageView chartView){
         chart = new ChartLine[11];
@@ -34,8 +36,14 @@ public class ChartHelper {
         chart[8] = new ChartLine(9, 20, 15, R.drawable.snellen_line_9);
         chart[9] = new ChartLine(10, 20, 10, R.drawable.snellen_line_10);
         chart[10] = new ChartLine(11, 20, 5, R.drawable.snellen_line_11);
-        currentLineNumber = 0;
+        this.currentLineNumber = 0;
         this.chartView = chartView;
+        this.result = null;
+        this.isDone = false;
+    }
+
+    public ChartLine getPreviousLine(){
+        return chart[currentLineNumber-1];
     }
 
     public ChartLine getCurrentLine(){
@@ -43,11 +51,12 @@ public class ChartHelper {
     }
 
     public void goToNextLine(){
-        if(currentLineNumber<=9){
+        if(currentLineNumber<10){
             currentLineNumber++;
+            displayChartLine();
         }
-        else{
-            currentLineNumber = 10;
+        if(currentLineNumber==10 && result==null){
+            result = getCurrentLine();
         }
     }
 
@@ -55,22 +64,16 @@ public class ChartHelper {
         chartView.setImageResource(getCurrentLine().getChartLineDrawable());
     }
 
-    public ChartLine testLine(boolean canRead){
-        ChartLine result = null;
-        if(canRead && currentLineNumber<=9){
-            goToNextLine();
-        }
-        else{
-            result = chart[currentLineNumber];
-        }
-        return result;
+    public void startTest(){
+        displayChartLine();
     }
 
-    public void performTest(Context context){
-        ChartLine result = null;
-        while(currentLineNumber<=10 && result==null) {
-            result = testLine(true);
-        }
+    public void setResult(){
+        result = getPreviousLine();
+    }
+
+    public ChartLine getResult(){
+        return result;
     }
 
 

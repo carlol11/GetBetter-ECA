@@ -1,6 +1,7 @@
 package com.geebeelicious.models;
 
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.content.Context;
 import android.app.Activity;
 import android.widget.ImageView;
@@ -17,13 +18,27 @@ public class DistanceCalculator {
 
     private int displayHeight;
     private int displayWidth;
-    private int chartHeight;
-    private int chartWidth;
 
-    public void getDisplaySize(ImageView imageView){
+    private void getDisplaySize(ImageView imageView){
         displayHeight = imageView.getHeight();
         displayWidth = imageView.getWidth();
-        System.out.println("height: " + displayHeight + " width: " + displayWidth);
+        System.out.println("height: " + displayHeight);
     }
 
+    public float getUserDistance(Context context, ImageView imageView){
+        getDisplaySize(imageView);
+        float height = convertPixelsToMillimeter(displayHeight, context.getResources().getDisplayMetrics().xdpi);
+        float distance = (height/88) * 6;
+        System.out.println("user distance: " + distance);
+        return distance;
+    }
+
+    private float convertPixelsToMillimeter(int pixels, float dpi){
+        float height = pixels / dpi * 25.4f;
+        return height;
+    }
+
+    private float convertMetersToFeet(int meters){
+        return meters * 3.28084f;
+    }
 }

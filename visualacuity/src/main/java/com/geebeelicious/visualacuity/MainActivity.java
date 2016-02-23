@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
-        distanceCalculator.getDisplaySize((ImageView)findViewById(R.id.chartLine));
+        distanceCalculator.getUserDistance(this,(ImageView)findViewById(R.id.chartLine));
     }
 
 }

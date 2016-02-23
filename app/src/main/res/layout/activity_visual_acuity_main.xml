@@ -9,7 +9,7 @@
     android:paddingTop="0dp"
     tools:context="com.geebeelicious.geebeelicious.tests.visualacuity.VisualAcuityMainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="300dp"
         android:layout_height="match_parent"
@@ -21,7 +21,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
         android:background="#92b8ff"
-        android:id="@+id/linearLayoutECA">
+        android:id="@+id/relativeLayoutECA">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -35,36 +35,56 @@
             android:longClickable="false"
             android:maxHeight="300dp"
             android:maxWidth="300dp" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/linearLayoutECA"
+        android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/relativeLayoutTest"
-        android:background="#fff7c9"
-        android:layout_above="@+id/linearLayout">
+        android:background="#ffffff"
+        android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:id="@+id/chartLine"
-            android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_margin="15dp"
-            android:background="#d96969" />
+            android:background="#ffffff" />
+
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#4526b8"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/linearLayoutECA"
-        android:id="@+id/linearLayout"></LinearLayout>
+        android:layout_toStartOf="@+id/relativeLayoutECA"
+        android:id="@+id/linearLayoutAnswers"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/Yes"
+            android:id="@+id/YesButton"
+            android:background="#98ff88"
+            android:minWidth="250dp"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/No"
+            android:id="@+id/NoButton"
+            android:background="#ff7f7d"
+            android:minWidth="250dp"
+            android:layout_weight="0.50"/>
+    </LinearLayout>
 
 </RelativeLayout>

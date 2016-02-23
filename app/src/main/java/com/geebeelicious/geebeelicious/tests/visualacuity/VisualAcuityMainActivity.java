@@ -1,13 +1,17 @@
 package com.geebeelicious.geebeelicious.tests.visualacuity;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 
-import models.visualacuity.DistanceCalculator;
+import models.visualacuity.ChartHelper;
 import models.visualacuity.ChartLine;
+import models.visualacuity.DistanceCalculator;
 
 public class VisualAcuityMainActivity extends ActionBarActivity {
 
@@ -19,8 +23,14 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
+        ImageView chartView = (ImageView) findViewById(R.id.chartLine);
         DistanceCalculator distanceCalculator = new DistanceCalculator();
-        distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
+        distanceCalculator.getUserDistance(this, chartView);
+
+        ChartHelper chartHelper = new ChartHelper(chartView);
     }
+    
+
+
 
 }

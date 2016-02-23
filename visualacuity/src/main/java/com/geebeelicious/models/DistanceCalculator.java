@@ -3,6 +3,7 @@ package com.geebeelicious.models;
 import android.util.DisplayMetrics;
 import android.content.Context;
 import android.app.Activity;
+import android.widget.ImageView;
 
 import com.geebeelicious.visualacuity.MainActivity;
 
@@ -19,11 +20,10 @@ public class DistanceCalculator {
     private int chartHeight;
     private int chartWidth;
 
-    public void getDisplaySize(Context context) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        displayHeight = metrics.heightPixels;
-        displayWidth = metrics.widthPixels;
+    public void getDisplaySize(ImageView imageView){
+        displayHeight = imageView.getHeight();
+        displayWidth = imageView.getWidth();
+        System.out.println("height: " + displayHeight + " width: " + displayWidth);
     }
 
 }

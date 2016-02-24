@@ -35,6 +35,7 @@
             android:longClickable="false"
             android:maxHeight="300dp"
             android:maxWidth="300dp" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -51,6 +52,8 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:id="@+id/chartLine"
             android:layout_centerInParent="true"
             android:background="#ffffff" />

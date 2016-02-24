@@ -22,6 +22,8 @@ public class ChartHelper {
     private ImageView chartView;
     private ChartLine result;
     private boolean isDone;
+    private boolean isRightTested;
+    private boolean isLeftTested;
 
     public ChartHelper(ImageView chartView){
         chart = new ChartLine[11];
@@ -36,10 +38,9 @@ public class ChartHelper {
         chart[8] = new ChartLine(9, 20, 15, R.drawable.snellen_line_9);
         chart[9] = new ChartLine(10, 20, 10, R.drawable.snellen_line_10);
         chart[10] = new ChartLine(11, 20, 5, R.drawable.snellen_line_11);
-        this.currentLineNumber = 0;
         this.chartView = chartView;
-        this.result = null;
-        this.isDone = false;
+        this.isRightTested = false;
+        this.isLeftTested = false;
     }
 
     public ChartLine getPreviousLine(){
@@ -56,7 +57,7 @@ public class ChartHelper {
             displayChartLine();
         }
         if(currentLineNumber==10 && result==null){
-            result = getCurrentLine();
+            setResult();
         }
     }
 
@@ -65,16 +66,50 @@ public class ChartHelper {
     }
 
     public void startTest(){
+        result = null;
+        isDone = false;
+        currentLineNumber = 0;
         displayChartLine();
     }
 
+    public boolean isDone(){
+        return isDone;
+    }
+
     public void setResult(){
-        result = getPreviousLine();
+        if(currentLineNumber==0 || currentLineNumber==10){
+            result = getCurrentLine();
+        }
+        else{
+            result = getPreviousLine();
+        }
+        isDone = true;
     }
 
     public ChartLine getResult(){
         return result;
     }
+
+    public boolean isRightTested(){
+        return isRightTested;
+    }
+
+    public boolean isLeftTested(){
+        return isLeftTested;
+    }
+
+    public void setIsRightTested(){
+        isRightTested = true;
+    }
+
+    public void setIsLeftTested(){
+        isLeftTested = true;
+    }
+
+    public boolean isBothTested(){
+        return isRightTested && isLeftTested;
+    }
+
 
 
 

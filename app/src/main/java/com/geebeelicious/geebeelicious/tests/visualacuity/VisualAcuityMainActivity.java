@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 
 import models.visualacuity.ChartHelper;
-import models.visualacuity.ChartLine;
 import models.visualacuity.DistanceCalculator;
+import models.visualacuity.Result;
 
 public class VisualAcuityMainActivity extends ActionBarActivity {
 
@@ -22,7 +22,6 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_visual_acuity_main);
 
         final ChartHelper chartHelper = new ChartHelper((ImageView) findViewById(R.id.chartLine));
-
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
 
@@ -30,6 +29,10 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 chartHelper.goToNextLine();
+                if(chartHelper.isDone() && !chartHelper.isBothTested()){
+                    updateResults(chartHelper);
+                    chartHelper.startTest();
+                }
             }
         });
 
@@ -37,12 +40,14 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 chartHelper.setResult();
+                if(chartHelper.isDone() && !chartHelper.isBothTested()){
+                    updateResults(chartHelper);
+                    chartHelper.startTest();
+                }
             }
         });
 
-        ChartLine result = null;
         chartHelper.startTest();
-        
 
     }
 
@@ -51,6 +56,27 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
     }
+
+    private void updateResults(ChartHelper chartHelper){
+        Result rightEyeResult = null;
+        Result leftEyeResult = null;
+
+        if(!chartHelper.isRightTested() && rightEyeResult == null){
+            rightEyeResult = new Result("Right", chartHelper.getResult());
+            chartHelper.setIsRightTested();
+        }
+        else if(!chartHelper.isLeftTested() && leftEyeResult == null){
+            leftEyeResult = new Result("Left", chartHelper.getResult());
+            chartHelper.setIsLeftTested();
+        }
+
+        System.out.println("right: " + chartHelper.isRightTested() + "left: " + chartHelper.isLeftTested());
+        System.out.println("donee");
+
+    }
+
+
+
 
 
 

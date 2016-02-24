@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geebeelicious.geebeelicious.R;
@@ -53,7 +54,9 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
-        distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
+        float distance = distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
+        TextView tv = (TextView) findViewById(R.id.distanceTextView);
+        tv.setText("Distance: " + distance + " meters");
     }
 
     private void endTest(){
@@ -65,6 +68,7 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
     }
 
     private void updateResults(ChartHelper chartHelper){
+        //TODO: pass the results to a record
         Result rightEyeResult = null;
         Result leftEyeResult = null;
 
@@ -72,15 +76,24 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             rightEyeResult = new Result("Right", chartHelper.getResult());
             chartHelper.setIsRightTested();
             chartHelper.startTest();
-            //TODO: display results on eca column
+            displayResults(rightEyeResult, R.id.rightEyeResultsTextView);
         }
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
             leftEyeResult = new Result("Left", chartHelper.getResult());
             chartHelper.setIsLeftTested();
+            displayResults(leftEyeResult, R.id.leftEyeResultsTextView);
             endTest();
-            //TODO: display results on eca column
         }
         System.out.println("right: " + chartHelper.isRightTested() + "left: " + chartHelper.isLeftTested());
+    }
+
+    private void displayResults(Result result, int id){
+        String resultString = "";
+        resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
+                        result.getLineNumber() + "\nVisual Acuity: " +
+                        result.getVisualAcuity());
+        TextView textView = (TextView) findViewById(id);
+        textView.setText(resultString);
     }
 
 

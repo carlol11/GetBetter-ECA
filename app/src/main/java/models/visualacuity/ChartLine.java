@@ -1,6 +1,5 @@
 package models.visualacuity;
 
-import android.graphics.drawable.Drawable;
 
 /**
  * Created by Kate on 02/23/2016.

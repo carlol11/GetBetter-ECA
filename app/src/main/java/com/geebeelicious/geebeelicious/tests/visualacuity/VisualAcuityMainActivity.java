@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.geebeelicious.geebeelicious.R;
 
@@ -31,7 +32,6 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
                 chartHelper.goToNextLine();
                 if(chartHelper.isDone() && !chartHelper.isBothTested()){
                     updateResults(chartHelper);
-                    chartHelper.startTest();
                 }
             }
         });
@@ -42,7 +42,6 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
                 chartHelper.setResult();
                 if(chartHelper.isDone() && !chartHelper.isBothTested()){
                     updateResults(chartHelper);
-                    chartHelper.startTest();
                 }
             }
         });
@@ -57,6 +56,14 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
         distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
     }
 
+    private void endTest(){
+        Button yesButton = (Button) findViewById(R.id.YesButton);
+        Button noButton = (Button) findViewById(R.id.NoButton);
+        yesButton.setEnabled(false);
+        noButton.setEnabled(false);
+        //TODO: insert code to set chartView to something else (maybe GeeBee or results screen?)
+    }
+
     private void updateResults(ChartHelper chartHelper){
         Result rightEyeResult = null;
         Result leftEyeResult = null;
@@ -64,16 +71,19 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
         if(!chartHelper.isRightTested() && rightEyeResult == null){
             rightEyeResult = new Result("Right", chartHelper.getResult());
             chartHelper.setIsRightTested();
+            chartHelper.startTest();
+            //TODO: display results on eca column
         }
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
             leftEyeResult = new Result("Left", chartHelper.getResult());
             chartHelper.setIsLeftTested();
+            endTest();
+            //TODO: display results on eca column
         }
-
         System.out.println("right: " + chartHelper.isRightTested() + "left: " + chartHelper.isLeftTested());
-        System.out.println("donee");
-
     }
+
+
 
 
 

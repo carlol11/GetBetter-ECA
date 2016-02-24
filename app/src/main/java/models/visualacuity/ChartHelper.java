@@ -1,13 +1,9 @@
 package models.visualacuity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 
-import java.util.ArrayList;
 
 /**
  * Created by Kate on 02/24/2016.

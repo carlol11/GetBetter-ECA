@@ -2,6 +2,10 @@ package models.visualacuity;
 
 /**
  * Created by Kate on 02/24/2016.
+ * The Result class represents a result
+ * of the visual acuity test performed.
+ * It can store which eye was tested and
+ * the test result (represented by a ChartLine)
  */
 public class Result {
 

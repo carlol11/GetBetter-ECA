@@ -84,7 +84,6 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             displayResults(leftEyeResult, R.id.leftEyeResultsTextView);
             endTest();
         }
-        System.out.println("right: " + chartHelper.isRightTested() + "left: " + chartHelper.isLeftTested());
     }
 
     private void displayResults(Result result, int id){

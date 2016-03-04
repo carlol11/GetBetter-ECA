@@ -25,15 +25,6 @@ public class IshiharaPlate {
         return style;
     }
 
-    public boolean isVisibleToColorBlind() {
-        if(style == 6){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
     public int getIshiharaPlateDrawable() {
         return ishiharaPlateDrawable;
     }

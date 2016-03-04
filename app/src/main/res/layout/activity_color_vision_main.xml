@@ -46,16 +46,14 @@
             android:layout_below="@+id/placeholderECA"
             android:layout_marginBottom="10dp"/>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/cvtResultsText"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/placeholderECAText"
-            android:id="@+id/linearLayoutResults"
-            android:weightSum="1">
-        </LinearLayout>
+            android:layout_marginBottom="10dp"/>
+
 
 
     </RelativeLayout>
@@ -72,7 +70,6 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:id="@+id/ishiharaPlate"
             android:layout_centerInParent="true"
             android:background="#ffffff" />
@@ -83,47 +80,59 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#4526b8"
+        android:background="#ffffff"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/linearLayoutAnswers"
         android:weightSum="1">
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button1"
-            android:background="#ff7c7c"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/cvt_option1"
+            android:background="#92ffff"
             android:layout_weight="0.2" />
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button2"
-            android:background="#008080"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/cvt_option2"
+            android:background="#ffa5a5"
             android:layout_weight="0.2" />
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button3"
-            android:background="#ff2031"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/cvt_option3"
+            android:background="#ffac4c"
             android:layout_weight="0.2" />
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button4"
-            android:background="#49ff22"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/cvt_option4"
+            android:background="#fed5ff"
             android:layout_weight="0.2" />
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button5"
-            android:background="#008080"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/cvt_option5"
+            android:background="#a0ff65"
             android:layout_weight="0.2" />
     </LinearLayout>
 

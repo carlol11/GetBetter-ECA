@@ -1,9 +1,11 @@
 package models.colorvision;
 
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -12,14 +14,18 @@ import java.util.Random;
 public class IshiharaHelper {
 
     private IshiharaPlate[] ishiharaPlates;
-    private IshiharaPlate[] generatedTest;
+    private IshiharaTest ishiharaTest;
+    private Option[] options;
     private ImageView plateView;
     private int currentPlate;
-    private Random randomGenerator;
+    private ImageButton[] buttonList;
+    private boolean isDone;
 
-    public IshiharaHelper(ImageView plateView){
+    public IshiharaHelper(ImageView plateView, ImageButton[] buttonList){
+        this.plateView = plateView;
+        this.buttonList = buttonList;
+
         ishiharaPlates = new IshiharaPlate[36];
-        generatedTest = new IshiharaPlate[11];
         ishiharaPlates[0] = new IshiharaPlate("circle", 1, R.drawable.circle_tv_1);
         ishiharaPlates[1] = new IshiharaPlate("circle", 3, R.drawable.circle_tv_3);
         ishiharaPlates[2] = new IshiharaPlate("circle", 6, R.drawable.circle_tv_6);
@@ -56,49 +62,76 @@ public class IshiharaHelper {
         ishiharaPlates[33] = new IshiharaPlate("triangle", 1, R.drawable.triangle_tv_1);
         ishiharaPlates[34] = new IshiharaPlate("triangle", 3, R.drawable.triangle_tv_3);
         ishiharaPlates[35] = new IshiharaPlate("triangle", 6, R.drawable.triangle_tv_6);
-        this.plateView = plateView;
-        randomGenerator = new Random();
+
+        options = new Option[12];
+        options[0] = new Option("circle", R.drawable.btn_cvt_circle);
+        options[1] = new Option("cloud", R.drawable.btn_cvt_cloud);
+        options[2] = new Option("crescent", R.drawable.btn_cvt_crescent);
+        options[3] = new Option("cross", R.drawable.btn_cvt_cross);
+        options[4] = new Option("diamond", R.drawable.btn_cvt_diamond);
+        options[5] = new Option("ellipse", R.drawable.btn_cvt_ellipse);
+        options[6] = new Option("heart", R.drawable.btn_cvt_heart);
+        options[7] = new Option("rectangle", R.drawable.btn_cvt_rectangle);
+        options[8] = new Option("semicircle", R.drawable.btn_cvt_semicircle);
+        options[9] = new Option("square", R.drawable.btn_cvt_square);
+        options[10] = new Option("star", R.drawable.btn_cvt_star);
+        options[11] = new Option("triangle", R.drawable.btn_cvt_triangle);
+
+        ishiharaTest = new IshiharaTest(ishiharaPlates, options);
     }
 
     private void displayPlate(){
         plateView.setImageResource(getCurrentPlate().getIshiharaPlateDrawable());
     }
 
+    private void displayOptions(){
+        for(int i = 0; i<5; i++){
+            buttonList[i].setImageResource(getCurrentOptions()[i].getOptionDrawable());
+        }
+
+    }
+
     private IshiharaPlate getCurrentPlate(){
-        return generatedTest[currentPlate];
+        return ishiharaTest.getPlate(currentPlate);
     }
 
-    private void generateTest(){
-        generatedTest[0] = getPlateWithStyle(6);
-        for(int i = 1; i<10; i++){
-            if(i%2==0){
-                generatedTest[i] = getPlateWithStyle(1);
-            }
-            else{
-                generatedTest[i] = getPlateWithStyle(3);
-            }
-        }
-    }
-
-    private IshiharaPlate getPlateWithStyle(int i){
-        boolean isFound = false;
-        int index;
-        while(!isFound) {
-            index = randomGenerator.nextInt(35);
-            if (!ishiharaPlates[index].isAdded() && (ishiharaPlates[index].getStyle() == i)) {
-                isFound = true;
-                ishiharaPlates[index].setAdded();
-                return ishiharaPlates[index];
-            }
-        }
-        return null;
+    private Option[] getCurrentOptions(){
+        return ishiharaTest.getOptions(currentPlate);
     }
 
     public void startTest(){
         currentPlate = 0;
-        generateTest();
+        ishiharaTest.generateTest();
         displayPlate();
+        displayOptions();
+        isDone = false;
     }
+
+    public void goToNextQuestion(){
+        if(currentPlate<10){
+            currentPlate++;
+            displayPlate();
+            displayOptions();
+        }
+        if(currentPlate==10){
+            ishiharaTest.getScore();
+            isDone = true;
+        }
+    }
+
+    public void answerQuestion(int i){
+        ishiharaTest.checkAnswer(currentPlate, i);
+    }
+
+    public boolean isDone(){
+        return isDone;
+    }
+
+    public int getScore(){
+        return ishiharaTest.getScore();
+    }
+
+
 
 
 

@@ -112,8 +112,7 @@ public class IshiharaHelper {
             currentPlate++;
             displayPlate();
             displayOptions();
-        }
-        if(currentPlate==10){
+        } else if(currentPlate==10){
             ishiharaTest.getScore();
             isDone = true;
         }

@@ -39,11 +39,11 @@ public class ChartHelper {
         this.isLeftTested = false;
     }
 
-    public ChartLine getPreviousLine(){
+    private ChartLine getPreviousLine(){
         return chart[currentLineNumber-1];
     }
 
-    public ChartLine getCurrentLine(){
+    private ChartLine getCurrentLine(){
         return chart[currentLineNumber];
     }
 
@@ -57,7 +57,7 @@ public class ChartHelper {
         }
     }
 
-    public void displayChartLine(){
+    private void displayChartLine(){
         chartView.setImageResource(getCurrentLine().getChartLineDrawable());
     }
 

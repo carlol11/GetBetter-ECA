@@ -5,4 +5,5 @@
     <string name="title_activity_visual_acuity_main">VisualAcuityMainActivity</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="title_activity_color_vision_main">ColorVisionMainActivity</string>
 </resources>

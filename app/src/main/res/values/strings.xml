@@ -6,4 +6,8 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="title_activity_color_vision_main">ColorVisionMainActivity</string>
+    <string name="title_activity_hearing_main">HearingMainActivity</string>
+    <string name="title_activity_calibration">CalibrationActivity</string>
+    <string name="title_activity_hearing_calibration">HearingCalibrationActivity</string>
+    <string name="calibration_in_progress">Calibrating...</string>
 </resources>

@@ -24,12 +24,18 @@
         <activity
             android:name=".tests.visualacuity.VisualAcuityMainActivity"
             android:label="@string/title_activity_visual_acuity_main"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".tests.colorvision.ColorVisionMainActivity"
             android:label="@string/title_activity_color_vision_main"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".tests.hearing.HearingMainActivity"
+            android:label="@string/title_activity_hearing_main"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".tests.hearing.HearingCalibrationActivity"
+            android:label="@string/title_activity_hearing_calibration">
             <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->
                 <action android:name="android.intent.action.MAIN" />
 

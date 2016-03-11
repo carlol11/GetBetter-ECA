@@ -56,7 +56,7 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         float distance = distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
         TextView tv = (TextView) findViewById(R.id.distanceTextView);
-        tv.setText("Distance: " + distance + " meters");
+        tv.setText("Distance: " + String.format("%.2f", distance) + " meters");
     }
 
     private void endTest(){

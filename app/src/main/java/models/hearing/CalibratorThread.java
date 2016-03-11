@@ -29,11 +29,13 @@ public class CalibratorThread extends Thread {
     final public double[] dbHLCorrectionCoefficients = {13.5, 7.5, 11.5, 12, 16, 15.5};
 
     private Calibrator calibrator;
+    private SoundHelper soundHelper;
     private double calibrationArray[];
     private Context context;
 
     public CalibratorThread(Context context){
         calibrator = new Calibrator();
+        soundHelper = new SoundHelper(calibrator.numSamples, calibrator.sampleRate);
         calibrationArray = new double[frequencies.length];
         this.context = context;
     }
@@ -45,7 +47,7 @@ public class CalibratorThread extends Thread {
             int frequency = frequencies[i];
             final float increment = (float) (Math.PI) * frequency / calibrator.sampleRate;
 
-            AudioTrack audioTrack = calibrator.playSound(calibrator.generateSound(increment, volume));
+            AudioTrack audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, volume));
             System.out.println("Played sound");
 
             if(!calibrator.isRunning()){
@@ -121,7 +123,12 @@ public class CalibratorThread extends Thread {
 
         }
 
-        System.out.println("CALIBRATION DONE");
+        System.out.println("Calibration done");
+        completeCalibration();
+    }
+
+    public void completeCalibration(){
+        //TODO: Exit activity to somewhere else; this will automatically call onStop()
     }
 
     public void stopThread(){

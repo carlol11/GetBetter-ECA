@@ -14,6 +14,7 @@ public class SoundHelper {
 
     public SoundHelper(int numSamples, int sampleRate){
         this.numSamples = numSamples;
+        this.sampleRate = sampleRate;
     }
 
     public byte[] generateSound(float increment, int volume){

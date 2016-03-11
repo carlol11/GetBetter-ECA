@@ -1,6 +1,5 @@
 package com.geebeelicious.geebeelicious.tests.visualacuity;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.geebeelicious.geebeelicious.R;
 

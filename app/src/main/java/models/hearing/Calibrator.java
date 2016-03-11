@@ -20,7 +20,6 @@ import android.media.MediaRecorder;
  */
 
 public class Calibrator {
-    //TODO: Test on actual device since emulator is limited
     final public int sampleRate = 44100;
     final public int numSamples = 4 * sampleRate;
     final public int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
@@ -28,30 +27,6 @@ public class Calibrator {
     private double[] inputSignalImaginary = new double[2048];
     private static boolean running = true;
 
-    public byte[] generateSound(float increment, int volume){
-        float angle = 0;
-        double sample[] = new double[numSamples];
-        byte generatedSound[] = new byte[2 * numSamples];
-        for(int i = 0; i<numSamples; i++){
-            sample[i] = Math.sin(angle);
-            angle+=increment;
-        }
-
-        int index = 0;
-        for (final double dVal: sample){
-            final short val = (short) ((dVal * volume)); //volume controlled by the value multiplied by dVal; max value is 32767
-            generatedSound[index++] = (byte) (val & 0x00ff);
-            generatedSound[index++] = (byte) ((val & 0xff00) >>> 8);
-        }
-
-        return generatedSound;
-    }
-
-    public AudioTrack playSound(byte[] generatedSound){
-        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSound.length, AudioTrack.MODE_STATIC);
-        audioTrack.write(generatedSound, 0, generatedSound.length);
-        return audioTrack;
-    }
 
     public int newBitReverse(int i){
         int a = 0;

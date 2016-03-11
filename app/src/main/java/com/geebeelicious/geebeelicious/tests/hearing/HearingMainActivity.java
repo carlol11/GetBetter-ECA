@@ -30,7 +30,6 @@ public class HearingMainActivity extends ActionBarActivity {
 
         hearingTest = new HearingTest();
         final double[] calibrationData = hearingTest.getCalibrationData(getApplicationContext());
-        System.out.println("DONE");
         final Button yesButton = (Button)findViewById(R.id.YesButton);
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,9 +41,6 @@ public class HearingMainActivity extends ActionBarActivity {
 
             }
         });
-            System.out.println("HERE");
-         //hearingTest.performTest(calibrationData);
-            System.out.println("HELLO");
 
         final Runnable backgroundFlash = new Runnable(){
             public void run(){

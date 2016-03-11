@@ -1,10 +1,16 @@
 package models.hearing;
 
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * Created by Kate on 03/07/2016.
@@ -20,15 +26,31 @@ import android.media.MediaRecorder;
  */
 
 public class Calibrator {
-    final public int sampleRate = 44100;
-    final public int numSamples = 4 * sampleRate;
-    final public int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+
+    final private int sampleRate = 44100;
+    final private int numSamples = 4 * sampleRate;
+    final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+    final private int frequencies[] = {500, 1000, 3000, 4000, 6000, 8000};
+    final private int volume = 30000;
+    final private double gain = 0.0044;
+    final private double alpha = 0.9;
+    final private double[] dbHLCorrectionCoefficients = {13.5, 7.5, 11.5, 12, 16, 15.5};
 
     private double[] inputSignalImaginary = new double[2048];
-    private static boolean running = true;
+    //private static boolean running = true;
+    private SoundHelper soundHelper;
+    private double[] calibrationArray;
+    private Context context;
+    private boolean isDone = false;
 
+    public Calibrator(Context context){
+        soundHelper = new SoundHelper(numSamples, sampleRate);
+        calibrationArray = new double[frequencies.length];
+        this.context = context;
+        isDone = true;
+    }
 
-    public int newBitReverse(int i){
+    private int newBitReverse(int i){
         int a = 0;
         while(i!=0){
             a<<=1;
@@ -39,7 +61,7 @@ public class Calibrator {
     }
 
     //FFT (Fast Fourier Transform) Analysis
-    public double[] fftAnalysis(double[] inputReal, double[] inputImaginary){
+    private double[] fftAnalysis(double[] inputReal, double[] inputImaginary){
         int n = 2048;
         int nu = 11;
         double[] bufferReal = new double[n];
@@ -102,7 +124,7 @@ public class Calibrator {
         return transformResult;
     }
 
-    public double[] dbListen(int frequency){
+    private double[] dbListen(int frequency){
         double rmsArray[] = new double[5];
         for(int i = 0; i<rmsArray.length; i++){
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
@@ -134,16 +156,97 @@ public class Calibrator {
         return rmsArray;
     }
 
-    public static void stopThread(){
-        running = false;
+//    public static void stopThread(){
+//        running = false;
+//    }
+//
+//    public static void startThread(){
+//        running = true;
+//    }
+//
+//    public boolean isRunning(){
+//        return running;
+//    }
+
+    private void endCalibration(){
+        isDone = true;
     }
 
-    public static void startThread(){
-        running = true;
+    public boolean isDone(){
+        return isDone;
     }
 
-    public boolean isRunning(){
-        return running;
+    public void calibrate(){
+        for(int i = 0; i<frequencies.length; i++){
+            int frequency = frequencies[i];
+            final float increment = (float) (Math.PI) * frequency / sampleRate;
+
+            AudioTrack audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, volume));
+
+            double backgroundRms[] = dbListen(frequency);
+            audioTrack.play();
+            double soundRms[] = dbListen(frequency);
+
+            double resultingRms[] = new double[5];
+            double resultingDb[] = new double[5];
+
+            for(int j = 0; j< resultingRms.length; j++){
+                resultingRms[j] = soundRms[j]/backgroundRms[j];
+                resultingDb[j] = 20 * Math.log10(resultingRms[j]) + 70;
+                resultingDb[j] -= dbHLCorrectionCoefficients[i];
+            }
+
+            double rmsSum = 0;
+            for (double rms: resultingRms){
+                if(rms > 0){
+                    rmsSum += rms;
+                }
+            }
+
+            double dbAverage = 0;
+            for(double db : resultingDb){
+                dbAverage += db;
+            }
+            dbAverage /= resultingDb.length;
+
+            calibrationArray[i] = dbAverage / volume;
+
+//            if(!isRunning()){
+//                return;
+//            }
+
+            try{
+                Thread.sleep(1000);
+            } catch(InterruptedException e){
+
+            }
+
+            audioTrack.release();
+        }
+
+        int counter = 0;
+        byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
+        for(double calibration : calibrationArray){
+            byte tempByteArray[] = new byte[8];
+            ByteBuffer.wrap(tempByteArray).putDouble(calibration);
+            for(byte b : tempByteArray){
+                calibrationByteArray[counter] = b;
+                counter++;
+            }
+        }
+
+        try{
+            FileOutputStream fos = context.openFileOutput("HearingTestCalibrationPreferences", Context.MODE_PRIVATE);
+            try{
+                fos.write(calibrationByteArray);
+                fos.close();
+            } catch(IOException ioe){
+
+            }
+        } catch(FileNotFoundException fe){
+
+        }
+        endCalibration();
     }
 
 }

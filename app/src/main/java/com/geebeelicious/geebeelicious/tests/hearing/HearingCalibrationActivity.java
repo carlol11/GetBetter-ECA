@@ -3,49 +3,52 @@ package com.geebeelicious.geebeelicious.tests.hearing;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
-import java.util.ArrayList;
-
 import models.hearing.Calibrator;
-import models.hearing.CalibratorThread;
 
 public class HearingCalibrationActivity extends ActionBarActivity {
 
-    ArrayList<CalibratorThread> threads;
+    private Calibrator calibrator;
+    Thread calibrationThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hearing_calibration);
 
-        AudioManager audioManager = (AudioManager)getSystemService(AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 9, 0);
-
-        threads = new ArrayList<CalibratorThread>();
-        Thread runningThread = new Thread(new Runnable() {
-
-            public void run(){
-                final CalibratorThread calibratorThread = new CalibratorThread(getBaseContext());
-                System.out.println("New Calibrator Thread");
-                threads.add(calibratorThread);
-                calibratorThread.run();
+        calibrator = new Calibrator(getApplicationContext());
+        calibrationThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                calibrator.calibrate();
+                endCalibration();
             }
-
         });
-        runningThread.start();
+        calibrationThread.start();
+
+
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        for(CalibratorThread ct : threads){
-            ct.stopThread();
-            ct.interrupt();
+    private void endCalibration(){
+        calibrationThread.interrupt();
+        if(calibrator.isDone()){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ProgressBar progressBar = (ProgressBar) findViewById(R.id.calibrationProgressBar);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    TextView textView = (TextView) findViewById(R.id.calibrationInProgressTextView);
+                    textView.setText("Calibration Done!");
+                }
+            });
         }
-
     }
+
 
 
 }

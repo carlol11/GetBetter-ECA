@@ -30,6 +30,7 @@ public class HearingCalibrationActivity extends ActionBarActivity {
                 endCalibration();
                 Intent intent = new Intent(HearingCalibrationActivity.this, HearingMainActivity.class);
                 HearingCalibrationActivity.this.startActivity(intent);
+                //TODO: Separate calibration and hearing test activity when menu has been made (put calibration in settings menu)
             }
         });
         calibrationThread.start();

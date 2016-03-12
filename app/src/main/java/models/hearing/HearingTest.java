@@ -59,7 +59,6 @@ public class HearingTest {
             fis.close();
         } catch(IOException e){
             //TODO: Go to calibration activity
-            System.out.println("No calibration preferences yet.");
         }
 
         final double calibrationArray[] = new double[3];
@@ -71,7 +70,6 @@ public class HearingTest {
                 counter++;
             }
             calibrationArray[i] = ByteBuffer.wrap(tempByteBuffer).getDouble();
-            System.out.println("getDouble: " + calibrationArray[i]);
         }
         return calibrationArray;
     }
@@ -90,15 +88,11 @@ public class HearingTest {
                     int tempResponse = 0;
                     int actualVolume = (minVolume + maxVolume) / 2;
                     if ((maxVolume - minVolume) < 50) {
-                        thresholdsRight[i] = actualVolume * calibrationArray[i];
                         if(e == 0){
-                            System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
-                            System.out.println("Thresholds[i]: " + thresholdsRight[i]);
+                            thresholdsRight[i] = actualVolume * calibrationArray[i];
                         }
                         else if(e == 1){
                             thresholdsLeft[i] = actualVolume * calibrationArray[i];
-                            System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
-                            System.out.println("Thresholds[i]: " + thresholdsLeft[i]);
                         }
                         break;
                     } else {

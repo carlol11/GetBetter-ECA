@@ -204,9 +204,7 @@ public class Calibrator {
             for(int j = 0; j<resultingRms.length; j++){
                 resultingRms[j] = soundRms[j]/backgroundRms[j];
                 resultingDb[j] = 20 * log10(resultingRms[j]) + 70;
-                System.out.println("resultingRms: " + resultingRms[j] + " resultingDb: " + resultingDb[j]);
                 resultingDb[j] -= dbHLCorrectionCoefficients[i];
-                System.out.println("dbHlCC: " + dbHLCorrectionCoefficients[i] + " resultingDb2: " + resultingDb[j]);
             }
 
             double rmsSum = 0;
@@ -218,7 +216,6 @@ public class Calibrator {
 
             double dbAverage = 0;
             for(int j = 0; j<resultingDb.length; j++){
-                System.out.println("rsDb: " + resultingDb[j]);
                 dbAverage += resultingDb[j];
             }
             dbAverage /= (resultingDb.length - 1);
@@ -247,6 +244,8 @@ public class Calibrator {
                 counter++;
             }
         }
+
+        //TODO: Fix calibration such that if there is an infinite value, recalibrate
 
         try{
             FileOutputStream fos = context.openFileOutput("HearingTestCalibrationPreferences", Context.MODE_PRIVATE);

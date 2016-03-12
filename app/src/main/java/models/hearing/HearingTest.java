@@ -161,15 +161,52 @@ public class HearingTest {
         return inLoop;
     }
 
-    public String getResults(){
+    private double getPureToneAverage(double[] testResults){
+        double result = 0;
+        for(double d : testResults){
+            result += d;
+        }
+        return (result / testResults.length);
+    }
+
+    private String getResultsPerFrequency(double[] testResults){
         String result = "";
 
-        for(int i = 0; i<6; i++){
-            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", thresholdsRight[i]) + "db HL Right\n");
+        for(int i = 0; i<testResults.length; i++){
+            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResults[i]) + "db HL Right\n");
+
         }
-        for(int i = 0; i<6; i++){
-            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", thresholdsLeft[i]) + "db HL Left\n");
+        return result;
+    }
+
+    private String interpretPureToneAverage(double result){
+        if(result <= 20){
+            return "Normal Hearing";
+        } else if(result >= 21 && result <= 40){
+            return "Mild Hearing Loss";
+        } else if(result >=41 && result <= 55){
+            return "Moderate Hearing Loss";
+        } else if(result >= 56 && result <= 70){
+            return "Moderately-Severe Hearing Loss";
+        } else if(result >= 71 && result <= 90){
+            return "Severe Hearing Loss";
+        } else {
+            return "Profound Hearing Loss";
         }
+    }
+
+    private String getPureToneAverageResults(double[] testResults){
+        double ptaResult = getPureToneAverage(testResults);
+        String result = "";
+        result += "Pure Tone Average: " + ptaResult;
+        result += "\nYou have " + interpretPureToneAverage(ptaResult) + ".";
+        return result;
+    }
+
+    public String getResults(){
+        String result = "";
+        result += "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + "\n" + getPureToneAverageResults(thresholdsRight);
+        result += "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + "\n" + getPureToneAverageResults(thresholdsLeft);
         return result;
     }
 

@@ -37,7 +37,7 @@ public class Calibrator {
     final private double[] dbHLCorrectionCoefficients = {13.5, 7.5, 11.5, 12, 16, 15.5};
 
     private double[] inputSignalImaginary = new double[2048];
-    //private static boolean running = true;
+    private static boolean isRunning = true;
     private SoundHelper soundHelper;
     private double[] calibrationArray;
     private Context context;
@@ -156,17 +156,17 @@ public class Calibrator {
         return rmsArray;
     }
 
-//    public static void stopThread(){
-//        running = false;
-//    }
-//
-//    public static void startThread(){
-//        running = true;
-//    }
-//
-//    public boolean isRunning(){
-//        return running;
-//    }
+    public static void stopThread(){
+        isRunning = false;
+    }
+
+    private static void startThread(){
+        isRunning = true;
+    }
+
+    public boolean isRunning(){
+        return isRunning;
+    }
 
     private void endCalibration(){
         isDone = true;
@@ -177,11 +177,16 @@ public class Calibrator {
     }
 
     public void calibrate(){
+        startThread();
         for(int i = 0; i<frequencies.length; i++){
             int frequency = frequencies[i];
             final float increment = (float) (Math.PI) * frequency / sampleRate;
 
             AudioTrack audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, volume));
+
+            if(!isRunning()){
+                return;
+            }
 
             double backgroundRms[] = dbListen(frequency);
             audioTrack.play();
@@ -208,8 +213,11 @@ public class Calibrator {
                 dbAverage += db;
             }
             dbAverage /= resultingDb.length;
-
             calibrationArray[i] = dbAverage / volume;
+
+            if(!isRunning()){
+                return;
+            }
 
             try{
                 Thread.sleep(1000);

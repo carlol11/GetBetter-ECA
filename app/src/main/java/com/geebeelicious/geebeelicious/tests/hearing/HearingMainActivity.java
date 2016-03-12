@@ -29,7 +29,7 @@ public class HearingMainActivity extends ActionBarActivity {
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 9, 0);
 
         hearingTest = new HearingTest();
-        final double[] calibrationData = hearingTest.getCalibrationData(getBaseContext());
+        final double[] calibrationData = hearingTest.getCalibrationData(getApplicationContext());
         final Button yesButton = (Button)findViewById(R.id.YesButton);
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override

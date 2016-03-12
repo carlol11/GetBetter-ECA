@@ -54,7 +54,7 @@ public class HearingTest {
         byte calibrationByteData[] = new byte[48];
 
         try{
-            FileInputStream fis = context.openFileInput("CalibrationPreferences");
+            FileInputStream fis = context.openFileInput("HearingTestCalibrationPreferences");
             fis.read(calibrationByteData, 0, 48);
             fis.close();
         } catch(IOException e){

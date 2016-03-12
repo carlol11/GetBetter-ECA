@@ -34,7 +34,22 @@ public class HearingCalibrationActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        calibrator.stopThread();
+        calibrationThread.interrupt();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        calibrator.stopThread();
+        calibrationThread.interrupt();
+    }
+
     private void endCalibration(){
+        calibrator.stopThread();
         calibrationThread.interrupt();
         if(calibrator.isDone()){
             runOnUiThread(new Runnable() {
@@ -48,6 +63,8 @@ public class HearingCalibrationActivity extends ActionBarActivity {
             });
         }
     }
+
+
 
 
 

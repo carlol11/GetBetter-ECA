@@ -1,5 +1,6 @@
 package com.geebeelicious.geebeelicious.tests.hearing;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +28,8 @@ public class HearingCalibrationActivity extends ActionBarActivity {
             public void run() {
                 calibrator.calibrate();
                 endCalibration();
+                Intent intent = new Intent(HearingCalibrationActivity.this, HearingMainActivity.class);
+                HearingCalibrationActivity.this.startActivity(intent);
             }
         });
         calibrationThread.start();

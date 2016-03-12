@@ -25,7 +25,7 @@ public class HearingTest {
     final private int sampleRate = 44100;
     final private int numSamples = duration * sampleRate;
     final private int volume = 32767;
-    final private int[] testingFrequencies = {500};
+    final private int[] testingFrequencies = {500, 1000, 2000};
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
 
@@ -34,8 +34,8 @@ public class HearingTest {
     private boolean isDone = false;
 
     private static boolean isRunning = true;
-    private double[] thresholdsRight;
-    private double[] thresholdsLeft;
+    private double[] thresholdsRight = {0, 0, 0};
+    private double[] thresholdsLeft = {0, 0, 0};
 
     private int getRandomGapDuration() {
         int time;
@@ -51,17 +51,18 @@ public class HearingTest {
     }
 
     public double[] getCalibrationData(Context context){
-        byte calibrationByteData[] = new byte[48];
+        byte calibrationByteData[] = new byte[24];
 
         try{
             FileInputStream fis = context.openFileInput("HearingTestCalibrationPreferences");
-            fis.read(calibrationByteData, 0, 48);
+            fis.read(calibrationByteData, 0, 24);
             fis.close();
         } catch(IOException e){
             //TODO: Go to calibration activity
+            System.out.println("No calibration preferences yet.");
         }
 
-        final double calibrationArray[] = new double[6];
+        final double calibrationArray[] = new double[3];
         int counter = 0;
         for(int i = 0; i<calibrationArray.length; i++){
             byte tempByteBuffer[] = new byte[8];
@@ -70,13 +71,12 @@ public class HearingTest {
                 counter++;
             }
             calibrationArray[i] = ByteBuffer.wrap(tempByteBuffer).getDouble();
+            System.out.println("getDouble: " + calibrationArray[i]);
         }
         return calibrationArray;
     }
 
     public void performTest(double[] calibrationArray) {
-        thresholdsLeft = new double[]{0};
-        thresholdsRight = new double[]{0};
         SoundHelper soundHelper = new SoundHelper(numSamples, sampleRate);
         for (int e = 0; e < 2; e++) {
             for (int i = 0; i < testingFrequencies.length; i++) {
@@ -90,20 +90,16 @@ public class HearingTest {
                     int tempResponse = 0;
                     int actualVolume = (minVolume + maxVolume) / 2;
                     if ((maxVolume - minVolume) < 50) {
-                        if (i == 0) {
-                            thresholdsRight[i] = actualVolume * calibrationArray[1];
-                        } else {
-                            thresholdsRight[i] = actualVolume * calibrationArray[i - 1];
+                        thresholdsRight[i] = actualVolume * calibrationArray[i];
+                        if(e == 0){
+                            System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
+                            System.out.println("Thresholds[i]: " + thresholdsRight[i]);
                         }
-                        System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
-                        System.out.println("Thresholds[i]: " + thresholdsRight[i]);
-                        if (i == 0) {
-                            thresholdsLeft[i] = actualVolume * calibrationArray[1];
-                        } else {
-                            thresholdsLeft[i] = actualVolume * calibrationArray[i - 1];
+                        else if(e == 1){
+                            thresholdsLeft[i] = actualVolume * calibrationArray[i];
+                            System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
+                            System.out.println("Thresholds[i]: " + thresholdsLeft[i]);
                         }
-                        System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
-                        System.out.println("Thresholds[i]: " + thresholdsLeft[i]);
                         break;
                     } else {
                         for (int z = 0; z < 3; z++) {
@@ -183,7 +179,7 @@ public class HearingTest {
         String result = "";
 
         for(int i = 0; i<testResults.length; i++){
-            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResults[i]) + "db HL\n");
+            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResults[i]) + " db HL\n");
 
         }
         return result;

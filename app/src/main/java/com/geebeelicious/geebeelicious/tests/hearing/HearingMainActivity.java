@@ -98,6 +98,13 @@ public class HearingMainActivity extends ActionBarActivity {
         testThread.start();
     }
 
+    public void onStop(){
+        super.onStop();
+        for(Thread t : threads){
+            t.interrupt();
+        }
+    }
+
     private void endTest(){
         for(Thread t : threads){
             t.interrupt();

@@ -25,7 +25,8 @@ public class HearingTest {
     final private int sampleRate = 44100;
     final private int numSamples = duration * sampleRate;
     final private int volume = 32767;
-    final private int[] testingFrequencies = {500, 1000, 3000, 4000, 6000, 8000};
+//    final private int[] testingFrequencies = {250, 500, 1000, 2000, 4000, 8000};
+    final private int[] testingFrequencies = {500, 1000, 2000};
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
 
@@ -34,8 +35,10 @@ public class HearingTest {
     private boolean isDone = false;
 
     public static boolean isRunning = true;
-    public double[] thresholdsRight = {0, 0, 0, 0, 0, 0, 0};
-    public double[] thresholdsLeft = {0, 0, 0, 0, 0, 0, 0};
+//    public double[] thresholdsRight = {0, 0, 0, 0, 0, 0};
+//    public double[] thresholdsLeft = {0, 0, 0, 0, 0, 0};
+    public double[] thresholdsRight = {0, 0, 0};
+    public double[] thresholdsLeft = {0, 0, 0};
 
     public int getRandomGapDuration() {
         int time;
@@ -139,28 +142,6 @@ public class HearingTest {
             //Run
         }
         inLoop = false;
-
-//        int counter = 0;
-//        thresholdVolumeRightByte = new byte[thresholdsRight.length * 8];
-//        for (int i = 0; i < thresholdsRight.length; i++) {
-//            byte tempByteArray[] = new byte[8];
-//            ByteBuffer.wrap(tempByteArray).putDouble(thresholdsRight[i]);
-//            for (byte b : tempByteArray) {
-//                thresholdVolumeRightByte[counter] = b;
-//                counter++;
-//            }
-//        }
-//
-//        counter = 0;
-//        thresholdVolumeLeftByte = new byte[thresholdsLeft.length * 8];
-//        for (int i = 0; i < thresholdsLeft.length; i++) {
-//            byte tempByteArray[] = new byte[8];
-//            ByteBuffer.wrap(tempByteArray).putDouble(thresholdsLeft[i]);
-//            for (byte b : tempByteArray) {
-//                thresholdVolumeLeftByte[counter] = b;
-//                counter++;
-//            }
-//        }
         isDone = true;
     }
 
@@ -183,10 +164,10 @@ public class HearingTest {
     public String getResults(){
         String result = "";
 
-        for(int i = 0; i<7; i++){
+        for(int i = 0; i<6; i++){
             result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", thresholdsRight[i]) + "db HL Right\n");
         }
-        for(int i = 0; i<7; i++){
+        for(int i = 0; i<6; i++){
             result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", thresholdsLeft[i]) + "db HL Left\n");
         }
         return result;

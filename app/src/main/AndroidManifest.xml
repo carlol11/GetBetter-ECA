@@ -34,25 +34,20 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".tests.hearing.HearingMainActivity"
-            android:label="@string/title_activity_hearing_main"
+            android:name=".tests.hearing.HearingCalibrationActivity"
+            android:label="@string/title_activity_hearing_calibration"
             android:screenOrientation="landscape"/>
 
         <activity
-            android:name=".tests.hearing.HearingCalibrationActivity"
-            android:label="@string/title_activity_hearing_calibration"
+            android:name=".tests.hearing.HearingMainActivity"
+            android:label="@string/title_activity_hearing_main"
             android:screenOrientation="landscape">
-
         <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-
-
-
-
 
     </application>
 

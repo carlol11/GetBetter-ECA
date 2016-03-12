@@ -25,8 +25,7 @@ public class HearingTest {
     final private int sampleRate = 44100;
     final private int numSamples = duration * sampleRate;
     final private int volume = 32767;
-//    final private int[] testingFrequencies = {250, 500, 1000, 2000, 4000, 8000};
-    final private int[] testingFrequencies = {500, 1000, 2000};
+    final private int[] testingFrequencies = {500};
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
 
@@ -34,13 +33,11 @@ public class HearingTest {
     private boolean inLoop = true;
     private boolean isDone = false;
 
-    public static boolean isRunning = true;
-//    public double[] thresholdsRight = {0, 0, 0, 0, 0, 0};
-//    public double[] thresholdsLeft = {0, 0, 0, 0, 0, 0};
-    public double[] thresholdsRight = {0, 0, 0};
-    public double[] thresholdsLeft = {0, 0, 0};
+    private static boolean isRunning = true;
+    private double[] thresholdsRight;
+    private double[] thresholdsLeft;
 
-    public int getRandomGapDuration() {
+    private int getRandomGapDuration() {
         int time;
         double random = Math.random();
         if (random < 0.3) {
@@ -66,19 +63,20 @@ public class HearingTest {
 
         final double calibrationArray[] = new double[6];
         int counter = 0;
-        for(double d :calibrationArray){
+        for(int i = 0; i<calibrationArray.length; i++){
             byte tempByteBuffer[] = new byte[8];
-            for(byte b : tempByteBuffer){
-                b = calibrationByteData[counter];
+            for(int j = 0; j<tempByteBuffer.length; j++){
+                tempByteBuffer[j] = calibrationByteData[counter];
                 counter++;
             }
-            d = ByteBuffer.wrap(tempByteBuffer).getDouble();
+            calibrationArray[i] = ByteBuffer.wrap(tempByteBuffer).getDouble();
         }
-
         return calibrationArray;
     }
 
     public void performTest(double[] calibrationArray) {
+        thresholdsLeft = new double[]{0};
+        thresholdsRight = new double[]{0};
         SoundHelper soundHelper = new SoundHelper(numSamples, sampleRate);
         for (int e = 0; e < 2; e++) {
             for (int i = 0; i < testingFrequencies.length; i++) {
@@ -97,11 +95,15 @@ public class HearingTest {
                         } else {
                             thresholdsRight[i] = actualVolume * calibrationArray[i - 1];
                         }
+                        System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
+                        System.out.println("Thresholds[i]: " + thresholdsRight[i]);
                         if (i == 0) {
                             thresholdsLeft[i] = actualVolume * calibrationArray[1];
                         } else {
                             thresholdsLeft[i] = actualVolume * calibrationArray[i - 1];
                         }
+                        System.out.println("Actual Volume: " + actualVolume + "CalibrationArray: " + calibrationArray[i]);
+                        System.out.println("Thresholds[i]: " + thresholdsLeft[i]);
                         break;
                     } else {
                         for (int z = 0; z < 3; z++) {
@@ -161,6 +163,14 @@ public class HearingTest {
         return inLoop;
     }
 
+    public void setIsNotRunning(){
+        isRunning = false;
+    }
+
+    public boolean isRunning(){
+        return isRunning;
+    }
+
     private double getPureToneAverage(double[] testResults){
         double result = 0;
         for(double d : testResults){
@@ -173,7 +183,7 @@ public class HearingTest {
         String result = "";
 
         for(int i = 0; i<testResults.length; i++){
-            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResults[i]) + "db HL Right\n");
+            result+=(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResults[i]) + "db HL\n");
 
         }
         return result;
@@ -198,15 +208,15 @@ public class HearingTest {
     private String getPureToneAverageResults(double[] testResults){
         double ptaResult = getPureToneAverage(testResults);
         String result = "";
-        result += "Pure Tone Average: " + ptaResult;
+        result += "Pure Tone Average: " + String.format("%.2f",ptaResult) + " dB HL";
         result += "\nYou have " + interpretPureToneAverage(ptaResult) + ".";
         return result;
     }
 
     public String getResults(){
         String result = "";
-        result += "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + "\n" + getPureToneAverageResults(thresholdsRight);
-        result += "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + "\n" + getPureToneAverageResults(thresholdsLeft);
+        result += "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + getPureToneAverageResults(thresholdsRight);
+        result += "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + getPureToneAverageResults(thresholdsLeft);
         return result;
     }
 

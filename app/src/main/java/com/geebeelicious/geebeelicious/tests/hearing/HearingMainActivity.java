@@ -29,16 +29,12 @@ public class HearingMainActivity extends ActionBarActivity {
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 9, 0);
 
         hearingTest = new HearingTest();
-        final double[] calibrationData = hearingTest.getCalibrationData(getApplicationContext());
+        final double[] calibrationData = hearingTest.getCalibrationData(getBaseContext());
         final Button yesButton = (Button)findViewById(R.id.YesButton);
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hearingTest.setHeard();
-                if(hearingTest.isDone()){
-                    endTest();
-                }
-
             }
         });
 
@@ -54,9 +50,21 @@ public class HearingMainActivity extends ActionBarActivity {
             }
         };
 
+        final Runnable disableTest = new Runnable() {
+            @Override
+            public void run() {
+                yesButton.setEnabled(false);
+                TextView resultsView = (TextView) findViewById(R.id.hearingResultsTV);
+                resultsView.setText(hearingTest.getResults());
+            }
+        };
+
         Thread screenThread = new Thread(new Runnable(){
             public void run(){
                 while(hearingTest.isInLoop()){
+                    if(!hearingTest.isRunning()){
+                        return;
+                    }
                     if(hearingTest.isHeard()){
                         runOnUiThread(backgroundFlash);
                         while(hearingTest.isHeard()){
@@ -70,6 +78,9 @@ public class HearingMainActivity extends ActionBarActivity {
         Thread timingThread = new Thread(new Runnable(){
             public void run(){
                 while(hearingTest.isInLoop()){
+                    if(!hearingTest.isRunning()){
+                        return;
+                    }
                     if(hearingTest.isHeard()){
                         try{
                             Thread.sleep(500);
@@ -86,6 +97,11 @@ public class HearingMainActivity extends ActionBarActivity {
             @Override
             public void run() {
                 hearingTest.performTest(calibrationData);
+                if(hearingTest.isDone()){
+                    runOnUiThread(backgroundFlash);
+                    runOnUiThread(disableTest);
+                    endTest();
+                }
             }
         });
 
@@ -98,25 +114,23 @@ public class HearingMainActivity extends ActionBarActivity {
         testThread.start();
     }
 
-    public void onStop(){
+    @Override
+    protected void onStop() {
         super.onStop();
-        for(Thread t : threads){
-            t.interrupt();
-        }
+        endTest();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        endTest();
     }
 
     private void endTest(){
-        for(Thread t : threads){
-            t.interrupt();
+        hearingTest.setIsNotRunning();
+        for(int i = 0; i<threads.size(); i++){
+            threads.get(i).interrupt();
         }
-        Button yesButton = (Button) findViewById(R.id.YesButton);
-        yesButton.setEnabled(false);
-        displayResults();
-    }
-
-    private void displayResults(){
-        TextView resultsView = (TextView) findViewById(R.id.hearingResultsTV);
-        resultsView.setText(hearingTest.getResults());
     }
 
 

@@ -211,10 +211,6 @@ public class Calibrator {
 
             calibrationArray[i] = dbAverage / volume;
 
-//            if(!isRunning()){
-//                return;
-//            }
-
             try{
                 Thread.sleep(1000);
             } catch(InterruptedException e){
@@ -226,11 +222,11 @@ public class Calibrator {
 
         int counter = 0;
         byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
-        for(double calibration : calibrationArray){
+        for(int i = 0; i<calibrationArray.length; i++){
             byte tempByteArray[] = new byte[8];
-            ByteBuffer.wrap(tempByteArray).putDouble(calibration);
-            for(byte b : tempByteArray){
-                calibrationByteArray[counter] = b;
+            ByteBuffer.wrap(tempByteArray).putDouble(calibrationArray[i]);
+            for(int j = 0; j<tempByteArray.length; j++){
+                calibrationByteArray[counter] = tempByteArray[j];
                 counter++;
             }
         }

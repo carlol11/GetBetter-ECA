@@ -2,6 +2,11 @@ package models.colorvision;
 
 /**
  * Created by Kate on 03/04/2016.
+ * The Option class represents an option
+ * from the multiple choice menu that
+ * the user chooses answers from. The class
+ * contains the shape of the Option, its
+ * corresponding drawable resource.
  */
 public class Option {
 

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ public class FineMotorsActivity extends Activity {
 
     private ImageView imageViewPathToTrace;
     private TextView ECAtext;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +34,15 @@ public class FineMotorsActivity extends Activity {
         setContentView(R.layout.activity_fine_motors);
         ECAtext = (TextView) findViewById(R.id.placeholderECAText);
         imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.fine_motor_outside_path);
 
+        mp.setLooping(true);
         imageViewPathToTrace.setOnTouchListener(image_Listener);
-
     }
 
     private OnTouchListener image_Listener = new OnTouchListener(){
-        private boolean haveStarted = false;
+        private boolean haveStarted = false; //has user started
+        private boolean wasOutside = false; //was user outside the path
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -51,10 +55,18 @@ public class FineMotorsActivity extends Activity {
             if(haveStarted){ //if user have pressed start_color
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
+                        return true;
                     case MotionEvent.ACTION_MOVE:
                         if(pixel == END_COLOR) { //if user done
                             doFinishPathSuccess();
                         } else {
+                            if(pixel == 0) { //if outside the lines
+                                doIfOutSideThePath();
+                            } else if (wasOutside){
+                                mp.pause();
+                                wasOutside = false;
+                            }
+
                             ECAtext.setText("Touch event position: " + eventX + ", " + eventY + "\n" +
                                     "Pixel: " + pixel);
                         }
@@ -77,6 +89,14 @@ public class FineMotorsActivity extends Activity {
         //called if user finished path successfully
         private void doFinishPathSuccess(){
             ECAtext.setText("You've finished the path successfully!");
+        }
+
+        //called if the user is outside the path
+        private void doIfOutSideThePath(){
+            if(!wasOutside){
+                mp.start();
+                wasOutside = true;
+            }
         }
         
         //returns the equivalent x and y coordinates of the bitmap given x and y coordinates of the touch event

@@ -7,7 +7,8 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity">
+    tools:context="com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity"
+    android:background="#d14f4f">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -94,14 +95,26 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/linearLayoutAnswers"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:visibility="invisible">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="127dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/Yes"
             android:id="@+id/YesButton"
-            android:background="#98ff88" />
+            android:background="#98ff88"
+            android:minWidth="250dp"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/No"
+            android:id="@+id/NoButton"
+            android:background="#ff7f7d"
+            android:minWidth="250dp"
+            android:layout_weight="0.50" />
 
     </LinearLayout>
 

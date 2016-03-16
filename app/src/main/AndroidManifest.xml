@@ -46,7 +46,7 @@
             android:screenOrientation="landscape"/>
 
         <activity
-            android:name=".tests.finemotors.FineMotorsActivity"
+            android:name=".tests.finemotor.FineMotorsActivity"
             android:label="@string/title_activity_fine_motors"
             android:screenOrientation="landscape">
 

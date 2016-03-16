@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.tests.finemotors;
+package com.geebeelicious.geebeelicious.tests.finemotor;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -30,7 +30,7 @@ public class FineMotorsActivity extends Activity {
         setContentView(R.layout.activity_fine_motors);
         ECAtext = (TextView) findViewById(R.id.placeholderECAText);
         imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
-        
+
         imageViewPathToTrace.setOnTouchListener(image_Listener);
 
     }

@@ -10,6 +10,10 @@ import java.util.Random;
 
 /**
  * Created by Kate on 03/04/2016.
+ * The IshiharaHelper class functions to help
+ * generate the test and conduct the test.
+ * It contains all possible plates and options
+ * that may be used in test generation.
  */
 public class IshiharaHelper {
 

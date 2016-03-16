@@ -5,6 +5,10 @@ import java.util.Random;
 
 /**
  * Created by Kate on 03/04/2016.
+ * The IshiharaTest class is generated and
+ * will contain the generated test items
+ * composed of plates and options. The class
+ * also keeps track of the score of the user.
  */
 public class IshiharaTest {
 

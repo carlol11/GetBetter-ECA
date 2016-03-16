@@ -19,10 +19,12 @@ import com.geebeelicious.geebeelicious.R;
 * Activity for the Fine Motors Test
 */
 public class FineMotorsActivity extends Activity {
-    private ImageView imageViewPathToTrace;
-    private TextView ECAtext;
+    //Set the color for the start and end of the path
     private static final int START_COLOR = Color.WHITE;
     private static final int END_COLOR = Color.BLACK;
+
+    private ImageView imageViewPathToTrace;
+    private TextView ECAtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,29 +48,37 @@ public class FineMotorsActivity extends Activity {
             int[] xY = getBitMapCoordinates(bitmap, event.getX(), event.getY());
             int pixel = bitmap.getPixel(xY[0], xY[1]);
 
-            if(haveStarted){
+            if(haveStarted){ //if user have pressed start_color
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
-                        ECAtext.setText("Touch event position: " + eventX + ", " + eventY + "\n" +
-                                "Pixel: " + pixel);
+                        if(pixel == END_COLOR) { //if user done
+                            doFinishPathSuccess();
+                        } else {
+                            ECAtext.setText("Touch event position: " + eventX + ", " + eventY + "\n" +
+                                    "Pixel: " + pixel);
+                        }
                         break;
                     default:
                         return false;
                 }
                 return true;
             } else {
-                switch(event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        haveStarted = true;
-                        return true;
-                    default:
-                        return false;
+
+                if(pixel == START_COLOR && event.getAction() == MotionEvent.ACTION_DOWN){
+                    haveStarted = true;
+                    return true;
                 }
+                return false;
             }
 
         }
 
+        //called if user finished path successfully
+        private void doFinishPathSuccess(){
+            ECAtext.setText("You've finished the path successfully!");
+        }
+        
         //returns the equivalent x and y coordinates of the bitmap given x and y coordinates of the touch event
         private int[] getBitMapCoordinates(Bitmap bitmap, float eventX, float eventY){
             Matrix invertMatrix = new Matrix();

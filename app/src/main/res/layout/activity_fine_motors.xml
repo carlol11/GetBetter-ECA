@@ -77,15 +77,12 @@
         android:background="#ffffff"
         android:layout_above="@+id/linearLayoutAnswers">
 
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="views.FineMotorsView"
-            android:id="@+id/single_touch_view"
-            android:layout_gravity="left|top"
-            android:background="#ffffff"
-            />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewPathToTrace"
+            android:src="@drawable/path_to_trace"
+            android:background="#d14f4f" />
     </RelativeLayout>
 
     <LinearLayout

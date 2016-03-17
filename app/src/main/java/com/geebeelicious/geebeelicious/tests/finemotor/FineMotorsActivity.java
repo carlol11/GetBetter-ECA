@@ -29,6 +29,7 @@ public class FineMotorsActivity extends Activity {
     //Set the color for the start and end of the path
     private static final int START_COLOR = Color.WHITE; //update the instruction if you change this
     private static final int END_COLOR = Color.BLACK;  //update the instruction if you change this
+    private static final int MAX_NUM_WRONG = 2;
 
     private ImageView imageViewPathToTrace;
     private TextView ECAtext;
@@ -37,7 +38,7 @@ public class FineMotorsActivity extends Activity {
     private Button buttonNo;
 
     private boolean isDominantHand = false; //current test the user is taking
-    private boolean isTestOngoing = false;
+    private boolean isTestOngoing = true;
     private boolean[] result = new boolean[3]; //result[i] is true if pass, false if fail
 
     //TODO: Change instructions to be more specific. since you know the dominant hand na. also the gender
@@ -116,7 +117,9 @@ public class FineMotorsActivity extends Activity {
                             doIfOutSideThePath();
                         } else { //if touch is within path
                             if (wasOutside){
-                                mp.pause();
+                                if(mp.isPlaying()) {
+                                    mp.pause();
+                                }
                                 wasOutside = false;
                             } else {
                                 ECAtext.setText("Trace to black circle");
@@ -143,6 +146,9 @@ public class FineMotorsActivity extends Activity {
 
         //called if user finished path successfully
         private synchronized void doFinishPathSuccess(boolean isDominant){
+            if(mp.isPlaying()) {
+                mp.pause();
+            }
             if(!isDominant && hasStarted){
                 ECAtext.setText("You've finished the path successfully!");
                 doTestWithPen();
@@ -165,13 +171,15 @@ public class FineMotorsActivity extends Activity {
         private void doIfTouchIsUp(){
             hasStarted = false;
             ECAtext.setText("Don't lift your finger. Go back to start.");
-            mp.pause();
+            if(mp.isPlaying()) {
+                mp.pause();
+            }
         }
 
         //starts the 2nd test. resets the variables
         private void doTestWithPen(){
             hasStarted = false;
-            result[0] = numWrongs < 2;
+            result[0] = numWrongs <= MAX_NUM_WRONG;
             numWrongs = 0;
             ECAtext.setText(instructions[1]);
             isDominantHand = true;
@@ -181,7 +189,7 @@ public class FineMotorsActivity extends Activity {
         private void askAssistantOfPen(){
             LinearLayout linearLayoutAnswer = (LinearLayout) findViewById(R.id.linearLayoutAnswers);
             hasStarted = false;
-            result[1] = numWrongs < 2;
+            result[1] = numWrongs <= MAX_NUM_WRONG;
             ECAtext.setText(instructions[2]);
             linearLayoutAnswer.setVisibility(View.VISIBLE);
         }

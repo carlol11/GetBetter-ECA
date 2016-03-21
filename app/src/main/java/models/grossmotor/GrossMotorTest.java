@@ -22,7 +22,6 @@ public class GrossMotorTest {
     private MusicPlayer musicPlayer;
     private int currentSkill;
 
-
 //skill, type, instruction, duration
     public GrossMotorTest(Context context){
         musicPlayer = new MusicPlayer(context);
@@ -40,25 +39,33 @@ public class GrossMotorTest {
     }
     //TODO: Add more skills; fix current skills (current ones are just for testing)
 
-    private GrossMotorSkill getRandomSkill(){
+    private GrossMotorSkill getRandomSkill(int testSkillCounter){
         Random random = new Random();
         boolean isFound = false;
         GrossMotorSkill temp = null;
+        int skillNumber;
         while(!isFound){
             temp = grossMotorSkills[random.nextInt(grossMotorSkills.length - 1)];
-            for(int i = 0; i<testSkills.length; i++){
-                if(i == 0 || (i > 0 && !temp.getSkillName().equals(testSkills[i].getSkillName()) && !temp.getType().equals(testSkills[i].getType()))){
-                    isFound = true;
-                    break;
-                }
+            if(!checkSkillDuplicates(testSkills, temp)){
+                isFound = true;
+                break;
             }
         }
         return temp;
     }
 
+    private boolean checkSkillDuplicates(GrossMotorSkill[] array, GrossMotorSkill key){
+        for(GrossMotorSkill gms : array){
+            if(key == gms){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void makeTest() {
         for (int i = 0; i < 3; i++) {
-            testSkills[i] = getRandomSkill();
+            testSkills[i] = getRandomSkill(i);
         }
     }
 
@@ -113,6 +120,34 @@ public class GrossMotorTest {
             result += gms.getSkillName() + " : " + gms.getAssessment() + "\n";
         }
         return result;
+    }
+
+    public String getFinalResult(){
+        int pass = 0;
+        int fail = 0;
+        int na = 0;
+        String assessment;
+        for(GrossMotorSkill gms : testSkills){
+            assessment = gms.getAssessment();
+            if(assessment.equals("Pass")){
+                pass++;
+            }else if(assessment.equals("Fail")){
+                fail++;
+            }else if(assessment.equals("N/A")){
+                na++;
+            }
+        }
+        if(pass>=2){
+            return "Pass";
+        } else if(na >=2){
+            return "N/A";
+        } else{
+            return "Fail";
+        }
+    }
+
+    public void endTest(){
+        musicPlayer.stopMusic();
     }
 
 

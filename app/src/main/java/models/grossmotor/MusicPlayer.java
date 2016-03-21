@@ -17,15 +17,31 @@ public class MusicPlayer {
     private MediaPlayer mediaPlayer;
     private AudioManager audioManager;
     private int[] music;
+    private int[] usedMusic;
+    private int usedCount;
 
     public MusicPlayer(Context context){
         this.context = context;
-        music = new int[3];
+        music = new int[8];
+        usedMusic = new int[3];
+        usedCount = 0;
         music[0] = R.raw.gross_motor_1;
-        music[1] = R.raw.gross_motor_1;
-        music[2] = R.raw.gross_motor_1;
-        //TODO: Download more music files
+        music[1] = R.raw.gross_motor_2;
+        music[2] = R.raw.gross_motor_3;
+        music[3] = R.raw.gross_motor_4;
+        music[4] = R.raw.gross_motor_5;
+        music[5] = R.raw.gross_motor_6;
+        music[6] = R.raw.gross_motor_7;
+        music[7] = R.raw.gross_motor_8;
+    }
 
+    private boolean checkDuplicates(int[] array, int key){
+        for(int i : array){
+            if(i == key){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setRandomSong(int duration){
@@ -34,11 +50,22 @@ public class MusicPlayer {
         boolean isFound = false;
 
         while(!isFound){
-            randomSong = music[random.nextInt(2)];
+            int temp = 0;
+            boolean isUsed = false;
+            while(!isUsed){
+                temp = random.nextInt(7);
+                if(!checkDuplicates(usedMusic, temp)){
+                    isUsed = true;
+                    break;
+                }
+            }
+            randomSong = music[temp];
             mediaPlayer = MediaPlayer.create(context, randomSong);
             System.out.println("duration: " + mediaPlayer.getDuration());
             if(mediaPlayer.getDuration()>=duration){
                 isFound = true;
+                usedMusic[usedCount] = temp;
+                usedCount++;
                 break;
             }
         }
@@ -56,7 +83,6 @@ public class MusicPlayer {
             mediaPlayer.stop();
             System.out.println("Stopped");
         }
-        //mediaPlayer.release();
         mediaPlayer = null;
     }
 

@@ -33,6 +33,13 @@ public class GrossMotorMainActivity extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        grossMotorTest.endTest();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        grossMotorTest.endTest();
     }
 
     private void startTest(){
@@ -45,7 +52,8 @@ public class GrossMotorMainActivity extends ActionBarActivity {
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText("");
         ((TextView)findViewById(R.id.gmDurationTV)).setText("");
         ((TextView)findViewById(R.id.gmAssessmentTV)).setText("");
-        ((TextView)findViewById(R.id.gmSkillNameTV)).setText(grossMotorTest.getAllResults());
+        ((TextView)findViewById(R.id.gmSkillNameTV)).setText(grossMotorTest.getAllResults() +
+                                                            "\nOverall: " + grossMotorTest.getFinalResult());
 
         hideAnswerButtons();
 
@@ -63,7 +71,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
 
         hideAnswerButtons();
 
-        final CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+        final CountDownTimer countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)findViewById(R.id.countdownTV);
 
             @Override

@@ -19,10 +19,10 @@ public class VisualAcuityResult {
 
     public String getEye(){
         if(eye.equals("Right")){
-            return "R";
+            return "Right";
         }
         else {
-            return "L";}
+            return "Left";}
     }
 
     public String getVisualAcuity(){

@@ -13,7 +13,7 @@ import com.geebeelicious.geebeelicious.R;
 
 import models.visualacuity.ChartHelper;
 import models.visualacuity.DistanceCalculator;
-import models.visualacuity.Result;
+import models.visualacuity.VisualAcuityResult;
 
 public class VisualAcuityMainActivity extends ActionBarActivity {
 
@@ -68,24 +68,24 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
 
     private void updateResults(ChartHelper chartHelper){
         //TODO: pass the results to a record
-        Result rightEyeResult = null;
-        Result leftEyeResult = null;
+        VisualAcuityResult rightEyeResult = null;
+        VisualAcuityResult leftEyeResult = null;
 
         if(!chartHelper.isRightTested() && rightEyeResult == null){
-            rightEyeResult = new Result("Right", chartHelper.getResult());
+            rightEyeResult = new VisualAcuityResult("Right", chartHelper.getResult());
             chartHelper.setIsRightTested();
             chartHelper.startTest();
             displayResults(rightEyeResult, R.id.rightEyeResultsTextView);
         }
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
-            leftEyeResult = new Result("Left", chartHelper.getResult());
+            leftEyeResult = new VisualAcuityResult("Left", chartHelper.getResult());
             chartHelper.setIsLeftTested();
             displayResults(leftEyeResult, R.id.leftEyeResultsTextView);
             endTest();
         }
     }
 
-    private void displayResults(Result result, int id){
+    private void displayResults(VisualAcuityResult result, int id){
         String resultString = "";
         resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
                         result.getLineNumber() + "\nVisual Acuity: " +

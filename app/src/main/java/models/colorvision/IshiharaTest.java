@@ -140,6 +140,14 @@ public class IshiharaTest {
         return score;
     }
 
+    public String getResult(){
+        if(score > 10){
+            return "Normal";
+        } else{
+            return "Abnormal";
+        }
+    }
+
     public void checkAnswer(int questionNumber, int answer){
         Option userAnswer = getOption(questionNumber, answer);
         Option correctAnswer = getCorrectAnswer(questionNumber);

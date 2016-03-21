@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
+import models.colorvision.ColorVisionResult;
 import models.colorvision.IshiharaHelper;
 import models.colorvision.IshiharaPlate;
+import models.visualacuity.VisualAcuityResult;
 
 public class ColorVisionMainActivity extends ActionBarActivity {
 
@@ -77,7 +79,7 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         if(ishiharaHelper.isDone()){
             //TODO: pass the results to a record
             displayResults(ishiharaHelper.getScore());
-            endTest(buttonList);
+            endTest(buttonList, ishiharaHelper);
         }
     }
 
@@ -92,10 +94,11 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         textView.setText(resultString);
     }
 
-    private void endTest(ImageButton[] buttonList){
+    private void endTest(ImageButton[] buttonList, IshiharaHelper ishiharaHelper){
         for(ImageButton i : buttonList){
             i.setEnabled(false);
         }
+        ColorVisionResult colorVisionResult = new ColorVisionResult(ishiharaHelper.getScore(),ishiharaHelper.getResult());
         //TODO: insert code to set plateView to something else
     }
 

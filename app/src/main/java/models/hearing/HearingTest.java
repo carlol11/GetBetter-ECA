@@ -37,6 +37,9 @@ public class HearingTest {
     private double[] thresholdsRight = {0, 0, 0};
     private double[] thresholdsLeft = {0, 0, 0};
 
+    private HearingResult rightEarResult;
+    private HearingResult leftEarResult;
+
     private int getRandomGapDuration() {
         int time;
         double random = Math.random();
@@ -208,6 +211,20 @@ public class HearingTest {
         result += "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + getPureToneAverageResults(thresholdsRight);
         result += "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + getPureToneAverageResults(thresholdsLeft);
         return result;
+    }
+
+    public HearingResult getHearingTestResult(String ear){
+        double[] thresholds;
+        double pureToneAverage;
+
+        if(ear.equals("Right")){
+            thresholds = thresholdsRight;
+        }else{
+            thresholds = thresholdsLeft;
+        }
+        pureToneAverage = getPureToneAverage(thresholds);
+
+        return new HearingResult(ear, thresholds, pureToneAverage, interpretPureToneAverage(pureToneAverage));
     }
 
 

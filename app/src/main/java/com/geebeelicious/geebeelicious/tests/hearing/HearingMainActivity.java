@@ -13,6 +13,7 @@ import com.geebeelicious.geebeelicious.R;
 
 import java.util.ArrayList;
 
+import models.hearing.HearingResult;
 import models.hearing.HearingTest;
 
 public class HearingMainActivity extends ActionBarActivity {
@@ -127,6 +128,8 @@ public class HearingMainActivity extends ActionBarActivity {
     }
 
     private void endTest(){
+        HearingResult rightEarResult = hearingTest.getHearingTestResult("Right");
+        HearingResult leftEarResult = hearingTest.getHearingTestResult("Left");
         hearingTest.setIsNotRunning();
         for(int i = 0; i<threads.size(); i++){
             threads.get(i).interrupt();

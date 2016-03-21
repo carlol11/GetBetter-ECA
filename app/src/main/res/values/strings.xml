@@ -5,10 +5,13 @@
     <string name="title_activity_visual_acuity_main">VisualAcuityMainActivity</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="NA">N/A</string>
     <string name="title_activity_color_vision_main">ColorVisionMainActivity</string>
     <string name="title_activity_hearing_main">HearingMainActivity</string>
     <string name="title_activity_calibration">CalibrationActivity</string>
     <string name="title_activity_hearing_calibration">HearingCalibrationActivity</string>
     <string name="calibration_in_progress">Calibrating...</string>
     <string name="title_activity_hearing_test">HearingTest</string>
+    <string name="title_activity_fine_motors">FineMotorsActivity</string>
+    <string name="title_activity_gross_motor_main">GrossMotorMainActivity</string>
 </resources>

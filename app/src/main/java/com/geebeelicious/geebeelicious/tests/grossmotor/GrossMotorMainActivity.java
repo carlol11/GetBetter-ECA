@@ -4,19 +4,16 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
-import org.w3c.dom.Text;
 
 import java.util.concurrent.TimeUnit;
 
 import models.grossmotor.GrossMotorSkill;
 import models.grossmotor.GrossMotorTest;
-import models.grossmotor.MusicPlayer;
 
 public class GrossMotorMainActivity extends ActionBarActivity {
 

@@ -10,12 +10,16 @@ import java.util.Random;
 
 /**
  * Created by Kate on 03/21/2016.
+ * The MusicPlayer class contains
+ * the music to be used during the
+ * Gross Motor Test. The class allows
+ * music to be played on the device
+ * during the test.
  */
 public class MusicPlayer {
 
     private Context context;
     private MediaPlayer mediaPlayer;
-    private AudioManager audioManager;
     private int[] music;
     private int[] usedMusic;
     private int usedCount;

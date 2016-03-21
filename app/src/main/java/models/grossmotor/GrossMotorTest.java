@@ -6,14 +6,20 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.R;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Kate on 03/21/2016.
- *
+ * The GrossMotorTest class represents the
+ * gross motor test that the child will
+ * take. It generates a short list of skills
+ * from the general list of skills, as well as
+ * generates music for the test. The class
+ * allows the test to be generated for each
+ * user and allows the user to perform
+ * the skill.
  */
 public class GrossMotorTest {
 

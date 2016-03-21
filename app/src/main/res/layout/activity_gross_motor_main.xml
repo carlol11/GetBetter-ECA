@@ -7,8 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.geebeelicious.geebeelicious.tests.finemotor.FineMotorActivity"
-    android:background="#d14f4f">
+    tools:context="com.geebeelicious.geebeelicious.tests.grossmotor.GrossMotorMainActivity">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -60,9 +59,32 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fineMotorResultsTV"
-                android:layout_weight="0.2"
-                android:layout_marginBottom="3dp"/>
+                android:id="@+id/gmSkillNameTV"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gmSkillTypeTV"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gmInstructionsTV"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gmDurationTV"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gmAssessmentTV"
+                android:layout_weight="0.2"/>
 
         </LinearLayout>
 
@@ -78,12 +100,14 @@
         android:background="#ffffff"
         android:layout_above="@+id/linearLayoutAnswers">
 
-        <ImageView
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageViewPathToTrace"
-            android:src="@drawable/path_to_trace"
-            android:background="#d14f4f" />
+            android:textSize="200sp"
+            android:id="@+id/countdownTV"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
     <LinearLayout
@@ -96,7 +120,7 @@
         android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/linearLayoutAnswers"
         android:weightSum="1"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <Button
             android:layout_width="wrap_content"
@@ -105,7 +129,9 @@
             android:id="@+id/YesButton"
             android:background="#98ff88"
             android:minWidth="250dp"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.33"
+            android:onClick="answerYes"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -114,8 +140,22 @@
             android:id="@+id/NoButton"
             android:background="#ff7f7d"
             android:minWidth="250dp"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.33"
+            android:onClick="answerNo"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/NA"
+            android:id="@+id/NAButton"
+            android:background="#008080"
+            android:minWidth="250dp"
+            android:layout_weight="0.33"
+            android:onClick="answerNA"
+            android:visibility="gone"/>
 
     </LinearLayout>
+
 
 </RelativeLayout>

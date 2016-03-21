@@ -23,9 +23,9 @@ import com.geebeelicious.geebeelicious.R;
 /*
 * Activity for the Fine Motors Test
 */
-public class FineMotorsActivity extends Activity {
+public class FineMotorActivity extends Activity {
 
-    private static final String TAG = "FineMotorsActivity";
+    private static final String TAG = "FineMotorActivity";
     //Set the color for the start and end of the path
     private static final int START_COLOR = Color.WHITE; //update the instruction if you change this
     private static final int END_COLOR = Color.BLACK;  //update the instruction if you change this

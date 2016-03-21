@@ -32,22 +32,23 @@
             android:name=".tests.colorvision.ColorVisionMainActivity"
             android:label="@string/title_activity_color_vision_main"
             android:screenOrientation="landscape" />
-
-
-
         <activity
             android:name=".tests.hearing.HearingMainActivity"
             android:label="@string/title_activity_hearing_main"
-            android:screenOrientation="landscape"/>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".tests.hearing.HearingCalibrationActivity"
             android:label="@string/title_activity_hearing_calibration"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".tests.finemotor.FineMotorActivity"
+            android:label="@string/title_activity_fine_motors"
             android:screenOrientation="landscape"/>
 
         <activity
-            android:name=".tests.finemotor.FineMotorsActivity"
-            android:label="@string/title_activity_fine_motors"
+            android:name=".tests.grossmotor.GrossMotorMainActivity"
+            android:label="@string/title_activity_gross_motor_main"
             android:screenOrientation="landscape">
 
             <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->

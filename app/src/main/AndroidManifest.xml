@@ -46,8 +46,8 @@
             android:screenOrientation="landscape"/>
 
         <activity
-            android:name=".tests.finemotor.FineMotorsActivity"
-            android:label="@string/title_activity_fine_motors"
+            android:name=".tests.finemotor.FineMotorActivity"
+            android:label="@string/title_activity_fine_motor"
             android:screenOrientation="landscape">
 
             <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->

@@ -14,7 +14,7 @@ public class GrossMotorSkill {
     private String skillName;
     private String type;
     private String instruction;
-    private int duration;
+    private int duration; //milliseconds (1s = 1000ms)
     private String assessment;
     private boolean isTested;
 

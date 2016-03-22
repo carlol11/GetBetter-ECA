@@ -44,7 +44,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
         displaySkill(0);
     }
 
-    private void displayResults(){
+    private void endTest(){
         ((TextView)findViewById(R.id.gmSkillTypeTV)).setText("");
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText("");
         ((TextView)findViewById(R.id.gmDurationTV)).setText("");
@@ -52,6 +52,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
         ((TextView)findViewById(R.id.gmSkillNameTV)).setText(grossMotorTest.getAllResults() +
                                                             "\nOverall: " + grossMotorTest.getFinalResult());
 
+        
         hideAnswerButtons();
 
     }
@@ -111,7 +112,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
             grossMotorTest.setCurrentSkill(currentSkill);
             displaySkill(currentSkill);
         } else if(currentSkill == 2){
-            displayResults();
+            endTest();
         }
     }
 

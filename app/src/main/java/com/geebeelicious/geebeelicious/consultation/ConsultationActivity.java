@@ -20,7 +20,7 @@ public class ConsultationActivity extends ActionBarActivity {
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
         final TextView ECAText = (TextView) findViewById(R.id.placeholderECAText);
-        final ConsultationHelper consultationHelper = new ConsultationHelper();
+        final ConsultationHelper consultationHelper = new ConsultationHelper(this);
 
         ECAText.setText(consultationHelper.getFirstQuestion());
 

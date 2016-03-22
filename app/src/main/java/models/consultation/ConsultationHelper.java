@@ -1,9 +1,15 @@
 package models.consultation;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.expertsystem.ExpertSystem;
+
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class ConsultationHelper {
     private static String TAG = "ConsultationHelper";
@@ -13,9 +19,9 @@ public class ConsultationHelper {
     private int currentChiefComplaint;
     private ArrayList<ChiefComplaint> chiefComplaints;
     private ArrayList<ChiefComplaint> patientChiefComplaints;
+    private ExpertSystem expertSystem;
 
-
-    public ConsultationHelper() {
+    public ConsultationHelper(Context context) {
         isConsultationDone = false;
         isAskingChiefComplaint = true;
         currentChiefComplaint = 0;
@@ -23,10 +29,8 @@ public class ConsultationHelper {
         patientChiefComplaints = new ArrayList<ChiefComplaint>();
 
         initializeQuestions();
+        expertSystem = new ExpertSystem(context);
     }
-
-
-
 
     public boolean isConsultationDone() {
         return isConsultationDone;
@@ -40,23 +44,28 @@ public class ConsultationHelper {
                 patientChiefComplaints.add(complaint);
             }
             currentChiefComplaint++;
-            if(currentChiefComplaint == chiefComplaints.size()){
+
+            if(currentChiefComplaint == chiefComplaints.size()){ //checks if no more questions
                 isAskingChiefComplaint = false; //to skip this parent conditional statement
+                return expertSystem.startExpertSystem(patientChiefComplaints);
                 //TODO: Handle if all no for chief complain
             } else {
                 return chiefComplaints.get(currentChiefComplaint).getQuestion();
             }
         }
+
+
         return "for impressions";
     }
 
+
     public String getFirstQuestion(){
-        //TODO: have a checker if meron ba tlaaga chiefComplaints
+        //TODO: have a checker if meron ba talaga chiefComplaints sa list. baka kasi will cause an error
         return chiefComplaints.get(0).getQuestion();
     }
 
     private void initializeQuestions(){
-        //TODO: Transfer this questions if you think it's better. Fix questions, change wording
+        //TODO: [NOT URGENT] Transfer this questions if you think it's better. Fix questions, change wording
         chiefComplaints.add(new ChiefComplaint(1, "Do you have fever?"));
         chiefComplaints.add(new ChiefComplaint(2, "Are you experiencing any pain?"));
         chiefComplaints.add(new ChiefComplaint(3, "Do you have injury?"));

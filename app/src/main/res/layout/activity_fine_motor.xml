@@ -7,7 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.geebeelicious.geebeelicious.tests.finemotor.FineMotorsActivity"
+    tools:context="com.geebeelicious.geebeelicious.tests.finemotor.FineMotorActivity"
     android:background="#d14f4f">
 
     <RelativeLayout

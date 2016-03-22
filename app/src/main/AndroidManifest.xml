@@ -41,8 +41,8 @@
             android:label="@string/title_activity_hearing_calibration"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".tests.finemotor.FineMotorsActivity"
-            android:label="@string/title_activity_fine_motors"
+            android:name=".tests.finemotor.FineMotorActivity"
+            android:label="@string/title_activity_fine_motor"
             android:screenOrientation="landscape"/>
 
         <activity

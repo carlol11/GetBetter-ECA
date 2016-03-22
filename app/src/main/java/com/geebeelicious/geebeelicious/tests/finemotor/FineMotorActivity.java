@@ -23,7 +23,7 @@ import com.geebeelicious.geebeelicious.R;
 /*
 * Activity for the Fine Motors Test
 */
-public class FineMotorsActivity extends Activity {
+public class FineMotorActivity extends Activity {
 
     private static final String TAG = "FineMotorsActivity";
     //Set the color for the start and end of the path

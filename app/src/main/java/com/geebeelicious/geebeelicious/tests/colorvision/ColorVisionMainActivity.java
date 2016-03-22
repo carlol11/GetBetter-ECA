@@ -1,6 +1,5 @@
 package com.geebeelicious.geebeelicious.tests.colorvision;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -11,10 +10,7 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
-import models.colorvision.ColorVisionResult;
 import models.colorvision.IshiharaHelper;
-import models.colorvision.IshiharaPlate;
-import models.visualacuity.VisualAcuityResult;
 
 public class ColorVisionMainActivity extends ActionBarActivity {
 
@@ -98,7 +94,7 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         for(ImageButton i : buttonList){
             i.setEnabled(false);
         }
-        ColorVisionResult colorVisionResult = new ColorVisionResult(ishiharaHelper.getScore(),ishiharaHelper.getResult());
+
         //TODO: insert code to set plateView to something else
     }
 

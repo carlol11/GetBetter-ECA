@@ -46,17 +46,18 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".tests.grossmotor.GrossMotorMainActivity"
-            android:label="@string/title_activity_gross_motor_main"/>
-
+            android:label="@string/title_activity_gross_motor_main"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".MonitoringConsultationChoice"
             android:label="@string/title_activity_monitoring_consultation_choice"
-            android:screenOrientation="landscape"><intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->
+            android:screenOrientation="landscape">
+        <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        </activity>
+    </activity>
 
     </application>
 

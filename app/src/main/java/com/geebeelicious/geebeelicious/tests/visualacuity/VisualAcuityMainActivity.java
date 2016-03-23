@@ -1,6 +1,8 @@
 package com.geebeelicious.geebeelicious.tests.visualacuity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,13 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.tests.colorvision.ColorVisionMainActivity;
+
+import java.util.Timer;
 
 import models.visualacuity.ChartHelper;
 import models.visualacuity.DistanceCalculator;
 import models.visualacuity.VisualAcuityResult;
 
 public class VisualAcuityMainActivity extends ActionBarActivity {
+
+    private Bundle record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +38,7 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 chartHelper.goToNextLine();
-                if(chartHelper.isDone() && !chartHelper.isBothTested()){
+                if (chartHelper.isDone() && !chartHelper.isBothTested()) {
                     updateResults(chartHelper);
                 }
             }
@@ -40,12 +48,13 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 chartHelper.setResult();
-                if(chartHelper.isDone() && !chartHelper.isBothTested()){
+                if (chartHelper.isDone() && !chartHelper.isBothTested()) {
                     updateResults(chartHelper);
                 }
             }
         });
 
+        record = this.getIntent().getExtras();
         chartHelper.startTest();
 
     }
@@ -61,13 +70,32 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
     private void endTest(){
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
+        yesButton.setVisibility(View.GONE);
+        noButton.setVisibility(View.GONE);
         yesButton.setEnabled(false);
         noButton.setEnabled(false);
-        //TODO: insert code to set chartView to something else (maybe GeeBee or results screen?)
+
+        ImageView chartView = (ImageView)findViewById(R.id.chartLine);
+        chartView.setImageResource(R.drawable.wait_for_next_test);
+
+        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(VisualAcuityMainActivity.this, ColorVisionMainActivity.class);
+                intent.putExtras(record);
+                finish();
+                startActivity(intent);
+            }
+        };
+        timer.start();
     }
 
     private void updateResults(ChartHelper chartHelper){
-        //TODO: pass the results to a record
         VisualAcuityResult rightEyeResult = null;
         VisualAcuityResult leftEyeResult = null;
 
@@ -76,11 +104,13 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
             chartHelper.setIsRightTested();
             chartHelper.startTest();
             displayResults(rightEyeResult, R.id.rightEyeResultsTextView);
+            record.putString("visualAcuityRight", rightEyeResult.getVisualAcuity());
         }
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
             leftEyeResult = new VisualAcuityResult("Left", chartHelper.getResult());
             chartHelper.setIsLeftTested();
             displayResults(leftEyeResult, R.id.leftEyeResultsTextView);
+            record.putString("visualAcuityLeft", leftEyeResult.getVisualAcuity());
             endTest();
         }
     }
@@ -93,12 +123,5 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(id);
         textView.setText(resultString);
     }
-
-
-
-
-
-
-
 
 }

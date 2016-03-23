@@ -1,12 +1,14 @@
 package com.geebeelicious.geebeelicious.tests.finemotor;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
 
@@ -25,7 +28,9 @@ import com.geebeelicious.geebeelicious.R;
 */
 public class FineMotorActivity extends Activity {
 
-    private static final String TAG = "FineMotorsActivity";
+    Bundle record;
+
+    private static final String TAG = "FineMotorActivity";
     //Set the color for the start and end of the path
     private static final int START_COLOR = Color.WHITE; //update the instruction if you change this
     private static final int END_COLOR = Color.BLACK;  //update the instruction if you change this
@@ -41,7 +46,7 @@ public class FineMotorActivity extends Activity {
     private boolean isTestOngoing = true;
     private boolean[] result = new boolean[3]; //result[i] is true if pass, false if fail
 
-    //TODO: Change instructions to be more specific. since you know the dominant hand na. also the gender
+    //TODO: Change instructions to be more specific when you can get the dominant hand and the gender
     private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the white circle and go to the black circle",
         "Using the pen with your dominant hand, trace the path. Start from the white circle and go to the black circle",
         "Assistant, has he/she used the pen without difficulties?"
@@ -52,6 +57,8 @@ public class FineMotorActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fine_motor);
 
+        record = this.getIntent().getExtras();
+
         ECAtext = (TextView) findViewById(R.id.placeholderECAText);
         imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
         mp = MediaPlayer.create(getApplicationContext(), R.raw.fine_motor_outside_path);
@@ -59,6 +66,7 @@ public class FineMotorActivity extends Activity {
         buttonNo = (Button) findViewById(R.id.NoButton);
 
         mp.setLooping(true);
+
         imageViewPathToTrace.setOnTouchListener(image_Listener);
         ECAtext.setText(instructions[0]);
         buttonYes.setOnClickListener(new OnClickListener() {
@@ -81,13 +89,52 @@ public class FineMotorActivity extends Activity {
 
     //TODO: Intent shound be sent through this method
     private synchronized void sendResults(){
+        String resultString = "";
+        String[] testString = {"Non-Dominant Hand", "Dominant Hand", "Use of Pen"};
+
         if(isTestOngoing){ //this is too avoid double clicking
-            for(boolean b: result){
-                String a = (b ? "pass" : "fail");
-                Log.d(TAG, "Results: " + (b ? "pass" : "fail"));
+            for(int i = 0; i < 3; i++){
+                String temp =  (result[i] ? "Pass" : "Fail");
+                resultString += testString[i] + ": " + temp + "\n";
+                record.putString(testString[i], temp);
             }
             isTestOngoing = false;
         }
+        TextView resultView = (TextView)findViewById(R.id.fineMotorResultsTV);
+        resultView.setText(resultString);
+
+        imageViewPathToTrace.setBackgroundColor(Color.WHITE);
+        imageViewPathToTrace.setImageResource(R.drawable.wait_for_next_test);
+        hideAnswerButtons();
+
+
+        CountDownTimer timer = new CountDownTimer(10000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                //TODO: Change the activity it will go to
+                Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
+                intent.putExtras(record);
+                finish();
+                startActivity(intent);
+            }
+        };
+        timer.start();
+    }
+
+    private void hideAnswerButtons(){
+        LinearLayout answers = (LinearLayout)findViewById(R.id.linearLayoutAnswers);
+        for (int j = 0; j<answers.getChildCount(); j++){
+            View view = answers.getChildAt(j);
+            view.setEnabled(false);
+            view.setVisibility(View.GONE);
+        }
+        answers.setVisibility(View.GONE);
+
     }
 
     private OnTouchListener image_Listener = new OnTouchListener(){
@@ -220,4 +267,11 @@ public class FineMotorActivity extends Activity {
             return new int[] {x,y};
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
+        finish();
+        startActivity(intent);
+    }
 }

@@ -1,6 +1,8 @@
 package com.geebeelicious.geebeelicious.tests.colorvision;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,11 +10,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
+import com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity;
 
 import models.colorvision.IshiharaHelper;
 
 public class ColorVisionMainActivity extends ActionBarActivity {
+
+    Bundle record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,8 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         ImageButton option5 = (ImageButton) findViewById(R.id.cvt_option5);
         final ImageButton[] buttonList = {option1, option2, option3, option4, option5};
         final IshiharaHelper ishiharaHelper = new IshiharaHelper((ImageView) findViewById(R.id.ishiharaPlate), buttonList);
+
+        record = this.getIntent().getExtras();
 
         ishiharaHelper.startTest();
 
@@ -73,7 +82,7 @@ public class ColorVisionMainActivity extends ActionBarActivity {
     private void updateResults(IshiharaHelper ishiharaHelper, ImageButton[] buttonList){
         ishiharaHelper.goToNextQuestion();
         if(ishiharaHelper.isDone()){
-            //TODO: pass the results to a record
+            record.putString("colorVision", ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
             endTest(buttonList, ishiharaHelper);
         }
@@ -92,14 +101,35 @@ public class ColorVisionMainActivity extends ActionBarActivity {
 
     private void endTest(ImageButton[] buttonList, IshiharaHelper ishiharaHelper){
         for(ImageButton i : buttonList){
+            i.setVisibility(View.GONE);
             i.setEnabled(false);
         }
 
-        //TODO: insert code to set plateView to something else
+        ImageView chartView = (ImageView)findViewById(R.id.ishiharaPlate);
+        chartView.setImageResource(R.drawable.wait_for_next_test);
+
+        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(ColorVisionMainActivity.this, HearingMainActivity.class);
+                intent.putExtras(record);
+                finish();
+                startActivity(intent);
+            }
+        };
+        timer.start();
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ColorVisionMainActivity.this, MonitoringConsultationChoice.class);
+        finish();
+        startActivity(intent);
+    }
 
 }

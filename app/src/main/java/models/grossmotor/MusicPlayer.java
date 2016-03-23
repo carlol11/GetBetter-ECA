@@ -65,7 +65,6 @@ public class MusicPlayer {
             }
             randomSong = music[temp];
             mediaPlayer = MediaPlayer.create(context, randomSong);
-            System.out.println("duration: " + mediaPlayer.getDuration());
             if(mediaPlayer.getDuration()>=duration){
                 isFound = true;
                 usedMusic[usedCount] = temp;
@@ -82,10 +81,8 @@ public class MusicPlayer {
     }
 
     public void stopMusic(){
-        System.out.println("Stopping");
         if(mediaPlayer!=null && mediaPlayer.isPlaying()){
             mediaPlayer.stop();
-            System.out.println("Stopped");
         }
         mediaPlayer = null;
     }

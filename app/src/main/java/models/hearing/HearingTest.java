@@ -1,9 +1,13 @@
 package models.hearing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioTrack;
 
+import com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity;
+
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -58,7 +62,6 @@ public class HearingTest {
             fis.read(calibrationByteData, 0, 24);
             fis.close();
         } catch(IOException e){
-            //TODO: Go to calibration activity
         }
 
         final double calibrationArray[] = new double[3];
@@ -93,6 +96,8 @@ public class HearingTest {
                         }
                         else if(e == 1){
                             thresholdsLeft[i] = actualVolume * calibrationArray[i];
+                        }else{
+
                         }
                         break;
                     } else {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
 import models.hearing.Calibrator;
@@ -28,9 +29,6 @@ public class HearingCalibrationActivity extends ActionBarActivity {
             public void run() {
                 calibrator.calibrate();
                 endCalibration();
-                Intent intent = new Intent(HearingCalibrationActivity.this, HearingMainActivity.class);
-                HearingCalibrationActivity.this.startActivity(intent);
-                //TODO: Separate calibration and hearing test activity when menu has been made (put calibration in settings menu)
             }
         });
         calibrationThread.start();
@@ -66,10 +64,10 @@ public class HearingCalibrationActivity extends ActionBarActivity {
                 }
             });
         }
+
+        Intent intent = new Intent(HearingCalibrationActivity.this, MonitoringConsultationChoice.class);
+        finish();
+        startActivity(intent);
     }
-
-
-
-
 
 }

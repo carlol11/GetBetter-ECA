@@ -1,13 +1,18 @@
 package com.geebeelicious.geebeelicious.tests.grossmotor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.tests.finemotor.FineMotorActivity;
 
 
 import java.util.concurrent.TimeUnit;
@@ -18,25 +23,18 @@ import models.grossmotor.GrossMotorTest;
 public class GrossMotorMainActivity extends ActionBarActivity {
 
     GrossMotorTest grossMotorTest;
+    Bundle record;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gross_motor_main);
         grossMotorTest = new GrossMotorTest(getApplicationContext());
+
+        record = this.getIntent().getExtras();
+
         grossMotorTest.makeTest();
         startTest();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        grossMotorTest.endTest();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        grossMotorTest.endTest();
     }
 
     private void startTest(){
@@ -45,19 +43,43 @@ public class GrossMotorMainActivity extends ActionBarActivity {
     }
 
     private void endTest(){
+        hideAnswerButtons();
         ((TextView)findViewById(R.id.gmSkillTypeTV)).setText("");
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText("");
         ((TextView)findViewById(R.id.gmDurationTV)).setText("");
         ((TextView)findViewById(R.id.gmAssessmentTV)).setText("");
         ((TextView)findViewById(R.id.gmSkillNameTV)).setText(grossMotorTest.getAllResults() +
-                                                            "\nOverall: " + grossMotorTest.getFinalResult());
+                "\nOverall: " + grossMotorTest.getFinalResult());
 
-        
-        hideAnswerButtons();
+        record.putString("grossMotor", grossMotorTest.getFinalResult());
+
+        TextView countDownTV = (TextView)findViewById(R.id.countdownTV);
+        countDownTV.setVisibility(View.GONE);
+
+        ImageView countDownIV = (ImageView)findViewById(R.id.grossMotorIV);
+        countDownIV.setVisibility(View.VISIBLE);
+        countDownIV.setImageResource(R.drawable.wait_for_next_test);
+
+        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(GrossMotorMainActivity.this, FineMotorActivity.class);
+                intent.putExtras(record);
+                finish();
+                startActivity(intent);
+            }
+        };
+        timer.start();
 
     }
 
     private void displaySkill(final int i){
+        hideAnswerButtons();
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String activityString = "Activity: " + gms.getSkillName();
         String typeString = "Type: " + gms.getType();
@@ -66,8 +88,6 @@ public class GrossMotorMainActivity extends ActionBarActivity {
         ((TextView)findViewById(R.id.gmSkillTypeTV)).setText(typeString);
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText(gms.getInstruction());
         ((TextView)findViewById(R.id.gmDurationTV)).setText(durationString);
-
-        hideAnswerButtons();
 
         final CountDownTimer countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)findViewById(R.id.countdownTV);
@@ -80,12 +100,11 @@ public class GrossMotorMainActivity extends ActionBarActivity {
 
             @Override
             public void onFinish() {
-                grossMotorTest.performSkill(i, timerView, (LinearLayout)findViewById(R.id.linearLayoutAnswers));
+                grossMotorTest.performSkill(i, timerView, (LinearLayout) findViewById(R.id.linearLayoutAnswers));
             }
         };
-
+        hideAnswerButtons();
         countDownTimer.start();
-
 
     }
 
@@ -118,11 +137,20 @@ public class GrossMotorMainActivity extends ActionBarActivity {
 
     private void hideAnswerButtons(){
         LinearLayout answers = (LinearLayout)findViewById(R.id.linearLayoutAnswers);
-        answers.setVisibility(View.GONE);
         for (int j = 0; j<answers.getChildCount(); j++){
             View view = answers.getChildAt(j);
+            view.setEnabled(false);
             view.setVisibility(View.GONE);
         }
+        answers.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(GrossMotorMainActivity.this, MonitoringConsultationChoice.class);
+        finish();
+        startActivity(intent);
     }
 
 }

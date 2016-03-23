@@ -8,6 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
+    android:keepScreenOn="true"
     tools:context="com.geebeelicious.geebeelicious.MonitoringConsultationChoice">
 
     <ImageView
@@ -60,6 +61,15 @@
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calibrate Hearing Test"
+        android:id="@+id/calibrateHearingTestButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/choicesLayout"
+        android:onClick="calibrateHearing" />
 
 </RelativeLayout>
 

@@ -90,7 +90,7 @@ public class FineMotorActivity extends Activity {
     //TODO: Intent shound be sent through this method
     private synchronized void sendResults(){
         String resultString = "";
-        String[] testString = {"Non-Dominant Hand", "Dominant Hand", "Use of Pen"};
+        String[] testString = {"nonDominantHand", "dominantHand", "usePen"};
 
         if(isTestOngoing){ //this is too avoid double clicking
             for(int i = 0; i < 3; i++){

@@ -113,8 +113,7 @@
             android:id="@+id/YesButton"
             android:background="#98ff88"
             android:minWidth="250dp"
-            android:layout_weight="0.50"
-            android:onClick="answerYes" />
+            android:layout_weight="0.50" />
 
         <Button
             android:layout_width="wrap_content"
@@ -123,8 +122,7 @@
             android:id="@+id/NoButton"
             android:background="#ff7f7d"
             android:minWidth="250dp"
-            android:layout_weight="0.50"
-            android:onClick="answerNo" />
+            android:layout_weight="0.50" />
     </LinearLayout>
 
 </RelativeLayout>

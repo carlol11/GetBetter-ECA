@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.expertsystem;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.geebeelicious.geebeelicious.database.DataAdapter;
 
@@ -11,6 +12,7 @@ import java.util.LinkedHashSet;
 import models.consultation.ChiefComplaint;
 import models.consultation.Impressions;
 import models.consultation.PatientAnswers;
+import models.consultation.PositiveResults;
 import models.consultation.Symptom;
 import models.consultation.SymptomFamily;
 
@@ -348,12 +350,8 @@ public class ExpertSystem {
 
         if(ruledOutSymptomList.containsAll(hardSymptoms)) {
             ruledOutImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
-//            Toast.makeText(this, "ruled out impression: " + impressionsSymptoms.
-//                    get(currentImpressionIndex).getImpression(), Toast.LENGTH_LONG).show();
         } else {
             plausibleImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
-//            Toast.makeText(this, "plausible impression: " + impressionsSymptoms.
-//                    get(currentImpressionIndex).getImpression(), Toast.LENGTH_LONG).show();
         }
 
         getBetterDb.closeDatabase();
@@ -371,5 +369,82 @@ public class ExpertSystem {
         getBetterDb.closeDatabase();
         return value;
     }
+    //TODO: [REALLY NOT URGENT] You can refactor this. dont need to save the answers to database. just process it as it is. also remove the saveAnswersToDatabase
+    public String getHPI(){
+        String HPI = generateIntroductionSentence();
+        ArrayList<PositiveResults> positiveSymptoms;
 
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        positiveSymptoms = getBetterDb.getPositiveSymptoms(answers);
+
+        //TODO:[NOT URGENT] Use of 'his' it should be gender specific
+        for(int i = 0; i < positiveSymptoms.size(); i++) {
+            if (positiveSymptoms.get(i).getPositiveName() == "High Fever") {
+                HPI += "His " + positiveSymptoms.get(i).getPositiveAnswerPhrase() + " ";
+            } else {
+                HPI += "He " + positiveSymptoms.get(i).getPositiveAnswerPhrase() + " ";
+            }
+        }
+        return HPI;
+    }
+
+    private String generateIntroductionSentence () {
+
+        String introductionSentence = "";
+        //TODO: Should get from the database
+
+        String patientGender = "Female";
+        String patientName = "Elsa";
+        int patientAge = 20;
+        String attachComplaints = "being cold";
+
+        introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge + " years old, " +
+                " is complaining about " + attachComplaints();
+
+
+        return introductionSentence;
+    }
+
+    private String attachComplaints () {
+
+        String complaints = "";
+
+        String [] chiefComplaints = getChiefComplaints();
+
+        //TODO: Have a default value. what if more than 3.
+        switch (chiefComplaints.length) {
+
+            case 1: complaints += " " + chiefComplaints[0] + ". ";
+                break;
+            case 2: complaints += " " + chiefComplaints[0] + " and " + chiefComplaints[1] + ". ";
+                break;
+            case 3: complaints += " " + chiefComplaints[0] + ", " + chiefComplaints[1] + ", and " + chiefComplaints[2] + ". ";
+                break;
+        }
+
+
+        return complaints;
+    }
+
+    private String[] getChiefComplaints () {
+        String [] chiefComplaints = new String[patientChiefComplaints.size()];
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < chiefComplaints.length; i++) {
+            chiefComplaints[i] = getBetterDb.getChiefComplaints(patientChiefComplaints.get(i).getComplaintID());
+        }
+
+        getBetterDb.closeDatabase();
+
+        return chiefComplaints;
+    }
 }

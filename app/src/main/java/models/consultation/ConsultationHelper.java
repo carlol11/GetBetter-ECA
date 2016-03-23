@@ -55,8 +55,9 @@ public class ConsultationHelper {
             }
         } else {
             String question = expertSystem.getNextQuestion(isYes);
-            if(question == null) //if there's no more question, consultation is done
+            if(question == null) { //if there's no more question, consultation is done. also saves the answers
                 isConsultationDone = true;
+            }
             return question;
         }
     }
@@ -77,5 +78,11 @@ public class ConsultationHelper {
         chiefComplaints.add(new ChiefComplaint(6, "Are you having bowel movement problems?"));
         chiefComplaints.add(new ChiefComplaint(7, "Are you experiencing general unwellness?"));
     }
+
+    public String getHPI(){
+        return expertSystem.getHPI();
+    }
+
+
 
 }

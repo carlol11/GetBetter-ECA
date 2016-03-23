@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.consultation;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import models.consultation.ConsultationHelper;
 public class ConsultationActivity extends ActionBarActivity {
     private TextView ECAText;
     private ConsultationHelper consultationHelper;
+    private final static String TAG = "ConsultationActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class ConsultationActivity extends ActionBarActivity {
         });
     }
 
+    //TODO: [NOT URGENT] handle multiple clicks. mageerror ata sa
     private void onAnswer (boolean isYes){
         String nextQuestion = consultationHelper.getNextQuestion(isYes);
         if(nextQuestion == null) {
@@ -56,7 +59,8 @@ public class ConsultationActivity extends ActionBarActivity {
         }
     }
 
+    //TODO: Put intent stuff here. or save to database
     private void doWhenConsultationDone(){
-        ECAText.setText("IZ DONE");
+        Log.d(TAG, "HPI: " + consultationHelper.getHPI());
     }
 }

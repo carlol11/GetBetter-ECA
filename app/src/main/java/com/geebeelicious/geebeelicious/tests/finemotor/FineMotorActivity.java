@@ -32,8 +32,8 @@ public class FineMotorActivity extends Activity {
 
     private static final String TAG = "FineMotorActivity";
     //Set the color for the start and end of the path
-    private static final int START_COLOR = Color.WHITE; //update the instruction if you change this
-    private static final int END_COLOR = Color.BLACK;  //update the instruction if you change this
+    private static final int START_COLOR = Color.parseColor("#09BCD4");//update the instruction if you change this
+    private static final int END_COLOR = Color.parseColor("#E71E63");  //update the instruction if you change this
     private static final int MAX_NUM_WRONG = 2;
 
     private ImageView imageViewPathToTrace;
@@ -47,8 +47,8 @@ public class FineMotorActivity extends Activity {
     private boolean[] result = new boolean[3]; //result[i] is true if pass, false if fail
 
     //TODO: Change instructions to be more specific when you can get the dominant hand and the gender
-    private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the white circle and go to the black circle",
-        "Using the pen with your dominant hand, trace the path. Start from the white circle and go to the black circle",
+    private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the butterfly and go to the flowers",
+        "Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers",
         "Assistant, has he/she used the pen without difficulties?"
     };
 
@@ -137,6 +137,17 @@ public class FineMotorActivity extends Activity {
 
     }
 
+    private void showAnswerButtons(){
+        LinearLayout answers = (LinearLayout)findViewById(R.id.linearLayoutAnswers);
+        for (int j = 0; j<answers.getChildCount(); j++){
+            View view = answers.getChildAt(j);
+            view.setEnabled(true);
+            view.setVisibility(View.VISIBLE);
+        }
+        answers.setVisibility(View.VISIBLE);
+
+    }
+
     private OnTouchListener image_Listener = new OnTouchListener(){
         private boolean hasStarted = false; //has user started
         private boolean wasOutside = false; //was user outside the path
@@ -169,7 +180,7 @@ public class FineMotorActivity extends Activity {
                                 }
                                 wasOutside = false;
                             } else {
-                                ECAtext.setText("Trace to black circle");
+                                ECAtext.setText("Trace to flowers (pink circle)");
                             }
 
                             Log.d(TAG, "Touch event position: " + eventX + ", " + eventY + "\n" +
@@ -182,7 +193,7 @@ public class FineMotorActivity extends Activity {
                 return true;
             } else {
 
-                if(pixel == START_COLOR && event.getAction() == MotionEvent.ACTION_DOWN){
+                if(pixel == START_COLOR && (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE)){
                     hasStarted = true;
                     return true;
                 }
@@ -238,7 +249,7 @@ public class FineMotorActivity extends Activity {
             hasStarted = false;
             result[1] = numWrongs <= MAX_NUM_WRONG;
             ECAtext.setText(instructions[2]);
-            linearLayoutAnswer.setVisibility(View.VISIBLE);
+            showAnswerButtons();
         }
 
         //returns the equivalent x and y coordinates of the bitmap given x and y coordinates of the touch event

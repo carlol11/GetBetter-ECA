@@ -7,11 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import models.consultation.ChiefComplaint;
+import models.consultation.HPI;
 import models.consultation.Impressions;
+import models.consultation.Patient;
+import models.consultation.PatientAnswers;
+import models.consultation.PositiveResults;
+import models.consultation.Record;
+import models.consultation.School;
 import models.consultation.Symptom;
 import models.consultation.SymptomFamily;
 
@@ -29,7 +36,6 @@ public class DataAdapter {
     private static final String IMPRESSION_TO_COMPLAINTS = "tbl_impressions_of_complaints";
     private static final String SYMPTOM_TO_IMPRESSION = "tbl_symptom_of_impression";
     private static final String SYMPTOM_TABLE = "tbl_symptom_list";
-
 
     public DataAdapter (Context context) {
         getBetterDatabaseHelper  = new DatabaseHelper(context);
@@ -285,5 +291,133 @@ public class DataAdapter {
                 return false;
             }
         }
+    }
+
+    public String getChiefComplaints(int chiefComplaintIds) {
+
+        String result = "";
+        String sql = "SELECT chief_complaint_english FROM tbl_chief_complaint WHERE _id = " + chiefComplaintIds;
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        c.moveToFirst();
+        result = c.getString(c.getColumnIndexOrThrow("chief_complaint_english"));
+
+        //Log.d("result", result);
+        c.close();
+        return result;
+    }
+
+    public ArrayList<PositiveResults> getPositiveSymptoms (ArrayList<PatientAnswers> patientAnswers) {
+        ArrayList<PositiveResults> results = new ArrayList<>();
+        String delim = "";
+
+        StringBuilder sql = new StringBuilder("Select symptom_name_english AS positiveSymptom, answer_phrase AS answerPhrase" +
+                " FROM tbl_symptom_list WHERE ");
+
+        for(PatientAnswers answer: patientAnswers){
+            sql.append(delim).append("_id = ").append(answer.getSymptomId());
+            delim = " OR ";
+        }
+
+        Log.d(TAG, "SQL Statement: " + sql);
+        Cursor c = getBetterDb.rawQuery(sql.toString(), null);
+
+        while(c.moveToNext()) {
+            PositiveResults positive = new PositiveResults(c.getString(c.getColumnIndexOrThrow("positiveSymptom")),
+                    c.getString(c.getColumnIndexOrThrow("answerPhrase")));
+
+            results.add(positive);
+        }
+
+        c.close();
+        return results;
+    }
+
+/*
+ * The succeeding code are not part of the original code created by Mike
+ */
+
+    public void insertPatient(Patient patient){
+        ContentValues values = new ContentValues();
+        int row;
+
+        values.put(Patient.C_FIRST_NAME, patient.getFirstName());
+        values.put(Patient.C_LAST_NAME, patient.getLastName());
+        values.put(Patient.C_BIRTHDAY, patient.getBirthday());
+        values.put(Patient.C_GENDER, patient.getBirthday());
+        values.put(Patient.C_SCHOOL_ID, patient.getBirthday());
+        values.put(Patient.C_HANDEDNESS, patient.getBirthday());
+
+        row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
+        Log.d(TAG, "insertPatient Result: " + row);
+    }
+
+    public void insertRecord(Record record){
+        ContentValues values = new ContentValues();
+        int row;
+
+        values.put(Record.C_PATIENT_ID, record.getPatient_id());
+        values.put(Record.C_DATE_CREATED, record.getDateCreated());
+        values.put(Record.C_HEIGHT, record.getHeight());
+        values.put(Record.C_WEIGHT, record.getWeight());
+        values.put(Record.C_VISUAL_ACUITY_LEFT, record.getVisualAcuityLeft());
+        values.put(Record.C_VISUAL_ACUITY_RIGHT, record.getVisualActuityRight());
+        values.put(Record.C_COLOR_VISION, record.getColorVision());
+        values.put(Record.C_HEARING_LEFT, record.getHearingLeft());
+        values.put(Record.C_HEARING_RIGHT, record.getHearingRight());
+        values.put(Record.C_GROSS_MOTOR, record.getGrossMotor());
+        values.put(Record.C_FINE_MOTOR_LEFT, record.getFineMotorLeft());
+        values.put(Record.C_FINE_MOTOR_RIGHT, record.getFineMotorRight());
+        values.put(Record.C_FINE_MOTOR_HOLD, record.getFineMotorHold());
+
+        row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
+        Log.d(TAG, "insertRecord Result: " + row);
+    }
+
+    public void insertHPI(HPI hpi){
+        ContentValues values = new ContentValues();
+        int row;
+
+        values.put(HPI.C_PATIENT_ID, hpi.getPatientId());
+        values.put(HPI.C_DATE_CREATED, hpi.getDateCreated());
+        values.put(HPI.C_HPI_TEXT, hpi.getHpiText());
+
+        row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
+        Log.d(TAG, "insertRecord Result: " + row);
+    }
+
+    public ArrayList<Patient> getPossiblePatients(String firstName, String lastName, int gender, String birthday, int schoolId){
+        ArrayList<Patient> patients = new ArrayList<>();
+        Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_FIRST_NAME + " = ? AND "
+                + Patient.C_LAST_NAME + " = ? AND " + Patient.C_GENDER + " = "+ gender+" AND "
+                + Patient.C_BIRTHDAY + " = ? AND " + Patient.C_SCHOOL_ID + " = " + schoolId,
+                new String[]{firstName, lastName, birthday, null}, null, null, null, null);
+
+        if(c.moveToFirst()){
+            do{
+                    patients.add(new Patient(c.getInt(c.getColumnIndex(Patient.C_PATIENT_ID)),
+                            c.getString(c.getColumnIndex(Patient.C_FIRST_NAME)),
+                            c.getString(c.getColumnIndex(Patient.C_LAST_NAME)),
+                            c.getString(c.getColumnIndex(Patient.C_BIRTHDAY)),
+                            c.getInt(c.getColumnIndex(Patient.C_GENDER)),
+                            c.getInt(c.getColumnIndex(Patient.C_SCHOOL_ID)),
+                            c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS))));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return patients;
+    }
+
+    public ArrayList<String> getAllSchoolNames(){
+        ArrayList<String> schools = new ArrayList<>();
+        Cursor c = getBetterDb.query(School.TABLE_NAME, new String[]{School.C_SCHOOLNAME}, null, null, null, null, null, null);
+
+        if(c.moveToFirst()){
+            do{
+                schools.add(c.getString(c.getColumnIndex(School.C_SCHOOLNAME)));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return schools;
     }
 }

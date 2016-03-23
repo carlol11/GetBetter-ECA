@@ -229,4 +229,61 @@ public class DataAdapter {
         c.close();
         return generalQuestion;
     }
+
+    public void updateAnsweredFlagPositive(int symptomId) {
+
+        ContentValues values = new ContentValues();
+        values.put("is_answered", 1);
+        int count = getBetterDb.update(SYMPTOM_LIST, values, "_id = " + symptomId, null);
+
+        //Log.d("update rows flag positive", count + "");
+    }
+
+    public void updateAnsweredStatusSymptomFamily(int symptomFamilyId, int answer) {
+
+        String sql = "UPDATE tbl_symptom_family SET answered_flag = 1, answer_status = " + answer +
+                " WHERE _id = " + symptomFamilyId;
+
+        getBetterDb.execSQL(sql);
+    }
+
+    public ArrayList<String> getHardSymptoms (int impressionId) {
+
+        ArrayList<String> results = new ArrayList<>();
+
+        String sql = "SELECT s.symptom_name_english AS symptom_name_english FROM tbl_symptom_list AS s, " +
+                "tbl_symptom_of_impression AS i WHERE i.impression_id = " + impressionId +
+                " AND i.hard_symptom = 1 AND i.symptom_id = s._id";
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+
+        while(c.moveToNext()) {
+            results.add(c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
+        }
+
+        c.close();
+        return results;
+    }
+
+    public boolean symptomFamilyAnswerStatus (int symptomFamilyId) {
+
+        Log.d("symptom family id", symptomFamilyId + "");
+        String sql = "SELECT answer_status FROM tbl_symptom_family WHERE _id = " + symptomFamilyId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        c.moveToFirst();
+
+        if(c.getCount() == 0) {
+            c.close();
+            return false;
+        } else {
+            if (c.getInt(c.getColumnIndexOrThrow("answer_status")) == 1) {
+                c.close();
+                return true;
+            } else {
+                c.close();
+                return false;
+            }
+        }
+    }
 }

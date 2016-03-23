@@ -3,13 +3,14 @@ package models.consultation;
 import android.content.Context;
 import android.util.Log;
 
-import com.geebeelicious.geebeelicious.database.DataAdapter;
 import com.geebeelicious.geebeelicious.expertsystem.ExpertSystem;
 
-import java.lang.reflect.Array;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+
+/* Created by Mary Grace Malana on 3/22/2016
+* The ConsultationHelper class serves to generate chief complaint
+* questions, and retrieves succeeding questions from the ExpertSystem.
+*/
 
 public class ConsultationHelper {
     private static String TAG = "ConsultationHelper";
@@ -36,8 +37,8 @@ public class ConsultationHelper {
         return isConsultationDone;
     }
 
-    public String getNextQuestion(boolean isYes) {
-        if(isAskingChiefComplaint){
+    public String getNextQuestion(boolean isYes) { //returns null if there's no more questions
+        if(isAskingChiefComplaint){ //if asking about chief complaint
             if(isYes){ //if isYes, adds to patient's chief complaints
                 ChiefComplaint complaint = chiefComplaints.get(currentChiefComplaint);
                 Log.d(TAG, "Added complaint with question '" + complaint.getQuestion() + "' to patient's chief complaint");
@@ -45,17 +46,19 @@ public class ConsultationHelper {
             }
             currentChiefComplaint++;
 
-            if(currentChiefComplaint == chiefComplaints.size()){ //checks if no more questions
+            if(currentChiefComplaint == chiefComplaints.size()) { //checks if no more questions
                 isAskingChiefComplaint = false; //to skip this parent conditional statement
                 return expertSystem.startExpertSystem(patientChiefComplaints);
                 //TODO: Handle if all no for chief complain
             } else {
                 return chiefComplaints.get(currentChiefComplaint).getQuestion();
             }
+        } else {
+            String question = expertSystem.getNextQuestion(isYes);
+            if(question == null) //if there's no more question, consultation is done
+                isConsultationDone = true;
+            return question;
         }
-
-
-        return "for impressions";
     }
 
 

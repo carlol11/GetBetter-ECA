@@ -11,6 +11,8 @@ import com.geebeelicious.geebeelicious.R;
 import models.consultation.ConsultationHelper;
 
 public class ConsultationActivity extends ActionBarActivity {
+    private TextView ECAText;
+    private ConsultationHelper consultationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,26 +21,42 @@ public class ConsultationActivity extends ActionBarActivity {
 
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
-        final TextView ECAText = (TextView) findViewById(R.id.placeholderECAText);
-        final ConsultationHelper consultationHelper = new ConsultationHelper(this);
+
+        consultationHelper = new ConsultationHelper(this);
+        ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
         ECAText.setText(consultationHelper.getFirstQuestion());
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nextQuestion = consultationHelper.getNextQuestion(true); //true because yes
-                ECAText.setText(nextQuestion);
+                if(!consultationHelper.isConsultationDone()){ //checks if consultation is still ongoing
+                    onAnswer(true); //true because yes
+                }
             }
-
         });
 
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nextQuestion = consultationHelper.getNextQuestion(false); //false because no
-                ECAText.setText(nextQuestion);
+                if(!consultationHelper.isConsultationDone()){ //checks if consultation is still ongoing
+                    onAnswer(false);  //false because no
+                }
             }
         });
+    }
+
+    private void onAnswer (boolean isYes){
+        String nextQuestion = consultationHelper.getNextQuestion(isYes);
+        if(nextQuestion == null) {
+            doWhenConsultationDone();
+        }
+        else {
+            ECAText.setText(nextQuestion);
+        }
+    }
+
+    private void doWhenConsultationDone(){
+        ECAText.setText("IZ DONE");
     }
 }

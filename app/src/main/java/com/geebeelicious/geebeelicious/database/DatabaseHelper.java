@@ -13,6 +13,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
+/*
+* The original code was created by Mike Dayupay.
+* For the purpose of integration, the code was modified.
+*/
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DB_PATH = "";
     private static String DB_NAME = "get_better";

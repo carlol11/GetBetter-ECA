@@ -120,10 +120,7 @@
             android:id="@+id/grossMotorIV"
             android:layout_centerInParent="true"
             android:background="#ffffff"/>
-<<<<<<< HEAD
-=======
 
->>>>>>> tests
     </RelativeLayout>
 
     <LinearLayout

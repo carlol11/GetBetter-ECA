@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import models.consultation.ChiefComplaint;
+import models.consultation.HPI;
 import models.consultation.Impressions;
+import models.consultation.Patient;
 import models.consultation.PatientAnswers;
 import models.consultation.PositiveResults;
 import models.consultation.Symptom;
@@ -26,6 +28,8 @@ import models.consultation.SymptomFamily;
 
 
 public class ExpertSystem {
+    private final static String TAG = "ExpertSystem";
+
     private ArrayList<Impressions> impressionsSymptoms;
     private ArrayList<String> ruledOutImpressionList;
     private ArrayList<String> plausibleImpressionList;
@@ -34,29 +38,30 @@ public class ExpertSystem {
     private ArrayList<Symptom> questions;
     private ArrayList<PatientAnswers> answers;
     private ArrayList<ChiefComplaint> patientChiefComplaints;
+    private Patient patient;
 
     private int currentImpressionIndex;
     private int currentSymptomIndex;
     private int symptomFamilyId;
 
     private boolean flag;
-    private boolean clickFlag;
 
     private DataAdapter getBetterDb;
     private SymptomFamily generalQuestion;
 
     private int caseRecordId;
 
-    public ExpertSystem(Context context){
+    public ExpertSystem(Context context, Patient patient){
         ruledOutSymptomList = new ArrayList<>();
         ruledOutImpressionList = new ArrayList<>();
         plausibleImpressionList = new ArrayList<>();
         positiveSymptomList = new ArrayList<>();
         questions = new ArrayList<>();
         answers = new ArrayList<>();
-        initializeDatabase(context);
 
-        clickFlag = true;
+        Log.d(TAG, patient.getFirstName());
+
+        initializeDatabase(context);
 
         //TODO: [URGENT] change this temp caseRecordId. should be fetched from the database
         caseRecordId = 0;
@@ -74,6 +79,17 @@ public class ExpertSystem {
         getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
 
         return getQuestion();
+    }
+
+    public void saveToDatabase(HPI hpi) {
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        getBetterDb.insertHPI(hpi);
+
+        getBetterDb.closeDatabase();
     }
 
     private void initializeDatabase (Context context) {
@@ -406,7 +422,6 @@ public class ExpertSystem {
         introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge + " years old, " +
                 " is complaining about " + attachComplaints();
 
-
         return introductionSentence;
     }
 
@@ -447,4 +462,5 @@ public class ExpertSystem {
 
         return chiefComplaints;
     }
+
 }

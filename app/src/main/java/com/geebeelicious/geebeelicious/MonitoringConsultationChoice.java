@@ -7,12 +7,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.geebeelicious.geebeelicious.consultation.ConsultationActivity;
 import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
 import com.geebeelicious.geebeelicious.tests.visualacuity.VisualAcuityMainActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import models.consultation.Patient;
+
 public class MonitoringConsultationChoice extends ActionBarActivity {
+    private DateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +26,16 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         setContentView(R.layout.activity_monitoring_consultation_choice);
         Button mButton = (Button)findViewById(R.id.monitoringButton);
         Button cButton = (Button)findViewById(R.id.consultationButton);
+        final Patient patient = new Patient(1, "Kristoff", "McHamm", "2/7/2008", 0, 1, 1);
+
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
         mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle record = new Bundle();
-                record.putString("currentDate", new Date().toString());
+                record.putParcelable("patient", patient);
+                record.putString("currentDate", dateFormat.format(new Date()));
                 Intent intent = new Intent(MonitoringConsultationChoice.this, VisualAcuityMainActivity.class);
                 intent.putExtras(record);
                 startActivity(intent);
@@ -35,10 +45,12 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         cButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MonitoringConsultationChoice.this, ConsultationActivity.class);
+                intent.putExtra("currentDate", dateFormat.format(new Date()));
+                intent.putExtra("patient", patient);
+                startActivity(intent);
             }
         });
-
     }
 
     public void calibrateHearing(View view){

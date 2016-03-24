@@ -21,6 +21,12 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.database.DataAdapter;
+
+import java.sql.SQLException;
+
+import models.consultation.Patient;
+import models.consultation.Record;
 
 
 /*
@@ -46,6 +52,8 @@ public class FineMotorActivity extends Activity {
     private boolean isTestOngoing = true;
     private boolean[] result = new boolean[3]; //result[i] is true if pass, false if fail
 
+    private DataAdapter getBetterDb;
+
     //TODO: Change instructions to be more specific when you can get the dominant hand and the gender
     private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the butterfly and go to the flowers",
         "Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers",
@@ -58,6 +66,7 @@ public class FineMotorActivity extends Activity {
         setContentView(R.layout.activity_fine_motor);
 
         record = this.getIntent().getExtras();
+        getBetterDb = new DataAdapter(this);
 
         ECAtext = (TextView) findViewById(R.id.placeholderECAText);
         imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
@@ -114,16 +123,52 @@ public class FineMotorActivity extends Activity {
 
             }
 
+            private int getIntResults(String result){
+                switch(result){
+                    case "Pass":
+                        return 0;
+                    case "Fail":
+                        return 1;
+                    default:
+                        return 2;
+                }
+            }
+
             @Override
             public void onFinish() {
-                //TODO: Change the activity it will go to
+                openDatabase();
+                Patient patient = record.getParcelable("patient");
+                double height = 127;
+                double weight =  25;
+
+                int grossMotor = getIntResults(record.getString("grossMotor"));
+                int nonDominantHand = getIntResults(record.getString("nonDominantHand"));
+                int dominantHand = getIntResults(record.getString("dominantHand"));
+                int usePen = getIntResults(record.getString("usePen"));
+
+                //TODO: [NOT URGENT] Add activity asking for height and weight. change the placeholders
+                getBetterDb.insertRecord(new Record(patient.getPatientID(),
+                        record.getString("currentDate"), height, weight, record.getString("visualAcuityLeft"),
+                        record.getString("visualAcuityRight"), record.getString("colorVision"),
+                        record.getString("hearingLeft"), record.getString("hearingRight"),
+                        grossMotor, nonDominantHand,
+                        dominantHand, usePen));
+
                 Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
-                intent.putExtras(record);
                 finish();
                 startActivity(intent);
             }
         };
         timer.start();
+    }
+
+    private void openDatabase(){
+        try {
+            getBetterDb.createDatabase();
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void hideAnswerButtons(){
@@ -196,7 +241,8 @@ public class FineMotorActivity extends Activity {
                 if(pixel == START_COLOR && (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE)){
                     hasStarted = true;
                     return true;
-                }
+                } else if (event.getAction() == MotionEvent.ACTION_DOWN)
+                    return true;
                 return false;
             }
 

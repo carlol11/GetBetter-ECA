@@ -1,5 +1,6 @@
 package com.geebeelicious.geebeelicious.consultation;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.database.DataAdapter;
 
 import models.consultation.ConsultationHelper;
+import models.consultation.Patient;
 
 public class ConsultationActivity extends ActionBarActivity {
     private TextView ECAText;
@@ -24,7 +28,10 @@ public class ConsultationActivity extends ActionBarActivity {
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
 
-        consultationHelper = new ConsultationHelper(this);
+        Patient patient = getIntent().getExtras().getParcelable("patient");
+        String dateConsultation = getIntent().getStringExtra("currentDate");
+
+        consultationHelper = new ConsultationHelper(this, patient, dateConsultation);
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
         ECAText.setText(consultationHelper.getFirstQuestion());
@@ -61,6 +68,10 @@ public class ConsultationActivity extends ActionBarActivity {
 
     //TODO: Put intent stuff here. or save to database
     private void doWhenConsultationDone(){
-        Log.d(TAG, "HPI: " + consultationHelper.getHPI());
+        String hpi = consultationHelper.getHPI();
+        Log.d(TAG, "HPI: " + hpi);
+        consultationHelper.saveToDatabase(hpi);
+        finish();
+        startActivity(new Intent(this, MonitoringConsultationChoice.class));
     }
 }

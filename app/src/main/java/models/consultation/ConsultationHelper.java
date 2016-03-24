@@ -21,16 +21,19 @@ public class ConsultationHelper {
     private ArrayList<ChiefComplaint> chiefComplaints;
     private ArrayList<ChiefComplaint> patientChiefComplaints;
     private ExpertSystem expertSystem;
+    private Patient patient;
+    private String dateConsultation;
 
-    public ConsultationHelper(Context context) {
+    public ConsultationHelper(Context context, Patient patient, String dateConsultation) {
         isConsultationDone = false;
         isAskingChiefComplaint = true;
         currentChiefComplaint = 0;
         chiefComplaints = new ArrayList<ChiefComplaint>();
         patientChiefComplaints = new ArrayList<ChiefComplaint>();
-
+        this.patient = patient;
+        this.dateConsultation = dateConsultation;
         initializeQuestions();
-        expertSystem = new ExpertSystem(context);
+        expertSystem = new ExpertSystem(context, patient);
     }
 
     public boolean isConsultationDone() {
@@ -83,6 +86,7 @@ public class ConsultationHelper {
         return expertSystem.getHPI();
     }
 
-
-
+    public void saveToDatabase(String hpi){
+        expertSystem.saveToDatabase(new HPI(patient.getPatientID(), hpi, dateConsultation));
+    }
 }

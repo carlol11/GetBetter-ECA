@@ -2,27 +2,27 @@ package models.visualacuity;
 
 /**
  * Created by Kate on 02/24/2016.
- * The Result class represents a result
+ * The VisualAcuityResult class represents a result
  * of the visual acuity test performed.
  * It can store which eye was tested and
  * the test result (represented by a ChartLine)
  */
-public class Result {
+public class VisualAcuityResult {
 
     private ChartLine resultLine;
     private String eye;
 
-    public Result(String eye, ChartLine resultLine){
+    public VisualAcuityResult(String eye, ChartLine resultLine){
         this.eye = eye;
         this.resultLine = resultLine;
     }
 
     public String getEye(){
         if(eye.equals("Right")){
-            return "R";
+            return "Right";
         }
         else {
-            return "L";}
+            return "Left";}
     }
 
     public String getVisualAcuity(){

@@ -8,7 +8,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:keepScreenOn="true"
-    tools:context="com.geebeelicious.geebeelicious.tests.visualacuity.VisualAcuityMainActivity">
+    tools:context="com.geebeelicious.geebeelicious.tests.grossmotor.GrossMotorMainActivity">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -16,6 +16,11 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
+        android:layout_margin="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
         android:background="#92b8ff"
         android:id="@+id/relativeLayoutECA">
 
@@ -55,23 +60,33 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/distanceTextView"
-                android:layout_weight="0.2"
-                android:layout_marginBottom="3dp"/>
+                android:id="@+id/gmSkillNameTV"
+                android:layout_weight="0.2"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rightEyeResultsTextView"
-                android:layout_weight="0.4"
-                android:layout_marginBottom="3dp"/>
+                android:id="@+id/gmSkillTypeTV"
+                android:layout_weight="0.2"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/leftEyeResultsTextView"
-                android:layout_weight="0.4"
-                android:layout_marginBottom="3dp"/>
+                android:id="@+id/gmInstructionsTV"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gmDurationTV"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gmAssessmentTV"
+                android:layout_weight="0.2"/>
+
         </LinearLayout>
 
 
@@ -81,18 +96,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/relativeLayoutTest"
         android:background="#ffffff"
-        android:layout_above="@+id/linearLayoutAnswers"
-        android:layout_toStartOf="@+id/relativeLayoutECA">
+        android:layout_above="@+id/linearLayoutAnswers">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="200sp"
+            android:id="@+id/countdownTV"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/chartLine"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/grossMotorIV"
             android:layout_centerInParent="true"
-            android:background="#ffffff" />
-
+            android:background="#ffffff"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -104,25 +131,42 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/linearLayoutAnswers"
-        android:weightSum="1">
+        android:weightSum="3"
+        android:visibility="gone">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/Yes"
             android:id="@+id/YesButton"
             android:background="#98ff88"
             android:minWidth="250dp"
-            android:layout_weight="0.50" />
+            android:layout_weight="1"
+            android:onClick="answerYes"
+            android:visibility="gone"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/No"
             android:id="@+id/NoButton"
             android:background="#ff7f7d"
             android:minWidth="250dp"
-            android:layout_weight="0.50" />
+            android:layout_weight="1"
+            android:onClick="answerNo"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/NA"
+            android:id="@+id/NAButton"
+            android:background="#008080"
+            android:minWidth="250dp"
+            android:layout_weight="1"
+            android:onClick="answerNA"
+            android:visibility="gone"/>
     </LinearLayout>
+
 
 </RelativeLayout>

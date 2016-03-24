@@ -17,7 +17,6 @@ public class DistanceCalculator {
     private void getDisplaySize(ImageView imageView){
         displayHeight = imageView.getHeight();
         displayWidth = imageView.getWidth();
-        System.out.println("dh: " + displayHeight + "dw: " + displayWidth);
     }
 
     public float getUserDistance(Context context, ImageView imageView){

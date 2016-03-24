@@ -7,6 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
+    android:keepScreenOn="true"
     tools:context="com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity">
 
     <RelativeLayout
@@ -15,11 +16,6 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
         android:background="#92b8ff"
         android:id="@+id/relativeLayoutECA">
 
@@ -94,7 +90,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#4526b8"
+        android:background="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/relativeLayoutECA"

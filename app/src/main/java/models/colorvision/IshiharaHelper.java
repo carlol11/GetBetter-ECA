@@ -134,6 +134,14 @@ public class IshiharaHelper {
         return ishiharaTest.getScore();
     }
 
+    public String getResult(){
+        if(getScore() > 10){
+            return "Normal";
+        } else{
+            return "Abnormal";
+        }
+    }
+
 
 
 

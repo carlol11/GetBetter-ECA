@@ -7,6 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
+    android:keepScreenOn="true"
     tools:context="com.geebeelicious.geebeelicious.tests.finemotor.FineMotorActivity"
     android:background="#d14f4f">
 
@@ -16,13 +17,9 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
         android:background="#92b8ff"
-        android:id="@+id/relativeLayoutECA">
+        android:id="@+id/relativeLayoutECA"
+        android:padding="2dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -79,11 +76,11 @@
         android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/imageViewPathToTrace"
             android:src="@drawable/path_to_trace"
-            android:background="#d14f4f" />
+            android:background="#ffffff" />
     </RelativeLayout>
 
     <LinearLayout
@@ -96,7 +93,7 @@
         android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/linearLayoutAnswers"
         android:weightSum="1"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <Button
             android:layout_width="wrap_content"
@@ -105,7 +102,8 @@
             android:id="@+id/YesButton"
             android:background="#98ff88"
             android:minWidth="250dp"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.50"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -114,7 +112,8 @@
             android:id="@+id/NoButton"
             android:background="#ff7f7d"
             android:minWidth="250dp"
-            android:layout_weight="0.50" />
+            android:layout_weight="0.50"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

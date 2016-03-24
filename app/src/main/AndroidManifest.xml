@@ -41,14 +41,18 @@
             android:label="@string/title_activity_hearing_calibration"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".tests.grossmotor.GrossMotorMainActivity"
-            android:label="@string/title_activity_gross_motor_main"
+            android:name=".consultation.ConsultationActivity"
+            android:label="@string/title_activity_consultation"
             android:screenOrientation="landscape"/>
         <activity
             android:name=".tests.finemotor.FineMotorActivity"
             android:label="@string/title_activity_fine_motor"
             android:screenOrientation="landscape"/>
         <activity
+            android:name=".tests.grossmotor.GrossMotorMainActivity"
+            android:label="@string/title_activity_gross_motor_main"
+            android:screenOrientation="landscape"/>
+        <activity>
             android:name=".MonitoringConsultationChoice"
             android:label="@string/title_activity_monitoring_consultation_choice"
             android:screenOrientation="landscape">
@@ -57,8 +61,7 @@
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-    </activity>
-
+        </activity>
     </application>
 
 </manifest>

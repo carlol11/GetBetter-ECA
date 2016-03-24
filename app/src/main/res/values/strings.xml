@@ -14,6 +14,7 @@
     <string name="title_activity_hearing_test">HearingTest</string>
     <string name="title_activity_fine_motor">FineMotorActivity</string>
     <string name="title_activity_gross_motor_main">GrossMotorMainActivity</string>
+    <string name="title_activity_consultation">ConsultationActivity</string>
     <string name="title_activity_monitoring_consultation_choice">MonitoringConsultationChoice</string>
     <string name="MonitoringOrConsultationQuestion">What would you like to do?</string>
     <string name="Monitoring">Monitoring</string>

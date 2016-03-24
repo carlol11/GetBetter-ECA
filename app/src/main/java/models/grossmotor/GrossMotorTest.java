@@ -99,9 +99,6 @@ public class GrossMotorTest {
                 answers.setVisibility(View.VISIBLE);
                 for (int j = 0; j<answers.getChildCount(); j++){
                     View view = answers.getChildAt(j);
-                answers.setVisibility(View.VISIBLE);
-                for (int j = 0; j<answers.getChildCount(); j++){
-                    View view = answers.getChildAt(j);
                     view.setEnabled(true);
                     view.setVisibility(View.VISIBLE);
                 }

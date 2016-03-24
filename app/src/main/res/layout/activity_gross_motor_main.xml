@@ -120,6 +120,10 @@
             android:id="@+id/grossMotorIV"
             android:layout_centerInParent="true"
             android:background="#ffffff"/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> tests
     </RelativeLayout>
 
     <LinearLayout
@@ -166,6 +170,7 @@
             android:layout_weight="1"
             android:onClick="answerNA"
             android:visibility="gone"/>
+
     </LinearLayout>
 
 

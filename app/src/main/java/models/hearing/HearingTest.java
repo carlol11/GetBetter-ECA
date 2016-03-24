@@ -41,6 +41,15 @@ public class HearingTest {
     private double[] thresholdsRight = {0, 0, 0};
     private double[] thresholdsLeft = {0, 0, 0};
 
+    public HearingTest(){
+        this.isHeard = false;
+        this.inLoop = true;
+        this.isDone = false;
+        isRunning = true;
+        thresholdsRight = new double[]{0, 0, 0};
+        thresholdsLeft = new double[]{0, 0, 0};
+    }
+
     private int getRandomGapDuration() {
         int time;
         double random = Math.random();

@@ -1,16 +1,19 @@
 package models.consultation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by mgmalana on 24/03/2016.
  */
-public class Patient {
+public class Patient implements Parcelable {
     private int patientID;
     private String firstName;
     private String lastName;
     private String birthday;
-    private int gender; // 1 for MALE, 2 for FEMALE
+    private int gender; // 0 for MALE, 1 for FEMALE
     private int schoolId;
-    private int handedness; //1 for RIGHT, 2 for LEFT
+    private int handedness; //0 for RIGHT, 1 for LEFT
 
     public final static String C_PATIENT_ID = "patient_id";
     public final static String C_FIRST_NAME = "first_name";
@@ -24,6 +27,23 @@ public class Patient {
 
 
     public final static String TABLE_NAME = "tbl_patient";
+
+
+    /**
+     * This field is needed for Android to be able to
+     * create new objects, individually or as arrays
+     */
+    public static final Parcelable.Creator CREATOR =
+            new Parcelable.Creator() {
+                public Patient createFromParcel(Parcel in) {
+                    return new Patient(in);
+                }
+
+                public Patient[] newArray(int size) {
+                    return new Patient[size];
+                }
+            };
+
 
     public Patient(int patientID, String firstName, String lastName, String birthday, int gender, int schoolId, int handedness) {
         this.patientID = patientID;
@@ -42,6 +62,36 @@ public class Patient {
         this.gender = gender;
         this.schoolId = schoolId;
         this.handedness = handedness;
+    }
+
+    public Patient(Parcel in){
+        readFromParcel(in);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) { //write each field into the parcel
+        dest.writeInt(patientID);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(birthday);
+        dest.writeInt(gender);
+        dest.writeInt(schoolId);
+        dest.writeInt(handedness);
+    }
+
+    public void readFromParcel(Parcel in){ //read back each field in the order that it was written to the parcel
+        patientID = in.readInt();
+        firstName = in.readString();
+        lastName = in.readString();
+        birthday = in.readString();
+        gender = in.readInt();
+        schoolId = in.readInt();
+        handedness = in.readInt();
     }
 
     public int getPatientID() {

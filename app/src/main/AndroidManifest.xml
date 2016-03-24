@@ -43,15 +43,31 @@
         <activity
             android:name=".tests.finemotor.FineMotorActivity"
             android:label="@string/title_activity_fine_motor"
+<<<<<<< HEAD
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".consultation.ConsultationActivity"
             android:label="@string/title_activity_consultation"
-            android:screenOrientation="landscape">
-            <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+=======
+>>>>>>> origin/master
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".tests.grossmotor.GrossMotorMainActivity"
+            android:label="@string/title_activity_gross_motor_main">
+
+        <intent-filter> <!-- added intent-filter for testing only REMOVE AFTER -->
+            <action android:name="android.intent.action.MAIN" />
+<<<<<<< HEAD
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+=======
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+>>>>>>> origin/master
         </activity>
 
     </application>

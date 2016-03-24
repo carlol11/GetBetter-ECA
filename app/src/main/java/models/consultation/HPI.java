@@ -24,6 +24,12 @@ public class HPI {
         this.dateCreated = dateCreated;
     }
 
+    public HPI(int patientId, String hpiText, String dateCreated) {
+        this.patientId = patientId;
+        this.hpiText = hpiText;
+        this.dateCreated = dateCreated;
+    }
+
     public int getHpi_id() {
         return hpi_id;
     }

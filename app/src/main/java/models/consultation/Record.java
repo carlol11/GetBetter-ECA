@@ -15,28 +15,28 @@ public class Record {
     public final static String C_VISUAL_ACUITY_RIGHT = "visual_acuity_right";
     public final static String C_COLOR_VISION = "color_vision";
     public final static String C_HEARING_LEFT = "hearing_left";
-    public final static String C_HEARING_RIGHT = "hearing)right";
+    public final static String C_HEARING_RIGHT = "hearing_right";
     public final static String C_GROSS_MOTOR = "gross_motor";
-    public final static String C_FINE_MOTOR_LEFT = "fine_motor_left";
-    public final static String C_FINE_MOTOR_RIGHT = "fine_motor_right";
+    public final static String C_FINE_MOTOR_DOMINANT = "fine_motor_dominant";
+    public final static String C_FINE_MOTOR_N_DOMINANT = "fine_motor_n_dominant";
     public final static String C_FINE_MOTOR_HOLD = "fine_motor_hold";
 
     private int recordID;
     private int patient_id;
     private String dateCreated;
-    private String height;
-    private String weight;
+    private double height;
+    private double weight;
     private String visualAcuityLeft;
     private String visualActuityRight;
     private String colorVision;
     private String hearingLeft;
     private String hearingRight;
-    private String grossMotor;
-    private String fineMotorLeft;
-    private String fineMotorRight;
-    private String fineMotorHold;
+    private int grossMotor;
+    private int fineMotorDominant;
+    private int fineMotorNDominant;
+    private int fineMotorHold;
 
-    public Record(int recordID, int patient_id, String dateCreated, String height, String weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, String grossMotor, String fineMotorLeft, String fineMotorRight, String fineMotorHold) {
+    public Record(int recordID, int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold) {
         this.recordID = recordID;
         this.patient_id = patient_id;
         this.dateCreated = dateCreated;
@@ -48,12 +48,12 @@ public class Record {
         this.hearingLeft = hearingLeft;
         this.hearingRight = hearingRight;
         this.grossMotor = grossMotor;
-        this.fineMotorLeft = fineMotorLeft;
-        this.fineMotorRight = fineMotorRight;
+        this.fineMotorNDominant = fineMotorNDominant;
+        this.fineMotorDominant = fineMotorDominant;
         this.fineMotorHold = fineMotorHold;
     }
 
-    public Record(int patient_id, String dateCreated, String height, String weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, String grossMotor, String fineMotorLeft, String fineMotorRight, String fineMotorHold) {
+    public Record(int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold) {
         this.patient_id = patient_id;
         this.dateCreated = dateCreated;
         this.height = height;
@@ -64,8 +64,8 @@ public class Record {
         this.hearingLeft = hearingLeft;
         this.hearingRight = hearingRight;
         this.grossMotor = grossMotor;
-        this.fineMotorLeft = fineMotorLeft;
-        this.fineMotorRight = fineMotorRight;
+        this.fineMotorDominant = fineMotorDominant;
+        this.fineMotorNDominant = fineMotorNDominant;
         this.fineMotorHold = fineMotorHold;
     }
 
@@ -81,11 +81,11 @@ public class Record {
         return dateCreated;
     }
 
-    public String getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
@@ -109,19 +109,19 @@ public class Record {
         return hearingRight;
     }
 
-    public String getGrossMotor() {
+    public int getGrossMotor() {
         return grossMotor;
     }
 
-    public String getFineMotorLeft() {
-        return fineMotorLeft;
+    public int getFineMotorDominant() {
+        return fineMotorDominant;
     }
 
-    public String getFineMotorRight() {
-        return fineMotorRight;
+    public int getFineMotorNDominant() {
+        return fineMotorNDominant;
     }
 
-    public String getFineMotorHold() {
+    public int getFineMotorHold() {
         return fineMotorHold;
     }
 }

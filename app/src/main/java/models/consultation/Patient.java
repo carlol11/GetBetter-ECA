@@ -8,7 +8,7 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String birthday;
-    private int gender; // 1 for MALE, 1 for FEMALE
+    private int gender; // 1 for MALE, 2 for FEMALE
     private int schoolId;
     private int handedness; //1 for RIGHT, 2 for LEFT
 
@@ -27,6 +27,15 @@ public class Patient {
 
     public Patient(int patientID, String firstName, String lastName, String birthday, int gender, int schoolId, int handedness) {
         this.patientID = patientID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.schoolId = schoolId;
+        this.handedness = handedness;
+    }
+
+    public Patient(String firstName, String lastName, String birthday, int gender, int schoolId, int handedness) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -59,7 +68,7 @@ public class Patient {
         return schoolId;
     }
 
-    public int isHandedness() {
+    public int getHandedness() {
         return handedness;
     }
 }

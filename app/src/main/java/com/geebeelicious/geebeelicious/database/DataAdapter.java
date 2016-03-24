@@ -344,9 +344,9 @@ public class DataAdapter {
         values.put(Patient.C_FIRST_NAME, patient.getFirstName());
         values.put(Patient.C_LAST_NAME, patient.getLastName());
         values.put(Patient.C_BIRTHDAY, patient.getBirthday());
-        values.put(Patient.C_GENDER, patient.getBirthday());
-        values.put(Patient.C_SCHOOL_ID, patient.getBirthday());
-        values.put(Patient.C_HANDEDNESS, patient.getBirthday());
+        values.put(Patient.C_GENDER, patient.getGender());
+        values.put(Patient.C_SCHOOL_ID, patient.getSchoolId());
+        values.put(Patient.C_HANDEDNESS, patient.getHandedness());
 
         row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
         Log.d(TAG, "insertPatient Result: " + row);
@@ -366,11 +366,11 @@ public class DataAdapter {
         values.put(Record.C_HEARING_LEFT, record.getHearingLeft());
         values.put(Record.C_HEARING_RIGHT, record.getHearingRight());
         values.put(Record.C_GROSS_MOTOR, record.getGrossMotor());
-        values.put(Record.C_FINE_MOTOR_LEFT, record.getFineMotorLeft());
-        values.put(Record.C_FINE_MOTOR_RIGHT, record.getFineMotorRight());
+        values.put(Record.C_FINE_MOTOR_DOMINANT, record.getFineMotorDominant());
+        values.put(Record.C_FINE_MOTOR_N_DOMINANT, record.getFineMotorNDominant());
         values.put(Record.C_FINE_MOTOR_HOLD, record.getFineMotorHold());
 
-        row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
+        row = (int) getBetterDb.insert(Record.TABLE_NAME, null, values);
         Log.d(TAG, "insertRecord Result: " + row);
     }
 
@@ -382,8 +382,8 @@ public class DataAdapter {
         values.put(HPI.C_DATE_CREATED, hpi.getDateCreated());
         values.put(HPI.C_HPI_TEXT, hpi.getHpiText());
 
-        row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
-        Log.d(TAG, "insertRecord Result: " + row);
+        row = (int) getBetterDb.insert(HPI.TABLE_NAME, null, values);
+        Log.d(TAG, "insertHPI Result: " + row);
     }
 
     public ArrayList<Patient> getPossiblePatients(String firstName, String lastName, int gender, String birthday, int schoolId){
@@ -391,7 +391,7 @@ public class DataAdapter {
         Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_FIRST_NAME + " = ? AND "
                 + Patient.C_LAST_NAME + " = ? AND " + Patient.C_GENDER + " = "+ gender+" AND "
                 + Patient.C_BIRTHDAY + " = ? AND " + Patient.C_SCHOOL_ID + " = " + schoolId,
-                new String[]{firstName, lastName, birthday, null}, null, null, null, null);
+                new String[]{firstName, lastName, birthday}, null, null, null, null);
 
         if(c.moveToFirst()){
             do{
@@ -408,16 +408,50 @@ public class DataAdapter {
         return patients;
     }
 
-    public ArrayList<String> getAllSchoolNames(){
-        ArrayList<String> schools = new ArrayList<>();
-        Cursor c = getBetterDb.query(School.TABLE_NAME, new String[]{School.C_SCHOOLNAME}, null, null, null, null, null, null);
+    public ArrayList<School> getAllSchools(){
+        ArrayList<School> schools = new ArrayList<>();
+        Cursor c = getBetterDb.query(School.TABLE_NAME, null, null, null, null, null, null, null);
 
         if(c.moveToFirst()){
             do{
-                schools.add(c.getString(c.getColumnIndex(School.C_SCHOOLNAME)));
+                schools.add(new School(c.getInt(c.getColumnIndex(School.C_SCHOOL_ID)), c.getString(c.getColumnIndex(School.C_SCHOOLNAME)),
+                        c.getString(c.getColumnIndex(School.C_MUNICIPALITY))));
             }while(c.moveToNext());
         }
         c.close();
         return schools;
+    }
+
+    public ArrayList<Record> getRecords(int patientId){
+        ArrayList<Record> records = new ArrayList<>();
+        Cursor c = getBetterDb.query(Record.TABLE_NAME, null, Record.C_PATIENT_ID + " = " + patientId, null, null, null, null, null);
+
+        if(c.moveToFirst()){
+            do{
+                records.add(new Record(c.getInt(c.getColumnIndex(Record.C_RECORD_ID)), c.getInt(c.getColumnIndex(Record.C_PATIENT_ID)),
+                        c.getString(c.getColumnIndex(Record.C_DATE_CREATED)), c.getDouble(c.getColumnIndex(Record.C_HEIGHT)),
+                        c.getDouble(c.getColumnIndex(Record.C_WEIGHT)), c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_LEFT)),
+                        c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_RIGHT)), c.getString(c.getColumnIndex(Record.C_COLOR_VISION)),
+                        c.getString(c.getColumnIndex(Record.C_HEARING_LEFT)), c.getString(c.getColumnIndex(Record.C_HEARING_RIGHT)),
+                        c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)),
+                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD))));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return records;
+    }
+
+    public ArrayList<HPI> getHPIs(int patientId){
+        ArrayList<HPI> HPIs = new ArrayList<>();
+        Cursor c = getBetterDb.query(HPI.TABLE_NAME, null, HPI.C_PATIENT_ID + " = " + patientId, null, null, null, null, null);
+
+        if(c.moveToFirst()){
+            do{
+                HPIs.add(new HPI(c.getInt(c.getColumnIndex(HPI.C_HPI_ID)), c.getInt(c.getColumnIndex(HPI.C_PATIENT_ID)),
+                        c.getString(c.getColumnIndex(HPI.C_HPI_TEXT)), c.getString(c.getColumnIndex(HPI.C_DATE_CREATED))));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return HPIs;
     }
 }

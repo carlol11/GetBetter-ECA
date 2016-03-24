@@ -4,6 +4,26 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:buttonStyle">@style/DefaultButton</item>
+    </style>
+
+    <style name="DefaultButton" parent="android:style/Widget.Button">
+        <item name="android:background">#80DEEA</item>
+    </style>
+
+    <style name="DefaultBackground">
+        <item name="android:background">#E0F7FA</item>
+    </style>
+
+    <style name="ECAPlaceholder" parent="android:Widget">
+        <item name="android:src">#00BCD4</item>
+    </style>
+
+    <style name="TestButton" parent="android:Widget.Button">
+        <item name="android:textSize">30sp</item>
+        <item name="android:background">#80DEEA</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
     </style>
 
 </resources>

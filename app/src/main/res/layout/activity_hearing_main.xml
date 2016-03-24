@@ -16,14 +16,13 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:background="#92b8ff"
-        android:id="@+id/relativeLayoutECA">
+        android:id="@+id/relativeLayoutECA"
+        style="@style/DefaultBackground">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/placeholderECA"
-            android:src="#ff0000"
             android:minHeight="300dp"
             android:minWidth="300dp"
             android:layout_alignParentTop="true"
@@ -31,16 +30,19 @@
             android:longClickable="false"
             android:maxHeight="300dp"
             android:maxWidth="300dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            style="@style/ECAPlaceholder"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Placeholder for Instructions from GeeBee"
             android:id="@+id/placeholderECAText"
+            android:paddingTop="10dp"
+            android:padding="5dp"
+            style="@style/DefaultBackground"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/placeholderECA"
-            android:layout_marginBottom="10dp"/>
+            android:layout_below="@+id/placeholderECA" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -50,14 +52,16 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/placeholderECAText"
             android:id="@+id/linearLayoutResults"
-            android:weightSum="1">
+            android:weightSum="1"
+            style="@style/DefaultBackground">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/hearingResultsTV"
                 android:layout_weight="0.2"
-                android:layout_marginBottom="3dp"/>
+                android:layout_marginBottom="3dp"
+                style="@style/DefaultBackground"/>
 
         </LinearLayout>
 
@@ -71,7 +75,8 @@
         android:layout_toStartOf="@+id/relativeLayoutECA"
         android:id="@+id/relativeLayoutTest"
         android:background="#ffffff"
-        android:layout_above="@+id/linearLayoutAnswers">
+        android:layout_above="@+id/linearLayoutAnswers"
+        style="@style/DefaultBackground">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -82,7 +87,7 @@
             android:layout_marginLeft="15dp"
             android:id="@+id/hearingTestImageView"
             android:layout_centerInParent="true"
-            android:background="#ffffff" />
+            style="@style/DefaultBackground"/>
 
     </RelativeLayout>
 
@@ -99,10 +104,10 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="127dp"
+            android:layout_height="match_parent"
             android:text="@string/Yes"
             android:id="@+id/YesButton"
-            android:background="#98ff88" />
+            style="@style/TestButton"/>
 
     </LinearLayout>
 

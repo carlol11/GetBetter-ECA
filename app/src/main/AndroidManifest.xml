@@ -49,14 +49,10 @@
             android:label="@string/title_activity_consultation"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".tests.finemotor.FineMotorActivity"
-            android:label="@string/title_activity_fine_motor"
-            android:screenOrientation="landscape"/>
-        <activity
             android:name=".tests.grossmotor.GrossMotorMainActivity"
             android:label="@string/title_activity_gross_motor_main"
             android:screenOrientation="landscape"/>
-        <activity>
+        <activity
             android:name=".MonitoringConsultationChoice"
             android:label="@string/title_activity_monitoring_consultation_choice"
             android:screenOrientation="landscape">

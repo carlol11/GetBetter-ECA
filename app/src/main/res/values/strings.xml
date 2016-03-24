@@ -12,4 +12,5 @@
     <string name="calibration_in_progress">Calibrating...</string>
     <string name="title_activity_hearing_test">HearingTest</string>
     <string name="title_activity_fine_motor">FineMotorActivity</string>
+    <string name="title_activity_consultation">ConsultationActivity</string>
 </resources>

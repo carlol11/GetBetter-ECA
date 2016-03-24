@@ -131,9 +131,9 @@ public class FineMotorActivity extends Activity {
         for (int j = 0; j<answers.getChildCount(); j++){
             View view = answers.getChildAt(j);
             view.setEnabled(false);
-            view.setVisibility(View.GONE);
+            view.setVisibility(View.INVISIBLE);
         }
-        answers.setVisibility(View.GONE);
+        answers.setVisibility(View.INVISIBLE);
 
     }
 

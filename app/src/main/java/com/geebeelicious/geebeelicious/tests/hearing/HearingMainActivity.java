@@ -48,13 +48,13 @@ public class HearingMainActivity extends ActionBarActivity {
 
         final Runnable backgroundFlash = new Runnable(){
             public void run(){
-                yesButton.setBackgroundColor(Color.BLUE);
+                yesButton.setBackgroundColor(Color.parseColor("#18FFFF"));
             }
         };
 
         final Runnable backgroundNormal = new Runnable(){
             public void run(){
-                yesButton.setBackgroundColor(Color.parseColor("#98ff88"));
+                yesButton.setBackgroundColor(Color.parseColor("#80DEEA"));
             }
         };
 

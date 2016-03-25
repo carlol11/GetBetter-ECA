@@ -79,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageViewPathToTrace"
-            android:src="@drawable/path_to_trace"
             android:background="#ffffff" />
     </RelativeLayout>
 

@@ -24,6 +24,8 @@ import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DataAdapter;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.Random;
 
 import models.consultation.Patient;
 import models.consultation.Record;
@@ -55,9 +57,9 @@ public class FineMotorActivity extends Activity {
     private DataAdapter getBetterDb;
 
     //TODO: Change instructions to be more specific when you can get the dominant hand and the gender
-    private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the butterfly and go to the flowers",
-        "Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers",
-        "Assistant, has he/she used the pen without difficulties?"
+    private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the blue circle and go to the pink circle",
+        "Using the pen with your dominant hand, trace the path. Start from the blue circle and go to the pink circle",
+        "Assistant, has he/she use the pen without difficulties?"
     };
 
     @Override
@@ -70,6 +72,7 @@ public class FineMotorActivity extends Activity {
 
         ECAtext = (TextView) findViewById(R.id.placeholderECAText);
         imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
+        imageViewPathToTrace.setImageResource(getRandomPathDrawable());
         mp = MediaPlayer.create(getApplicationContext(), R.raw.fine_motor_outside_path);
         buttonYes = (Button) findViewById(R.id.YesButton);
         buttonNo = (Button) findViewById(R.id.NoButton);
@@ -94,6 +97,12 @@ public class FineMotorActivity extends Activity {
             }
         });
 
+    }
+
+    private int getRandomPathDrawable(){
+        int[] path = new int[]{R.drawable.path_to_trace_1, R.drawable.path_to_trace_2};
+        Random random = new Random((int)System.nanoTime());
+        return path[random.nextInt(2)];
     }
 
     //TODO: Intent shound be sent through this method

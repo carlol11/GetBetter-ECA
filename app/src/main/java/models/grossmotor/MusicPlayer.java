@@ -49,7 +49,7 @@ public class MusicPlayer {
     }
 
     public void setRandomSong(int duration){
-        Random random = new Random();
+        Random random = new Random((int)System.nanoTime());
         int randomSong;
         boolean isFound = false;
 

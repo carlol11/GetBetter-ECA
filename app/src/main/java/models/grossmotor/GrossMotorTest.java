@@ -46,7 +46,7 @@ public class GrossMotorTest {
     //TODO: Add more skills; fix current skills (current ones are just for testing)
 
     private GrossMotorSkill getRandomSkill(int testSkillCounter){
-        Random random = new Random();
+        Random random = new Random((int)System.nanoTime());
         boolean isFound = false;
         GrossMotorSkill temp = null;
         int skillNumber;

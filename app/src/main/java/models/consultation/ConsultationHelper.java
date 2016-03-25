@@ -32,8 +32,9 @@ public class ConsultationHelper {
         patientChiefComplaints = new ArrayList<ChiefComplaint>();
         this.patient = patient;
         this.dateConsultation = dateConsultation;
-        initializeQuestions();
         expertSystem = new ExpertSystem(context, patient);
+
+        chiefComplaints = expertSystem.getChiefComplaintsQuestions();
     }
 
     public boolean isConsultationDone() {
@@ -51,8 +52,9 @@ public class ConsultationHelper {
 
             if(currentChiefComplaint == chiefComplaints.size()) { //checks if no more questions
                 isAskingChiefComplaint = false; //to skip this parent conditional statement
+                if(patientChiefComplaints.size() == 0)
+                    return null;
                 return expertSystem.startExpertSystem(patientChiefComplaints);
-                //TODO: Handle if all no for chief complain
             } else {
                 return chiefComplaints.get(currentChiefComplaint).getQuestion();
             }
@@ -67,19 +69,7 @@ public class ConsultationHelper {
 
 
     public String getFirstQuestion(){
-        //TODO: have a checker if meron ba talaga chiefComplaints sa list. baka kasi will cause an error
         return chiefComplaints.get(0).getQuestion();
-    }
-
-    private void initializeQuestions(){
-        //TODO: [NOT URGENT] Transfer this questions if you think it's better. Fix questions, change wording
-        chiefComplaints.add(new ChiefComplaint(1, "Do you have fever?"));
-        chiefComplaints.add(new ChiefComplaint(2, "Are you experiencing any pain?"));
-        chiefComplaints.add(new ChiefComplaint(3, "Do you have injury?"));
-        chiefComplaints.add(new ChiefComplaint(4, "Do you have any skin problem?"));
-        chiefComplaints.add(new ChiefComplaint(5, "Are you having breathing problems?"));
-        chiefComplaints.add(new ChiefComplaint(6, "Are you having bowel movement problems?"));
-        chiefComplaints.add(new ChiefComplaint(7, "Are you experiencing general unwellness?"));
     }
 
     public String getHPI(){
@@ -88,5 +78,9 @@ public class ConsultationHelper {
 
     public void saveToDatabase(String hpi){
         expertSystem.saveToDatabase(new HPI(patient.getPatientID(), hpi, dateConsultation));
+    }
+
+    public boolean isTherePatientComplaints(){
+        return patientChiefComplaints.size() > 0;
     }
 }

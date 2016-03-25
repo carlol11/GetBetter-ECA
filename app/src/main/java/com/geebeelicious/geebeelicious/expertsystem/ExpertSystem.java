@@ -6,7 +6,13 @@ import android.util.Log;
 import com.geebeelicious.geebeelicious.database.DataAdapter;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashSet;
 
 import models.consultation.ChiefComplaint;
@@ -43,13 +49,15 @@ public class ExpertSystem {
     private int currentImpressionIndex;
     private int currentSymptomIndex;
     private int symptomFamilyId;
+    private int caseRecordId;
 
     private boolean flag;
 
     private DataAdapter getBetterDb;
     private SymptomFamily generalQuestion;
 
-    private int caseRecordId;
+
+    private DateFormat dateFormat;
 
     public ExpertSystem(Context context, Patient patient){
         ruledOutSymptomList = new ArrayList<>();
@@ -58,13 +66,15 @@ public class ExpertSystem {
         positiveSymptomList = new ArrayList<>();
         questions = new ArrayList<>();
         answers = new ArrayList<>();
+        this.patient = patient;
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
 
         Log.d(TAG, patient.getFirstName());
 
         initializeDatabase(context);
 
-        //TODO: [URGENT] change this temp caseRecordId. should be fetched from the database
-        caseRecordId = 0;
+        caseRecordId = 0; //just used for placeholder, since the old code saves the users' answers
     }
 
     public String startExpertSystem(ArrayList<ChiefComplaint> patientChiefComplaints){
@@ -92,14 +102,26 @@ public class ExpertSystem {
         getBetterDb.closeDatabase();
     }
 
+    public ArrayList<ChiefComplaint> getChiefComplaintsQuestions(){
+        ArrayList <ChiefComplaint> chiefComplaints = new ArrayList<>();
+
+        chiefComplaints.add(new ChiefComplaint(1, "Do you have fever?"));
+        chiefComplaints.add(new ChiefComplaint(2, "Are you experiencing any pain?"));
+        chiefComplaints.add(new ChiefComplaint(3, "Do you have injury?"));
+        chiefComplaints.add(new ChiefComplaint(4, "Do you have any skin problem?"));
+        chiefComplaints.add(new ChiefComplaint(5, "Are you having breathing problems?"));
+        chiefComplaints.add(new ChiefComplaint(6, "Are you having bowel movement problems?"));
+        chiefComplaints.add(new ChiefComplaint(7, "Are you experiencing general unwellness?"));
+
+        return chiefComplaints;
+    }
+
     private void initializeDatabase (Context context) {
 
         getBetterDb = new DataAdapter(context);
 
         try {
             getBetterDb.createDatabase();
-
-            //TODO: Check if kelangan talaga ang openDatabaseForRead()
             getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -398,7 +420,7 @@ public class ExpertSystem {
 
         positiveSymptoms = getBetterDb.getPositiveSymptoms(answers);
 
-        //TODO:[NOT URGENT] Use of 'his' it should be gender specific
+        //TODO:[NOT SCOPE] Use of 'his' it should be gender specific
         for(int i = 0; i < positiveSymptoms.size(); i++) {
             if (positiveSymptoms.get(i).getPositiveName() == "High Fever") {
                 HPI += "His " + positiveSymptoms.get(i).getPositiveAnswerPhrase() + " ";
@@ -412,12 +434,9 @@ public class ExpertSystem {
     private String generateIntroductionSentence () {
 
         String introductionSentence = "";
-        //TODO: Should get from the database
-
-        String patientGender = "Female";
-        String patientName = "Elsa";
-        int patientAge = 20;
-        String attachComplaints = "being cold";
+        String patientGender = getGender(patient.getGender());
+        String patientName = patient.getFirstName() + " " + patient.getLastName();
+        int patientAge = getAge(patient.getBirthday());
 
         introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge + " years old, " +
                 " is complaining about " + attachComplaints();
@@ -431,7 +450,7 @@ public class ExpertSystem {
 
         String [] chiefComplaints = getChiefComplaints();
 
-        //TODO: Have a default value. what if more than 3.
+        //TODO:[NOT SCOPE] Have a default value. what if more than 3.
         switch (chiefComplaints.length) {
 
             case 1: complaints += " " + chiefComplaints[0] + ". ";
@@ -461,6 +480,24 @@ public class ExpertSystem {
         getBetterDb.closeDatabase();
 
         return chiefComplaints;
+    }
+
+    private String getGender(int gender){
+        return (gender == 0 ? "male" : "female");
+    }
+
+    //returns the age depending on the birthdate
+    private int getAge(String birthdayString){
+        Calendar birthday = Calendar.getInstance();
+        Calendar currentDate = Calendar.getInstance();
+
+        try {
+            birthday.setTime(dateFormat.parse(birthdayString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return (int)((currentDate.getTimeInMillis() - birthday.getTimeInMillis()) / 31536000000L); //divides by number of milliseconds in a year
     }
 
 }

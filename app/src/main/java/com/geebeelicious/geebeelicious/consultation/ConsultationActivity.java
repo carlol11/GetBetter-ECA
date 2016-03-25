@@ -19,6 +19,7 @@ public class ConsultationActivity extends ActionBarActivity {
     private TextView ECAText;
     private ConsultationHelper consultationHelper;
     private final static String TAG = "ConsultationActivity";
+    private boolean isOnGoingFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class ConsultationActivity extends ActionBarActivity {
         Patient patient = getIntent().getExtras().getParcelable("patient");
         String dateConsultation = getIntent().getStringExtra("currentDate");
 
+        isOnGoingFlag = true;
         consultationHelper = new ConsultationHelper(this, patient, dateConsultation);
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
@@ -55,8 +57,7 @@ public class ConsultationActivity extends ActionBarActivity {
         });
     }
 
-    //TODO: [NOT URGENT] handle multiple clicks. mageerror ata sa
-    private void onAnswer (boolean isYes){
+    private void onAnswer (boolean isYes) {
         String nextQuestion = consultationHelper.getNextQuestion(isYes);
         if(nextQuestion == null) {
             doWhenConsultationDone();
@@ -66,12 +67,19 @@ public class ConsultationActivity extends ActionBarActivity {
         }
     }
 
-    //TODO: Put intent stuff here. or save to database
-    private void doWhenConsultationDone(){
-        String hpi = consultationHelper.getHPI();
-        Log.d(TAG, "HPI: " + hpi);
-        consultationHelper.saveToDatabase(hpi);
-        finish();
-        startActivity(new Intent(this, MonitoringConsultationChoice.class));
+    private synchronized void doWhenConsultationDone(){
+        if(isOnGoingFlag){
+            isOnGoingFlag = false;
+
+            if(consultationHelper.isTherePatientComplaints()) {
+                String hpi = consultationHelper.getHPI();
+                Log.d(TAG, "HPI: " + hpi);
+                consultationHelper.saveToDatabase(hpi);
+            } else { //TODO: [UI PART] put the condition here if no complaints
+                Log.d(TAG, "No chief complaint found ");
+            }
+                finish();
+                startActivity(new Intent(this, MonitoringConsultationChoice.class));
+        }
     }
 }

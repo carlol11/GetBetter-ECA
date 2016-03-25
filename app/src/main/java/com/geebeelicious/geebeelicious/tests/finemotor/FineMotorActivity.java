@@ -56,10 +56,9 @@ public class FineMotorActivity extends Activity {
 
     private DataAdapter getBetterDb;
 
-    //TODO: Change instructions to be more specific when you can get the dominant hand and the gender
-    private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the blue circle and go to the pink circle",
-        "Using the pen with your dominant hand, trace the path. Start from the blue circle and go to the pink circle",
-        "Assistant, has he/she use the pen without difficulties?"
+    private String[] instructions = {"Using a finger of your non dominant hand, trace the path. Start from the butterfly and go to the flowers",
+        "Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers",
+        "Assistant, has he/she used the pen without difficulties?"
     };
 
     @Override
@@ -105,7 +104,7 @@ public class FineMotorActivity extends Activity {
         return path[random.nextInt(2)];
     }
 
-    //TODO: Intent shound be sent through this method
+
     private synchronized void sendResults(){
         String resultString = "";
         String[] testString = {"nonDominantHand", "dominantHand", "usePen"};

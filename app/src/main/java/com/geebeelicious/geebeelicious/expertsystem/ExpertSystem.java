@@ -407,7 +407,7 @@ public class ExpertSystem {
         getBetterDb.closeDatabase();
         return value;
     }
-    //TODO: [REALLY NOT URGENT] You can refactor this. dont need to save the answers to database. just process it as it is. also remove the saveAnswersToDatabase
+
     public String getHPI(){
         String HPI = generateIntroductionSentence();
         ArrayList<PositiveResults> positiveSymptoms;

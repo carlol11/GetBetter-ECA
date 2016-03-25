@@ -19,7 +19,7 @@ public class IshiharaTest {
     private int score;
 
     public IshiharaTest(IshiharaPlate[] ishiharaPlates, Option[] options){
-        Random random = new Random((int)System.nanoTime());
+        randomGenerator = new Random((int)System.nanoTime());
         this.ishiharaPlates = ishiharaPlates;
         this.options = options;
         this.score = 0;

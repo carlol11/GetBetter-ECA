@@ -39,7 +39,6 @@ public class SettingsActivity extends ActionBarActivity {
         schoolsAdapter.setDropDownViewResource(R.layout.item_school_list);
         Spinner schoolSpinner = (Spinner)findViewById(R.id.schoolSpinner);
         schoolSpinner.setAdapter(schoolsAdapter);
-        //TODO: [URGENT, DB] Set school to whatever is selected when save button is clicked
         schoolSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -51,6 +50,11 @@ public class SettingsActivity extends ActionBarActivity {
 
             }
         });
+
+
+        //TODO: [URGENT] Add save button functionality
+        //TODO: [URGENT] Move calibration test to settings
+        //TODO: [URGENT] Set onBackPressed()
     }
 
 }

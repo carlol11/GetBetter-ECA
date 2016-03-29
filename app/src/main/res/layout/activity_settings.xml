@@ -8,13 +8,33 @@
     style="@style/DefaultBackground"
     tools:context="com.geebeelicious.geebeelicious.SettingsActivity">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:text="@string/school_name"
+                android:id="@+id/schoolnameTV"
+                android:layout_gravity="center"/>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/schoolSpinner"
+                android:layout_alignTop="@+id/schoolnameTV"
+                android:layout_toEndOf="@+id/schoolnameTV"
+                android:layout_alignBottom="@+id/schoolnameTV"
+                android:layout_gravity="center"/>
+
+        </TableRow>
+
+
+    </TableLayout>
+
+
 </RelativeLayout>

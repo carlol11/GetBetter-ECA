@@ -69,6 +69,8 @@ public class PatientListActivity extends ActionBarActivity {
             }
         });
 
+        //TODO: [NOT URGENT] Handle creating new patient
+
     }
 
     private void initializeDatabase () {

@@ -41,7 +41,7 @@
             android:textSize="50sp"
             android:padding="20dp"
             style="@style/DefaultButton"
-            android:id="@+id/button"
+            android:id="@+id/startButton"
             android:layout_below="@+id/logo"
             android:layout_centerHorizontal="true"/>
 

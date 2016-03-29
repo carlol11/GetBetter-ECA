@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 
@@ -20,14 +21,22 @@ public class SettingsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Hereee");
         setContentView(R.layout.activity_settings);
 
+        addChooseSchoolSetting();
+
+    }
+
+    private void addChooseSchoolSetting(){
+        System.out.println("Here");
         //TODO: [URGENT, DB] Get list of schools from DB
         final ArrayList<School> schools = new ArrayList<School>();
         schools.add(new School(1, "Hammy School of the Arts", "Los Angeles"));
         schools.add(new School(2, "East High School", "Albuquerque"));
 
         SchoolsAdapter schoolsAdapter = new SchoolsAdapter(SettingsActivity.this, schools);
+        schoolsAdapter.setDropDownViewResource(R.layout.item_school_list);
         Spinner schoolSpinner = (Spinner)findViewById(R.id.schoolSpinner);
         schoolSpinner.setAdapter(schoolsAdapter);
         //TODO: [URGENT, DB] Set school to whatever is selected when save button is clicked
@@ -42,7 +51,6 @@ public class SettingsActivity extends ActionBarActivity {
 
             }
         });
-
     }
 
 }

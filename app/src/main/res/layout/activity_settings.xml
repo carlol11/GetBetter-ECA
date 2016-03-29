@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TableRow>
+        <TableRow
+            android:weightSum="4">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -20,16 +21,15 @@
                 android:textSize="30dp"
                 android:text="@string/school_name"
                 android:id="@+id/schoolnameTV"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/schoolSpinner"
-                android:layout_alignTop="@+id/schoolnameTV"
-                android:layout_toEndOf="@+id/schoolnameTV"
-                android:layout_alignBottom="@+id/schoolnameTV"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_weight="3"/>
 
         </TableRow>
 

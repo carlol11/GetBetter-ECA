@@ -18,10 +18,27 @@ import models.consultation.School;
 /**
  * Created by Kate on 03/30/2016.
  */
-public class SchoolsAdapter extends ArrayAdapter<School> {
+public class SchoolsAdapter extends ArrayAdapter<School>{
 
     public SchoolsAdapter(Context context, ArrayList<School> schools){
         super(context, 0, schools);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        School school = getItem(position);
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_school_list, parent, false);
+        }
+
+        TextView schoolName = (TextView)convertView.findViewById(R.id.school_name_list);
+        TextView schoolMunicipality = (TextView) convertView.findViewById(R.id.school_municipality_list);
+
+        schoolName.setText(school.getSchoolName());
+        schoolMunicipality.setText(school.getMunicipality());
+
+        return convertView;
     }
 
     @Override
@@ -33,10 +50,10 @@ public class SchoolsAdapter extends ArrayAdapter<School> {
         }
 
         TextView schoolName = (TextView)convertView.findViewById(R.id.school_name_list);
-        TextView schoolMunicipality = (TextView)convertView.findViewById(R.id.school_municipality_list);
+        TextView schoolMunicipality = (TextView) convertView.findViewById(R.id.school_municipality_list);
 
         schoolName.setText(school.getSchoolName());
-        schoolName.setText(school.getMunicipality());
+        schoolMunicipality.setText(school.getMunicipality());
 
         return convertView;
     }

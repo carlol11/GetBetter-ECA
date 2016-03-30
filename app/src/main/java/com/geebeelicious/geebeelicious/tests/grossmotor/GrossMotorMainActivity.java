@@ -43,6 +43,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
     }
 
     private void endTest(){
+        grossMotorTest.endTest();
         hideAnswerButtons();
         ((TextView)findViewById(R.id.gmSkillTypeTV)).setText("");
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText("");
@@ -149,6 +150,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(GrossMotorMainActivity.this, MonitoringConsultationChoice.class);
+        grossMotorTest.endTest();
         finish();
         startActivity(intent);
     }

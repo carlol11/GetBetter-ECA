@@ -17,13 +17,9 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.adapters.PatientsAdapter;
 import com.geebeelicious.geebeelicious.database.DataAdapter;
-import com.geebeelicious.geebeelicious.expertsystem.ExpertSystem;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,20 +32,21 @@ public class PatientListActivity extends ActionBarActivity {
     private Patient chosenPatient = null;
     private PatientsAdapter patientsAdapter;
     private EditText inputSearch;
-    private int schoolID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list);
 
-        //patients = getBetterDb.getAllPatients();
-        getSchoolPreferences();
-        System.out.println("schoolId" + schoolID);
-        //TODO [URGENT, DB]: Replace with database call to get patient list
+        DataAdapter getBetterDb = new DataAdapter(PatientListActivity.this);
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         patients = new ArrayList<>();
-        patients.add(new Patient(1, "Sammy", "McHam IV", "02/07/2008", 0, 1, 0));
-        patients.add(new Patient(2, "Electra", "Woman", "03/04/2010", 1, 1, 0));
+        patients = getBetterDb.getPatientsFromSchool(getSchoolPreferences());
+        getBetterDb.closeDatabase();
 
         inputSearch = (EditText)findViewById(R.id.search_input);
 
@@ -106,18 +103,20 @@ public class PatientListActivity extends ActionBarActivity {
 
     }
 
-    private void getSchoolPreferences(){
+    private int getSchoolPreferences(){
+        int schoolID = 0; //default schoolID
         byte[] byteArray = new byte[4];
         try{
             FileInputStream fis = openFileInput("SchoolIDPreferences");
             fis.read(byteArray, 0, 4);
             fis.close();
         } catch(IOException e){
-            schoolID = 0; //default schoolID
         }
 
         ByteBuffer b = ByteBuffer.wrap(byteArray);
         schoolID = b.getInt();
+
+        return schoolID;
     }
 
 }

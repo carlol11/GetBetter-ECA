@@ -454,4 +454,23 @@ public class DataAdapter {
         c.close();
         return HPIs;
     }
+
+    public ArrayList<Patient> getPatientsFromSchool(int schoolID){
+        ArrayList<Patient> patients = new ArrayList<>();
+        Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_SCHOOL_ID + " = " + schoolID, null, null, null, Patient.C_LAST_NAME +" ASC");
+        if(c.moveToFirst()){
+            do{
+                patients.add(new Patient(c.getInt(c.getColumnIndex(Patient.C_PATIENT_ID)),
+                        c.getString(c.getColumnIndex(Patient.C_FIRST_NAME)),
+                        c.getString(c.getColumnIndex(Patient.C_LAST_NAME)),
+                        c.getString(c.getColumnIndex(Patient.C_BIRTHDAY)),
+                        c.getInt(c.getColumnIndex(Patient.C_GENDER)),
+                        c.getInt(c.getColumnIndex(Patient.C_SCHOOL_ID)),
+                        c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS))));
+            }while(c.moveToNext());
+        }
+        c.close();
+
+        return patients;
+    }
 }

@@ -75,13 +75,21 @@
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/search_input"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_patients_hint"
+        android:textSize="25sp"
+        android:inputType="text"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:showDividers="middle"
-        android:layout_toStartOf="@+id/relativeLayoutECA">
+        android:layout_toStartOf="@+id/relativeLayoutECA"
+        android:layout_below="@+id/search_input">
 
         <ListView
             android:layout_width="350dp"

@@ -24,4 +24,5 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="school_name">School Name</string>
     <string name="save_settings">Save</string>
+    <string name="search_patients_hint">Search patients...</string>
 </resources>

@@ -408,25 +408,6 @@ public class DataAdapter {
         return patients;
     }
 
-    public ArrayList<Patient> getAllPatients(){
-        ArrayList<Patient> patients = new ArrayList<>();
-        Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, null, null, null, null, null, null);
-
-        if(c.moveToFirst()){
-            do{
-                patients.add(new Patient(c.getInt(c.getColumnIndex(Patient.C_PATIENT_ID)),
-                        c.getString(c.getColumnIndex(Patient.C_FIRST_NAME)),
-                        c.getString(c.getColumnIndex(Patient.C_LAST_NAME)),
-                        c.getString(c.getColumnIndex(Patient.C_BIRTHDAY)),
-                        c.getInt(c.getColumnIndex(Patient.C_GENDER)),
-                        c.getInt(c.getColumnIndex(Patient.C_SCHOOL_ID)),
-                        c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS))));
-            }while(c.moveToNext());
-        }
-        c.close();
-        return patients;
-    }
-
     public ArrayList<School> getAllSchools(){
         ArrayList<School> schools = new ArrayList<>();
         Cursor c = getBetterDb.query(School.TABLE_NAME, null, null, null, null, null, null, null);

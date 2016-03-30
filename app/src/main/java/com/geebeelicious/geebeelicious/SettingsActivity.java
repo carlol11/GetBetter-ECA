@@ -1,16 +1,24 @@
 package com.geebeelicious.geebeelicious;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Set;
 
 import models.consultation.School;
 
@@ -51,10 +59,36 @@ public class SettingsActivity extends ActionBarActivity {
             }
         });
 
-
-        //TODO: [URGENT] Add save button functionality
+        Button saveButton = (Button)findViewById(R.id.saveSettingsButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSchool();
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
         //TODO: [URGENT] Move calibration test to settings
         //TODO: [URGENT] Set onBackPressed()
+    }
+
+    private void saveSchool(){
+        ByteBuffer b = ByteBuffer.allocate(4);
+        b.putInt(chosenSchool.getSchoolId());
+        byte[] byteArray = b.array();
+
+        try{
+            FileOutputStream fos = openFileOutput("SchoolIDPreferences", Context.MODE_PRIVATE);
+            try{
+                fos.write(byteArray);
+                fos.close();
+            } catch(IOException ioe){
+
+            }
+        } catch(FileNotFoundException fe){
+
+        }
     }
 
 }

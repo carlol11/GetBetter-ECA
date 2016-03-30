@@ -20,7 +20,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //TODO: [UI for Kate] Make logo for main activity
-        //TODO: Make Settings Activity for Hearing Test Calibration and School List
         Button startButton = (Button)findViewById(R.id.startButton);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
         startButton.setOnClickListener(new View.OnClickListener() {

@@ -75,8 +75,6 @@ public class SettingsActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        //TODO: [URGENT] Move calibration test to settings
-        //TODO: [URGENT] Set onBackPressed()
     }
 
     private void saveSchool(){

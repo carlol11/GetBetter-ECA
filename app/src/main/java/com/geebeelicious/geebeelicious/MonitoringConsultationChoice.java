@@ -20,7 +20,6 @@ import models.consultation.Patient;
 
 public class MonitoringConsultationChoice extends ActionBarActivity {
     private DateFormat dateFormat;
-    private Patient chosenPatient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +27,7 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         setContentView(R.layout.activity_monitoring_consultation_choice);
         Button mButton = (Button)findViewById(R.id.monitoringButton);
         Button cButton = (Button)findViewById(R.id.consultationButton);
-        //final Patient patient = new Patient(1, "Kristoff", "McHamm", "2/7/2008", 0, 1, 1);
-
-        //TODO: [URGENT, DB] Use the patientID from Intent to get the patient from the database
-        ArrayList<Patient> patients = new ArrayList<>();
-        patients.add(new Patient(1, "Sammy", "McHam IV", "02/07/2008", 0, 1, 0));
-        patients.add(new Patient(2, "Electra", "Woman", "03/04/2010", 1, 1, 0));
-        int patientID = this.getIntent().getIntExtra("patientID", 0);
-        for(Patient p : patients){
-            if(p.getPatientID() == patientID){
-                chosenPatient = p;
-                break;
-            }
-        }
+        final Patient patient = getIntent().getParcelableExtra("patient");
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -48,7 +35,7 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Bundle record = new Bundle();
-                record.putParcelable("patient", chosenPatient);
+                record.putParcelable("patient", patient);
                 record.putString("currentDate", dateFormat.format(new Date()));
                 Intent intent = new Intent(MonitoringConsultationChoice.this, VisualAcuityMainActivity.class);
                 intent.putExtras(record);
@@ -61,7 +48,7 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MonitoringConsultationChoice.this, ConsultationActivity.class);
                 intent.putExtra("currentDate", dateFormat.format(new Date()));
-                intent.putExtra("patient", chosenPatient);
+                intent.putExtra("patient", patient);
                 startActivity(intent);
             }
         });

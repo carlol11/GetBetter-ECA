@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.geebeelicious.geebeelicious.database.DataAdapter;
+
+import java.sql.SQLException;
+
 public class MainActivity extends ActionBarActivity {
 
     @Override
@@ -33,6 +37,14 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        DataAdapter getBetterDb = new DataAdapter(MainActivity.this);
+        try {
+            getBetterDb.createDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            finish(); //exit app if database creation fails
+        }
     }
 
     @Override

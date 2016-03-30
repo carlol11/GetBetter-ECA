@@ -12,11 +12,13 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
+import com.geebeelicious.geebeelicious.database.DataAdapter;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -25,11 +27,11 @@ import models.consultation.School;
 public class SettingsActivity extends ActionBarActivity {
 
     private School chosenSchool = null;
+    private ArrayList<School> schools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Hereee");
         setContentView(R.layout.activity_settings);
 
         addChooseSchoolSetting();
@@ -37,11 +39,14 @@ public class SettingsActivity extends ActionBarActivity {
     }
 
     private void addChooseSchoolSetting(){
-        System.out.println("Here");
-        //TODO: [URGENT, DB] Get list of schools from DB
-        final ArrayList<School> schools = new ArrayList<School>();
-        schools.add(new School(1, "Hammy School of the Arts", "Los Angeles"));
-        schools.add(new School(2, "East High School", "Albuquerque"));
+        DataAdapter getBetterDb = new DataAdapter(SettingsActivity.this);
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        schools = getBetterDb.getAllSchools();
+        getBetterDb.closeDatabase();
 
         SchoolsAdapter schoolsAdapter = new SchoolsAdapter(SettingsActivity.this, schools);
         schoolsAdapter.setDropDownViewResource(R.layout.item_school_list);

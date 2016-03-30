@@ -113,7 +113,7 @@ public class PatientListActivity extends ActionBarActivity {
             fis.read(byteArray, 0, 4);
             fis.close();
         } catch(IOException e){
-            schoolID = 0;
+            schoolID = 0; //default schoolID
         }
 
         ByteBuffer b = ByteBuffer.wrap(byteArray);

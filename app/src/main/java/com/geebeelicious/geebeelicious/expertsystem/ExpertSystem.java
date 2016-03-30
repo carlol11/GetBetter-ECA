@@ -92,15 +92,11 @@ public class ExpertSystem {
     }
 
     public void saveToDatabase(HPI hpi) {
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         getBetterDb.insertHPI(hpi);
-
-        getBetterDb.closeDatabase();
+        getBetterDb.closeDatabase(); //closes the database
     }
+
+
 
     public ArrayList<ChiefComplaint> getChiefComplaintsQuestions(){
         ArrayList <ChiefComplaint> chiefComplaints = new ArrayList<>();
@@ -121,7 +117,6 @@ public class ExpertSystem {
         getBetterDb = new DataAdapter(context);
 
         try {
-            getBetterDb.createDatabase();
             getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,25 +124,11 @@ public class ExpertSystem {
     }
 
     private void resetDatabaseFlags() {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         getBetterDb.resetSymptomAnsweredFlag();
         getBetterDb.resetSymptomFamilyFlags();
-        getBetterDb.closeDatabase();
     }
 
     private void initializeImpressionList () {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         impressionsSymptoms = new ArrayList<>();
         impressionsSymptoms.addAll(getBetterDb.getImpressions(patientChiefComplaints));
@@ -158,49 +139,23 @@ public class ExpertSystem {
             ArrayList<Symptom> symptoms = getBetterDb.getSymptoms(impressionsSymptoms.get(i).getImpressionId());
             impressionsSymptoms.get(i).setSymptoms(symptoms);
         }
-
-        getBetterDb.closeDatabase();
     }
 
     private void updateAnsweredStatusSymptomFamily() {
 
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         for(ChiefComplaint c: patientChiefComplaints){
             getBetterDb.updateAnsweredStatusSymptomFamily(c.getComplaintID());
         }
-
-        getBetterDb.closeDatabase();
-
     }
 
     private void updateAnsweredStatusSymptomFamily(int answer) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         getBetterDb.updateAnsweredStatusSymptomFamily(generalQuestion.getSymptomFamilyId(), answer);
     }
 
     private void getQuestions(int impressionId) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         questions.clear();
         questions.addAll(getBetterDb.getQuestions(impressionId));
         //Log.d("questions size", questions.size() + "");
-        getBetterDb.closeDatabase();
     }
 
     private String getQuestion() {
@@ -220,28 +175,12 @@ public class ExpertSystem {
     }
 
     private boolean isSymptomFamilyQuestionAnswered(int symptomFamilyId) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         boolean value = getBetterDb.symptomFamilyIsAnswered(symptomFamilyId);
-        getBetterDb.closeDatabase();
         return value;
     }
 
     private void getGeneralQuestion (int symptomFamilyId) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         generalQuestion = getBetterDb.getGeneralQuestion(symptomFamilyId);
-        getBetterDb.closeDatabase();
     }
 
     public String getNextQuestion(boolean isYes) { //returns null if no more question
@@ -350,15 +289,7 @@ public class ExpertSystem {
     }
 
     private void updateAnsweredFlagPositive(int symptomId) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         getBetterDb.updateAnsweredFlagPositive(symptomId);
-        getBetterDb.closeDatabase();
     }
 
     private void addToAnswers(PatientAnswers answer) {
@@ -371,11 +302,6 @@ public class ExpertSystem {
 
     private void checkForRuledOutImpression(int impressionId) {
 
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         //Log.d("Impression id", impressionId + "");
         ArrayList<String> hardSymptoms = getBetterDb.getHardSymptoms(impressionId);
 
@@ -391,32 +317,17 @@ public class ExpertSystem {
         } else {
             plausibleImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
         }
-
-        getBetterDb.closeDatabase();
     }
 
     private boolean isSymptomFamilyPositive (int symptomFamilyId) {
 
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         boolean value = getBetterDb.symptomFamilyAnswerStatus(symptomFamilyId);
-        getBetterDb.closeDatabase();
         return value;
     }
 
     public String getHPI(){
         String HPI = generateIntroductionSentence();
         ArrayList<PositiveResults> positiveSymptoms;
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         positiveSymptoms = getBetterDb.getPositiveSymptoms(answers);
 
@@ -428,6 +339,7 @@ public class ExpertSystem {
                 HPI += "He " + positiveSymptoms.get(i).getPositiveAnswerPhrase() + " ";
             }
         }
+
         return HPI;
     }
 
@@ -468,16 +380,9 @@ public class ExpertSystem {
     private String[] getChiefComplaints () {
         String [] chiefComplaints = new String[patientChiefComplaints.size()];
 
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         for(int i = 0; i < chiefComplaints.length; i++) {
             chiefComplaints[i] = getBetterDb.getChiefComplaints(patientChiefComplaints.get(i).getComplaintID());
         }
-
-        getBetterDb.closeDatabase();
 
         return chiefComplaints;
     }

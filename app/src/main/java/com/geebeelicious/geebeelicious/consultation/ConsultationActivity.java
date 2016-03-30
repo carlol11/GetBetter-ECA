@@ -74,7 +74,7 @@ public class ConsultationActivity extends ActionBarActivity {
             if(consultationHelper.isTherePatientComplaints()) {
                 String hpi = consultationHelper.getHPI();
                 Log.d(TAG, "HPI: " + hpi);
-                consultationHelper.saveToDatabase(hpi);
+                consultationHelper.saveToDatabase(hpi); //closes the database after saving the hpi
             } else { //TODO: [UI PART] put the condition here if no complaints
                 Log.d(TAG, "No chief complaint found ");
             }

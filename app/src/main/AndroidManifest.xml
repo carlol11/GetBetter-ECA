@@ -55,16 +55,24 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".PatientListActivity"
-            android:label="@string/title_activity_patient_list" />
+            android:label="@string/title_activity_patient_list"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".AddPatientActivity"
+            android:label="@string/title_activity_add_patient"
+            android:screenOrientation="landscape"/>
     </application>
 
-</manifest><!--
+</manifest>
+
+    <!--
           commented out for testing purposes only MAIN ACTIVITY SHOULD HAVE LAUNCHER
           <intent-filter>
               <action android:name="android.intent.action.MAIN" />s
               <category android:name="android.intent.category.LAUNCHER" />
           </intent-filter>
--->
+    -->

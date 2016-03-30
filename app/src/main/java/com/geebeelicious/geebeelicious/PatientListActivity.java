@@ -104,13 +104,14 @@ public class PatientListActivity extends ActionBarActivity {
     }
 
     private int getSchoolPreferences(){
-        int schoolID = 0; //default schoolID
+        int schoolID = 1; //default schoolID
         byte[] byteArray = new byte[4];
         try{
             FileInputStream fis = openFileInput("SchoolIDPreferences");
             fis.read(byteArray, 0, 4);
             fis.close();
         } catch(IOException e){
+            return 1;
         }
 
         ByteBuffer b = ByteBuffer.wrap(byteArray);

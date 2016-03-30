@@ -13,6 +13,7 @@ import android.widget.SpinnerAdapter;
 
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,7 +36,7 @@ public class SettingsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_settings);
 
         addChooseSchoolSetting();
-
+        addCalibrationSetting();
     }
 
     private void addChooseSchoolSetting(){
@@ -60,7 +61,7 @@ public class SettingsActivity extends ActionBarActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                chosenSchool = schools.get(1);
             }
         });
 
@@ -94,6 +95,19 @@ public class SettingsActivity extends ActionBarActivity {
         } catch(FileNotFoundException fe){
 
         }
+    }
+
+    private void addCalibrationSetting(){
+        Button calibrateButton = (Button)findViewById(R.id.calibrateHearingTestButton);
+        calibrateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, HearingCalibrationActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
     }
 
 }

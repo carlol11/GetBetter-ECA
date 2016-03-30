@@ -81,7 +81,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/search_patients_hint"
         android:textSize="25sp"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:layout_toStartOf="@+id/relativeLayoutECA" />
 
     <LinearLayout
         android:orientation="horizontal"

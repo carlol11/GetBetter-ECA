@@ -67,10 +67,4 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         });
     }
 
-    public void calibrateHearing(View view){
-        Intent intent = new Intent(MonitoringConsultationChoice.this, HearingCalibrationActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
 }

@@ -25,4 +25,6 @@
     <string name="school_name">School Name</string>
     <string name="save_settings">Save</string>
     <string name="search_patients_hint">Search patients...</string>
+    <string name="calibrate_button">Calibrate</string>
+    <string name="calibrate_settings">Calibrate Hearing Test</string>
 </resources>

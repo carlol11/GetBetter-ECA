@@ -39,6 +39,7 @@ public class MonitoringActivity extends ActionBarActivity {
         unitView = (TextView)findViewById(R.id.unitView);
         numberPicker = (NumberPicker)findViewById(R.id.monitoringNumberPicker);
         numberPicker.setMinValue(0);
+        record = getIntent().getExtras();
 
         questionView.setText(questions[questionsCounter]);
         unitView.setText(questionUnit[questionsCounter]);
@@ -48,14 +49,14 @@ public class MonitoringActivity extends ActionBarActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                record = getIntent().getExtras();
+                System.out.println("numberPicker: " +  numberPicker.getValue() + " " + new Integer(numberPicker.getValue()).doubleValue());
                 switch(questionsCounter){
                     case 0:
-                        record.putDouble("height", (double)numberPicker.getValue());
+                        record.putDouble("height", new Integer(numberPicker.getValue()).doubleValue());
                         numberPicker.setMaxValue(100);
                         break;
                     case 1:
-                        record.putDouble("weight", (double)numberPicker.getValue());
+                        record.putDouble("weight", new Integer(numberPicker.getValue()).doubleValue());
                         break;
                 }
                 questionsCounter++;
@@ -70,6 +71,7 @@ public class MonitoringActivity extends ActionBarActivity {
     }
 
     private void endMonitoring(){
+        questionsCounter = 0;
         RelativeLayout monitoringView = (RelativeLayout)findViewById(R.id.monitoringQuestionView);
         monitoringView.setVisibility(View.GONE);
         Button saveButton = (Button)findViewById(R.id.saveAnswerButton);

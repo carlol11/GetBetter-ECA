@@ -129,4 +129,12 @@ public class Patient implements Parcelable {
             return "Female";
         }
     }
+
+    public String getHandednessString(){
+        if(handedness == 0){
+            return "Right-Handed";
+        }else{
+            return "Left-Handed";
+        }
+    }
 }

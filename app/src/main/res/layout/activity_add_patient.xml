@@ -93,13 +93,15 @@
                 android:textSize="60sp"
                 android:layout_marginBottom="30dp"
                 android:id="@+id/questionView"
+                android:gravity="center"
                 android:layout_centerHorizontal="true"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="50sp"
-                android:inputType="textPersonName"
+                android:gravity="center"
+                android:inputType="textCapWords"
                 android:id="@+id/newPatientStringInput"
                 android:layout_below="@+id/questionView"
                 android:visibility="gone"/>
@@ -110,6 +112,7 @@
                 android:id="@+id/newPatientDatePicker"
                 android:layout_below="@+id/questionView"
                 android:visibility="gone"
+                android:startYear="2000"
                 android:calendarViewShown="false">
             </DatePicker>
 
@@ -128,7 +131,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/radioButton1"
                     android:textSize="50sp"
-                    android:text="Hello"
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp"
                     android:layout_marginRight="100dp"/>
@@ -139,8 +141,7 @@
                     android:id="@+id/radioButton2"
                     android:textSize="50sp"
                     android:paddingRight="20dp"
-                    android:paddingLeft="20dp"
-                    android:text="Hello"/>
+                    android:paddingLeft="20dp"/>
 
             </RadioGroup>
 

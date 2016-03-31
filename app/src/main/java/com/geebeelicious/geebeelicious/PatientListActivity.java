@@ -72,12 +72,31 @@ public class PatientListActivity extends ActionBarActivity {
             }
         });
 
+        TextView patientDetailsView = (TextView)findViewById(R.id.patientDetailsTV);
+        patientDetailsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
+            }
+        });
+
         Button selectPatientButton = (Button)findViewById(R.id.selectPatientButton);
         selectPatientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PatientListActivity.this, MonitoringConsultationChoice.class);
                 intent.putExtra("patient", chosenPatient);
+                startActivity(intent);
+            }
+        });
+
+        Button addNewPatientButton = (Button)findViewById(R.id.addPatientButton);
+        addNewPatientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PatientListActivity.this, AddPatientActivity.class);
+                intent.putExtra("schoolID", getSchoolPreferences());
                 startActivity(intent);
             }
         });

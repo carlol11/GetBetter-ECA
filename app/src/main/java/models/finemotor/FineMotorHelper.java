@@ -59,7 +59,8 @@ public class FineMotorHelper {
     public void saveToDatabase(Record record){
         openDatabase();
         getBetterDb.insertRecord(record);
-
+        getBetterDb.getRecords(record.getPatient_id()); //calls the method to just print the recods
+        getBetterDb.closeDatabase();
     }
 
     public boolean[] getResults(){
@@ -72,7 +73,6 @@ public class FineMotorHelper {
 
     //called if the user is outside the path
     public void doIfOutSideThePath(){
-        ECAtext.setText(R.string.fine_motor_dont_lift);
         if(!wasOutside){
             mp.start();
             wasOutside = true;
@@ -95,7 +95,9 @@ public class FineMotorHelper {
         numWrongs = 0;
     }
 
-    public void doIfTouchIsUp() {
+    public void doIfTouchIsUp()
+    {
+        ECAtext.setText(R.string.fine_motor_dont_lift);
         pauseMp();
     }
     //asks the assistant if the user was able to use the pen properly. saves the results too

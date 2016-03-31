@@ -1,9 +1,13 @@
 package models.consultation;
 
+import android.util.Log;
+
 /**
  * Created by mgmalana on 24/03/2016.
  */
 public class Record {
+    public final static String TAG = "Record";
+
     public final static String TABLE_NAME = "tbl_record";
 
     public final static String C_RECORD_ID = "record_id";
@@ -123,5 +127,14 @@ public class Record {
 
     public int getFineMotorHold() {
         return fineMotorHold;
+    }
+
+    public void printRecord(){
+        Log.d(TAG, "recordID: " + recordID + ", patientID: " + patient_id + ", dateCreated: " + dateCreated +
+            ", height: " + height + ", weight " + weight + ", visualAcuityLeft: " + visualAcuityLeft +
+            ", visualAcuityRight: " + visualActuityRight + ", colorVision " + colorVision +
+            ", hearingLeft: " + hearingLeft + ", hearingRight: " + hearingRight +
+            ", grossMotor: " + grossMotor + ", fineMotorDominant: " + fineMotorDominant +
+            ", fineMotorNonDominant: " + fineMotorNDominant + ", fineMotorPen: " + fineMotorHold);
     }
 }

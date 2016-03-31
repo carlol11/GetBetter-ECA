@@ -31,12 +31,6 @@ public class DataAdapter {
 
     private static final String SYMPTOM_LIST = "tbl_symptom_list";
     private static final String SYMPTOM_FAMILY = "tbl_symptom_family";
-    private static final String PATIENT_ANSWERS = "tbl_patient_answers";
-    private static final String CASE_RECORDS_TABLE = "tbl_case_records";
-    private static final String IMPRESSION_TABLE = "tbl_case_impression";
-    private static final String IMPRESSION_TO_COMPLAINTS = "tbl_impressions_of_complaints";
-    private static final String SYMPTOM_TO_IMPRESSION = "tbl_symptom_of_impression";
-    private static final String SYMPTOM_TABLE = "tbl_symptom_list";
 
     public DataAdapter (Context context) {
         getBetterDatabaseHelper  = new DatabaseHelper(context);
@@ -430,13 +424,17 @@ public class DataAdapter {
 
         if(c.moveToFirst()){
             do{
-                records.add(new Record(c.getInt(c.getColumnIndex(Record.C_RECORD_ID)), c.getInt(c.getColumnIndex(Record.C_PATIENT_ID)),
+                Record record = new Record(c.getInt(c.getColumnIndex(Record.C_RECORD_ID)), c.getInt(c.getColumnIndex(Record.C_PATIENT_ID)),
                         c.getString(c.getColumnIndex(Record.C_DATE_CREATED)), c.getDouble(c.getColumnIndex(Record.C_HEIGHT)),
                         c.getDouble(c.getColumnIndex(Record.C_WEIGHT)), c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_LEFT)),
                         c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_RIGHT)), c.getString(c.getColumnIndex(Record.C_COLOR_VISION)),
                         c.getString(c.getColumnIndex(Record.C_HEARING_LEFT)), c.getString(c.getColumnIndex(Record.C_HEARING_RIGHT)),
                         c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)),
-                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD))));
+                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)));
+
+                record.printRecord();
+                records.add(record);
+
             }while(c.moveToNext());
         }
         c.close();

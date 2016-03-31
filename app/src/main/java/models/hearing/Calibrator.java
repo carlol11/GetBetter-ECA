@@ -245,7 +245,7 @@ public class Calibrator {
             }
         }
 
-        //TODO: Fix calibration such that if there is an infinite value, alert user, give instructions, and recalibrate
+        //TODO: [NOT URGENT, Kate] Fix calibration such that if there is an infinite value, alert user, give instructions, and recalibrate
 
         try{
             FileOutputStream fos = context.openFileOutput("HearingTestCalibrationPreferences", Context.MODE_PRIVATE);

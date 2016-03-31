@@ -57,13 +57,11 @@ public class PatientListActivity extends ActionBarActivity {
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: [NOT URGENT, UI PART] Make separate text view for each attribute instead of concatenating string
                 chosenPatient = patients.get(position);
-                String patientInfo = "";
-                patientInfo = "First Name: " + chosenPatient.getFirstName() +
-                        "\nLast Name: " + chosenPatient.getLastName() +
-                        "\nBirthdate: " + chosenPatient.getBirthday() +
-                        "\nGender: " + chosenPatient.getGenderString();
+                String patientInfo = "First Name: " + chosenPatient.getFirstName() +
+                                    "\nLast Name: " + chosenPatient.getLastName() +
+                                    "\nBirthdate: " + chosenPatient.getBirthday() +
+                                    "\nGender: " + chosenPatient.getGenderString();
                 TextView patientInfoView = (TextView) findViewById(R.id.patientDetailsTV);
                 patientInfoView.setText(patientInfo);
 
@@ -117,9 +115,6 @@ public class PatientListActivity extends ActionBarActivity {
                 patientsAdapter.filter(s.toString());
             }
         });
-
-        //TODO: [NOT URGENT] Handle creating new patient
-
     }
 
     private int getSchoolPreferences(){

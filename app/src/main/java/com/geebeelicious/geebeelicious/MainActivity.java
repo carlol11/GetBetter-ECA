@@ -19,7 +19,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TODO: [UI for Kate] Make logo for main activity
+        //TODO: [UI, Kate] Make logo for main activity
         Button startButton = (Button)findViewById(R.id.startButton);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
         startButton.setOnClickListener(new View.OnClickListener() {

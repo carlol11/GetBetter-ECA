@@ -70,8 +70,6 @@ public class FineMotorHelper {
         result[index] = isYes;
     }
 
-    //TODO: change this update the others
-
     //called if the user is outside the path
     public void doIfOutSideThePath(){
         ECAtext.setText(R.string.fine_motor_dont_lift);

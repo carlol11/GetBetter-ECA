@@ -24,14 +24,15 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/placeholderECA"
         android:padding="30dp"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:id="@+id/relativeLayout">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="300dp"
             android:id="@+id/logo"
-            style="@style/ECAPlaceholder"/>
+            android:src="@drawable/logo_main_activity"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -51,10 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/settingsButton"
-        android:minWidth="50dp"
-        android:minHeight="50dp"
-        style="@style/ECAPlaceholder"
+        android:src="@drawable/settings_button"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/relativeLayout" />
 
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">geebeelicious</string>
+    <string name="app_name">GeeBee</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_visual_acuity">MainVisualAcuity</string>
     <string name="title_activity_visual_acuity_main">VisualAcuityMainActivity</string>

@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.geebeelicious.geebeelicious.consultation.ConsultationActivity;
+import com.geebeelicious.geebeelicious.monitoring.MonitoringActivity;
 import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
 import com.geebeelicious.geebeelicious.tests.visualacuity.VisualAcuityMainActivity;
 
@@ -37,7 +38,7 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
                 Bundle record = new Bundle();
                 record.putParcelable("patient", patient);
                 record.putString("currentDate", dateFormat.format(new Date()));
-                Intent intent = new Intent(MonitoringConsultationChoice.this, VisualAcuityMainActivity.class);
+                Intent intent = new Intent(MonitoringConsultationChoice.this, MonitoringActivity.class);
                 intent.putExtras(record);
                 startActivity(intent);
             }

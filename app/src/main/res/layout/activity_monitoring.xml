@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:keepScreenOn="true"
+    style="@style/DefaultBackground"
+    tools:context="com.geebeelicious.geebeelicious.monitoring.MonitoringActivity">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/relativeLayoutECA"
+        style="@style/DefaultBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/placeholderECA"
+            android:minHeight="300dp"
+            android:minWidth="300dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:longClickable="false"
+            android:maxHeight="300dp"
+            android:maxWidth="300dp"
+            android:layout_marginBottom="10dp"
+            style="@style/ECAPlaceholder"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Placeholder for Instructions from GeeBee"
+            android:id="@+id/placeholderECAText"
+            android:paddingTop="10dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/placeholderECA" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/placeholderECAText">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:textSize="35sp"
+                android:padding="15dp"
+                android:id="@+id/saveAnswerButton"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toStartOf="@+id/relativeLayoutECA">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:id="@+id/monitoringQuestionView"
+            android:visibility="visible"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/monitoringIV"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="60sp"
+                android:layout_marginBottom="30dp"
+                android:id="@+id/questionView"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/questionView"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/monitoringNumberPicker"
+                    android:layout_centerHorizontal="true">
+                </NumberPicker>
+
+                <TextView
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="60sp"
+                    android:gravity="center"
+                    android:id="@+id/unitView"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

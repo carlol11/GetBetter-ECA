@@ -38,4 +38,9 @@
     <string name="right_handed">Right-Handed</string>
     <string name="left_handed">Left-Handed</string>
     <string name="cancel">Cancel</string>
+    <string name="title_activity_monitoring">MonitoringActivity</string>
+    <string name="weight">What is your weight?</string>
+    <string name="height">What is your height?</string>
+    <string name="centimeters">cm</string>
+    <string name="kilograms">kg</string>
 </resources>

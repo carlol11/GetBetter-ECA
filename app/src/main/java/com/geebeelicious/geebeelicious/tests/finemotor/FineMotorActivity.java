@@ -181,8 +181,6 @@ public class FineMotorActivity extends Activity {
             @Override
             public void onFinish() {
                 Patient patient = record.getParcelable("patient");
-                double height = 127;
-                double weight =  25;
 
                 int grossMotor = getIntResults(record.getString("grossMotor"));
                 int nonDominantHand = getIntResults(record.getString("nonDominantHand"));
@@ -190,13 +188,11 @@ public class FineMotorActivity extends Activity {
                 int usePen = getIntResults(record.getString("usePen"));
 
                 fineMotorHelper.saveToDatabase(new Record(patient.getPatientID(),
-                        record.getString("currentDate"), height, weight, record.getString("visualAcuityLeft"),
+                        record.getString("currentDate"), record.getDouble("height"), record.getDouble("weight"), record.getString("visualAcuityLeft"),
                         record.getString("visualAcuityRight"), record.getString("colorVision"),
                         record.getString("hearingLeft"), record.getString("hearingRight"),
                         grossMotor, nonDominantHand,
                         dominantHand, usePen));
-
-                //TODO: [NOT URGENT] Add activity asking for height and weight. change the placeholders
 
                 Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
                 finish();

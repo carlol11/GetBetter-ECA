@@ -134,4 +134,10 @@ public class PatientListActivity extends ActionBarActivity {
         return schoolID;
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }

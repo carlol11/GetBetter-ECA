@@ -72,6 +72,8 @@ public class MonitoringActivity extends ActionBarActivity {
     private void endMonitoring(){
         RelativeLayout monitoringView = (RelativeLayout)findViewById(R.id.monitoringQuestionView);
         monitoringView.setVisibility(View.GONE);
+        Button saveButton = (Button)findViewById(R.id.saveAnswerButton);
+        saveButton.setVisibility(View.INVISIBLE);
         ImageView imageView = (ImageView)findViewById(R.id.monitoringIV);
         imageView.setVisibility(View.VISIBLE);
         imageView.setImageResource(R.drawable.wait_for_next_test);

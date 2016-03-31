@@ -113,7 +113,8 @@
                 android:layout_below="@+id/questionView"
                 android:visibility="gone"
                 android:startYear="2000"
-                android:calendarViewShown="false">
+                android:calendarViewShown="false"
+                android:descendantFocusability="blocksDescendants">
             </DatePicker>
 
             <RadioGroup

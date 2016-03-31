@@ -55,4 +55,10 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MonitoringConsultationChoice.this, PatientListActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }

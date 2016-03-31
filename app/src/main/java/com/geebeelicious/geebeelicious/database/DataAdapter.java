@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import models.consultation.ChiefComplaint;
 import models.consultation.HPI;
 import models.consultation.Impressions;
+import models.consultation.Municipality;
 import models.consultation.Patient;
 import models.consultation.PatientAnswers;
 import models.consultation.PositiveResults;
@@ -410,12 +411,13 @@ public class DataAdapter {
 
     public ArrayList<School> getAllSchools(){
         ArrayList<School> schools = new ArrayList<>();
-        Cursor c = getBetterDb.query(School.TABLE_NAME, null, null, null, null, null, null, null);
-
+        Cursor c = getBetterDb.rawQuery("SELECT "+ School.C_SCHOOL_ID + ", s." + School.C_SCHOOLNAME + ", m." +
+                Municipality.C_NAME + " AS municipalityName FROM " + School.TABLE_NAME + " AS s, " + Municipality.TABLE_NAME +
+                " AS m WHERE s." + School.C_MUNICIPALITY + " = m." + Municipality.C_MUNICIPALITY_ID, null);
         if(c.moveToFirst()){
             do{
                 schools.add(new School(c.getInt(c.getColumnIndex(School.C_SCHOOL_ID)), c.getString(c.getColumnIndex(School.C_SCHOOLNAME)),
-                        c.getString(c.getColumnIndex(School.C_MUNICIPALITY))));
+                        c.getString(c.getColumnIndex("municipalityName"))));
             }while(c.moveToNext());
         }
         c.close();

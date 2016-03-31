@@ -13,6 +13,7 @@ import com.geebeelicious.geebeelicious.tests.visualacuity.VisualAcuityMainActivi
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import models.consultation.Patient;
@@ -26,7 +27,7 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         setContentView(R.layout.activity_monitoring_consultation_choice);
         Button mButton = (Button)findViewById(R.id.monitoringButton);
         Button cButton = (Button)findViewById(R.id.consultationButton);
-        final Patient patient = new Patient(1, "Kristoff", "McHamm", "2/7/2008", 0, 1, 1);
+        final Patient patient = getIntent().getParcelableExtra("patient");
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -51,12 +52,6 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    public void calibrateHearing(View view){
-        Intent intent = new Intent(MonitoringConsultationChoice.this, HearingCalibrationActivity.class);
-        finish();
-        startActivity(intent);
     }
 
 }

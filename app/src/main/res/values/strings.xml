@@ -20,4 +20,22 @@
     <string name="Monitoring">Monitoring</string>
     <string name="Consultation">Consultation</string>
     <string name="fine_motor_dont_lift">Don\'t lift your finger. Go back to start.</string>
+    <string name="title_activity_patient_list">PatientListActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="school_name">School Name</string>
+    <string name="save">Save</string>
+    <string name="search_patients_hint">Search patients...</string>
+    <string name="calibrate_button">Calibrate</string>
+    <string name="calibrate_settings">Calibrate Hearing Test</string>
+    <string name="title_activity_add_patient">AddPatientActivity</string>
+    <string name="first_name">What is your first name?</string>
+    <string name="last_name">What is your last name?</string>
+    <string name="birthdate">What is your birth date?</string>
+    <string name="gender">Are you a male or a female?</string>
+    <string name="handedness">Are you right-handed or left-handed?</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="right_handed">Right-Handed</string>
+    <string name="left_handed">Left-Handed</string>
+    <string name="cancel">Cancel</string>
 </resources>

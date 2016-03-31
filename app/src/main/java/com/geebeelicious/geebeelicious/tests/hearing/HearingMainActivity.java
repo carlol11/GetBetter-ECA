@@ -44,6 +44,15 @@ public class HearingMainActivity extends ActionBarActivity {
             }
         });
 
+        final ImageView placeholderECA = (ImageView)findViewById(R.id.placeholderECA);
+        placeholderECA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endTestShortCut();
+            }
+        });
+
+
         final Runnable backgroundFlash = new Runnable(){
             public void run(){
                 yesButton.setBackgroundColor(Color.parseColor("#18FFFF"));
@@ -144,6 +153,19 @@ public class HearingMainActivity extends ActionBarActivity {
         for(int i = 0; i<threads.size(); i++){
             threads.get(i).interrupt();
         }
+    }
+
+    //For testing purposes only
+    public void endTestShortCut(){
+        record.putString("hearingRight", "Mild Hearing Loss");
+        record.putString("hearingLeft", "Moderately-Severe Hearing Loss");
+
+        stopTest();
+
+        Intent intent = new Intent(HearingMainActivity.this, GrossMotorMainActivity.class);
+        intent.putExtras(record);
+        finish();
+        startActivity(intent);
     }
 
     @Override

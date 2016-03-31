@@ -195,6 +195,7 @@ public class FineMotorActivity extends Activity {
                         dominantHand, usePen));
 
                 Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
+                intent.putExtra("patient", patient);
                 finish();
                 startActivity(intent);
             }

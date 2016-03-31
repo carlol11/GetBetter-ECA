@@ -20,6 +20,7 @@ public class ConsultationActivity extends ActionBarActivity {
     private ConsultationHelper consultationHelper;
     private final static String TAG = "ConsultationActivity";
     private boolean isOnGoingFlag;
+    private Patient patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class ConsultationActivity extends ActionBarActivity {
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
 
-        Patient patient = getIntent().getExtras().getParcelable("patient");
+        patient = getIntent().getExtras().getParcelable("patient");
         String dateConsultation = getIntent().getStringExtra("currentDate");
 
         isOnGoingFlag = true;
@@ -78,8 +79,11 @@ public class ConsultationActivity extends ActionBarActivity {
             } else { //TODO: [UI PART] put the condition here if no complaints
                 Log.d(TAG, "No chief complaint found ");
             }
-                finish();
-                startActivity(new Intent(this, MonitoringConsultationChoice.class));
+            Intent intent = new Intent(this, MonitoringConsultationChoice.class);
+            intent.putExtra("patient", patient);
+            startActivity(intent);
+            finish();
+
         }
     }
 }

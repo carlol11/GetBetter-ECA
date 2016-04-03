@@ -14,8 +14,14 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.tests.visualacuity.VisualAcuityMainActivity;
 
-import org.w3c.dom.Text;
-
+/**
+ * Created by Kate.
+ * The MonitoringActivity class serves as the first activity
+ * that users will encounter when they choose to perform a
+ * monitoring activity. The activity will allow users to
+ * input updates for certain health determinants such as
+ * height and weight.
+ */
 
 public class MonitoringActivity extends ActionBarActivity {
 

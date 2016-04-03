@@ -24,12 +24,15 @@ import models.consultation.Record;
 import models.finemotor.FineMotorHelper;
 
 
-/*
-* Activity for the Fine Motors Test
-*/
+/**
+ * Created by Mary Grace Malana.
+ * The FineMotorActivity class serves as the main activity
+ * for the fine motor test.
+ */
+
 public class FineMotorActivity extends Activity {
 
-    Bundle record;
+    private Bundle record;
 
     private static final String TAG = "FineMotorActivity";
 
@@ -122,6 +125,7 @@ public class FineMotorActivity extends Activity {
         }
     };
 
+    //Define OnClickListener for buttons
     private void initializeButtons(){
         buttonYes.setOnClickListener(new OnClickListener() {
             @Override
@@ -145,7 +149,7 @@ public class FineMotorActivity extends Activity {
         String[] testString = {"nonDominantHand", "dominantHand", "usePen"};
         boolean[] result = fineMotorHelper.getResults();
 
-        if(isTestOngoing){ //this is too avoid double clicking
+        if(isTestOngoing){ //this is to avoid double clicking
             for(int i = 0; i < 3; i++){
                 String temp =  (result[i] ? "Pass" : "Fail");
                 resultString += testString[i] + ": " + temp + "\n";

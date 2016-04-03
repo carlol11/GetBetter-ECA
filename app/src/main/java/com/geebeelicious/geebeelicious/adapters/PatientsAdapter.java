@@ -5,19 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import models.consultation.Patient;
 
 /**
  * Created by Kate on 03/30/2016.
+ * The PatientsAdapter class extends the ArrayAdapter class to allow
+ * a customized ListView to display Patient objects.
  */
 public class PatientsAdapter extends ArrayAdapter<Patient> {
 
@@ -65,6 +65,7 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
         return convertView;
     }
 
+    //Allows list to be filtered based on search terms
     public void filter(String searchText){
         searchText = searchText.toLowerCase();
         patientList.clear();
@@ -80,25 +81,6 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
             }
         }
         notifyDataSetChanged();
-
     }
-//
-//    charText = charText.toLowerCase(Locale.getDefault());
-//    worldpopulationlist.clear();
-//    if (charText.length() == 0) {
-//        worldpopulationlist.addAll(arraylist);
-//    }
-//    else
-//    {
-//        for (WorldPopulation wp : arraylist)
-//        {
-//            if (wp.getCountry().toLowerCase(Locale.getDefault()).contains(charText))
-//            {
-//                worldpopulationlist.add(wp);
-//            }
-//        }
-//    }
-//    notifyDataSetChanged();
-//
 
 }

@@ -10,10 +10,16 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.database.DataAdapter;
 
 import models.consultation.ConsultationHelper;
 import models.consultation.Patient;
+
+/**
+ * Created by Mary Grace Malana.
+ * The ConsultationActivity class is the main activity for consultation.
+ * This covers consultation with patients and the succeeding generation of HPI.
+ * It allows the user to view questions and answer with Yes or No inputs.
+ */
 
 public class ConsultationActivity extends ActionBarActivity {
     private TextView ECAText;
@@ -58,7 +64,8 @@ public class ConsultationActivity extends ActionBarActivity {
         });
     }
 
-    private void onAnswer (boolean isYes) {
+    //Determines the course of action depending on user input (Yes or No)
+    private void onAnswer(boolean isYes) {
         String nextQuestion = consultationHelper.getNextQuestion(isYes);
         if(nextQuestion == null) {
             doWhenConsultationDone();
@@ -68,6 +75,7 @@ public class ConsultationActivity extends ActionBarActivity {
         }
     }
 
+    //Performed when consultation is done; Saves generated HPI to database if patient has complaints
     private synchronized void doWhenConsultationDone(){
         if(isOnGoingFlag){
             isOnGoingFlag = false;
@@ -83,7 +91,6 @@ public class ConsultationActivity extends ActionBarActivity {
             intent.putExtra("patient", patient);
             startActivity(intent);
             finish();
-
         }
     }
 }

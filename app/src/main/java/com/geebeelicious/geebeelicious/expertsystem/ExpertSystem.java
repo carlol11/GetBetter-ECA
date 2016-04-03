@@ -11,8 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashSet;
 
 import models.consultation.ChiefComplaint;
@@ -26,10 +24,9 @@ import models.consultation.SymptomFamily;
 
 /*
 * The original code was created by Mike Dayupay 2015.
-* For the purpose of integration, the code was modified.
-* Modified by Mary Grace Malana 2015.
-* The expert system gives specific questions depending on the input of the user
-* It uses the class DataAdapter to connect with the database.
+* For the purpose of integration, the code was modified by Mary Grace Malana (2015).
+* The ExpertSystem class gives specific questions depending on the input of the user
+* It uses the DataAdapter class to connect with the database.
 */
 
 
@@ -391,7 +388,7 @@ public class ExpertSystem {
         return (gender == 0 ? "male" : "female");
     }
 
-    //returns the age depending on the birthdate
+    //Returns the age depending on the birthdate
     private int getAge(String birthdayString){
         Calendar birthday = Calendar.getInstance();
         Calendar currentDate = Calendar.getInstance();

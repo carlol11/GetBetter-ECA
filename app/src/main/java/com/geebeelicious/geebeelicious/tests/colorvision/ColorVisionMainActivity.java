@@ -12,10 +12,16 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
 import com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity;
 
 import models.colorvision.IshiharaHelper;
+
+/**
+ * Created by Kate.
+ * The ColorVisionMainActivity serves as the main activity for
+ * the color vision test. The activity utilizes the
+ * IshiharaHelper class to perform the test.
+ */
 
 public class ColorVisionMainActivity extends ActionBarActivity {
 
@@ -79,15 +85,17 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         });
     }
 
+    //Allows test to either go to the next question and save results if the test is done
     private void updateResults(IshiharaHelper ishiharaHelper, ImageButton[] buttonList){
         ishiharaHelper.goToNextQuestion();
         if(ishiharaHelper.isDone()){
             record.putString("colorVision", ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
-            endTest(buttonList, ishiharaHelper);
+            endTest(buttonList);
         }
     }
 
+    //Displays test results in a TextView
     private void displayResults(int score){
         String resultString = "SCORE: " + score;
         if(score>=10){
@@ -99,7 +107,8 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         textView.setText(resultString);
     }
 
-    private void endTest(ImageButton[] buttonList, IshiharaHelper ishiharaHelper){
+    //Sets view for end of test
+    private void endTest(ImageButton[] buttonList){
         for(ImageButton i : buttonList){
             i.setVisibility(View.GONE);
             i.setEnabled(false);

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -22,6 +21,13 @@ import models.consultation.Record;
 import models.consultation.School;
 import models.consultation.Symptom;
 import models.consultation.SymptomFamily;
+
+/**
+ * Created by Mary Grace Malana
+ * The DataAdapter class contains methods which serve as database queries.
+ * The original class used as a basis for this current version was
+ * created by Mike Dayupay for HPI Generation module of the GetBetter project.
+ */
 
 public class DataAdapter {
     protected static final String TAG = "DataAdapter";
@@ -329,7 +335,7 @@ public class DataAdapter {
     }
 
 /*
- * The succeeding code are not part of the original code created by Mike
+ * The succeeding code are not part of the original code created by Mike Dayupay
  */
 
     public void insertPatient(Patient patient){
@@ -381,6 +387,7 @@ public class DataAdapter {
         Log.d(TAG, "insertHPI Result: " + row);
     }
 
+    //Return a list of possible patients matching the given first name, last name, gender, birthday, and school
     public ArrayList<Patient> getPossiblePatients(String firstName, String lastName, int gender, String birthday, int schoolId){
         ArrayList<Patient> patients = new ArrayList<>();
         Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_FIRST_NAME + " = ? AND "
@@ -403,6 +410,7 @@ public class DataAdapter {
         return patients;
     }
 
+    //Return a list of all schools
     public ArrayList<School> getAllSchools(){
         ArrayList<School> schools = new ArrayList<>();
         Cursor c = getBetterDb.rawQuery("SELECT "+ School.C_SCHOOL_ID + ", s." + School.C_SCHOOLNAME + ", m." +
@@ -418,6 +426,7 @@ public class DataAdapter {
         return schools;
     }
 
+    //Return a list of all records associated with a given patient
     public ArrayList<Record> getRecords(int patientId){
         ArrayList<Record> records = new ArrayList<>();
         Cursor c = getBetterDb.query(Record.TABLE_NAME, null, Record.C_PATIENT_ID + " = " + patientId, null, null, null, null, null);
@@ -441,6 +450,7 @@ public class DataAdapter {
         return records;
     }
 
+    //Return a list of all the generated HPIs associated with a given patients
     public ArrayList<HPI> getHPIs(int patientId){
         ArrayList<HPI> HPIs = new ArrayList<>();
         Cursor c = getBetterDb.query(HPI.TABLE_NAME, null, HPI.C_PATIENT_ID + " = " + patientId, null, null, null, null, null);
@@ -455,6 +465,7 @@ public class DataAdapter {
         return HPIs;
     }
 
+    //Return a list of patients from a given school
     public ArrayList<Patient> getPatientsFromSchool(int schoolID){
         ArrayList<Patient> patients = new ArrayList<>();
         Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_SCHOOL_ID + " = " + schoolID, null, null, null, Patient.C_LAST_NAME +" ASC");

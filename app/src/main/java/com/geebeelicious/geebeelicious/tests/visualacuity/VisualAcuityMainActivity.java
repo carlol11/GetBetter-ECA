@@ -74,15 +74,17 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
     private void endTest(){
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
+        ImageView chartView = (ImageView)findViewById(R.id.chartLine);
+        CountDownTimer timer;
+
         yesButton.setVisibility(View.GONE);
         noButton.setVisibility(View.GONE);
         yesButton.setEnabled(false);
         noButton.setEnabled(false);
 
-        ImageView chartView = (ImageView)findViewById(R.id.chartLine);
         chartView.setImageResource(R.drawable.wait_for_next_test);
 
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+        timer = new CountDownTimer(6000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -121,10 +123,10 @@ public class VisualAcuityMainActivity extends ActionBarActivity {
 
     private void displayResults(VisualAcuityResult result, int id){
         String resultString = "";
+        TextView textView = (TextView) findViewById(id);
         resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
                         result.getLineNumber() + "\nVisual Acuity: " +
                         result.getVisualAcuity());
-        TextView textView = (TextView) findViewById(id);
         textView.setText(resultString);
     }
 

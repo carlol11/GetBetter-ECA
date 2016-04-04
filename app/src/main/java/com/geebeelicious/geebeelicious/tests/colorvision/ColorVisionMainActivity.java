@@ -25,7 +25,7 @@ import models.colorvision.IshiharaHelper;
 
 public class ColorVisionMainActivity extends ActionBarActivity {
 
-    Bundle record;
+    private Bundle record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,6 @@ public class ColorVisionMainActivity extends ActionBarActivity {
         final IshiharaHelper ishiharaHelper = new IshiharaHelper((ImageView) findViewById(R.id.ishiharaPlate), buttonList);
 
         record = this.getIntent().getExtras();
-
-        ishiharaHelper.startTest();
 
         option1.setOnClickListener(new OnClickListener() {
             @Override
@@ -83,6 +81,8 @@ public class ColorVisionMainActivity extends ActionBarActivity {
                 updateResults(ishiharaHelper, buttonList);
             }
         });
+
+        ishiharaHelper.startTest();
     }
 
     //Allows test to either go to the next question and save results if the test is done
@@ -97,27 +97,31 @@ public class ColorVisionMainActivity extends ActionBarActivity {
 
     //Displays test results in a TextView
     private void displayResults(int score){
+        TextView textView;
         String resultString = "SCORE: " + score;
+
         if(score>=10){
             resultString += "\nYou have NORMAL color vision.";
         } else{
             resultString += "\nYou scored lower than normal.";
         }
-        TextView textView = (TextView) findViewById(R.id.cvtResultsText);
+        textView = (TextView) findViewById(R.id.cvtResultsText);
         textView.setText(resultString);
     }
 
     //Sets view for end of test
     private void endTest(ImageButton[] buttonList){
+        ImageView chartView = (ImageView)findViewById(R.id.ishiharaPlate);
+        CountDownTimer timer;
+
         for(ImageButton i : buttonList){
             i.setVisibility(View.GONE);
             i.setEnabled(false);
         }
 
-        ImageView chartView = (ImageView)findViewById(R.id.ishiharaPlate);
         chartView.setImageResource(R.drawable.wait_for_next_test);
 
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+        timer = new CountDownTimer(6000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 

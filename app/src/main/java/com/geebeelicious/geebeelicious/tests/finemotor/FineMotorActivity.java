@@ -62,12 +62,13 @@ public class FineMotorActivity extends Activity {
         record = this.getIntent().getExtras();
 
         imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
-        imageViewPathToTrace.setOnTouchListener(image_Listener);
-
         buttonYes = (Button) findViewById(R.id.YesButton);
         buttonNo = (Button) findViewById(R.id.NoButton);
+
         currentTest = 0;
         fineMotorHelper = new FineMotorHelper(getApplicationContext(), imageViewPathToTrace, ECAtext);
+
+        imageViewPathToTrace.setOnTouchListener(image_Listener);
         initializeButtons();
     }
 
@@ -150,6 +151,8 @@ public class FineMotorActivity extends Activity {
         String resultString = "";
         String[] testString = {"nonDominantHand", "dominantHand", "usePen"};
         boolean[] result = fineMotorHelper.getResults();
+        CountDownTimer timer;
+        TextView resultView;
 
         if(isTestOngoing){ //this is to avoid double clicking
             for(int i = 0; i < 3; i++){
@@ -159,7 +162,7 @@ public class FineMotorActivity extends Activity {
             }
             isTestOngoing = false;
         }
-        TextView resultView = (TextView)findViewById(R.id.fineMotorResultsTV);
+        resultView = (TextView)findViewById(R.id.fineMotorResultsTV);
         resultView.setText(resultString);
 
         imageViewPathToTrace.setBackgroundColor(Color.WHITE);
@@ -167,7 +170,7 @@ public class FineMotorActivity extends Activity {
         hideAnswerButtons();
 
 
-        CountDownTimer timer = new CountDownTimer(10000, 1000) {
+        timer = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -186,6 +189,7 @@ public class FineMotorActivity extends Activity {
 
             @Override
             public void onFinish() {
+                Intent intent;
                 Patient patient = record.getParcelable("patient");
 
                 int grossMotor = getIntResults(record.getString("grossMotor"));
@@ -200,7 +204,7 @@ public class FineMotorActivity extends Activity {
                         grossMotor, nonDominantHand,
                         dominantHand, usePen));
 
-                Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
+                intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
                 intent.putExtra("patient", patient);
                 finish();
                 startActivity(intent);

@@ -30,6 +30,7 @@ public class IshiharaTest {
         generatedTest = new HashMap<Integer, Question>();
         IshiharaPlate plate;
         Option[] generatedOptions;
+
         for(int i = 0; i<11; i++){
             plate = makeQuestion(i);
             generatedOptions = makeAnswers(plate);
@@ -41,6 +42,7 @@ public class IshiharaTest {
     //Returns IshiharaPlate based on question index on which the necessary plate style is based
     private IshiharaPlate makeQuestion(int i){
         IshiharaPlate plate;
+
         if(i == 0){
             plate = getPlateWithStyle(6);
         } else if(i%2 == 0){
@@ -81,6 +83,7 @@ public class IshiharaTest {
     private Option getRandomOption(){
         boolean isFound = false;
         int index;
+
         while(!isFound){
             index = randomGenerator.nextInt(11);
             if(!options[index].isAdded()){
@@ -97,6 +100,7 @@ public class IshiharaTest {
         Option[] generatedOptions = new Option[5];
         int correctAnswer = randomGenerator.nextInt(5);
         generatedOptions[correctAnswer] = getOptionWithShape(plate.getShape());
+
         for(int i = 0; i<5; i++){
             if (i != correctAnswer) {
                 generatedOptions[i] = getRandomOption();

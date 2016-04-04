@@ -107,12 +107,14 @@ public class HearingTest {
                         break;
                     } else {
                         for (int z = 0; z < 3; z++) {
+                            AudioTrack audioTrack;
                             isHeard = false;
                             if (!isRunning) {
                                 return;
                             }
 
-                            AudioTrack audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, actualVolume), e);
+                            audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, actualVolume), e);
+
                             try {
                                 Thread.sleep(getRandomGapDuration());
 
@@ -207,16 +209,14 @@ public class HearingTest {
 
     private String getPureToneAverageResults(double[] testResults){
         double ptaResult = getPureToneAverage(testResults);
-        String result = "";
-        result += "Pure Tone Average: " + String.format("%.2f",ptaResult) + " dB HL";
-        result += "\nYou have " + interpretPureToneAverage(ptaResult) + ".";
+        String result = "Pure Tone Average: " + String.format("%.2f",ptaResult) + " dB HL" +
+                        "\nYou have " + interpretPureToneAverage(ptaResult) + ".";
         return result;
     }
 
     public String getResults(){
-        String result = "";
-        result += "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + getPureToneAverageResults(thresholdsRight);
-        result += "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + getPureToneAverageResults(thresholdsLeft);
+        String result = "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + getPureToneAverageResults(thresholdsRight)
+                        + "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + getPureToneAverageResults(thresholdsLeft);
         return result;
     }
 

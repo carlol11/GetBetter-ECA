@@ -62,8 +62,8 @@ public class HearingCalibrationActivity extends ActionBarActivity {
                 @Override
                 public void run() {
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.calibrationProgressBar);
-                    progressBar.setVisibility(View.INVISIBLE);
                     TextView textView = (TextView) findViewById(R.id.calibrationInProgressTextView);
+                    progressBar.setVisibility(View.INVISIBLE);
                     textView.setText("Calibration Done!");
                 }
             });

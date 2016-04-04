@@ -49,25 +49,26 @@ public class GrossMotorMainActivity extends ActionBarActivity {
     }
 
     private void endTest(){
+        String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
+        TextView countDownTV = (TextView)findViewById(R.id.countdownTV);
+        ImageView countDownIV = (ImageView)findViewById(R.id.grossMotorIV);
+        CountDownTimer timer;
+
         grossMotorTest.endTest();
         hideAnswerButtons();
         ((TextView)findViewById(R.id.gmSkillTypeTV)).setText("");
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText("");
         ((TextView)findViewById(R.id.gmDurationTV)).setText("");
         ((TextView)findViewById(R.id.gmAssessmentTV)).setText("");
-        ((TextView)findViewById(R.id.gmSkillNameTV)).setText(grossMotorTest.getAllResults() +
-                "\nOverall: " + grossMotorTest.getFinalResult());
+        ((TextView)findViewById(R.id.gmSkillNameTV)).setText(resultString);
 
         record.putString("grossMotor", grossMotorTest.getFinalResult());
 
-        TextView countDownTV = (TextView)findViewById(R.id.countdownTV);
         countDownTV.setVisibility(View.GONE);
-
-        ImageView countDownIV = (ImageView)findViewById(R.id.grossMotorIV);
         countDownIV.setVisibility(View.VISIBLE);
         countDownIV.setImageResource(R.drawable.wait_for_next_test);
 
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+        timer = new CountDownTimer(6000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -88,6 +89,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
     //Displays the skill as determined by the GrossMotorTest on the screen
     private void displaySkill(final int i){
         hideAnswerButtons();
+        final CountDownTimer countDownTimer;
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String activityString = "Activity: " + gms.getSkillName();
         String typeString = "Type: " + gms.getType();
@@ -97,7 +99,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
         ((TextView)findViewById(R.id.gmInstructionsTV)).setText(gms.getInstruction());
         ((TextView)findViewById(R.id.gmDurationTV)).setText(durationString);
 
-        final CountDownTimer countDownTimer = new CountDownTimer(6000, 1000) {
+        countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)findViewById(R.id.countdownTV);
 
             @Override

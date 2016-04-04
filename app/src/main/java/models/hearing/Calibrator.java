@@ -69,6 +69,10 @@ public class Calibrator {
         int nu = 11;
         double[] bufferReal = new double[n];
         double[] shortenedReal = new double[n];
+        double[][] real;
+        double[][] imaginary;
+        int step;
+        double[] transformResult;
 
         //Shorten buffer data to a power of two
         for(int i = 0; i<n; i++){
@@ -76,7 +80,7 @@ public class Calibrator {
         }
 
         //Compute coefficients for everything ahead of time
-        double[][] real = new double[nu+1][n];
+        real = new double[nu+1][n];
         int counter = 2;
         for(int i=1;i<=nu;i++){
             for(int j = 0; j<n; j++){
@@ -85,7 +89,7 @@ public class Calibrator {
             counter *= 2;
         }
 
-        double[][] imaginary = new double[nu+1][n];
+        imaginary = new double[nu+1][n];
         counter = 2;
         for(int i = 1; i<=nu; i++){
             for(int j=0; j<n; j++){
@@ -101,7 +105,7 @@ public class Calibrator {
         }
 
         //Begin Fast Fourier Transform (FFT)
-        int step = 1;
+        step = 1;
         for(int level = 1; level<=nu; level++){
             int incrementValue = step * 2;
             for(int j = 0; j<step; j++){
@@ -121,7 +125,7 @@ public class Calibrator {
             step *= 2;
         }
 
-        double[] transformResult = new double[bufferReal.length];
+        transformResult = new double[bufferReal.length];
         //Calculate magnitude of FFT coefficients
         for(int i = 0; i<bufferReal.length; i++){
             transformResult[i] = sqrt(pow(bufferReal[i], 2) + pow(inputImaginary[i], 2));
@@ -135,6 +139,10 @@ public class Calibrator {
         for(int i = 0; i<rmsArray.length; i++){
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
             short[] buffer = new short[bufferSize];
+            int bufferReadResult;
+            double[] inputSignal;
+            double[] outputSignal;
+            int k;
 
             try{
                 audioRecord.startRecording();
@@ -142,16 +150,16 @@ public class Calibrator {
             catch(IllegalStateException e){
 
             }
-            int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
+            bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
             //Convert buffer from short[] to double[]
-            double[] inputSignal = new double[buffer.length];
+            inputSignal = new double[buffer.length];
             for(int j = 0; j < buffer.length; j++){
                 inputSignal[j] = (double)buffer[j];
             }
 
-            double[] outputSignal = fftAnalysis(inputSignal, inputSignalImaginary);
+            outputSignal = fftAnalysis(inputSignal, inputSignalImaginary);
             //Select value from transform array corresponding to desired frequency
-            int k = frequency * 2048 / sampleRate;
+            k = frequency * 2048 / sampleRate;
             rmsArray[i] = outputSignal[k];
             //FFT Decibel Calculation
             audioRecord.stop();
@@ -182,10 +190,17 @@ public class Calibrator {
     }
 
     public void calibrate(){
+        int counter = 0;
         startThread();
         for(int i = 0; i<frequencies.length; i++){
             int frequency = frequencies[i];
             final float increment = (float) (Math.PI) * frequency / sampleRate;
+            double backgroundRms[];
+            double soundRms[];
+            double resultingRms[];
+            double resultingDb[];
+            double rmsSum = 0;
+            double dbAverage = 0;
 
             AudioTrack audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, volume));
 
@@ -193,12 +208,12 @@ public class Calibrator {
                 return;
             }
 
-            double backgroundRms[] = dbListen(frequency);
+            backgroundRms = dbListen(frequency);
             audioTrack.play();
-            double soundRms[] = dbListen(frequency);
+            soundRms = dbListen(frequency);
 
-            double resultingRms[] = new double[5];
-            double resultingDb[] = new double[5];
+            resultingRms = new double[5];
+            resultingDb = new double[5];
 
             for(int j = 0; j<resultingRms.length; j++){
                 resultingRms[j] = soundRms[j]/backgroundRms[j];
@@ -206,14 +221,12 @@ public class Calibrator {
                 resultingDb[j] -= dbHLCorrectionCoefficients[i];
             }
 
-            double rmsSum = 0;
             for (double rms: resultingRms){
                 if(rms > 0){
                     rmsSum += rms;
                 }
             }
 
-            double dbAverage = 0;
             for(int j = 0; j<resultingDb.length; j++){
                 dbAverage += resultingDb[j];
             }
@@ -233,7 +246,6 @@ public class Calibrator {
             audioTrack.release();
         }
 
-        int counter = 0;
         byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
         for(int i = 0; i<calibrationArray.length; i++){
             byte tempByteArray[] = new byte[8];

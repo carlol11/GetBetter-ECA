@@ -28,7 +28,6 @@ public class GrossMotorTest {
     private MusicPlayer musicPlayer;
     private int currentSkill;
 
-//skill, type, instruction, duration
     public GrossMotorTest(Context context){
         musicPlayer = new MusicPlayer(context);
         grossMotorSkills = new GrossMotorSkill[8];
@@ -48,7 +47,7 @@ public class GrossMotorTest {
         Random random = new Random((int)System.nanoTime());
         boolean isFound = false;
         GrossMotorSkill temp = null;
-        int skillNumber;
+
         while(!isFound){
             temp = grossMotorSkills[random.nextInt(grossMotorSkills.length - 1)];
             if(!checkSkillDuplicates(testSkills, temp)){

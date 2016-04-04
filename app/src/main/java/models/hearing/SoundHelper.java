@@ -23,12 +23,12 @@ public class SoundHelper {
         float angle = 0;
         double sample[] = new double[numSamples];
         byte generatedSound[] = new byte[2 * numSamples];
+        int index = 0;
         for(int i = 0; i<numSamples; i++){
             sample[i] = Math.sin(angle);
             angle+=increment;
         }
 
-        int index = 0;
         for (final double dVal: sample){
             final short val = (short) ((dVal * volume)); //volume controlled by the value multiplied by dVal; max value is 32767
             generatedSound[index++] = (byte) (val & 0x00ff);

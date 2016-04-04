@@ -37,7 +37,6 @@ public class HearingMainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_hearing_main);
 
         AudioManager audioManager = (AudioManager)getSystemService(AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 9, 0);
 
         hearingTest = new HearingTest();
         final double[] calibrationData = hearingTest.getCalibrationData(getApplicationContext());
@@ -123,6 +122,7 @@ public class HearingMainActivity extends ActionBarActivity {
             public void run() {
                 hearingTest.performTest(calibrationData);
                 if(hearingTest.isDone()){
+                    Intent intent;
                     runOnUiThread(backgroundFlash);
                     runOnUiThread(disableTest);
                     endTest();
@@ -131,7 +131,7 @@ public class HearingMainActivity extends ActionBarActivity {
                     } catch (InterruptedException e) {
 
                     }
-                    Intent intent = new Intent(HearingMainActivity.this, GrossMotorMainActivity.class);
+                    intent = new Intent(HearingMainActivity.this, GrossMotorMainActivity.class);
                     intent.putExtras(record);
                     finish();
                     startActivity(intent);
@@ -139,6 +139,7 @@ public class HearingMainActivity extends ActionBarActivity {
             }
         });
 
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 9, 0);
         threads = new ArrayList<Thread>();
         threads.add(screenThread);
         threads.add(timingThread);
@@ -164,12 +165,13 @@ public class HearingMainActivity extends ActionBarActivity {
 
     //For testing purposes only
     public void endTestShortCut(){
+        Intent intent;
         record.putString("hearingRight", "Mild Hearing Loss");
         record.putString("hearingLeft", "Moderately-Severe Hearing Loss");
 
         stopTest();
 
-        Intent intent = new Intent(HearingMainActivity.this, GrossMotorMainActivity.class);
+        intent = new Intent(HearingMainActivity.this, GrossMotorMainActivity.class);
         intent.putExtras(record);
         finish();
         startActivity(intent);
@@ -177,8 +179,9 @@ public class HearingMainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        Intent intent;
         stopTest();
-        Intent intent = new Intent(HearingMainActivity.this, MonitoringConsultationChoice.class);
+        intent = new Intent(HearingMainActivity.this, MonitoringConsultationChoice.class);
         finish();
         startActivity(intent);
     }

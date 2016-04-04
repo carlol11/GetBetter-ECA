@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,10 +19,17 @@ import java.util.concurrent.TimeUnit;
 import models.grossmotor.GrossMotorSkill;
 import models.grossmotor.GrossMotorTest;
 
+/**
+ * Created by Kate.
+ * The GrossMotorMainActivity class serves as the main activity
+ * for the gross motor test. It uses the GrossMotorTest class
+ * to perform the test.
+ */
+
 public class GrossMotorMainActivity extends ActionBarActivity {
 
-    GrossMotorTest grossMotorTest;
-    Bundle record;
+    private GrossMotorTest grossMotorTest;
+    private Bundle record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,7 @@ public class GrossMotorMainActivity extends ActionBarActivity {
 
     }
 
+    //Displays the skill as determined by the GrossMotorTest on the screen
     private void displaySkill(final int i){
         hideAnswerButtons();
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
@@ -109,21 +116,25 @@ public class GrossMotorMainActivity extends ActionBarActivity {
 
     }
 
+    //Sets current skill to "Pass" and goes to next question
     public void answerYes(View view) {
         grossMotorTest.getCurrentSkill().setSkillPassed();
         goToNextQuestion();
     }
 
+    //Sets current skill to "Fail" and goes to next question
     public void answerNo(View view) {
         grossMotorTest.getCurrentSkill().setSkillFailed();
         goToNextQuestion();
     }
 
+    //Sets current skill to "NA" and goes to next question
     public void answerNA(View view) {
         grossMotorTest.getCurrentSkill().setSkillSkipped();
         goToNextQuestion();
     }
 
+    //Allows the test to move to the next question or ends the test
     private void goToNextQuestion(){
         grossMotorTest.getCurrentSkill().setTested();
         int currentSkill = grossMotorTest.getCurrentSkillNumber();
@@ -144,7 +155,6 @@ public class GrossMotorMainActivity extends ActionBarActivity {
             view.setVisibility(View.GONE);
         }
         answers.setVisibility(View.GONE);
-
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.media.AudioTrack;
 
 /**
  * Created by Kate on 03/11/2016.
+ * The SoundHelper class contains functionality to
+ * generate and play sounds for the hearing test.
  */
 public class SoundHelper {
 

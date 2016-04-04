@@ -2,6 +2,9 @@ package models.consultation;
 
 /**
  * Created by Kate on 03/30/2016.
+ * The Municipality class represents a
+ * Municipality with an municipality ID, name,
+ * province, and region.s
  */
 public class Municipality {
     public final static String TABLE_NAME = "tbl_municipality";

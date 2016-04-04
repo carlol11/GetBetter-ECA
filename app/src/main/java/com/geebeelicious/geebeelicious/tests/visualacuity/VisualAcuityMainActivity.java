@@ -10,16 +10,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.tests.colorvision.ColorVisionMainActivity;
-
-import java.util.Timer;
 
 import models.visualacuity.ChartHelper;
 import models.visualacuity.DistanceCalculator;
 import models.visualacuity.VisualAcuityResult;
+
+/**
+ * Created by Kate.
+ * The VisualAcuityMainActivity serves as the activity
+ * for the visual acuity test. It uses the ChartHelper,
+ * DistanceCalculator, and VisualAcuityResult classes
+ * to perform the visual acuity test.
+ */
 
 public class VisualAcuityMainActivity extends ActionBarActivity {
 

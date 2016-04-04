@@ -4,6 +4,9 @@ import android.util.Log;
 
 /**
  * Created by mgmalana on 24/03/2016.
+ * The Record class represents a health record
+ * containing information from the monitoring module
+ * performed by the patient.
  */
 public class Record {
     public final static String TAG = "Record";

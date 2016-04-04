@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 /**
  * Created by mgmalana on 24/03/2016.
+ * The Patient class represents a Patient and implements Parcelable
+ * to allow for the object to be passed between activities.
+ * The class contains patient information.
  */
 public class Patient implements Parcelable {
     private int patientID;
@@ -25,9 +28,7 @@ public class Patient implements Parcelable {
     public final static String FEMALE = "Female";
     public final static String MALE = "Male";
 
-
     public final static String TABLE_NAME = "tbl_patient";
-
 
     /**
      * This field is needed for Android to be able to

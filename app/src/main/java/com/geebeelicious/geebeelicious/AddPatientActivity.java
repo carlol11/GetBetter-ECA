@@ -14,10 +14,15 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.database.DataAdapter;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 
 import models.consultation.Patient;
+
+/**
+ * Created by Kate.
+ * The AddPatientActivity serves as the activity containing
+ * functionality for adding new patients.
+ */
 
 public class AddPatientActivity extends ActionBarActivity {
 
@@ -37,7 +42,7 @@ public class AddPatientActivity extends ActionBarActivity {
 
     private int questionCounter = 0;
     private final int[] questions = {R.string.first_name, R.string.last_name, R.string.birthdate,
-            R.string.gender, R.string.handedness};
+                                    R.string.gender, R.string.handedness};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,14 +148,17 @@ public class AddPatientActivity extends ActionBarActivity {
 
     }
 
+    //Display question on screen based on resID parameter
     private void setQuestion(int resID){
         questionView.setText(resID);
     };
 
+    //Return String format of contents of search field
     private String getEditText(){
         return editText.getText().toString();
     };
 
+    //Return String format of selected date on Number Picker
     private String getSelectedDate(){
         return (datePicker.getMonth() + "/" + datePicker.getDayOfMonth() + "/" + datePicker.getYear());
     }
@@ -162,10 +170,8 @@ public class AddPatientActivity extends ActionBarActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         getBetterDb.insertPatient(patient);
 
         getBetterDb.closeDatabase();
     }
-
 }

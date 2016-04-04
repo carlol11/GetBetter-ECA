@@ -18,11 +18,18 @@ import java.util.ArrayList;
 
 import models.hearing.HearingTest;
 
+/**
+ * Created by Kate.
+ * The HearingMainActivity serves as the activity
+ * for the hearing test. It uses the HearingTest class
+ * to perform the hearing test.
+ */
+
 public class HearingMainActivity extends ActionBarActivity {
 
-    ArrayList<Thread> threads;
-    HearingTest hearingTest;
-    Bundle record;
+    private ArrayList<Thread> threads;
+    private HearingTest hearingTest;
+    private Bundle record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

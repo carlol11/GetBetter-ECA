@@ -1,13 +1,9 @@
 package models.hearing;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioTrack;
 
-import com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 

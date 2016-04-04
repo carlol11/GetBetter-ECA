@@ -2,6 +2,9 @@ package models.consultation;
 
 /**
  * Created by mgmalana on 24/03/2016.
+ * The School class represents a School
+ * containing the school name, schoolID, and
+ * municipality to which the school belongs.
  */
 public class School {
     public static final String TABLE_NAME = "tbl_school";

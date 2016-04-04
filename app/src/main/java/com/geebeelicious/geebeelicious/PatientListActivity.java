@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,6 +24,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import models.consultation.Patient;
+
+/**
+ * Created by Kate.
+ * The PatientsListActivity serves as the activity allowing
+ * the user to view the patient list from a given school.
+ * The user can view the list, search for patients, and
+ * is given the option to select the patient or be redirected
+ * to the module allowing for new patients to be added.
+ */
 
 public class PatientListActivity extends ActionBarActivity {
 
@@ -117,6 +125,7 @@ public class PatientListActivity extends ActionBarActivity {
         });
     }
 
+    //Returns the schoolID fo the preferred school stored in device storage via Settings
     private int getSchoolPreferences(){
         int schoolID = 1; //default schoolID
         byte[] byteArray = new byte[4];

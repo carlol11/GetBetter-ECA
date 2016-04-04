@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 import com.geebeelicious.geebeelicious.database.DataAdapter;
@@ -21,9 +19,15 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Set;
 
 import models.consultation.School;
+
+/**
+ * Created by Kate.
+ * The SettingsActivity serves as the activity containing
+ * the various settings and preferences for the app.
+ * These include school settings and hearing calibration.
+ */
 
 public class SettingsActivity extends ActionBarActivity {
 
@@ -39,6 +43,7 @@ public class SettingsActivity extends ActionBarActivity {
         addCalibrationSetting();
     }
 
+    //Adds option to select a school to the Settings screen
     private void addChooseSchoolSetting(){
         DataAdapter getBetterDb = new DataAdapter(SettingsActivity.this);
         try {
@@ -77,6 +82,7 @@ public class SettingsActivity extends ActionBarActivity {
         });
     }
 
+    //Saves schoolID of preferred school to device storage
     private void saveSchool(){
         ByteBuffer b = ByteBuffer.allocate(4);
         b.putInt(chosenSchool.getSchoolId());
@@ -95,6 +101,7 @@ public class SettingsActivity extends ActionBarActivity {
         }
     }
 
+    //Adds option to calibrate hearing test
     private void addCalibrationSetting(){
         Button calibrateButton = (Button)findViewById(R.id.calibrateHearingTestButton);
         calibrateButton.setOnClickListener(new View.OnClickListener() {

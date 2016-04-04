@@ -27,7 +27,8 @@ import models.finemotor.FineMotorHelper;
 /**
  * Created by Mary Grace Malana.
  * The FineMotorActivity class serves as the main activity
- * for the fine motor test.
+ * for the fine motor test. It uses the FineMotorHelper class
+ * to perform the test.
  */
 
 public class FineMotorActivity extends Activity {
@@ -70,6 +71,7 @@ public class FineMotorActivity extends Activity {
         initializeButtons();
     }
 
+    //OnTouchListener for tracing the path
     public View.OnTouchListener image_Listener = new View.OnTouchListener(){
         @Override
         public boolean onTouch(View v, MotionEvent event) {

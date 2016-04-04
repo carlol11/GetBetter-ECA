@@ -84,25 +84,29 @@ public class IshiharaHelper {
         ishiharaTest = new IshiharaTest(ishiharaPlates, options);
     }
 
+    //Displays current plate on screen
     private void displayPlate(){
         plateView.setImageResource(getCurrentPlate().getIshiharaPlateDrawable());
     }
 
+    //Displays possible answers on buttons on screen
     private void displayOptions(){
         for(int i = 0; i<5; i++){
             buttonList[i].setImageResource(getCurrentOptions()[i].getOptionDrawable());
         }
-
     }
 
+    //Returns current IshiharaPlate
     private IshiharaPlate getCurrentPlate(){
         return ishiharaTest.getPlate(currentPlate);
     }
 
+    //Returns possible answers for current IshiharaPlate
     private Option[] getCurrentOptions(){
         return ishiharaTest.getOptions(currentPlate);
     }
 
+    //Resets values and screen for start of test
     public void startTest(){
         currentPlate = 0;
         ishiharaTest.generateTest();
@@ -111,6 +115,7 @@ public class IshiharaHelper {
         isDone = false;
     }
 
+    //Determines course of action for next question as test progresses
     public void goToNextQuestion(){
         if(currentPlate<10){
             currentPlate++;
@@ -122,6 +127,7 @@ public class IshiharaHelper {
         }
     }
 
+    //Sets the answer of the user for the current plate
     public void answerQuestion(int i){
         ishiharaTest.checkAnswer(currentPlate, i);
     }
@@ -134,6 +140,7 @@ public class IshiharaHelper {
         return ishiharaTest.getScore();
     }
 
+    //Returns String interpretation of test score
     public String getResult(){
         if(getScore() > 10){
             return "Normal";

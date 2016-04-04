@@ -12,10 +12,17 @@ import com.geebeelicious.geebeelicious.SettingsActivity;
 
 import models.hearing.Calibrator;
 
+/**
+ * Created by Kate.
+ * The HearingCalibrationActivity serves as the activity
+ * for the hearing test calibration module. It uses the
+ * Calibrator class to perform the calibration.
+ */
+
 public class HearingCalibrationActivity extends ActionBarActivity {
 
     private Calibrator calibrator;
-    Thread calibrationThread;
+    private Thread calibrationThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +38,6 @@ public class HearingCalibrationActivity extends ActionBarActivity {
             }
         });
         calibrationThread.start();
-
-
     }
 
     @Override

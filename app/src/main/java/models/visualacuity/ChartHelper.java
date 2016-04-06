@@ -52,7 +52,7 @@ public class ChartHelper {
             currentLineNumber++;
             displayChartLine();
         }
-        if(currentLineNumber==10 && result==null){
+        else if(currentLineNumber==10 && result==null){
             setResult();
         }
     }

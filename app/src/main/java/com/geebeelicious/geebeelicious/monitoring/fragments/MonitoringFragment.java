@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.monitoring.fragments;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.monitoring.MonitoringMainActivity;
+import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
 
 import models.monitoring.Record;
 
@@ -38,6 +39,9 @@ public class MonitoringFragment extends Fragment {
     private final int numberOfQuestions = 2;
     private int questionsCounter = 0;
 
+    private Record record;
+
+    private MonitoringFragmentInteraction fragmentInteraction;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,8 +60,6 @@ public class MonitoringFragment extends Fragment {
 
         Button saveButton = (Button)view.findViewById(R.id.saveAnswerButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
-            final Record record = ((MonitoringMainActivity)getActivity()).getRecord();
-
             @Override
             public void onClick(View v) {
                 System.out.println("numberPicker: " +  numberPicker.getValue() + " " + new Integer(numberPicker.getValue()).doubleValue());
@@ -84,8 +86,23 @@ public class MonitoringFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement MonitoringFragmentInteraction");
+        }
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        record = fragmentInteraction.getRecord();
     }
 
     private void endMonitoring(){
@@ -106,7 +123,7 @@ public class MonitoringFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                ((MonitoringMainActivity)getActivity()).nextFragment();
+                fragmentInteraction.doneFragment();
             }
         };
         timer.start();

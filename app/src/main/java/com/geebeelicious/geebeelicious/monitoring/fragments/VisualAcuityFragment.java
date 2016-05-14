@@ -34,6 +34,7 @@ public class VisualAcuityFragment extends Fragment {
     private Button yesButton;
     private Button noButton;
     private ImageView chartView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class VisualAcuityFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
         record = fragmentInteraction.getRecord();
     }
 /*

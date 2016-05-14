@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.monitoring;
+package com.geebeelicious.geebeelicious.tests;
 
 import android.content.Intent;
 import android.os.Bundle;

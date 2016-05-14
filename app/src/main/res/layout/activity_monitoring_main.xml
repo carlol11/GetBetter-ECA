@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:keepScreenOn="true"
+    tools:context=".monitoring.MonitoringMainActivity">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/relativeLayoutECA"
+        style="@style/DefaultBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/placeholderECA"
+            android:minHeight="300dp"
+            android:minWidth="300dp"
+            android:longClickable="false"
+            android:maxHeight="300dp"
+            android:maxWidth="300dp"
+            style="@style/ECAPlaceholder"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Placeholder for Instructions from GeeBee"
+            android:id="@+id/placeholderECAText"
+            android:paddingTop="10dp"
+            android:padding="5dp"
+            style="@style/DefaultBackground"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/placeholderECA"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/placeholderECAText"
+            android:id="@+id/linearLayoutResults"
+            android:padding="5dp"
+            android:weightSum="1"
+            style="@style/DefaultBackground">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/distanceTextView"
+                android:layout_weight="0.2"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rightEyeResultsTextView"
+                android:layout_weight="0.4"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/leftEyeResultsTextView"
+                android:layout_weight="0.4"
+                android:layout_marginBottom="3dp"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.geebeelicious.geebeelicious.monitoring.fragments.MonitoringFragment"
+        android:id="@+id/monitoringFragmentContainer"
+        android:layout_toStartOf="@+id/relativeLayoutECA"
+        tools:layout="@layout/fragment_monitoring" />
+
+</RelativeLayout>

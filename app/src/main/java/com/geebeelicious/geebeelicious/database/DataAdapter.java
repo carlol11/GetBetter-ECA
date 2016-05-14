@@ -17,7 +17,7 @@ import models.consultation.Municipality;
 import models.consultation.Patient;
 import models.consultation.PatientAnswers;
 import models.consultation.PositiveResults;
-import models.consultation.Record;
+import models.monitoring.Record;
 import models.consultation.School;
 import models.consultation.Symptom;
 import models.consultation.SymptomFamily;

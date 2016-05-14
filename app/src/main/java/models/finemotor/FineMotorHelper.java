@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.MediaPlayer;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import com.geebeelicious.geebeelicious.database.DataAdapter;
 import java.sql.SQLException;
 import java.util.Random;
 
-import models.consultation.Record;
+import models.monitoring.Record;
 
 /**
  * Created by Mary Grace Malana on 25/03/2016.

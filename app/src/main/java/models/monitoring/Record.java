@@ -1,4 +1,4 @@
-package models.consultation;
+package models.monitoring;
 
 import android.util.Log;
 
@@ -43,6 +43,10 @@ public class Record {
     private int fineMotorNDominant;
     private int fineMotorHold;
 
+    public Record(){
+
+    }
+
     public Record(int recordID, int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold) {
         this.recordID = recordID;
         this.patient_id = patient_id;
@@ -57,22 +61,6 @@ public class Record {
         this.grossMotor = grossMotor;
         this.fineMotorNDominant = fineMotorNDominant;
         this.fineMotorDominant = fineMotorDominant;
-        this.fineMotorHold = fineMotorHold;
-    }
-
-    public Record(int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold) {
-        this.patient_id = patient_id;
-        this.dateCreated = dateCreated;
-        this.height = height;
-        this.weight = weight;
-        this.visualAcuityLeft = visualAcuityLeft;
-        this.visualActuityRight = visualActuityRight;
-        this.colorVision = colorVision;
-        this.hearingLeft = hearingLeft;
-        this.hearingRight = hearingRight;
-        this.grossMotor = grossMotor;
-        this.fineMotorDominant = fineMotorDominant;
-        this.fineMotorNDominant = fineMotorNDominant;
         this.fineMotorHold = fineMotorHold;
     }
 
@@ -130,6 +118,62 @@ public class Record {
 
     public int getFineMotorHold() {
         return fineMotorHold;
+    }
+
+    public void setRecordID(int recordID) {
+        this.recordID = recordID;
+    }
+
+    public void setPatient_id(int patient_id) {
+        this.patient_id = patient_id;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setVisualAcuityLeft(String visualAcuityLeft) {
+        this.visualAcuityLeft = visualAcuityLeft;
+    }
+
+    public void setVisualActuityRight(String visualActuityRight) {
+        this.visualActuityRight = visualActuityRight;
+    }
+
+    public void setColorVision(String colorVision) {
+        this.colorVision = colorVision;
+    }
+
+    public void setHearingLeft(String hearingLeft) {
+        this.hearingLeft = hearingLeft;
+    }
+
+    public void setHearingRight(String hearingRight) {
+        this.hearingRight = hearingRight;
+    }
+
+    public void setGrossMotor(int grossMotor) {
+        this.grossMotor = grossMotor;
+    }
+
+    public void setFineMotorDominant(int fineMotorDominant) {
+        this.fineMotorDominant = fineMotorDominant;
+    }
+
+    public void setFineMotorNDominant(int fineMotorNDominant) {
+        this.fineMotorNDominant = fineMotorNDominant;
+    }
+
+    public void setFineMotorHold(int fineMotorHold) {
+        this.fineMotorHold = fineMotorHold;
     }
 
     public void printRecord(){

@@ -20,7 +20,7 @@ import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
 import models.consultation.Patient;
-import models.consultation.Record;
+import models.monitoring.Record;
 import models.finemotor.FineMotorHelper;
 
 
@@ -196,14 +196,15 @@ public class FineMotorActivity extends Activity {
                 int nonDominantHand = getIntResults(record.getString("nonDominantHand"));
                 int dominantHand = getIntResults(record.getString("dominantHand"));
                 int usePen = getIntResults(record.getString("usePen"));
-
+//TODO: transfer this to main activity
+/*
                 fineMotorHelper.saveToDatabase(new Record(patient.getPatientID(),
                         record.getString("currentDate"), record.getDouble("height"), record.getDouble("weight"), record.getString("visualAcuityLeft"),
                         record.getString("visualAcuityRight"), record.getString("colorVision"),
                         record.getString("hearingLeft"), record.getString("hearingRight"),
                         grossMotor, nonDominantHand,
                         dominantHand, usePen));
-
+*/
                 intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
                 intent.putExtra("patient", patient);
                 finish();

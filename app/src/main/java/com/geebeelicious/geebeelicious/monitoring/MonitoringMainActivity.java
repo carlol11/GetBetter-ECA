@@ -71,4 +71,16 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             }
         }
     }
+
+    @Override
+    public int getIntResults(String result){
+        switch(result){
+            case "Pass":
+                return 0;
+            case "Fail":
+                return 1;
+            default:
+                return 2;
+        }
+    }
 }

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.geebeelicious.geebeelicious.monitoring.fragments.VisualAcuityFragment">
+    tools:context="com.geebeelicious.geebeelicious.monitoring.fragments.HearingMainFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,14 +10,19 @@
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
         android:background="#ffffff"
-        android:layout_above="@+id/linearLayoutAnswers">
+        android:layout_above="@+id/linearLayoutAnswers"
+        style="@style/DefaultBackground">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/chartLine"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/hearingTestImageView"
             android:layout_centerInParent="true"
-            android:background="#ffffff" />
+            style="@style/DefaultBackground"/>
 
     </RelativeLayout>
 
@@ -25,33 +30,19 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayoutAnswers"
         android:weightSum="1">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
             android:text="@string/Yes"
             android:id="@+id/YesButton"
-            android:minWidth="250dp"
-            android:layout_weight="0.50"
             style="@style/TestButton"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/No"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/NoButton"
-            android:minWidth="250dp"
-            android:layout_weight="0.50"
-            style="@style/TestButton"/>
     </LinearLayout>
+
 </RelativeLayout>

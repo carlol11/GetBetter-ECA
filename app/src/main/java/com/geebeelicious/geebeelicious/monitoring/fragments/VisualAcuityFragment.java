@@ -87,18 +87,14 @@ public class VisualAcuityFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        //TODO: Distance. Fix this. di ata nagwowork
+        //distance calculator
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
+        fragmentInteraction.setInstructions("Distance: " + String.format("%.2f", distance) + " meters");
         record = fragmentInteraction.getRecord();
     }
-/*
-TODO: visualacuity onwindowfocuschanged
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        DistanceCalculator distanceCalculator = new DistanceCalculator();
-        float distance = distanceCalculator.getUserDistance(this, (ImageView) findViewById(R.id.chartLine));
-        TextView tv = (TextView) findViewById(R.id.distanceTextView);
-        tv.setText("Distance: " + String.format("%.2f", distance) + " meters");
-    }
-*/
+
     private void endTest(){
         CountDownTimer timer;
 

@@ -1,0 +1,90 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geebeelicious.geebeelicious.monitoring.fragments.GrossMotorFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:id="@+id/relativeLayoutTest"
+        android:layout_above="@+id/linearLayoutAnswers"
+        android:background="#E1F5FE">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="200sp"
+            android:id="@+id/countdownTV"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/grossMotorIV"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayoutAnswers"
+        android:weightSum="3"
+        android:visibility="gone"
+        android:background="#E1F5FE">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/Yes"
+            android:id="@+id/YesButton"
+            android:minWidth="250dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:onClick="answerYes"
+            android:visibility="gone"
+            style="@style/TestButton"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/No"
+            android:id="@+id/NoButton"
+            android:minWidth="250dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:onClick="answerNo"
+            android:visibility="gone"
+            style="@style/TestButton"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/NA"
+            android:id="@+id/NAButton"
+            android:minWidth="250dp"
+            android:layout_weight="1"
+            android:onClick="answerNA"
+            android:visibility="gone"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            style="@style/TestButton"/>
+
+    </LinearLayout>
+</FrameLayout>

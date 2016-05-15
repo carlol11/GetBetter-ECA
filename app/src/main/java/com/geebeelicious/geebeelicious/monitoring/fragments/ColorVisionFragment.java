@@ -18,8 +18,11 @@ import models.colorvision.IshiharaHelper;
 import models.monitoring.Record;
 
 /**
- * A simple {@link Fragment} subclass.
- */
+ * Created by Kate.
+ * The ColorVisionMainFragment serves as the main fragment for
+ * the color vision test. The activity utilizes the
+ * IshiharaHelper class to perform the test.
+ * */
 public class ColorVisionFragment extends Fragment {
     private Record record;
     private MonitoringFragmentInteraction fragmentInteraction;

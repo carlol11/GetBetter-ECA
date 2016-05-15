@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +43,36 @@ public class GrossMotorFragment extends Fragment {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_gross_motor, container, false);
 
+        Button yesButton = (Button) view.findViewById(R.id.YesButton);
+        Button noButton = (Button) view.findViewById(R.id.NoButton);
+        Button naButton = (Button) view.findViewById(R.id.NAButton);
+
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //set skill to pass
+                grossMotorTest.getCurrentSkill().setSkillPassed();
+                goToNextQuestion();
+            }
+        });
+
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //set skill to fail
+                grossMotorTest.getCurrentSkill().setSkillFailed();
+                goToNextQuestion();
+            }
+        });
+
+        naButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //set skill to na
+                grossMotorTest.getCurrentSkill().setSkillSkipped();
+                goToNextQuestion();
+            }
+        });
         grossMotorTest = new GrossMotorTest(activity);
         grossMotorTest.makeTest();
         startTest();
@@ -126,24 +157,6 @@ public class GrossMotorFragment extends Fragment {
         hideAnswerButtons();
         countDownTimer.start();
 
-    }
-
-    //Sets current skill to "Pass" and goes to next question
-    public void answerYes(View view) {
-        grossMotorTest.getCurrentSkill().setSkillPassed();
-        goToNextQuestion();
-    }
-
-    //Sets current skill to "Fail" and goes to next question
-    public void answerNo(View view) {
-        grossMotorTest.getCurrentSkill().setSkillFailed();
-        goToNextQuestion();
-    }
-
-    //Sets current skill to "NA" and goes to next question
-    public void answerNA(View view) {
-        grossMotorTest.getCurrentSkill().setSkillSkipped();
-        goToNextQuestion();
     }
 
     //Allows the test to move to the next question or ends the test

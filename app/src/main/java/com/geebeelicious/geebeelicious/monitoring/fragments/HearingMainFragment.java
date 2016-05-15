@@ -55,15 +55,6 @@ public class HearingMainFragment extends Fragment {
             }
         });
 
-        final ImageView placeholderECA = (ImageView)view.findViewById(R.id.placeholderECA);
-        placeholderECA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                endTestShortCut();
-            }
-        });
-
-
         final Runnable backgroundFlash = new Runnable(){
             public void run(){
                 yesButton.setBackgroundColor(Color.parseColor("#18FFFF"));

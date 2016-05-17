@@ -83,46 +83,16 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         if(currentFragmentIndex == fragments.length){
             //TODO: send to database
         } else {
-
+            clearTextViews();
             try {
                 Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
 
-                /*******
-                 * TODO: [Testing Code] Remove this if no longer testing.
-                 * this is for the shortcut for the hearing fragment
-                 */
-                final ImageView placeholderECA = (ImageView)findViewById(R.id.placeholderECA);
-                Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
-
-                if(newFragment instanceof HearingMainFragment){
-                    placeholderECA.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            HearingMainFragment hearingFragment = (HearingMainFragment) fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
-                            hearingFragment.endTestShortCut();
-                        }
-                    });
-                } else if(hearingFragment != null){
-                    placeholderECA.setClickable(false);
-                }
-
-
-                /*
-                 *
-                 *  Testing code ends here
-                 */
-
-
-
+                shortcutForHearingfragment(newFragment); //this is only used for testing
 
                 FragmentTransaction transaction= fragmentManager.beginTransaction();
                 transaction.replace(R.id.monitoringFragmentContainer, newFragment, fragments[currentFragmentIndex]);
                 transaction.commit();
-
                 currentFragmentIndex++;
-
-
-
 
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 Log.e(TAG, "Error in initializing the fragment", e);
@@ -140,5 +110,32 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             default:
                 return 2;
         }
+    }
+    
+    private void clearTextViews() {
+        ECAText.setText("");
+        resultsText.setText("");
+    }
+
+    private void shortcutForHearingfragment(Fragment newFragment) {
+        /*******
+         * TODO: [Testing Code] Remove this if no longer testing.
+         * this is for the shortcut for the hearing fragment
+         */
+        final ImageView placeholderECA = (ImageView)findViewById(R.id.placeholderECA);
+        Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
+
+        if(newFragment instanceof HearingMainFragment){
+            placeholderECA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HearingMainFragment hearingFragment = (HearingMainFragment) fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
+                    hearingFragment.endTestShortCut();
+                }
+            });
+        } else if(hearingFragment != null){
+            placeholderECA.setClickable(false);
+        }
+
     }
 }

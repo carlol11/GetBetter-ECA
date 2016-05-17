@@ -144,7 +144,7 @@ public class VisualAcuityFragment extends Fragment {
         resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
                 result.getLineNumber() + "\nVisual Acuity: " +
                 result.getVisualAcuity());
-        fragmentInteraction.setInstructions(resultString);
+        fragmentInteraction.setResults(resultString);
     }
 
 }

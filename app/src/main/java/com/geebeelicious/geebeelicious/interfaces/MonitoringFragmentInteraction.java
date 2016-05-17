@@ -12,6 +12,7 @@ import models.monitoring.Record;
 public interface MonitoringFragmentInteraction {
     public Record getRecord();
     public void setInstructions(String instructions);
+    public void setResults(String results);
     public void doneFragment();
     public int getIntResults(String result);
 }

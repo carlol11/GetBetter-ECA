@@ -32,6 +32,8 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     private Record record;
 
     private TextView ECAText;
+    private TextView resultsText;
+
     private String[] fragments;
     private int currentFragmentIndex = 0;
     private FragmentManager fragmentManager;
@@ -48,6 +50,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         patient = patientRecord.getParcelable("patient");
 
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
+        resultsText = (TextView) findViewById(R.id.placeholderResults);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -68,6 +71,11 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     @Override
     public void setInstructions(String instructions) {
         ECAText.setText(instructions);
+    }
+
+    @Override
+    public void setResults(String results) {
+        resultsText.append("\n" + results);
     }
 
     @Override

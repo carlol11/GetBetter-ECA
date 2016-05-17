@@ -30,7 +30,6 @@ import models.monitoring.Record;
  */
 
 public class GrossMotorFragment extends Fragment {
-    private Record record;
     private MonitoringFragmentInteraction fragmentInteraction;
     private Activity activity;
 
@@ -87,11 +86,12 @@ public class GrossMotorFragment extends Fragment {
 
     private void endTest(){
         String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
-
-
         TextView countDownTV = (TextView)view.findViewById(R.id.countdownTV);
         ImageView countDownIV = (ImageView)view.findViewById(R.id.grossMotorIV);
         CountDownTimer timer;
+
+        Record record = fragmentInteraction.getRecord();
+
 
         grossMotorTest.endTest();
         hideAnswerButtons();
@@ -188,12 +188,5 @@ public class GrossMotorFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement MonitoringFragmentInteraction");
         }
-    }
-
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        record = fragmentInteraction.getRecord();
     }
 }

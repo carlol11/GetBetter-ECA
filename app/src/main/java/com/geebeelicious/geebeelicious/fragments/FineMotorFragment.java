@@ -31,7 +31,6 @@ import models.monitoring.Record;
  */
 
 public class FineMotorFragment extends Fragment {
-    private Record record;
     private MonitoringFragmentInteraction fragmentInteraction;
 
 
@@ -61,6 +60,7 @@ public class FineMotorFragment extends Fragment {
 
         currentTest = 0;
         fineMotorHelper = new FineMotorHelper(getActivity(), imageViewPathToTrace);
+        fragmentInteraction.setInstructions(fineMotorHelper.setInstructions(0));
 
         imageViewPathToTrace.setOnTouchListener(image_Listener);
         initializeButtons();
@@ -88,17 +88,15 @@ public class FineMotorFragment extends Fragment {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if(pixel == END_COLOR) { //if user done
-                            if(hasStarted){
-                                hasStarted = false;
-                                if(currentTest == 0){
-                                    fineMotorHelper.doTestWithPen();
-                                    currentTest = 1;
-                                } else if(currentTest == 1) {
-                                    fragmentInteraction.setInstructions(fineMotorHelper.askAssistantOfPen());
-                                    currentTest = 2;
-                                    showAnswerButtons();
-                                }
+                            hasStarted = false;
+
+                            if(currentTest == 0 || currentTest == 1) {
+                                fragmentInteraction.setInstructions(fineMotorHelper.doNextTest(currentTest++));
                             }
+                            if(currentTest == 2){
+                                showAnswerButtons();
+                            }
+
                         } else if(pixel == 0){ //if touch is outside path
                             fineMotorHelper.doIfOutSideThePath();
                         } else {
@@ -116,7 +114,7 @@ public class FineMotorFragment extends Fragment {
                     hasStarted = true;
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    fineMotorHelper.setInstructions(currentTest);
+                    fragmentInteraction.setInstructions(fineMotorHelper.setInstructions(currentTest));
                     return true;
                 }
                 return false;
@@ -155,6 +153,7 @@ public class FineMotorFragment extends Fragment {
 
         if(isTestOngoing){ //this is to avoid double clicking
             isTestOngoing = false;
+            Record record = fragmentInteraction.getRecord();
 
             resultString = "Non dominant hand: " + result[0] +
                     "\nDominant hand: " + result[1] +
@@ -163,7 +162,7 @@ public class FineMotorFragment extends Fragment {
             record.setFineMotorNDominant(result[0] ? 0: 1);
             record.setFineMotorDominant(result[1] ? 0: 1);
             record.setFineMotorHold(result[2] ? 0: 1);
-            fragmentInteraction.setInstructions(resultString);
+            fragmentInteraction.setResults(resultString);
             imageViewPathToTrace.setBackgroundColor(Color.WHITE);
             imageViewPathToTrace.setImageResource(R.drawable.wait_for_next_test);
             hideAnswerButtons();
@@ -218,8 +217,6 @@ public class FineMotorFragment extends Fragment {
 
     }
 
-
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -232,12 +229,4 @@ public class FineMotorFragment extends Fragment {
                     + " must implement MonitoringFragmentInteraction");
         }
     }
-
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        record = fragmentInteraction.getRecord();
-    }
-
 }

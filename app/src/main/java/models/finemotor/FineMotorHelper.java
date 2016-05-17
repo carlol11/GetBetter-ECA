@@ -43,7 +43,6 @@ public class FineMotorHelper {
 
         imageViewPathToTrace.setImageResource(pathNumber);
         instructions = getInstructions(pathNumber);
-        setInstructions(0);
     }
 
     public boolean[] getResults(){
@@ -63,31 +62,28 @@ public class FineMotorHelper {
         }
     }
     //if touch is within path
-    public void doIfWithinPath() {
+    //returns true if was outside, else false;
+    public boolean doIfWithinPath() {
         if (wasOutside){
             pauseMp();
             wasOutside = false;
+            return true;
         }
+        return false;
     }
 
-    //starts the 2nd test. resets the variables
-    public void doTestWithPen() {
+    //starts the next test. resets the variables
+    public String doNextTest(int currentTest){
         pauseMp();
-        setInstructions(1);
-        result[0] = numWrongs <= MAX_NUM_WRONG;
+        result[currentTest] = numWrongs <= MAX_NUM_WRONG;
         numWrongs = 0;
+        return setInstructions(currentTest+1);
     }
 
-    public String doIfTouchIsUp()
-    {
+
+    public String doIfTouchIsUp() {
         pauseMp();
         return "Don't lift your finger. Go back to start";
-    }
-    //asks the assistant if the user was able to use the pen properly. saves the results too
-    public String askAssistantOfPen(){
-        pauseMp();
-        result[1] = numWrongs <= MAX_NUM_WRONG;
-        return setInstructions(2);
     }
 
     //returns the equivalent x and y coordinates of the bitmap given x and y coordinates of the touch event
@@ -136,7 +132,7 @@ public class FineMotorHelper {
                     };
                 break;
             case R.drawable.path_to_trace_2: instructionList =  new String[]{"Using a finger of your non dominant hand, trace the path. Start from the lion and go to his friends",
-                    "Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers",
+                    "Using the pen with your dominant hand, trace the path. Start from the lion and go to his friends",
                     "Assistant, has he/she used the pen without difficulties?"
                     };
                 break;

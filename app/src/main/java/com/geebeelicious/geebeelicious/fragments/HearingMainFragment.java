@@ -29,7 +29,6 @@ import models.monitoring.Record;
  */
 
 public class HearingMainFragment extends Fragment {
-    private Record record;
     private MonitoringFragmentInteraction fragmentInteraction;
 
     private ArrayList<Thread> threads;
@@ -143,6 +142,7 @@ public class HearingMainFragment extends Fragment {
     }
 
     private void endTest(){
+        Record record = fragmentInteraction.getRecord();
         record.setHearingRight(hearingTest.getPureToneAverageInterpretation("Right"));
         record.setHearingLeft(hearingTest.getPureToneAverageInterpretation("Left"));
 
@@ -158,6 +158,7 @@ public class HearingMainFragment extends Fragment {
 
     //For testing purposes only
     public void endTestShortCut(){
+        Record record = fragmentInteraction.getRecord();
         record.setHearingRight("Mild Hearing Loss");
         record.setHearingLeft("Moderately-Severe Hearing Loss");
 
@@ -177,13 +178,6 @@ public class HearingMainFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement MonitoringFragmentInteraction");
         }
-    }
-
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        record = fragmentInteraction.getRecord();
     }
 
 }

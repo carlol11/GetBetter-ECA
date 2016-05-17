@@ -24,7 +24,6 @@ import models.monitoring.Record;
  * IshiharaHelper class to perform the test.
  * */
 public class ColorVisionFragment extends Fragment {
-    private Record record;
     private MonitoringFragmentInteraction fragmentInteraction;
 
     private ImageView chartView;
@@ -95,6 +94,7 @@ public class ColorVisionFragment extends Fragment {
     private void updateResults(IshiharaHelper ishiharaHelper, ImageButton[] buttonList){
         ishiharaHelper.goToNextQuestion();
         if(ishiharaHelper.isDone()){
+            Record record = fragmentInteraction.getRecord();
             record.setColorVision(ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
             endTest(buttonList);
@@ -151,13 +151,6 @@ public class ColorVisionFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement MonitoringFragmentInteraction");
         }
-    }
-
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        record = fragmentInteraction.getRecord();
     }
 
 }

@@ -110,7 +110,7 @@ public class ColorVisionFragment extends Fragment {
         } else{
             resultString += "\nYou scored lower than normal.";
         }
-        fragmentInteraction.setInstructions(resultString);
+        fragmentInteraction.setResults(resultString);
 
     }
 

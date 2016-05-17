@@ -84,6 +84,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             //TODO: send to database
         } else {
             clearTextViews();
+
             try {
                 Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
 
@@ -111,10 +112,10 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
                 return 2;
         }
     }
-    
+
     private void clearTextViews() {
-        ECAText.setText("");
-        resultsText.setText("");
+        ECAText.setText("Placeholder for Instructions");
+        resultsText.setText("Placeholder for Results");
     }
 
     private void shortcutForHearingfragment(Fragment newFragment) {

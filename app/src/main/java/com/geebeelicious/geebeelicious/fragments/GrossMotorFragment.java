@@ -95,14 +95,9 @@ public class GrossMotorFragment extends Fragment {
 
         grossMotorTest.endTest();
         hideAnswerButtons();
-        /*
-        TODO: Fix this after naayos mo na yung instructions and placeholder
-        ((TextView)view.findViewById(R.id.gmSkillTypeTV)).setText("");
-        ((TextView)view.findViewById(R.id.gmInstructionsTV)).setText("");
-        ((TextView)view.findViewById(R.id.gmDurationTV)).setText("");
-        ((TextView)view.findViewById(R.id.gmAssessmentTV)).setText("");
-        ((TextView)view.findViewById(R.id.gmSkillNameTV)).setText(resultString);
-        */
+
+        fragmentInteraction.setResults(resultString);
+
         record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
 
         countDownTV.setVisibility(View.GONE);
@@ -133,13 +128,11 @@ public class GrossMotorFragment extends Fragment {
         String typeString = "Type: " + gms.getType();
         String durationString = "Duration: " + String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
-        /*
-        TODO: Fix this after the instructions crap is fixed
-        ((TextView)findViewById(R.id.gmSkillNameTV)).setText(activityString);
-        ((TextView)findViewById(R.id.gmSkillTypeTV)).setText(typeString);
-        ((TextView)findViewById(R.id.gmInstructionsTV)).setText(gms.getInstruction());
-        ((TextView)findViewById(R.id.gmDurationTV)).setText(durationString);
-        */
+        fragmentInteraction.setInstructions(activityString + "\n"
+                + typeString + "\n"
+                + gms.getInstruction() + "\n"
+                + durationString);
+
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
 

@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -164,7 +164,7 @@ public class AddPatientActivity extends ActionBarActivity {
     }
 
     private void savePatientToDatabase(Patient patient){
-        DataAdapter getBetterDb = new DataAdapter(AddPatientActivity.this);
+        DatabaseAdapter getBetterDb = new DatabaseAdapter(AddPatientActivity.this);
         try {
             getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {

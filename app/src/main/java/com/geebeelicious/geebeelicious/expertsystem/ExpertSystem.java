@@ -3,7 +3,7 @@ package com.geebeelicious.geebeelicious.expertsystem;
 import android.content.Context;
 import android.util.Log;
 
-import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -26,7 +26,7 @@ import models.consultation.SymptomFamily;
 * The original code was created by Mike Dayupay 2015.
 * For the purpose of integration, the code was modified by Mary Grace Malana (2015).
 * The ExpertSystem class gives specific questions depending on the input of the user
-* It uses the DataAdapter class to connect with the database.
+* It uses the DatabaseAdapter class to connect with the database.
 */
 
 
@@ -50,7 +50,7 @@ public class ExpertSystem {
 
     private boolean flag;
 
-    private DataAdapter getBetterDb;
+    private DatabaseAdapter getBetterDb;
     private SymptomFamily generalQuestion;
 
 
@@ -111,7 +111,7 @@ public class ExpertSystem {
 
     private void initializeDatabase (Context context) {
 
-        getBetterDb = new DataAdapter(context);
+        getBetterDb = new DatabaseAdapter(context);
 
         try {
             getBetterDb.openDatabaseForRead();

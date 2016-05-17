@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.adapters.PatientsAdapter;
-import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class PatientListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list);
 
-        DataAdapter getBetterDb = new DataAdapter(PatientListActivity.this);
+        DatabaseAdapter getBetterDb = new DatabaseAdapter(PatientListActivity.this);
         try {
             getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {

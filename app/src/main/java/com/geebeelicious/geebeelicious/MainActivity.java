@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 
 import java.sql.SQLException;
 
@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        DataAdapter getBetterDb = new DataAdapter(MainActivity.this);
+        DatabaseAdapter getBetterDb = new DatabaseAdapter(MainActivity.this);
         try {
             getBetterDb.createDatabase();
         } catch (SQLException e) {

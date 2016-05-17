@@ -24,13 +24,13 @@ import models.consultation.SymptomFamily;
 
 /**
  * Created by Mary Grace Malana
- * The DataAdapter class contains methods which serve as database queries.
+ * The DatabaseAdapter class contains methods which serve as database queries.
  * The original class used as a basis for this current version was
  * created by Mike Dayupay for HPI Generation module of the GetBetter project.
  */
 
-public class DataAdapter {
-    protected static final String TAG = "DataAdapter";
+public class DatabaseAdapter {
+    protected static final String TAG = "DatabaseAdapter";
 
     private SQLiteDatabase getBetterDb;
     private DatabaseHelper getBetterDatabaseHelper;
@@ -38,11 +38,11 @@ public class DataAdapter {
     private static final String SYMPTOM_LIST = "tbl_symptom_list";
     private static final String SYMPTOM_FAMILY = "tbl_symptom_family";
 
-    public DataAdapter (Context context) {
+    public DatabaseAdapter(Context context) {
         getBetterDatabaseHelper  = new DatabaseHelper(context);
     }
 
-    public DataAdapter createDatabase() throws SQLException {
+    public DatabaseAdapter createDatabase() throws SQLException {
 
         try {
             getBetterDatabaseHelper.createDatabase();
@@ -53,7 +53,7 @@ public class DataAdapter {
         return this;
     }
 
-    public DataAdapter openDatabaseForRead() throws SQLException {
+    public DatabaseAdapter openDatabaseForRead() throws SQLException {
 
         try {
             getBetterDatabaseHelper.openDatabase();
@@ -66,7 +66,7 @@ public class DataAdapter {
         return this;
     }
 
-    public DataAdapter openDatabaseForWrite() throws SQLException {
+    public DatabaseAdapter openDatabaseForWrite() throws SQLException {
 
         try {
             getBetterDatabaseHelper.openDatabase();

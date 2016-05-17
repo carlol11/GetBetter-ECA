@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
-import com.geebeelicious.geebeelicious.database.DataAdapter;
+import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
 
 import java.io.FileNotFoundException;
@@ -45,7 +45,7 @@ public class SettingsActivity extends ActionBarActivity {
 
     //Adds option to select a school to the Settings screen
     private void addChooseSchoolSetting(){
-        DataAdapter getBetterDb = new DataAdapter(SettingsActivity.this);
+        DatabaseAdapter getBetterDb = new DatabaseAdapter(SettingsActivity.this);
         try {
             getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {

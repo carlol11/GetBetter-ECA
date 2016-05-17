@@ -17,6 +17,7 @@ import com.geebeelicious.geebeelicious.monitoring.fragments.GrossMotorFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.HearingMainFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.VisualAcuityFragment;
 
+import models.consultation.Patient;
 import models.monitoring.Record;
 
 /**
@@ -34,11 +35,18 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     private String[] fragments;
     private int currentFragmentIndex = 0;
     private FragmentManager fragmentManager;
+    private Patient patient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_main);
+
+        Bundle patientRecord = getIntent().getExtras();
         record = new Record();
+        record.setDateCreated(patientRecord.getString("currentDate"));
+        patient = patientRecord.getParcelable("patient");
+
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
         //so that the fragments can be dynamically initialized
@@ -72,7 +80,8 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
                 Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
 
                 /*******
-                 * TODO: [Testing Code] Remove this if no longer testing
+                 * TODO: [Testing Code] Remove this if no longer testing.
+                 * this is for the shortcut for the hearing fragment
                  */
                 final ImageView placeholderECA = (ImageView)findViewById(R.id.placeholderECA);
                 Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());

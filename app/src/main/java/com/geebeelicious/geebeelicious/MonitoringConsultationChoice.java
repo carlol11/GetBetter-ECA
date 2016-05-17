@@ -42,11 +42,9 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle record = new Bundle();
-                record.putParcelable("patient", patient);
-                record.putString("currentDate", dateFormat.format(new Date()));
                 Intent intent = new Intent(MonitoringConsultationChoice.this, MonitoringMainActivity.class);
-                intent.putExtras(record);
+                intent.putExtra("patient", patient);
+                intent.putExtra("currentDate", dateFormat.format(new Date()));
                 startActivity(intent);
             }
         });

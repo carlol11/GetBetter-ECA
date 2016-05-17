@@ -6,7 +6,7 @@
     android:padding="20dp"
     android:keepScreenOn="true"
     style="@style/DefaultBackground"
-    tools:context="com.geebeelicious.geebeelicious.SettingsActivity">
+    tools:context=".activities.SettingsActivity">
 
     <TableLayout
         android:layout_width="match_parent"

@@ -1,6 +1,6 @@
 package com.geebeelicious.geebeelicious.interfaces;
 
-import models.monitoring.Record;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 /**
  * Created by mgmalana on 15/05/2016.

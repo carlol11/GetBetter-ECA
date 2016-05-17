@@ -18,8 +18,8 @@ import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
 import java.util.ArrayList;
 
-import models.hearing.HearingTest;
-import models.monitoring.Record;
+import com.geebeelicious.geebeelicious.models.hearing.HearingTest;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 /**
  * Created by Kate.

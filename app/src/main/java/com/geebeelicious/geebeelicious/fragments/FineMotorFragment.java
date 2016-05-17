@@ -20,8 +20,8 @@ import android.widget.LinearLayout;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
-import models.finemotor.FineMotorHelper;
-import models.monitoring.Record;
+import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 /**
  * Created by MG.

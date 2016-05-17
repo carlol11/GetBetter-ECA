@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
-import models.colorvision.IshiharaHelper;
-import models.monitoring.Record;
+import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 /**
  * Created by Kate.

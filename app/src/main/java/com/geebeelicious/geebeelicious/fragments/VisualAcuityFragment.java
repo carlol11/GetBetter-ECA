@@ -14,10 +14,10 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
-import models.monitoring.Record;
-import models.visualacuity.ChartHelper;
-import models.visualacuity.DistanceCalculator;
-import models.visualacuity.VisualAcuityResult;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
+import com.geebeelicious.geebeelicious.models.visualacuity.ChartHelper;
+import com.geebeelicious.geebeelicious.models.visualacuity.DistanceCalculator;
+import com.geebeelicious.geebeelicious.models.visualacuity.VisualAcuityResult;
 
 /**
  * Created by Kate.

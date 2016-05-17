@@ -8,7 +8,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:keepScreenOn="true"
-    tools:context=".MonitoringMainActivity">
+    tools:context=".activities.MonitoringMainActivity">
 
     <RelativeLayout
         android:orientation="horizontal"

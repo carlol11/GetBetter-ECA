@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
+import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.tests.grossmotor.GrossMotorMainActivity;
 
 import java.util.ArrayList;
 
-import models.hearing.HearingTest;
+import com.geebeelicious.geebeelicious.models.hearing.HearingTest;
 
 /**
  * Created by Kate.

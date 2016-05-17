@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
 
-import models.consultation.ChiefComplaint;
-import models.consultation.HPI;
-import models.consultation.Impressions;
-import models.consultation.Patient;
-import models.consultation.PatientAnswers;
-import models.consultation.PositiveResults;
-import models.consultation.Symptom;
-import models.consultation.SymptomFamily;
+import com.geebeelicious.geebeelicious.models.consultation.ChiefComplaint;
+import com.geebeelicious.geebeelicious.models.consultation.HPI;
+import com.geebeelicious.geebeelicious.models.consultation.Impressions;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
+import com.geebeelicious.geebeelicious.models.consultation.PatientAnswers;
+import com.geebeelicious.geebeelicious.models.consultation.PositiveResults;
+import com.geebeelicious.geebeelicious.models.consultation.Symptom;
+import com.geebeelicious.geebeelicious.models.consultation.SymptomFamily;
 
 /*
 * The original code was created by Mike Dayupay 2015.

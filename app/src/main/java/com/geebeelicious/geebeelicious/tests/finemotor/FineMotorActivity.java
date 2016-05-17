@@ -2,13 +2,9 @@ package com.geebeelicious.geebeelicious.tests.finemotor;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,12 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
+import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
-import models.consultation.Patient;
-import models.monitoring.Record;
-import models.finemotor.FineMotorHelper;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
+import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
 
 
 /**

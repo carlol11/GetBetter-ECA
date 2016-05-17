@@ -41,10 +41,10 @@ public class VisualAcuityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
 
-        final ChartHelper chartHelper = new ChartHelper((ImageView) view.findViewById(R.id.chartLine));
+        chartView = (ImageView)view.findViewById(R.id.chartLine);
+        final ChartHelper chartHelper = new ChartHelper(chartView);
         yesButton = (Button) view.findViewById(R.id.YesButton);
         noButton = (Button) view.findViewById(R.id.NoButton);
-        chartView = (ImageView)view.findViewById(R.id.chartLine);
 
 
         yesButton.setOnClickListener(new View.OnClickListener() {

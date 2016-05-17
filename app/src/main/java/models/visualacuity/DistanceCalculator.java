@@ -2,6 +2,7 @@ package models.visualacuity;
 
 import android.content.Context;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 /**
  * Created by Kate on 02/23/2016.
@@ -12,15 +13,17 @@ import android.widget.ImageView;
 public class DistanceCalculator {
 
     private int displayHeight;
-    private int displayWidth;
 
     private void getDisplaySize(ImageView imageView){
-        displayHeight = imageView.getHeight();
-        displayWidth = imageView.getWidth();
+        imageView.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        //TODO: Check this if tama. idk kung tama. kasi ayaw ni kate :(
+
+        displayHeight = imageView.getMeasuredHeight();
     }
 
     public float getUserDistance(Context context, ImageView imageView){
         getDisplaySize(imageView);
+
         float height = convertPixelsToMillimeter(displayHeight, context.getResources().getDisplayMetrics().xdpi);
         float distanceMeters = (height/88) * 6;
         return distanceMeters;

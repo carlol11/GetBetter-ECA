@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.monitoring.fragments.ColorVisionFragment;
+import com.geebeelicious.geebeelicious.monitoring.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.GrossMotorFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.HearingMainFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.VisualAcuityFragment;
@@ -45,7 +46,8 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
                 VisualAcuityFragment.class.getName(),
                 ColorVisionFragment.class.getName(),
                 HearingMainFragment.class.getName(),
-                GrossMotorFragment.class.getName()
+                GrossMotorFragment.class.getName(),
+                FineMotorFragment.class.getName(),
         };
 
         fragmentManager = getSupportFragmentManager();

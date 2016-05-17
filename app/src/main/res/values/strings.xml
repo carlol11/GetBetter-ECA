@@ -19,7 +19,6 @@
     <string name="MonitoringOrConsultationQuestion">What would you like to do?</string>
     <string name="Monitoring">Monitoring</string>
     <string name="Consultation">Consultation</string>
-    <string name="fine_motor_dont_lift">Don\'t lift your finger. Go back to start.</string>
     <string name="title_activity_patient_list">PatientListActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="school_name">School Name</string>

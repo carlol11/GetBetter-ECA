@@ -9,12 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.database.DataAdapter;
 
-import java.sql.SQLException;
 import java.util.Random;
 
-import models.monitoring.Record;
 
 /**
  * Created by Mary Grace Malana on 25/03/2016.
@@ -28,9 +25,6 @@ public class FineMotorHelper {
     private static final int MAX_NUM_WRONG = 2;
 
     private ImageView imageViewPathToTrace;
-    private TextView ECAtext;
-
-    private DataAdapter getBetterDb;
     private MediaPlayer mp;
 
     private boolean wasOutside = false; //was user outside the path
@@ -40,12 +34,9 @@ public class FineMotorHelper {
 
     private String[] instructions;
 
-    public FineMotorHelper(Context context, ImageView imageViewPathToTrace, TextView ECAtext) {
+    public FineMotorHelper(Context context, ImageView imageViewPathToTrace) {
         this.imageViewPathToTrace = imageViewPathToTrace;
-        this.ECAtext = ECAtext;
         int pathNumber = getRandomPathDrawable();
-
-        getBetterDb = new DataAdapter(context);
 
         mp = MediaPlayer.create(context, R.raw.fine_motor_outside_path);
         mp.setLooping(true);
@@ -53,13 +44,6 @@ public class FineMotorHelper {
         imageViewPathToTrace.setImageResource(pathNumber);
         instructions = getInstructions(pathNumber);
         setInstructions(0);
-    }
-
-    public void saveToDatabase(Record record){
-        openDatabase();
-        getBetterDb.insertRecord(record);
-        getBetterDb.getRecords(record.getPatient_id()); //calls the method to just print the recods
-        getBetterDb.closeDatabase();
     }
 
     public boolean[] getResults(){
@@ -94,16 +78,16 @@ public class FineMotorHelper {
         numWrongs = 0;
     }
 
-    public void doIfTouchIsUp()
+    public String doIfTouchIsUp()
     {
-        ECAtext.setText(R.string.fine_motor_dont_lift);
         pauseMp();
+        return "Don't lift your finger. Go back to start";
     }
     //asks the assistant if the user was able to use the pen properly. saves the results too
-    public void askAssistantOfPen(){
+    public String askAssistantOfPen(){
         pauseMp();
-        setInstructions(2);
         result[1] = numWrongs <= MAX_NUM_WRONG;
+        return setInstructions(2);
     }
 
     //returns the equivalent x and y coordinates of the bitmap given x and y coordinates of the touch event
@@ -132,12 +116,8 @@ public class FineMotorHelper {
         return new int[] {x,y};
     }
 
-    public void refreshInstructions(int currentTest){
-        setInstructions(currentTest);
-    }
-
-    private void setInstructions(int index){
-        ECAtext.setText(instructions[index]);
+    public String setInstructions(int index){
+        return(instructions[index]);
     }
 
     private int getRandomPathDrawable(){
@@ -163,16 +143,6 @@ public class FineMotorHelper {
         }
         return instructionList;
 
-    }
-
-    //opens the database for read
-    private void openDatabase() {
-        try {
-            getBetterDb.createDatabase();
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     //pause mediaplayer

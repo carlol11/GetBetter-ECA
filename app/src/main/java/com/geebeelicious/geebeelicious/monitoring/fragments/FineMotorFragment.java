@@ -1,45 +1,45 @@
-package com.geebeelicious.geebeelicious.tests.finemotor;
+package com.geebeelicious.geebeelicious.monitoring.fragments;
+
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
 
-import models.consultation.Patient;
-import models.monitoring.Record;
 import models.finemotor.FineMotorHelper;
-
+import models.monitoring.Record;
 
 /**
- * Created by Mary Grace Malana.
- * The FineMotorActivity class serves as the main activity
+ * Created by MG.
+ * The FineMotorFragment class serves as the main fragment
  * for the fine motor test. It uses the FineMotorHelper class
  * to perform the test.
  */
 
-public class FineMotorActivity extends Activity {
+public class FineMotorFragment extends Fragment {
+    private Record record;
+    private MonitoringFragmentInteraction fragmentInteraction;
 
-    private Bundle record;
 
     private static final String TAG = "FineMotorActivity";
 
+    private View view;
+
     private ImageView imageViewPathToTrace;
-    private Button buttonYes;
-    private Button buttonNo;
 
     //Set the color for the start and end of the path
     private final int START_COLOR = Color.parseColor("#09BCD4");//update the instruction if you change this
@@ -51,25 +51,21 @@ public class FineMotorActivity extends Activity {
     private boolean hasStarted = false; //has user started
     private FineMotorHelper fineMotorHelper;
 
-/*
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fine_motor);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view =  inflater.inflate(R.layout.fragment_fine_motor, container, false);
 
-        TextView ECAtext = (TextView) findViewById(R.id.placeholderECAText);
-
-        record = this.getIntent().getExtras();
-
-        imageViewPathToTrace = (ImageView) findViewById(R.id.imageViewPathToTrace);
-        buttonYes = (Button) findViewById(R.id.YesButton);
-        buttonNo = (Button) findViewById(R.id.NoButton);
+        imageViewPathToTrace = (ImageView) view.findViewById(R.id.imageViewPathToTrace);
 
         currentTest = 0;
-        fineMotorHelper = new FineMotorHelper(getApplicationContext(), imageViewPathToTrace, ECAtext);
+        fineMotorHelper = new FineMotorHelper(getActivity(), imageViewPathToTrace);
 
         imageViewPathToTrace.setOnTouchListener(image_Listener);
         initializeButtons();
+
+        return view;
     }
 
     //OnTouchListener for tracing the path
@@ -88,7 +84,7 @@ public class FineMotorActivity extends Activity {
                         break;
                     case MotionEvent.ACTION_UP: //go back to start if finger is lifted
                         hasStarted = false;
-                        fineMotorHelper.doIfTouchIsUp();
+                        fragmentInteraction.setInstructions(fineMotorHelper.doIfTouchIsUp());
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if(pixel == END_COLOR) { //if user done
@@ -98,7 +94,7 @@ public class FineMotorActivity extends Activity {
                                     fineMotorHelper.doTestWithPen();
                                     currentTest = 1;
                                 } else if(currentTest == 1) {
-                                    fineMotorHelper.askAssistantOfPen();
+                                    fragmentInteraction.setInstructions(fineMotorHelper.askAssistantOfPen());
                                     currentTest = 2;
                                     showAnswerButtons();
                                 }
@@ -120,17 +116,21 @@ public class FineMotorActivity extends Activity {
                     hasStarted = true;
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    fineMotorHelper.refreshInstructions(currentTest);
+                    fineMotorHelper.setInstructions(currentTest);
                     return true;
                 }
                 return false;
             }
         }
-    };*/
+    };
 
     //Define OnClickListener for buttons
     private void initializeButtons(){
-        buttonYes.setOnClickListener(new OnClickListener() {
+        Button buttonYes = (Button) view.findViewById(R.id.YesButton);
+        Button buttonNo = (Button) view.findViewById(R.id.NoButton);
+
+
+        buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fineMotorHelper.setResult(2, true);
@@ -138,7 +138,7 @@ public class FineMotorActivity extends Activity {
             }
         });
 
-        buttonNo.setOnClickListener(new OnClickListener() {
+        buttonNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fineMotorHelper.setResult(2, false);
@@ -147,27 +147,28 @@ public class FineMotorActivity extends Activity {
         });
     }
 
-    private synchronized void sendResults(){
-        String resultString = "";
-        String[] testString = {"nonDominantHand", "dominantHand", "usePen"};
+    private void sendResults(){
+        String resultString ;
         boolean[] result = fineMotorHelper.getResults();
         CountDownTimer timer;
-        TextView resultView;
+        //TODO: [Testing] remove the resultString na
 
         if(isTestOngoing){ //this is to avoid double clicking
-            for(int i = 0; i < 3; i++){
-                String temp =  (result[i] ? "Pass" : "Fail");
-                resultString += testString[i] + ": " + temp + "\n";
-                record.putString(testString[i], temp);
-            }
             isTestOngoing = false;
-        }
-        resultView = (TextView)findViewById(R.id.fineMotorResultsTV);
-        resultView.setText(resultString);
 
-        imageViewPathToTrace.setBackgroundColor(Color.WHITE);
-        imageViewPathToTrace.setImageResource(R.drawable.wait_for_next_test);
-        hideAnswerButtons();
+            resultString = "Non dominant hand: " + result[0] +
+                    "\nDominant hand: " + result[1] +
+                    "\nUsing pen: " + result[2];
+
+            record.setFineMotorNDominant(result[0] ? 0: 1);
+            record.setFineMotorDominant(result[1] ? 0: 1);
+            record.setFineMotorHold(result[2] ? 0: 1);
+            fragmentInteraction.setInstructions(resultString);
+            imageViewPathToTrace.setBackgroundColor(Color.WHITE);
+            imageViewPathToTrace.setImageResource(R.drawable.wait_for_next_test);
+            hideAnswerButtons();
+        }
+
 
 
         timer = new CountDownTimer(10000, 1000) {
@@ -189,33 +190,14 @@ public class FineMotorActivity extends Activity {
 
             @Override
             public void onFinish() {
-                Intent intent;
-                Patient patient = record.getParcelable("patient");
-
-                int grossMotor = getIntResults(record.getString("grossMotor"));
-                int nonDominantHand = getIntResults(record.getString("nonDominantHand"));
-                int dominantHand = getIntResults(record.getString("dominantHand"));
-                int usePen = getIntResults(record.getString("usePen"));
-//TODO: transfer this to main activity
-/*
-                fineMotorHelper.saveToDatabase(new Record(patient.getPatientID(),
-                        record.getString("currentDate"), record.getDouble("height"), record.getDouble("weight"), record.getString("visualAcuityLeft"),
-                        record.getString("visualAcuityRight"), record.getString("colorVision"),
-                        record.getString("hearingLeft"), record.getString("hearingRight"),
-                        grossMotor, nonDominantHand,
-                        dominantHand, usePen));
-*/
-                intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
-                intent.putExtra("patient", patient);
-                finish();
-                startActivity(intent);
+                fragmentInteraction.doneFragment();
             }
         };
         timer.start();
     }
 
     private void hideAnswerButtons(){
-        LinearLayout answers = (LinearLayout)findViewById(R.id.linearLayoutAnswers);
+        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutAnswers);
         for (int j = 0; j<answers.getChildCount(); j++){
             View view = answers.getChildAt(j);
             view.setEnabled(false);
@@ -226,7 +208,7 @@ public class FineMotorActivity extends Activity {
     }
 
     private void showAnswerButtons(){
-        LinearLayout answers = (LinearLayout)findViewById(R.id.linearLayoutAnswers);
+        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutAnswers);
         for (int j = 0; j<answers.getChildCount(); j++){
             View view = answers.getChildAt(j);
             view.setEnabled(true);
@@ -236,10 +218,26 @@ public class FineMotorActivity extends Activity {
 
     }
 
+
+
     @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
-        finish();
-        startActivity(intent);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement MonitoringFragmentInteraction");
+        }
     }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        record = fragmentInteraction.getRecord();
+    }
+
 }

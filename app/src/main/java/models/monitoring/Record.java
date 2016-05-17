@@ -38,10 +38,10 @@ public class Record {
     private String colorVision;
     private String hearingLeft;
     private String hearingRight;
-    private int grossMotor;
-    private int fineMotorDominant;
-    private int fineMotorNDominant;
-    private int fineMotorHold;
+    private int grossMotor; //0 pass, 1 fail
+    private int fineMotorDominant; //0 pass, 1 fail
+    private int fineMotorNDominant; //0 pass, 1 fail
+    private int fineMotorHold; //0 pass, 1 fail
 
     public Record(){
 

@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.expertsystem;
+package com.geebeelicious.geebeelicious.models.consultation;
 
 import android.content.Context;
 import android.util.Log;

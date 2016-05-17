@@ -3,11 +3,9 @@ package com.geebeelicious.geebeelicious.models.consultation;
 import android.content.Context;
 import android.util.Log;
 
-import com.geebeelicious.geebeelicious.expertsystem.ExpertSystem;
-
 import java.util.ArrayList;
 
-/* Created by Mary Grace Malana on 3/22/2016
+/* Created by MG on 3/22/2016
 * The ConsultationHelper class serves to generate chief complaint
 * questions, and retrieves succeeding questions from the ExpertSystem.
 */

@@ -1,7 +1,7 @@
 package com.geebeelicious.geebeelicious.models.consultation;
 
 /**
- * Created by mgmalana on 24/03/2016.
+ * Created by MG on 24/03/2016.
  * The HPI class represents a history of present illness (HPI).
  * It contains the HPI ID, the patient ID to which the HPI is for,
  * the text content of the HPI, and the date of creation of the HPI.

@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.monitoring;
+package com.geebeelicious.geebeelicious;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
 import com.geebeelicious.geebeelicious.monitoring.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.monitoring.fragments.GrossMotorFragment;
@@ -26,7 +27,7 @@ import models.monitoring.Record;
  * Each test are executed through this activity
  */
 
-public class MonitoringMainActivity extends ActionBarActivity implements MonitoringFragmentInteraction{
+public class MonitoringMainActivity extends ActionBarActivity implements MonitoringFragmentInteraction {
     private final static String TAG = "MonitoringMainActivity";
 
     private Record record;

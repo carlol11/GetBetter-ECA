@@ -8,8 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.geebeelicious.geebeelicious.consultation.ConsultationActivity;
-import com.geebeelicious.geebeelicious.monitoring.MonitoringMainActivity;
-import com.geebeelicious.geebeelicious.tests.MonitoringActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

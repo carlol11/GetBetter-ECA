@@ -68,7 +68,7 @@
         <activity
             android:name=".tests.MonitoringActivity"
             android:label="@string/title_activity_monitoring" />
-        <activity android:name=".monitoring.MonitoringMainActivity"></activity>
+        <activity android:name=".MonitoringMainActivity"></activity>
     </application>
 
 </manifest><!--

@@ -2,13 +2,9 @@ package com.geebeelicious.geebeelicious.tests.finemotor;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,12 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
+import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
-import models.consultation.Patient;
-import models.consultation.Record;
-import models.finemotor.FineMotorHelper;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
+import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
 
 
 /**
@@ -51,7 +46,7 @@ public class FineMotorActivity extends Activity {
     private boolean hasStarted = false; //has user started
     private FineMotorHelper fineMotorHelper;
 
-
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +121,7 @@ public class FineMotorActivity extends Activity {
                 return false;
             }
         }
-    };
+    };*/
 
     //Define OnClickListener for buttons
     private void initializeButtons(){
@@ -196,14 +191,15 @@ public class FineMotorActivity extends Activity {
                 int nonDominantHand = getIntResults(record.getString("nonDominantHand"));
                 int dominantHand = getIntResults(record.getString("dominantHand"));
                 int usePen = getIntResults(record.getString("usePen"));
-
+//TODO: transfer this to main activity
+/*
                 fineMotorHelper.saveToDatabase(new Record(patient.getPatientID(),
                         record.getString("currentDate"), record.getDouble("height"), record.getDouble("weight"), record.getString("visualAcuityLeft"),
                         record.getString("visualAcuityRight"), record.getString("colorVision"),
                         record.getString("hearingLeft"), record.getString("hearingRight"),
                         grossMotor, nonDominantHand,
                         dominantHand, usePen));
-
+*/
                 intent = new Intent(FineMotorActivity.this, MonitoringConsultationChoice.class);
                 intent.putExtra("patient", patient);
                 finish();

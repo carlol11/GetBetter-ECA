@@ -10,11 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
+import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.tests.hearing.HearingMainActivity;
 
-import models.colorvision.IshiharaHelper;
+import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
 
 /**
  * Created by Kate.

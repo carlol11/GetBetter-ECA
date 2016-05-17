@@ -8,9 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.SettingsActivity;
+import com.geebeelicious.geebeelicious.activities.SettingsActivity;
 
-import models.hearing.Calibrator;
+import com.geebeelicious.geebeelicious.models.hearing.Calibrator;
 
 /**
  * Created by Kate.

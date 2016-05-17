@@ -9,7 +9,7 @@
     android:paddingTop="0dp"
     android:keepScreenOn="true"
     style="@style/DefaultBackground"
-    tools:context="com.geebeelicious.geebeelicious.AddPatientActivity">
+    tools:context=".activities.AddPatientActivity">
 
     <RelativeLayout
         android:orientation="horizontal"

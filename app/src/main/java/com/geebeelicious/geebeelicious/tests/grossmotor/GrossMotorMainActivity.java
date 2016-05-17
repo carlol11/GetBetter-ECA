@@ -9,15 +9,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.MonitoringConsultationChoice;
+import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.tests.finemotor.FineMotorActivity;
 
 
 import java.util.concurrent.TimeUnit;
 
-import models.grossmotor.GrossMotorSkill;
-import models.grossmotor.GrossMotorTest;
+import com.geebeelicious.geebeelicious.models.grossmotor.GrossMotorSkill;
+import com.geebeelicious.geebeelicious.models.grossmotor.GrossMotorTest;
 
 /**
  * Created by Kate.

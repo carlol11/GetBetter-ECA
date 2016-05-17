@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.tests.colorvision.ColorVisionMainActivity;
 
-import models.visualacuity.ChartHelper;
-import models.visualacuity.DistanceCalculator;
-import models.visualacuity.VisualAcuityResult;
+import com.geebeelicious.geebeelicious.models.visualacuity.ChartHelper;
+import com.geebeelicious.geebeelicious.models.visualacuity.DistanceCalculator;
+import com.geebeelicious.geebeelicious.models.visualacuity.VisualAcuityResult;
 
 /**
  * Created by Kate.

@@ -10,7 +10,7 @@
     android:paddingTop="0dp"
     android:keepScreenOn="true"
     style="@style/DefaultBackground"
-    tools:context="com.geebeelicious.geebeelicious.MonitoringConsultationChoice">
+    tools:context=".activities.MonitoringConsultationChoice">
 
     <ImageView
         android:layout_width="wrap_content"

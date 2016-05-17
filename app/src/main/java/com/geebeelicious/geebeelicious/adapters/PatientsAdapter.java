@@ -12,7 +12,7 @@ import com.geebeelicious.geebeelicious.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.consultation.Patient;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
  * Created by Kate on 03/30/2016.

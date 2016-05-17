@@ -11,7 +11,7 @@ import com.geebeelicious.geebeelicious.R;
 
 import java.util.ArrayList;
 
-import models.consultation.School;
+import com.geebeelicious.geebeelicious.models.consultation.School;
 
 /**
  * Created by Kate on 03/30/2016.

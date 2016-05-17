@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.monitoring;
+package com.geebeelicious.geebeelicious.interfaces;
 
 import models.monitoring.Record;
 

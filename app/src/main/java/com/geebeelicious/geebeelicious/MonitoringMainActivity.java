@@ -10,13 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
-import com.geebeelicious.geebeelicious.monitoring.fragments.ColorVisionFragment;
-import com.geebeelicious.geebeelicious.monitoring.fragments.FineMotorFragment;
-import com.geebeelicious.geebeelicious.monitoring.fragments.GrossMotorFragment;
-import com.geebeelicious.geebeelicious.monitoring.fragments.HearingMainFragment;
-import com.geebeelicious.geebeelicious.monitoring.fragments.VisualAcuityFragment;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
+import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
+import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
+import com.geebeelicious.geebeelicious.fragments.HearingMainFragment;
+import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 
 import models.consultation.Patient;
 import models.monitoring.Record;

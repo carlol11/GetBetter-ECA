@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.geebeelicious.geebeelicious.monitoring.fragments.GrossMotorFragment">
+    tools:context=".fragments.GrossMotorFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

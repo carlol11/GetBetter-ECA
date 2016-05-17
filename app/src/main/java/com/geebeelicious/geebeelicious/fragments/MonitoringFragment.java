@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.monitoring.fragments;
+package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
 import models.monitoring.Record;
 

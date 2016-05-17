@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.monitoring.fragments;
+package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
 import java.util.ArrayList;
 

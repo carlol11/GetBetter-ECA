@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.monitoring.fragments;
+package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.monitoring.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 
 import models.colorvision.IshiharaHelper;
 import models.monitoring.Record;

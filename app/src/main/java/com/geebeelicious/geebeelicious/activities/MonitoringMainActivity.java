@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
@@ -20,6 +21,8 @@ import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
+
+import java.sql.SQLException;
 
 /**
  * Created by MG.
@@ -46,9 +49,10 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         setContentView(R.layout.activity_monitoring_main);
 
         Bundle patientRecord = getIntent().getExtras();
+        patient = patientRecord.getParcelable("patient");
         record = new Record();
         record.setDateCreated(patientRecord.getString("currentDate"));
-        patient = patientRecord.getParcelable("patient");
+        record.setPatient_id(patient.getPatientID());
 
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
@@ -82,7 +86,14 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     @Override
     public void doneFragment(){
         if(currentFragmentIndex == fragments.length){
-            //TODO: send to database
+            DatabaseAdapter db = new DatabaseAdapter(this);
+
+            try {
+                db.openDatabaseForRead();
+                db.insertRecord(record);
+            } catch (SQLException e) {
+                Log.e(TAG, "Database error", e);
+            }
         } else {
             clearTextViews();
 
@@ -138,6 +149,5 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         } else if(hearingFragment != null){
             placeholderECA.setClickable(false);
         }
-
     }
 }

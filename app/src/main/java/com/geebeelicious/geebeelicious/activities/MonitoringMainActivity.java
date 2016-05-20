@@ -1,5 +1,6 @@
 package com.geebeelicious.geebeelicious.activities;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -94,6 +95,10 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             } catch (SQLException e) {
                 Log.e(TAG, "Database error", e);
             }
+
+            Intent intent = new Intent(this, MonitoringConsultationChoice.class);
+            startActivity(intent);
+
         } else {
             clearTextViews();
 

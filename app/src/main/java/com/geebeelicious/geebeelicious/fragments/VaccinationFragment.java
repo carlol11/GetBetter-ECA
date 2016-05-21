@@ -46,9 +46,6 @@ public class VaccinationFragment extends Fragment {
     private MonitoringFragmentInteraction fragmentInteraction;
     private Activity activity;
 
-    private ImageView imageViewPlaceholder;
-    private String mCurrentPhotoPath;
-
     private VaccinationHelper vaccinationHelper;
 
     @Override
@@ -59,12 +56,12 @@ public class VaccinationFragment extends Fragment {
         Button skipButton = (Button) view.findViewById(R.id.skipButton);
         Button pictureButton = (Button) view.findViewById(R.id.takePictureButton);
 
-        imageViewPlaceholder = (ImageView) view.findViewById(R.id.imagePlaceholder);
+        ImageView imageViewPlaceholder = (ImageView) view.findViewById(R.id.imagePlaceholder);
 
-        vaccinationHelper = new VaccinationHelper();
+        vaccinationHelper = new VaccinationHelper(imageViewPlaceholder);
 
         if(savedInstanceState != null){
-            mCurrentPhotoPath = savedInstanceState.getString("photoPath");
+            vaccinationHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
             skipButton.setText("Continue");
             pictureButton.setText("Take Another Picture");
         }
@@ -72,13 +69,9 @@ public class VaccinationFragment extends Fragment {
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentPhotoPath != null) {
+                if (vaccinationHelper.getmCurrentPhotoPath() != null) {
                     Record record = fragmentInteraction.getRecord();
-
-                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    Bitmap vaccination = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-
-                    record.setVaccination(vaccinationHelper.getBytesFromBitmap(vaccination));
+                    record.setVaccination(vaccinationHelper.getVaccinationPicture());
                 }
 
                 fragmentInteraction.doneFragment();
@@ -102,7 +95,7 @@ public class VaccinationFragment extends Fragment {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = createImageFile();
+                photoFile = vaccinationHelper.createImageFile(); // also updates mCurrentPhotoPath
             } catch (IOException ex) {
                 Log.e(TAG, "Error occured while creating file");
                 Toast.makeText(activity, "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG);
@@ -116,60 +109,16 @@ public class VaccinationFragment extends Fragment {
         }
     }
 
-    private File createImageFile() throws IOException {
-        //this is android code
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    private void setPic() {
-        // Get the dimensions of the View
-        imageViewPlaceholder.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        int targetW = imageViewPlaceholder.getMeasuredWidth();
-        int targetH = imageViewPlaceholder.getMeasuredHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        imageViewPlaceholder.setImageBitmap(bitmap);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("photoPath", mCurrentPhotoPath);
+        outState.putString("photoPath", vaccinationHelper.getmCurrentPhotoPath());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         InputStream stream = null;
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == activity.RESULT_OK) {
-            setPic();
+            vaccinationHelper.setPic();
         }
     }
 

@@ -14,11 +14,11 @@
         android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/imagePlaceholder"
             android:layout_centerInParent="true"
-            android:background="#ffffff" />
+            android:src="@drawable/vaccination_placeholder"/>
 
     </RelativeLayout>
 
@@ -36,6 +36,18 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:text="@string/takePicture"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/takePictureButton"
+            android:minWidth="250dp"
+            android:layout_weight="0.50"
+            style="@style/TestButton"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"
@@ -45,17 +57,6 @@
             android:layout_weight="0.50"
             style="@style/TestButton"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/takePicture"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/takePictureButton"
-            android:minWidth="250dp"
-            android:layout_weight="0.50"
-            style="@style/TestButton"/>
     </LinearLayout>
 
 </RelativeLayout>

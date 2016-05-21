@@ -16,7 +16,6 @@ public class DistanceCalculator {
 
     private void getDisplaySize(ImageView imageView){
         imageView.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        //TODO: Check this if tama. idk kung tama. kasi ayaw ni kate :(
 
         displayHeight = imageView.getMeasuredHeight();
     }

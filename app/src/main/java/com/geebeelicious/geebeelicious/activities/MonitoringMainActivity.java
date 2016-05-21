@@ -58,7 +58,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
                 MonitoringFragment.class.getName(),
-                //VaccinationFragment.class.getName(),
+                VaccinationFragment.class.getName(),
                 VisualAcuityFragment.class.getName(),
                 ColorVisionFragment.class.getName(),
                 HearingMainFragment.class.getName(),

@@ -1,5 +1,7 @@
 package com.geebeelicious.geebeelicious.models.monitoring;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 /**
@@ -8,7 +10,7 @@ import android.util.Log;
  * containing information from the monitoring module
  * performed by the patient.
  */
-public class Record {
+public class Record implements Parcelable {
     public final static String TAG = "Record";
 
     public final static String TABLE_NAME = "tbl_record";
@@ -63,6 +65,22 @@ public class Record {
         this.fineMotorDominant = fineMotorDominant;
         this.fineMotorHold = fineMotorHold;
     }
+
+    protected Record(Parcel in) {
+        readParcel(in);
+    }
+
+    public static final Creator<Record> CREATOR = new Creator<Record>() {
+        @Override
+        public Record createFromParcel(Parcel in) {
+            return new Record(in);
+        }
+
+        @Override
+        public Record[] newArray(int size) {
+            return new Record[size];
+        }
+    };
 
     public int getRecordID() {
         return recordID;
@@ -183,5 +201,45 @@ public class Record {
             ", hearingLeft: " + hearingLeft + ", hearingRight: " + hearingRight +
             ", grossMotor: " + grossMotor + ", fineMotorDominant: " + fineMotorDominant +
             ", fineMotorNonDominant: " + fineMotorNDominant + ", fineMotorPen: " + fineMotorHold);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(recordID);
+        dest.writeInt(patient_id);
+        dest.writeString(dateCreated);
+        dest.writeDouble(height);
+        dest.writeDouble(weight);
+        dest.writeString(visualAcuityLeft);
+        dest.writeString(visualActuityRight);
+        dest.writeString(colorVision);
+        dest.writeString(hearingLeft);
+        dest.writeString(hearingRight);
+        dest.writeInt(grossMotor);
+        dest.writeInt(fineMotorDominant);
+        dest.writeInt(fineMotorNDominant);
+        dest.writeInt(fineMotorHold);
+    }
+
+    public void readParcel(Parcel in){
+        recordID = in.readInt();
+        patient_id = in.readInt();
+        dateCreated = in.readString();
+        height = in.readDouble();
+        weight = in.readDouble();
+        visualAcuityLeft = in.readString();
+        visualActuityRight = in.readString();
+        colorVision = in.readString();
+        hearingLeft = in.readString();
+        hearingRight = in.readString();
+        grossMotor = in.readInt();
+        fineMotorDominant = in.readInt();
+        fineMotorNDominant = in.readInt();
+        fineMotorHold = in.readInt();
     }
 }

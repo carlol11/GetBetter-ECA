@@ -26,7 +26,6 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by MG.
@@ -117,6 +116,8 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
 
             try {
                 db.openDatabaseForRead();
+                record.printRecord();
+
                 db.insertRecord(record);
             } catch (SQLException e) {
                 Log.e(TAG, "Database error", e);

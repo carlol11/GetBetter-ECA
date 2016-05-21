@@ -25,11 +25,8 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import com.geebeelicious.geebeelicious.models.vaccination.VaccinationHelper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by MG.
@@ -121,7 +118,6 @@ public class VaccinationFragment extends Fragment {
             vaccinationHelper.setPic();
         }
     }
-
 
     @Override
     public void onAttach(Activity activity) {

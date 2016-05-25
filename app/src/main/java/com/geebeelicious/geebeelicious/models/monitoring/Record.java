@@ -254,6 +254,6 @@ public class Record implements Parcelable {
         fineMotorDominant = in.readInt();
         fineMotorNDominant = in.readInt();
         fineMotorHold = in.readInt();
-        in.readByteArray(vaccination);
+        vaccination = in.createByteArray();
     }
 }

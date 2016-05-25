@@ -57,10 +57,9 @@
 
     </RelativeLayout>
 
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.geebeelicious.geebeelicious.fragments.MonitoringFragment"
         android:id="@+id/monitoringFragmentContainer"
         android:layout_toStartOf="@+id/relativeLayoutECA"
         tools:layout="@layout/fragment_monitoring" />

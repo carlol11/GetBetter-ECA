@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
+import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
@@ -40,7 +42,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     private TextView resultsText;
 
     private String[] fragments;
-    private int currentFragmentIndex = 0;
+    private int currentFragmentIndex;
     private FragmentManager fragmentManager;
     private Patient patient;
 
@@ -49,17 +51,13 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_main);
 
-        Bundle patientRecord = getIntent().getExtras();
-        patient = patientRecord.getParcelable("patient");
-        record = new Record();
-        record.setDateCreated(patientRecord.getString("currentDate"));
-        record.setPatient_id(patient.getPatientID());
-
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
+                MonitoringFragment.class.getName(),
+                VaccinationFragment.class.getName(),
                 VisualAcuityFragment.class.getName(),
                 ColorVisionFragment.class.getName(),
                 HearingMainFragment.class.getName(),
@@ -68,8 +66,35 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         };
 
         fragmentManager = getSupportFragmentManager();
+
+
+        if (savedInstanceState == null) { //if first launch
+            Bundle patientRecord = getIntent().getExtras();
+
+            currentFragmentIndex = 0;
+
+            patient = patientRecord.getParcelable("patient");
+            record = new Record();
+            record.setDateCreated(patientRecord.getString("currentDate"));
+            record.setPatient_id(patient.getPatientID());
+        } else {
+            currentFragmentIndex = savedInstanceState.getInt("fragmentIndex");
+            patient = savedInstanceState.getParcelable("patient");
+            record = savedInstanceState.getParcelable("record");
+        }
+
+        initializeOldFragment();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("record", record);
+        outState.putParcelable("patient", patient);
+        outState.putInt("fragmentIndex", currentFragmentIndex);
+    }
+
+    @Override
     public Record getRecord(){
         return record;
     }
@@ -86,35 +111,24 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
 
     @Override
     public void doneFragment(){
-        if(currentFragmentIndex == fragments.length){
+        if(currentFragmentIndex + 1 >= fragments.length){
             DatabaseAdapter db = new DatabaseAdapter(this);
 
             try {
                 db.openDatabaseForRead();
+                record.printRecord();
+
                 db.insertRecord(record);
             } catch (SQLException e) {
                 Log.e(TAG, "Database error", e);
             }
 
             Intent intent = new Intent(this, MonitoringConsultationChoice.class);
+            finish();
             startActivity(intent);
-
         } else {
             clearTextViews();
-
-            try {
-                Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
-
-                shortcutForHearingfragment(newFragment); //this is only used for testing
-
-                FragmentTransaction transaction= fragmentManager.beginTransaction();
-                transaction.replace(R.id.monitoringFragmentContainer, newFragment, fragments[currentFragmentIndex]);
-                transaction.commit();
-                currentFragmentIndex++;
-
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                Log.e(TAG, "Error in initializing the fragment", e);
-            }
+            nextFragment();
         }
     }
 
@@ -133,6 +147,36 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     private void clearTextViews() {
         ECAText.setText("Placeholder for Instructions");
         resultsText.setText("Placeholder for Results");
+    }
+
+    private void nextFragment(){
+        try {
+            currentFragmentIndex++;
+            Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
+            replaceFragment(newFragment);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            Log.e(TAG, "Error in initializing the fragment", e);
+        }
+    }
+
+    private void initializeOldFragment() {
+        Fragment oldFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+        try {
+            if(oldFragment == null) {
+                oldFragment = (Fragment) Class.forName(fragments[0]).newInstance();
+            }
+            replaceFragment(oldFragment);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            Log.e(TAG, "Error in initializing the fragment", e);
+        }
+    }
+
+    private void replaceFragment(Fragment fragment){
+        shortcutForHearingfragment(fragment); //this is only used for testing
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.monitoringFragmentContainer, fragment, fragments[currentFragmentIndex]);
+        transaction.commit();
     }
 
     private void shortcutForHearingfragment(Fragment newFragment) {

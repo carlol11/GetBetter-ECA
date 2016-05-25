@@ -1,5 +1,7 @@
 package com.geebeelicious.geebeelicious.models.monitoring;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 /**
@@ -8,7 +10,7 @@ import android.util.Log;
  * containing information from the monitoring module
  * performed by the patient.
  */
-public class Record {
+public class Record implements Parcelable {
     public final static String TAG = "Record";
 
     public final static String TABLE_NAME = "tbl_record";
@@ -27,6 +29,7 @@ public class Record {
     public final static String C_FINE_MOTOR_DOMINANT = "fine_motor_dominant";
     public final static String C_FINE_MOTOR_N_DOMINANT = "fine_motor_n_dominant";
     public final static String C_FINE_MOTOR_HOLD = "fine_motor_hold";
+    public final static String C_VACCINATION = "vaccination";
 
     private int recordID;
     private int patient_id;
@@ -42,12 +45,13 @@ public class Record {
     private int fineMotorDominant; //0 pass, 1 fail
     private int fineMotorNDominant; //0 pass, 1 fail
     private int fineMotorHold; //0 pass, 1 fail
+    private byte[] vaccination;
 
     public Record(){
 
     }
 
-    public Record(int recordID, int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold) {
+    public Record(int recordID, int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold, byte[] vaccination) {
         this.recordID = recordID;
         this.patient_id = patient_id;
         this.dateCreated = dateCreated;
@@ -62,7 +66,24 @@ public class Record {
         this.fineMotorNDominant = fineMotorNDominant;
         this.fineMotorDominant = fineMotorDominant;
         this.fineMotorHold = fineMotorHold;
+        this.vaccination = vaccination;
     }
+
+    protected Record(Parcel in) {
+        readParcel(in);
+    }
+
+    public static final Creator<Record> CREATOR = new Creator<Record>() {
+        @Override
+        public Record createFromParcel(Parcel in) {
+            return new Record(in);
+        }
+
+        @Override
+        public Record[] newArray(int size) {
+            return new Record[size];
+        }
+    };
 
     public int getRecordID() {
         return recordID;
@@ -118,6 +139,10 @@ public class Record {
 
     public int getFineMotorHold() {
         return fineMotorHold;
+    }
+
+    public byte[] getVaccination(){
+        return vaccination;
     }
 
     public void setRecordID(int recordID) {
@@ -176,12 +201,59 @@ public class Record {
         this.fineMotorHold = fineMotorHold;
     }
 
+    public void setVaccination(byte[] vaccination){
+        this.vaccination = vaccination;
+    }
+
     public void printRecord(){
         Log.d(TAG, "recordID: " + recordID + ", patientID: " + patient_id + ", dateCreated: " + dateCreated +
             ", height: " + height + ", weight " + weight + ", visualAcuityLeft: " + visualAcuityLeft +
             ", visualAcuityRight: " + visualActuityRight + ", colorVision " + colorVision +
             ", hearingLeft: " + hearingLeft + ", hearingRight: " + hearingRight +
             ", grossMotor: " + grossMotor + ", fineMotorDominant: " + fineMotorDominant +
-            ", fineMotorNonDominant: " + fineMotorNDominant + ", fineMotorPen: " + fineMotorHold);
+            ", fineMotorNonDominant: " + fineMotorNDominant + ", fineMotorPen: " + fineMotorHold +
+            ", vaccination: " + vaccination);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(recordID);
+        dest.writeInt(patient_id);
+        dest.writeString(dateCreated);
+        dest.writeDouble(height);
+        dest.writeDouble(weight);
+        dest.writeString(visualAcuityLeft);
+        dest.writeString(visualActuityRight);
+        dest.writeString(colorVision);
+        dest.writeString(hearingLeft);
+        dest.writeString(hearingRight);
+        dest.writeInt(grossMotor);
+        dest.writeInt(fineMotorDominant);
+        dest.writeInt(fineMotorNDominant);
+        dest.writeInt(fineMotorHold);
+        dest.writeByteArray(vaccination);
+    }
+
+    public void readParcel(Parcel in){
+        recordID = in.readInt();
+        patient_id = in.readInt();
+        dateCreated = in.readString();
+        height = in.readDouble();
+        weight = in.readDouble();
+        visualAcuityLeft = in.readString();
+        visualActuityRight = in.readString();
+        colorVision = in.readString();
+        hearingLeft = in.readString();
+        hearingRight = in.readString();
+        grossMotor = in.readInt();
+        fineMotorDominant = in.readInt();
+        fineMotorNDominant = in.readInt();
+        fineMotorHold = in.readInt();
+        vaccination = in.createByteArray();
     }
 }

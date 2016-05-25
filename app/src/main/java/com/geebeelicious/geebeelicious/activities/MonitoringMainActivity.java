@@ -124,8 +124,8 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             }
 
             Intent intent = new Intent(this, MonitoringConsultationChoice.class);
+            finish();
             startActivity(intent);
-
         } else {
             clearTextViews();
             nextFragment();

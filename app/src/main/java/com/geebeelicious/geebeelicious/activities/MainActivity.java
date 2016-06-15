@@ -36,17 +36,16 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        final Fragment ECAFragment = new ECAFragment();
-        transaction.replace(R.id.placeholderECA, ECAFragment);
+        final ECAFragment ecaFragment = new ECAFragment();
+        transaction.replace(R.id.placeholderECA, ecaFragment);
         transaction.commit();
 
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-//                startActivity(intent);
-                resizeFragment(ECAFragment, 200, 200);
+                Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                startActivity(intent);
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -72,15 +71,16 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
 
     }
 
-    private void resizeFragment(Fragment f, int newWidth, int newHeight) {
-        if (f != null) {
-            View view = f.getView();
-            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(newWidth, newHeight);
-            view.setLayoutParams(p);
-            view.requestLayout();
-
-
-        }
-    }
+    //TODO: Not sure if kelangan pa to
+//    private void resizeFragment(Fragment f, int newWidth, int newHeight) {
+//        if (f != null) {
+//            View view = f.getView();
+//            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(newWidth, newHeight);
+//            view.setLayoutParams(p);
+//            view.requestLayout();
+//
+//
+//        }
+//    }
 
 }

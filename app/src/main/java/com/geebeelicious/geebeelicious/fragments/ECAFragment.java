@@ -198,4 +198,8 @@ public class ECAFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void sendToECAToSpeak(String sentence){
+        VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
+    }
 }

@@ -11,12 +11,10 @@
     style="@style/DefaultBackground"
     tools:context=".activities.MainActivity">
 
-    <fragment class="com.geebeelicious.geebeelicious.fragments.ECAFragment"
+    <FrameLayout
         android:layout_width="775dp"
         android:layout_height="775dp"
-        android:id="@+id/placeholderECA"
-        />
-
+        android:id="@+id/placeholderECA" />
 
     <RelativeLayout
         android:layout_width="match_parent"

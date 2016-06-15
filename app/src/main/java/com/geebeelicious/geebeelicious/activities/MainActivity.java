@@ -3,10 +3,15 @@ package com.geebeelicious.geebeelicious.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
@@ -28,11 +33,20 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
         setContentView(R.layout.activity_main);
         Button startButton = (Button)findViewById(R.id.startButton);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        final Fragment ECAFragment = new ECAFragment();
+        transaction.replace(R.id.placeholderECA, ECAFragment);
+        transaction.commit();
+
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+//                startActivity(intent);
+                resizeFragment(ECAFragment, 200, 200);
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -57,4 +71,16 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    private void resizeFragment(Fragment f, int newWidth, int newHeight) {
+        if (f != null) {
+            View view = f.getView();
+            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(newWidth, newHeight);
+            view.setLayoutParams(p);
+            view.requestLayout();
+
+
+        }
+    }
+
 }

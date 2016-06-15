@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 
 import java.sql.SQLException;
 
@@ -18,7 +20,7 @@ import java.sql.SQLException;
  * the welcome screen and allows access to the Settings activity.
  */
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +50,11 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
             finish(); //exit app if database creation fails
         }
+    }
+
+    //TODO: dito yung communication from ecafragment
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

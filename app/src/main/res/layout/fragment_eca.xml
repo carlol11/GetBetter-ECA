@@ -1,0 +1,14 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geebeelicious.geebeelicious.fragments.ECAFragment">
+
+    <edu.usc.ict.vhmobile.VHMobileSurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/vhview"
+        >
+    </edu.usc.ict.vhmobile.VHMobileSurfaceView>
+
+</RelativeLayout>

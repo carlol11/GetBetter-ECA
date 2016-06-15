@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             try {
                 copyDatabase();
-                Log.e(TAG, "createDatabase database created");
+                Log.d(TAG, "createDatabase database created");
             }catch (IOException ioe) {
                 throw new Error("Error creating database");
             }

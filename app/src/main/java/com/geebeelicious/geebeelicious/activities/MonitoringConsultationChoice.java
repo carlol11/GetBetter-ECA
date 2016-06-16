@@ -1,7 +1,11 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -22,7 +27,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * consultation modules.
  */
 
-public class MonitoringConsultationChoice extends ActionBarActivity {
+public class MonitoringConsultationChoice extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
 
     private DateFormat dateFormat;
 
@@ -36,6 +41,16 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         final Patient patient = getIntent().getParcelableExtra("patient");
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        //ECA Integration
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+        }
 
         mButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -63,5 +78,11 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         Intent intent = new Intent(MonitoringConsultationChoice.this, PatientListActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    //TODO: Implement this
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

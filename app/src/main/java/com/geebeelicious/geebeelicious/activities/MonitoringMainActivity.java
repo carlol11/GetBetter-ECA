@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,14 +9,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
@@ -33,7 +35,7 @@ import java.sql.SQLException;
  * Each test are executed through this activity
  */
 
-public class MonitoringMainActivity extends ActionBarActivity implements MonitoringFragmentInteraction {
+public class MonitoringMainActivity extends ActionBarActivity implements OnMonitoringFragmentInteractionListener, ECAFragment.OnFragmentInteractionListener {
     private final static String TAG = "MonitoringMainActivity";
 
     private Record record;
@@ -81,6 +83,16 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             currentFragmentIndex = savedInstanceState.getInt("fragmentIndex");
             patient = savedInstanceState.getParcelable("patient");
             record = savedInstanceState.getParcelable("record");
+        }
+
+        //ECA Integration
+        fragmentManager = getSupportFragmentManager();
+        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
         }
 
         initializeOldFragment();
@@ -184,7 +196,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
          * TODO: [Testing Code] Remove this if no longer testing.
          * this is for the shortcut for the hearing fragment
          */
-        final ImageView placeholderECA = (ImageView)findViewById(R.id.placeholderECA);
+        final FrameLayout placeholderECA = (FrameLayout)findViewById(R.id.placeholderECA);
         Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
 
         if(newFragment instanceof HearingMainFragment){
@@ -198,5 +210,10 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
         } else if(hearingFragment != null){
             placeholderECA.setClickable(false);
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

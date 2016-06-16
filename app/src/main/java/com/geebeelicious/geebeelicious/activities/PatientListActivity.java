@@ -69,6 +69,7 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
         patientListView.setAdapter(patientsAdapter);
 
+        //ECA Integration
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
         if(ecaFragment == null) {

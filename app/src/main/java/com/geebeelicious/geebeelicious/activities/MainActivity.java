@@ -32,6 +32,7 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
         Button startButton = (Button)findViewById(R.id.startButton);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
 
+        //ECA Integration
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
         if(ecaFragment == null) {

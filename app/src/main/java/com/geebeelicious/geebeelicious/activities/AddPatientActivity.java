@@ -1,7 +1,11 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +21,7 @@ import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -25,7 +30,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * functionality for adding new patients.
  */
 
-public class AddPatientActivity extends ActionBarActivity {
+public class AddPatientActivity extends ActionBarActivity implements  ECAFragment.OnFragmentInteractionListener{
 
     private String firstName = null;
     private String lastName = null;
@@ -60,6 +65,17 @@ public class AddPatientActivity extends ActionBarActivity {
 
         setQuestion(questions[questionCounter]);
         editText.setVisibility(View.VISIBLE);
+
+        //ECA Integration
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+        }
+
 
         Button cancelButton = (Button)findViewById(R.id.cancelNewPatientButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -174,5 +190,11 @@ public class AddPatientActivity extends ActionBarActivity {
         getBetterDb.insertPatient(patient);
 
         getBetterDb.closeDatabase();
+    }
+
+    //TODO: Implement this
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

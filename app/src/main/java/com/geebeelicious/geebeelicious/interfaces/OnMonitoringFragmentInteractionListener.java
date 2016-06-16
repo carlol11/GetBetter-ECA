@@ -9,7 +9,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * by any activity or fragments that wants to interact with the fragments.
  * If not implemented, the fragment will throw an error;
  */
-public interface MonitoringFragmentInteraction {
+public interface OnMonitoringFragmentInteractionListener {
     public Record getRecord();
     public void setInstructions(String instructions);
     public void setResults(String results);

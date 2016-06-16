@@ -3,11 +3,8 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,11 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import com.geebeelicious.geebeelicious.models.vaccination.VaccinationHelper;
 
@@ -40,7 +36,7 @@ public class VaccinationFragment extends Fragment {
     private final static String TAG = "VaccinationFragment";
     private static final int REQUEST_TAKE_PHOTO = 1;
 
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Activity activity;
 
     private VaccinationHelper vaccinationHelper;
@@ -127,10 +123,10 @@ public class VaccinationFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 

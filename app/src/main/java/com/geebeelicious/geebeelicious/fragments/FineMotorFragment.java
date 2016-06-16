@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
@@ -31,7 +31,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  */
 
 public class FineMotorFragment extends Fragment {
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
 
     private static final String TAG = "FineMotorActivity";
@@ -223,10 +223,10 @@ public class FineMotorFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 }

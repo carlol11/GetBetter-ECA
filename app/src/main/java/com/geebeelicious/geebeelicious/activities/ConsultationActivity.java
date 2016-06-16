@@ -1,6 +1,10 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.models.consultation.ConsultationHelper;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -21,7 +26,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * It allows the user to view questions and answer with Yes or No inputs.
  */
 
-public class ConsultationActivity extends ActionBarActivity {
+public class ConsultationActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
     private TextView ECAText;
     private ConsultationHelper consultationHelper;
     private final static String TAG = "ConsultationActivity";
@@ -44,6 +49,16 @@ public class ConsultationActivity extends ActionBarActivity {
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
         ECAText.setText(consultationHelper.getFirstQuestion());
+
+        //ECA Integration
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+        }
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,5 +107,11 @@ public class ConsultationActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    //TODO: Implement this
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -3,6 +3,7 @@ package com.geebeelicious.geebeelicious.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -32,10 +33,15 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        final ECAFragment ecaFragment = new ECAFragment();
-        transaction.replace(R.id.placeholderECA, ecaFragment);
-        transaction.commit();
+        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
+        }
+
 
 
         startButton.setOnClickListener(new View.OnClickListener() {

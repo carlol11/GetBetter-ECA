@@ -2,7 +2,11 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +29,7 @@ import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -35,7 +41,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * to the module allowing for new patients to be added.
  */
 
-public class PatientListActivity extends ActionBarActivity {
+public class PatientListActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
 
     private ArrayList<Patient> patients = null;
     private Patient chosenPatient = null;
@@ -62,6 +68,16 @@ public class PatientListActivity extends ActionBarActivity {
         patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients);
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
         patientListView.setAdapter(patientsAdapter);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+        }
+
 
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -149,5 +165,11 @@ public class PatientListActivity extends ActionBarActivity {
         Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    //TODO: use this
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

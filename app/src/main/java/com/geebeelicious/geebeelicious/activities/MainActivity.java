@@ -24,6 +24,7 @@ import java.sql.SQLException;
 
 public class MainActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener {
     private ECAFragment ecaFragment;
+    private boolean hasSpoken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,12 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
 
         integrateECA();
+
+        if(savedInstanceState == null){
+            hasSpoken = false;
+        } else {
+            hasSpoken = savedInstanceState.getBoolean("hasSpoken");
+        }
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +68,25 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
     @Override
     protected void onStart() {
         super.onStart();
+    }
 
-        //Welcome message
-        ecaFragment.sendToECAToSpeak("Hello, I'm Geebee! Are you ready?");
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            if(!hasSpoken){
+                //Welcome message
+                ecaFragment.sendToECAToSpeak("Hello, I'm Geebee! Are you ready?");
+                hasSpoken = true;
+            }
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("hasSpoken", hasSpoken);
     }
 
     private void integrateECA() {

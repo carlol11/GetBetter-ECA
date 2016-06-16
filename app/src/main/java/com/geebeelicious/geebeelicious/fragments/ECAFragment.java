@@ -50,8 +50,11 @@ public class ECAFragment extends Fragment {
         vhmain = new VHMobileMain(activity);
         vhmain.init();
         _VHview = (VHMobileSurfaceView)view.findViewById(R.id.vhview);
+
         return view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -82,10 +85,6 @@ public class ECAFragment extends Fragment {
     {
         Log.d(TAG,  "The onStart() event");
         super.onStart();
-
-
-
-
     }
 
     @Override

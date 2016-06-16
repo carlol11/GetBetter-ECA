@@ -6,15 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.geebeelicious.geebeelicious.R;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 
 import edu.usc.ict.vhmobile.VHMobileLib;
 import edu.usc.ict.vhmobile.VHMobileMain;
@@ -45,6 +41,7 @@ public class ECAFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_eca, container, false);
+        Activity activity = (Activity) mListener;
 
         //ECA integration
         VHMobileMain.setupVHMobile();
@@ -52,45 +49,10 @@ public class ECAFragment extends Fragment {
 
         Log.d(TAG,  "The onCreate() event");
 
-        vhmain = new VHMobileMain((Activity)mListener);
+        vhmain = new VHMobileMain(activity);
         vhmain.init();
 
-        //TODO: check if tanggalin itong internet address crap. kung gagana pa rin
-        // seed the ip addresses of the mobile device
-        // can't find way to do this in JNI, so send it through Java
-
-        String ipAddress = new String();
-        boolean done = false;
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();)
-            {
-                if (done)
-                    break;
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
-                     enumIpAddr.hasMoreElements();)
-                {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    Log.d("SB", "Found internet address" + inetAddress.getHostAddress().toString());
-                    if (!inetAddress.isLoopbackAddress())
-                    {
-                        ipAddress = inetAddress.getHostAddress().toString();
-                        if (ipAddress.indexOf(".") >= 0)
-                        {
-                            Log.d("SB", "Found non-loopback address" + ipAddress);
-
-                            done = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            Log.e("SB", "Problem getting IP addresses.");
-        }
-
-        Log.d(TAG, "Setting debugger hostname to " + ipAddress);
-        VHMobileLib.executeSB("scene.getDebuggerServer().setStringAttribute(\"hostname\", \"" + ipAddress + "\")");
+        _VHview = (VHMobileSurfaceView)view.findViewById(R.id.vhview);
 
 
         return view;
@@ -138,6 +100,7 @@ public class ECAFragment extends Fragment {
         if (_VHview != null)
             _VHview.onResume();
         Log.d("SB", "The onResume() event");
+
     }
 
     @Override
@@ -150,24 +113,8 @@ public class ECAFragment extends Fragment {
         if (_VHview != null)
             _VHview.onPause();
         Log.d("SB", "The onPause() event");
+
     }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     /** Called when the activity is no longer visible. */
     @Override

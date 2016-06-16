@@ -27,6 +27,8 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  */
 
 public class ConsultationActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
+    private ECAFragment ecaFragment;
+
     private TextView ECAText;
     private ConsultationHelper consultationHelper;
     private final static String TAG = "ConsultationActivity";
@@ -48,17 +50,9 @@ public class ConsultationActivity extends ActionBarActivity implements ECAFragme
         consultationHelper = new ConsultationHelper(this, patient, dateConsultation);
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
-        ECAText.setText(consultationHelper.getFirstQuestion());
+        integrateECA();
 
-        //ECA Integration
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-        }
+        setQuestion(consultationHelper.getFirstQuestion());
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +80,7 @@ public class ConsultationActivity extends ActionBarActivity implements ECAFragme
             doWhenConsultationDone();
         }
         else {
-            ECAText.setText(nextQuestion);
+            setQuestion(nextQuestion);
         }
     }
 
@@ -106,6 +100,23 @@ public class ConsultationActivity extends ActionBarActivity implements ECAFragme
             intent.putExtra("patient", patient);
             startActivity(intent);
             finish();
+        }
+    }
+
+    private void setQuestion(String question){
+        ECAText.setText(question);
+        ecaFragment.sendToECAToSpeak(question);
+    }
+
+    private void integrateECA() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
         }
     }
 

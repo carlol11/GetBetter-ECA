@@ -28,6 +28,8 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  */
 
 public class MonitoringConsultationChoice extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
+    private ECAFragment ecaFragment;
+    private boolean hasSpoken;
 
     private DateFormat dateFormat;
 
@@ -42,15 +44,13 @@ public class MonitoringConsultationChoice extends ActionBarActivity implements E
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-        //ECA Integration
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
+        if(savedInstanceState == null){
+            hasSpoken = false;
+        } else {
+            hasSpoken = savedInstanceState.getBoolean("hasSpoken");
         }
+
+        integrateECA();
 
         mButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -71,6 +71,36 @@ public class MonitoringConsultationChoice extends ActionBarActivity implements E
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            if(!hasSpoken){
+                ecaFragment.sendToECAToSpeak("What would you like to do, monitoring or consultation?");
+                hasSpoken = true;
+            }
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("hasSpoken", hasSpoken);
+    }
+
+    private void integrateECA() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
+        }
     }
 
     @Override

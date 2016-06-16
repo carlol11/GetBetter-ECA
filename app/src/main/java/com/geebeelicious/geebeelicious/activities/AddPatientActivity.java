@@ -32,6 +32,8 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 public class AddPatientActivity extends ActionBarActivity implements  ECAFragment.OnFragmentInteractionListener{
 
+    private ECAFragment ecaFragment;
+
     private String firstName = null;
     private String lastName = null;
     private String birthDate = null;
@@ -63,19 +65,10 @@ public class AddPatientActivity extends ActionBarActivity implements  ECAFragmen
         radioButton1 = (RadioButton)findViewById(R.id.radioButton2);
         radioGroup = (RadioGroup)findViewById(R.id.newPatientRadioChoice);
 
+        integrateECA();
+
         setQuestion(questions[questionCounter]);
         editText.setVisibility(View.VISIBLE);
-
-        //ECA Integration
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-        }
-
 
         Button cancelButton = (Button)findViewById(R.id.cancelNewPatientButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +140,9 @@ public class AddPatientActivity extends ActionBarActivity implements  ECAFragmen
                                                 "\nGender: " + patient.getGenderString() +
                                                 "\nHandedness: " + patient.getHandednessString();
                         questionView.setText(patientDetails);
+
+                        ecaFragment.sendToECAToSpeak("Are the following information correct?");
+
                         break;
                     case 5:
                         savePatientToDatabase(patient);
@@ -168,6 +164,7 @@ public class AddPatientActivity extends ActionBarActivity implements  ECAFragmen
     //Display question on screen based on resID parameter
     private void setQuestion(int resID){
         questionView.setText(resID);
+        ecaFragment.sendToECAToSpeak(getResources().getString(resID));
     };
 
     //Return String format of contents of search field
@@ -197,4 +194,17 @@ public class AddPatientActivity extends ActionBarActivity implements  ECAFragmen
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    private void integrateECA() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
+        }
+    }
+
 }

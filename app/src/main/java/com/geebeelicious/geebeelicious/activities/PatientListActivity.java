@@ -42,6 +42,9 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  */
 
 public class PatientListActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
+    private boolean hasSpoken;
+
+    private ECAFragment ecaFragment;
 
     private ArrayList<Patient> patients = null;
     private Patient chosenPatient = null;
@@ -69,16 +72,13 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
         patientListView.setAdapter(patientsAdapter);
 
-        //ECA Integration
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-        }
+        integrateECA();
 
+        if(savedInstanceState == null){
+            hasSpoken = false;
+        } else {
+            hasSpoken = savedInstanceState.getBoolean("hasSpoken");
+        }
 
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,6 +93,10 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 mgr.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
+
+                ecaFragment.sendToECAToSpeak("Are you " + chosenPatient.getFirstName() +
+                        " " + chosenPatient.getLastName() + "?");
+
             }
         });
 
@@ -143,6 +147,36 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
         });
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            if(!hasSpoken){
+                ecaFragment.sendToECAToSpeak("Is your name in the list?");
+                hasSpoken = true;
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("hasSpoken", hasSpoken);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
+
+    //TODO: use this
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     //Returns the schoolID fo the preferred school stored in device storage via Settings
     private int getSchoolPreferences(){
         int schoolID = 1; //default schoolID
@@ -161,16 +195,16 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
         return schoolID;
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
-        finish();
-        startActivity(intent);
+    private void integrateECA() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
+        }
     }
 
-    //TODO: use this
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

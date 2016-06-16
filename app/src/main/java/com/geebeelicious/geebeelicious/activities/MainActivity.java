@@ -3,7 +3,6 @@ package com.geebeelicious.geebeelicious.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +23,7 @@ import java.sql.SQLException;
  */
 
 public class MainActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener {
+    private ECAFragment ecaFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +32,7 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
         Button startButton = (Button)findViewById(R.id.startButton);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
 
-        //ECA Integration
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-
-        }
-
-
+        integrateECA();
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,22 +58,29 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //Welcome message
+        ecaFragment.sendToECAToSpeak("Hello, I'm Geebee! Are you ready?");
+    }
+
+    private void integrateECA() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
+        }
+    }
+
     //TODO: dito yung communication from ecafragment
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
-    //TODO: Not sure if kelangan pa to
-//    private void resizeFragment(Fragment f, int newWidth, int newHeight) {
-//        if (f != null) {
-//            View view = f.getView();
-//            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(newWidth, newHeight);
-//            view.setLayoutParams(p);
-//            view.requestLayout();
-//
-//
-//        }
-//    }
-
 }

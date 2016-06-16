@@ -25,7 +25,6 @@ public class ECAFragment extends Fragment {
 
     private static final String TAG = "ECAFragment";
 
-
     private OnFragmentInteractionListener mListener;
 
     protected VHMobileMain vhmain = null;
@@ -46,15 +45,11 @@ public class ECAFragment extends Fragment {
         //ECA integration
         VHMobileMain.setupVHMobile();
 
-
         Log.d(TAG,  "The onCreate() event");
 
         vhmain = new VHMobileMain(activity);
         vhmain.init();
-
         _VHview = (VHMobileSurfaceView)view.findViewById(R.id.vhview);
-
-
         return view;
     }
 
@@ -85,8 +80,11 @@ public class ECAFragment extends Fragment {
     @Override
     public void onStart()
     {
-        Log.d("SB",  "The onStart() event");
+        Log.d(TAG,  "The onStart() event");
         super.onStart();
+
+
+
 
     }
 
@@ -99,7 +97,7 @@ public class ECAFragment extends Fragment {
          */
         if (_VHview != null)
             _VHview.onResume();
-        Log.d("SB", "The onResume() event");
+        Log.d(TAG, "The onResume() event");
 
     }
 
@@ -112,7 +110,7 @@ public class ECAFragment extends Fragment {
          */
         if (_VHview != null)
             _VHview.onPause();
-        Log.d("SB", "The onPause() event");
+        Log.d(TAG, "The onPause() event");
 
     }
 
@@ -120,14 +118,14 @@ public class ECAFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.d("SB", "The onStop() event");
+        Log.d(TAG, "The onStop() event");
     }
 
     /** Called just before the activity is destroyed. */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("SB", "The onDestroy() event");
+        Log.d(TAG, "The onDestroy() event");
     }
 
 
@@ -147,6 +145,7 @@ public class ECAFragment extends Fragment {
     }
 
     public void sendToECAToSpeak(String sentence){
+        Log.d(TAG, "ECA speaks: " + sentence);
         VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
     }
 }

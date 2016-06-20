@@ -87,11 +87,11 @@ public class VisualAcuityFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        //TODO: Distance. Fix this. di ata nagwowork
         //distance calculator
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
-        fragmentInteraction.setInstructions("Distance: " + String.format("%.2f", distance) + " meters");
+        fragmentInteraction.setInstructions("Distance yourself " +  String.format("%.2f", distance) +
+                " meters away from the tablet.");
         record = fragmentInteraction.getRecord();
     }
 

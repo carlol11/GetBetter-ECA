@@ -41,13 +41,16 @@ public class VaccinationFragment extends Fragment {
 
     private VaccinationHelper vaccinationHelper;
 
+    private Button skipButton;
+    private Button pictureButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
-        Button skipButton = (Button) view.findViewById(R.id.skipButton);
-        Button pictureButton = (Button) view.findViewById(R.id.takePictureButton);
+        skipButton = (Button) view.findViewById(R.id.skipButton);
+        pictureButton = (Button) view.findViewById(R.id.takePictureButton);
 
         ImageView imageViewPlaceholder = (ImageView) view.findViewById(R.id.imagePlaceholder);
 
@@ -55,8 +58,12 @@ public class VaccinationFragment extends Fragment {
 
         if(savedInstanceState != null){
             vaccinationHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
-            skipButton.setText("Continue");
-            pictureButton.setText("Take Another Picture");
+        }
+
+        if(vaccinationHelper.getmCurrentPhotoPath() == null){
+            fragmentInteraction.setInstructions("Do you have a vaccination document?" +
+                    " If you do not have, please press skip.");
+
         }
 
         skipButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +84,7 @@ public class VaccinationFragment extends Fragment {
                 dispatchTakePictureIntent();
             }
         });
+
 
         return view;
     }
@@ -112,6 +120,9 @@ public class VaccinationFragment extends Fragment {
         InputStream stream = null;
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == activity.RESULT_OK) {
             vaccinationHelper.setPic();
+            skipButton.setText("Continue");
+            pictureButton.setText("Retake");
+            fragmentInteraction.setInstructions("Is the picture okay? If yes, press continue.");
         }
     }
 

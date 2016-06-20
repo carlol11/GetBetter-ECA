@@ -38,6 +38,8 @@ import java.sql.SQLException;
 public class MonitoringMainActivity extends ActionBarActivity implements OnMonitoringFragmentInteractionListener, ECAFragment.OnFragmentInteractionListener {
     private final static String TAG = "MonitoringMainActivity";
 
+    private ECAFragment ecaFragment;
+
     private Record record;
 
     private TextView ECAText;
@@ -85,15 +87,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements OnMonit
             record = savedInstanceState.getParcelable("record");
         }
 
-        //ECA Integration
-        fragmentManager = getSupportFragmentManager();
-        Fragment ecaFragment = fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-        }
+        integrateECA();
 
         initializeOldFragment();
     }
@@ -114,6 +108,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements OnMonit
     @Override
     public void setInstructions(String instructions) {
         ECAText.setText(instructions);
+        ecaFragment.sendToECAToSpeak(instructions);
     }
 
     @Override
@@ -209,6 +204,18 @@ public class MonitoringMainActivity extends ActionBarActivity implements OnMonit
             });
         } else if(hearingFragment != null){
             placeholderECA.setClickable(false);
+        }
+    }
+
+    private void integrateECA() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
+        if(ecaFragment == null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ecaFragment = new ECAFragment();
+            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
+            transaction.commit();
+
         }
     }
 

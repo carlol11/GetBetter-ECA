@@ -54,7 +54,8 @@ public class MonitoringFragment extends Fragment {
         numberPicker = (NumberPicker)view.findViewById(R.id.monitoringNumberPicker);
         numberPicker.setMinValue(0);
 
-        questionView.setText(questions[questionsCounter]);
+        setQuestion(questions[questionsCounter]);
+
         unitView.setText(questionUnit[questionsCounter]);
         numberPicker.setMaxValue(250);
 
@@ -74,7 +75,7 @@ public class MonitoringFragment extends Fragment {
                 }
                 questionsCounter++;
                 if(questionsCounter < numberOfQuestions){
-                    questionView.setText(questions[questionsCounter]);
+                    setQuestion(questions[questionsCounter]);
                     unitView.setText(questionUnit[questionsCounter]);
                 }else{
                     endMonitoring();
@@ -83,6 +84,11 @@ public class MonitoringFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setQuestion(int resID) {
+        questionView.setText(resID);
+        fragmentInteraction.setInstructions(getResources().getString(resID));
     }
 
     @Override

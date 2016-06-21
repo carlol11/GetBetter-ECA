@@ -34,7 +34,7 @@ public class MonitoringFragment extends Fragment {
     private TextView unitView;
     private View view;
 
-    private final int[] questions = {R.string.height, R.string.weight};
+    private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};
     private final int numberOfQuestions = 2;
     private int questionsCounter = 0;

@@ -61,9 +61,7 @@ public class VaccinationFragment extends Fragment {
         }
 
         if(vaccinationHelper.getmCurrentPhotoPath() == null){
-            fragmentInteraction.setInstructions("Do you have a vaccination document?" +
-                    " If you do not have, please press skip.");
-
+            fragmentInteraction.setInstructions(R.string.vaccination_instruction);
         }
 
         skipButton.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +97,7 @@ public class VaccinationFragment extends Fragment {
                 photoFile = vaccinationHelper.createImageFile(); // also updates mCurrentPhotoPath
             } catch (IOException ex) {
                 Log.e(TAG, "Error occured while creating file");
-                Toast.makeText(activity, "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG);
+                Toast.makeText(activity, "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG).show();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -118,11 +116,11 @@ public class VaccinationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         InputStream stream = null;
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == activity.RESULT_OK) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             vaccinationHelper.setPic();
-            skipButton.setText("Continue");
-            pictureButton.setText("Retake");
-            fragmentInteraction.setInstructions("Is the picture okay? If yes, press continue.");
+            skipButton.setText(R.string.continueWord);
+            pictureButton.setText(R.string.retake);
+            fragmentInteraction.setInstructions(R.string.vaccination_confirm);
         }
     }
 

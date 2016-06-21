@@ -87,7 +87,7 @@ public class ColorVisionFragment extends Fragment {
 
         ishiharaHelper.startTest();
 
-        fragmentInteraction.setInstructions(R.string.colorVisionInstructions);
+        fragmentInteraction.setInstructions(R.string.colorVision_instruction);
 
         return view;
     }

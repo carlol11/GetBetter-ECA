@@ -43,8 +43,11 @@
     <string name="centimeters">cm</string>
     <string name="kilograms">kg</string>
 
+    <!-- ECA Strings-->
+    <string name="colorVisionInstructions">What shape do you see?</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="takePicture">Take Picture</string>
     <string name="skip">Skip</string>
 </resources>

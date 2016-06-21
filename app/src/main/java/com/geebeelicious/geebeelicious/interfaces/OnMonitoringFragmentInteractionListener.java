@@ -12,6 +12,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 public interface OnMonitoringFragmentInteractionListener {
     public Record getRecord();
     public void setInstructions(String instructions);
+    public void setInstructions(int resID);
     public void setResults(String results);
     public void doneFragment();
     public int getIntResults(String result);

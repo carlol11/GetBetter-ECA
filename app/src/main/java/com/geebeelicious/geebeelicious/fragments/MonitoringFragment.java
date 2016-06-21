@@ -88,7 +88,7 @@ public class MonitoringFragment extends Fragment {
 
     private void setQuestion(int resID) {
         questionView.setText(resID);
-        fragmentInteraction.setInstructions(getResources().getString(resID));
+        fragmentInteraction.setInstructions(resID);
     }
 
     @Override

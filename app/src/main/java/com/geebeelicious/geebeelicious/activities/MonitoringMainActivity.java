@@ -112,6 +112,12 @@ public class MonitoringMainActivity extends ActionBarActivity implements OnMonit
     }
 
     @Override
+    public void setInstructions(int resID) {
+        ECAText.setText(resID);
+        ecaFragment.sendToECAToSpeak(getString(resID));
+    }
+
+    @Override
     public void setResults(String results) {
         resultsText.append("\n" + results);
     }

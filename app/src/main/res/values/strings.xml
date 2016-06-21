@@ -51,6 +51,7 @@
     <string name="vaccination_instruction">Do you have a vaccination document? If you do not have, please press skip.</string>
     <string name="vaccination_confirm">Is the picture okay? If yes, press continue.</string>
     <string name="colorVision_instruction">What shape do you see?</string>
+    <string name="hearing_instruction">Press the button everytime you hear a sound.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="takePicture">Take Picture</string>

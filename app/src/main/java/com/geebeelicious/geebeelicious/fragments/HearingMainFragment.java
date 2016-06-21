@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
@@ -72,8 +71,7 @@ public class HearingMainFragment extends Fragment {
                 yesButton.setEnabled(false);
                 ImageView imageView = (ImageView)view.findViewById(R.id.hearingTestImageView);
                 imageView.setImageResource(R.drawable.wait_for_next_test);
-                TextView resultsView = (TextView) view.findViewById(R.id.hearingResultsTV);
-                resultsView.setText(hearingTest.getResults());
+                fragmentInteraction.setResults(hearingTest.getResults());
             }
         };
 
@@ -137,6 +135,8 @@ public class HearingMainFragment extends Fragment {
         screenThread.start();
         timingThread.start();
         testThread.start();
+
+        fragmentInteraction.setInstructions(R.string.hearing_instruction);
 
         return view;
     }

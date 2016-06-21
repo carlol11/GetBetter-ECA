@@ -158,8 +158,13 @@ public class MonitoringMainActivity extends ActionBarActivity implements OnMonit
     }
 
     private void clearTextViews() {
-        ECAText.setText("Placeholder for Instructions");
-        resultsText.setText("Placeholder for Results");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ECAText.setText("Placeholder for Instructions");
+                resultsText.setText("Placeholder for Results");
+            }
+        });
     }
 
     private void nextFragment(){

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 
 import java.sql.SQLException;
 
@@ -22,8 +23,7 @@ import java.sql.SQLException;
  * the welcome screen and allows access to the Settings activity.
  */
 
-public class MainActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener {
-    private ECAFragment ecaFragment;
+public class MainActivity extends ECAActivity{
     private boolean hasSpoken;
 
     @Override
@@ -87,23 +87,5 @@ public class MainActivity extends ActionBarActivity implements ECAFragment.OnFra
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("hasSpoken", hasSpoken);
-    }
-
-    private void integrateECA() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-
-        }
-    }
-
-    //TODO: dito yung communication from ecafragment
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

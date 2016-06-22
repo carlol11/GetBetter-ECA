@@ -30,6 +30,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -41,11 +42,8 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * to the module allowing for new patients to be added.
  */
 
-public class PatientListActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
+public class PatientListActivity extends ECAActivity{
     private boolean hasSpoken;
-
-    private ECAFragment ecaFragment;
-
     private ArrayList<Patient> patients = null;
     private Patient chosenPatient = null;
     private PatientsAdapter patientsAdapter;
@@ -171,12 +169,6 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
         startActivity(intent);
     }
 
-    //TODO: use this
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
     //Returns the schoolID fo the preferred school stored in device storage via Settings
     private int getSchoolPreferences(){
         int schoolID = 1; //default schoolID
@@ -194,17 +186,4 @@ public class PatientListActivity extends ActionBarActivity implements ECAFragmen
 
         return schoolID;
     }
-
-    private void integrateECA() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-
-        }
-    }
-
 }

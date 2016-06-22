@@ -17,6 +17,7 @@ import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
@@ -35,11 +36,8 @@ import java.sql.SQLException;
  * Each test are executed through this activity
  */
 
-public class MonitoringMainActivity extends ActionBarActivity implements OnMonitoringFragmentInteractionListener, ECAFragment.OnFragmentInteractionListener {
+public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener{
     private final static String TAG = "MonitoringMainActivity";
-
-    private ECAFragment ecaFragment;
-
     private Record record;
 
     private TextView ECAText;
@@ -216,22 +214,5 @@ public class MonitoringMainActivity extends ActionBarActivity implements OnMonit
         } else if(hearingFragment != null){
             placeholderECA.setClickable(false);
         }
-    }
-
-    private void integrateECA() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-
-        }
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

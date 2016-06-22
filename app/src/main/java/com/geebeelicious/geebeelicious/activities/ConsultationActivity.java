@@ -16,6 +16,7 @@ import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.ConsultationHelper;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -26,9 +27,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * It allows the user to view questions and answer with Yes or No inputs.
  */
 
-public class ConsultationActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
-    private ECAFragment ecaFragment;
-
+public class ConsultationActivity extends ECAActivity{
     private TextView ECAText;
     private ConsultationHelper consultationHelper;
     private final static String TAG = "ConsultationActivity";
@@ -106,23 +105,5 @@ public class ConsultationActivity extends ActionBarActivity implements ECAFragme
     private void setQuestion(String question){
         ECAText.setText(question);
         ecaFragment.sendToECAToSpeak(question);
-    }
-
-    private void integrateECA() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-
-        }
-    }
-
-    //TODO: Implement this
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

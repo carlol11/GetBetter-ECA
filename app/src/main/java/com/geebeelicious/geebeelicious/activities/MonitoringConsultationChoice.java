@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -27,8 +28,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * consultation modules.
  */
 
-public class MonitoringConsultationChoice extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener{
-    private ECAFragment ecaFragment;
+public class MonitoringConsultationChoice extends ECAActivity{
     private boolean hasSpoken;
 
     private DateFormat dateFormat;
@@ -91,28 +91,10 @@ public class MonitoringConsultationChoice extends ActionBarActivity implements E
         outState.putBoolean("hasSpoken", hasSpoken);
     }
 
-    private void integrateECA() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
-        if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ecaFragment = new ECAFragment();
-            transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
-            transaction.commit();
-
-        }
-    }
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(MonitoringConsultationChoice.this, PatientListActivity.class);
         finish();
         startActivity(intent);
-    }
-
-    //TODO: Implement this
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }

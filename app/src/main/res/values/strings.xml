@@ -50,6 +50,8 @@
     <string name="monitoring_height">What is your height?</string>
     <string name="vaccination_instruction">Do you have a vaccination document? If you do not have, please press skip.</string>
     <string name="vaccination_confirm">Is the picture okay? If yes, press continue.</string>
+    <string name="visualAcuity_instruction_left">Cover your left eye.</string>
+    <string name="visualAcuity_instruction_right">Cover your right eye.</string>
     <string name="colorVision_instruction">What shape do you see?</string>
     <string name="hearing_instruction">Press the button everytime you hear a sound.</string>
 

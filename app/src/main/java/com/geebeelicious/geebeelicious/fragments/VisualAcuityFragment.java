@@ -91,7 +91,7 @@ public class VisualAcuityFragment extends Fragment {
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
         fragmentInteraction.setInstructions("Distance yourself " +  String.format("%.2f", distance) +
-                " meters away from the tablet.");
+                " meters away from the tablet. " + getString(R.string.visualAcuity_instruction_left));
         record = fragmentInteraction.getRecord();
     }
 
@@ -129,6 +129,8 @@ public class VisualAcuityFragment extends Fragment {
             chartHelper.startTest();
             displayResults(rightEyeResult, R.id.rightEyeResultsTextView);
             record.setVisualActuityRight(rightEyeResult.getVisualAcuity());
+
+            fragmentInteraction.setInstructions(R.string.visualAcuity_instruction_right);
         }
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
             leftEyeResult = new VisualAcuityResult("Left", chartHelper.getResult());

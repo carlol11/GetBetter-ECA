@@ -44,6 +44,8 @@
     <string name="NA">N/A</string>
     <string name="continueWord">Continue</string>
     <string name="retake">Retake</string>
+    <string name="takePicture">Take Picture</string>
+    <string name="skip">Skip</string>
 
     <!-- ECA Strings-->
     <string name="monitoring_weight">What is your weight?</string>
@@ -54,8 +56,11 @@
     <string name="visualAcuity_instruction_right">Cover your right eye.</string>
     <string name="colorVision_instruction">What shape do you see?</string>
     <string name="hearing_instruction">Press the button everytime you hear a sound.</string>
+    <string name="finemotor_path1_1">Using a finger of your non dominant hand, trace the path. Start from the butterfly and go to the flowers</string>
+    <string name="finemotor_path1_2">Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers</string>
+    <string name="finemotor_question">Assistant, has he/she used the pen without difficulties?</string>
+    <string name="finemotor_path2_1">Using a finger of your non dominant hand, trace the path. Start from the lion and go to his friends</string>
+    <string name="finemotor_path2_2">Using the pen with your dominant hand, trace the path. Start from the lion and go to his friends</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="takePicture">Take Picture</string>
-    <string name="skip">Skip</string>
+
 </resources>

@@ -126,12 +126,10 @@ public class GrossMotorFragment extends Fragment {
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String activityString = "Activity: " + gms.getSkillName();
         String typeString = "Type: " + gms.getType();
-        String durationString = "Duration: " + String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
+        String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
-        fragmentInteraction.setInstructions(activityString + "\n"
-                + typeString + "\n"
-                + gms.getInstruction() + "\n"
-                + durationString);
+
+        fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
 
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)view.findViewById(R.id.countdownTV);

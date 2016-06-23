@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
@@ -200,11 +201,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
          * TODO: [Testing Code] Remove this if no longer testing.
          * this is for the shortcut for the hearing fragment
          */
-        final FrameLayout placeholderECA = (FrameLayout)findViewById(R.id.placeholderECA);
+        final RelativeLayout ecaLayout = (RelativeLayout)findViewById(R.id.relativeLayoutECA);
         Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
 
         if(newFragment instanceof HearingMainFragment){
-            placeholderECA.setOnClickListener(new View.OnClickListener() {
+            ecaLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     HearingMainFragment hearingFragment = (HearingMainFragment) fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
@@ -212,7 +213,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 }
             });
         } else if(hearingFragment != null){
-            placeholderECA.setClickable(false);
+            ecaLayout.setClickable(false);
         }
     }
 }

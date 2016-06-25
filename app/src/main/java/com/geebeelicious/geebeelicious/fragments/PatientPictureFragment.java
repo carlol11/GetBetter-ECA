@@ -26,17 +26,17 @@ import java.io.InputStream;
 
 /**
  * Created by MG.
- * The VaccinationFragment class serves as the fragment for
- * the taking a picture of the vaccination of a patient.
+ * The PatientPictureFragment class serves as the fragment for
+ * taking picture of the patient
  */
-public class VaccinationFragment extends Fragment {
-    private final static String TAG = "VaccinationFragment";
+public class PatientPictureFragment extends Fragment {
+    private final static String TAG = "PatientPictureFragment";
     private static final int REQUEST_TAKE_PHOTO = 1;
 
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Activity activity;
 
-    private TakePictureHelper vaccinationHelper;
+    private TakePictureHelper patientPictureHelper;
 
     private Button skipButton;
     private Button pictureButton;
@@ -45,28 +45,28 @@ public class VaccinationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
+        View view = inflater.inflate(R.layout.fragment_patient_picture, container, false);
         skipButton = (Button) view.findViewById(R.id.skipButton);
         pictureButton = (Button) view.findViewById(R.id.takePictureButton);
 
         ImageView imageViewPlaceholder = (ImageView) view.findViewById(R.id.imagePlaceholder);
 
-        vaccinationHelper = new TakePictureHelper(imageViewPlaceholder);
+        patientPictureHelper = new TakePictureHelper(imageViewPlaceholder);
 
         if(savedInstanceState != null){
-            vaccinationHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
+            patientPictureHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
         }
 
-        if(vaccinationHelper.getmCurrentPhotoPath() == null){
-            fragmentInteraction.setInstructions(R.string.vaccination_instruction);
+        if(patientPictureHelper.getmCurrentPhotoPath() == null){
+            fragmentInteraction.setInstructions(R.string.patientPicture_instruction);
         }
 
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (vaccinationHelper.getmCurrentPhotoPath() != null) {
+                if (patientPictureHelper.getmCurrentPhotoPath() != null) {
                     Record record = fragmentInteraction.getRecord();
-                    record.setVaccination(vaccinationHelper.getPicture());
+                    record.setPatientPicture(patientPictureHelper.getPicture());
                 }
 
                 fragmentInteraction.doneFragment();
@@ -91,7 +91,7 @@ public class VaccinationFragment extends Fragment {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = vaccinationHelper.createImageFile(); // also updates mCurrentPhotoPath
+                photoFile = patientPictureHelper.createImageFile(); // also updates mCurrentPhotoPath
             } catch (IOException ex) {
                 Log.e(TAG, "Error occured while creating file");
                 Toast.makeText(activity, "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG).show();
@@ -107,17 +107,17 @@ public class VaccinationFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("photoPath", vaccinationHelper.getmCurrentPhotoPath());
+        outState.putString("photoPath", patientPictureHelper.getmCurrentPhotoPath());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         InputStream stream = null;
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-            vaccinationHelper.setPic();
+            patientPictureHelper.setPic();
             skipButton.setText(R.string.continueWord);
             pictureButton.setText(R.string.retake);
-            fragmentInteraction.setInstructions(R.string.vaccination_confirm);
+            fragmentInteraction.setInstructions(R.string.patientPicture_confirm);
         }
     }
 
@@ -135,5 +135,4 @@ public class VaccinationFragment extends Fragment {
                     + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
-
 }

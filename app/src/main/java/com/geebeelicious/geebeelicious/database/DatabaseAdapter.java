@@ -371,6 +371,7 @@ public class DatabaseAdapter {
         values.put(Record.C_FINE_MOTOR_N_DOMINANT, record.getFineMotorNDominant());
         values.put(Record.C_FINE_MOTOR_HOLD, record.getFineMotorHold());
         values.put(Record.C_VACCINATION, record.getVaccination());
+        values.put(Record.C_VACCINATION, record.getPatientPicture());
 
         row = (int) getBetterDb.insert(Record.TABLE_NAME, null, values);
         Log.d(TAG, "insertRecord Result: " + row);
@@ -441,7 +442,7 @@ public class DatabaseAdapter {
                         c.getString(c.getColumnIndex(Record.C_HEARING_LEFT)), c.getString(c.getColumnIndex(Record.C_HEARING_RIGHT)),
                         c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)),
                         c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)),
-                        c.getBlob(c.getColumnIndex(Record.C_VACCINATION)));
+                        c.getBlob(c.getColumnIndex(Record.C_VACCINATION)), c.getBlob(c.getColumnIndex(Record.C_PATIENT_PICTURE)));
 
                 record.printRecord();
                 records.add(record);

@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.models.vaccination;
+package com.geebeelicious.geebeelicious.models.monitoring;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,12 +14,13 @@ import java.util.Date;
 
 /**
  * Created by mgmalana on 21/05/2016.
+ * TakePictureHelper class contains the functionality to take a picture
  */
-public class VaccinationHelper {
+public class TakePictureHelper {
     private ImageView imageViewPlaceholder;
     private String mCurrentPhotoPath;
 
-    public VaccinationHelper(ImageView imageViewPlaceholder) {
+    public TakePictureHelper(ImageView imageViewPlaceholder) {
         this.imageViewPlaceholder = imageViewPlaceholder;
     }
 
@@ -81,7 +82,7 @@ public class VaccinationHelper {
         imageViewPlaceholder.setImageBitmap(bitmap);
     }
 
-    public byte[] getVaccinationPicture() {
+    public byte[] getPicture() {
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         Bitmap vaccination = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 

@@ -30,6 +30,7 @@ public class Record implements Parcelable {
     public final static String C_FINE_MOTOR_N_DOMINANT = "fine_motor_n_dominant";
     public final static String C_FINE_MOTOR_HOLD = "fine_motor_hold";
     public final static String C_VACCINATION = "vaccination";
+    public final static String C_PATIENT_PICTURE = "patient_picture";
 
     private int recordID;
     private int patient_id;
@@ -46,12 +47,16 @@ public class Record implements Parcelable {
     private int fineMotorNDominant; //0 pass, 1 fail
     private int fineMotorHold; //0 pass, 1 fail
     private byte[] vaccination;
+    private byte[] patientPicture;
 
     public Record(){
 
     }
 
-    public Record(int recordID, int patient_id, String dateCreated, double height, double weight, String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft, String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold, byte[] vaccination) {
+    public Record(int recordID, int patient_id, String dateCreated, double height, double weight,
+                  String visualAcuityLeft, String visualActuityRight, String colorVision, String hearingLeft,
+                  String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant, int fineMotorHold,
+                  byte[] vaccination, byte[] patientPicture) {
         this.recordID = recordID;
         this.patient_id = patient_id;
         this.dateCreated = dateCreated;
@@ -67,6 +72,7 @@ public class Record implements Parcelable {
         this.fineMotorDominant = fineMotorDominant;
         this.fineMotorHold = fineMotorHold;
         this.vaccination = vaccination;
+        this.patientPicture = patientPicture;
     }
 
     protected Record(Parcel in) {
@@ -145,6 +151,10 @@ public class Record implements Parcelable {
         return vaccination;
     }
 
+    public byte[] getPatientPicture(){
+        return patientPicture;
+    }
+
     public void setRecordID(int recordID) {
         this.recordID = recordID;
     }
@@ -205,6 +215,10 @@ public class Record implements Parcelable {
         this.vaccination = vaccination;
     }
 
+    public void setPatientPicture(byte[] patientPicture){
+        this.patientPicture = patientPicture;
+    }
+
     public void printRecord(){
         Log.d(TAG, "recordID: " + recordID + ", patientID: " + patient_id + ", dateCreated: " + dateCreated +
             ", height: " + height + ", weight " + weight + ", visualAcuityLeft: " + visualAcuityLeft +
@@ -212,7 +226,7 @@ public class Record implements Parcelable {
             ", hearingLeft: " + hearingLeft + ", hearingRight: " + hearingRight +
             ", grossMotor: " + grossMotor + ", fineMotorDominant: " + fineMotorDominant +
             ", fineMotorNonDominant: " + fineMotorNDominant + ", fineMotorPen: " + fineMotorHold +
-            ", vaccination: " + vaccination);
+            ", vaccination: " + vaccination + ", patientPicture: " + patientPicture);
     }
 
     @Override
@@ -237,6 +251,7 @@ public class Record implements Parcelable {
         dest.writeInt(fineMotorNDominant);
         dest.writeInt(fineMotorHold);
         dest.writeByteArray(vaccination);
+        dest.writeByteArray(patientPicture);
     }
 
     public void readParcel(Parcel in){
@@ -255,5 +270,6 @@ public class Record implements Parcelable {
         fineMotorNDominant = in.readInt();
         fineMotorHold = in.readInt();
         vaccination = in.createByteArray();
+        patientPicture = in.createByteArray();
     }
 }

@@ -1,4 +1,4 @@
-package com.geebeelicious.geebeelicious.tests.hearing;
+package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.activities.SettingsActivity;
 
 import com.geebeelicious.geebeelicious.models.hearing.Calibrator;
 

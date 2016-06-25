@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
-import com.geebeelicious.geebeelicious.tests.hearing.HearingCalibrationActivity;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

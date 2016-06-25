@@ -23,32 +23,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".tests.visualacuity.VisualAcuityMainActivity"
-            android:label="@string/title_activity_visual_acuity_main"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".tests.colorvision.ColorVisionMainActivity"
-            android:label="@string/title_activity_color_vision_main"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".tests.hearing.HearingMainActivity"
-            android:label="@string/title_activity_hearing_main"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".tests.hearing.HearingCalibrationActivity"
+            android:name=".activities.HearingCalibrationActivity"
             android:label="@string/title_activity_hearing_calibration"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".tests.finemotor.FineMotorActivity"
-            android:label="@string/title_activity_fine_motor"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activities.ConsultationActivity"
             android:label="@string/title_activity_consultation"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".tests.grossmotor.GrossMotorMainActivity"
-            android:label="@string/title_activity_gross_motor_main"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activities.MonitoringConsultationChoice"
@@ -67,9 +47,9 @@
             android:label="@string/title_activity_add_patient"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".tests.MonitoringActivity"
-            android:label="@string/title_activity_monitoring" />
-        <activity android:name=".activities.MonitoringMainActivity"></activity>
+            android:name=".activities.MonitoringMainActivity"
+            android:label="@string/title_activity_monitoring"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest><!--

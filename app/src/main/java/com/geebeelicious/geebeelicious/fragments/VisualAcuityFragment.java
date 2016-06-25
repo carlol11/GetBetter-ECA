@@ -127,7 +127,7 @@ public class VisualAcuityFragment extends Fragment {
             rightEyeResult = new VisualAcuityResult("Right", chartHelper.getResult());
             chartHelper.setIsRightTested();
             chartHelper.startTest();
-            displayResults(rightEyeResult, R.id.rightEyeResultsTextView);
+            displayResults(rightEyeResult);
             record.setVisualActuityRight(rightEyeResult.getVisualAcuity());
 
             fragmentInteraction.setInstructions(R.string.visualAcuity_instruction_right);
@@ -135,13 +135,13 @@ public class VisualAcuityFragment extends Fragment {
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
             leftEyeResult = new VisualAcuityResult("Left", chartHelper.getResult());
             chartHelper.setIsLeftTested();
-            displayResults(leftEyeResult, R.id.leftEyeResultsTextView);
+            displayResults(leftEyeResult);
             record.setVisualAcuityLeft(leftEyeResult.getVisualAcuity());
             endTest();
         }
     }
 
-    private void displayResults(VisualAcuityResult result, int id){
+    private void displayResults(VisualAcuityResult result){
         String resultString = "";
         resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
                 result.getLineNumber() + "\nVisual Acuity: " +

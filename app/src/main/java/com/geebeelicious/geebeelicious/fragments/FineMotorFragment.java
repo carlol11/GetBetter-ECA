@@ -114,7 +114,6 @@ public class FineMotorFragment extends Fragment {
                     hasStarted = true;
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    fragmentInteraction.setInstructions(fineMotorHelper.setInstructions(currentTest));
                     return true;
                 }
                 return false;

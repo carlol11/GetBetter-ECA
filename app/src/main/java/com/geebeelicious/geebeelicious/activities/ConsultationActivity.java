@@ -1,6 +1,10 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +15,8 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.ConsultationHelper;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -21,7 +27,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * It allows the user to view questions and answer with Yes or No inputs.
  */
 
-public class ConsultationActivity extends ActionBarActivity {
+public class ConsultationActivity extends ECAActivity{
     private TextView ECAText;
     private ConsultationHelper consultationHelper;
     private final static String TAG = "ConsultationActivity";
@@ -43,7 +49,9 @@ public class ConsultationActivity extends ActionBarActivity {
         consultationHelper = new ConsultationHelper(this, patient, dateConsultation);
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
 
-        ECAText.setText(consultationHelper.getFirstQuestion());
+        integrateECA();
+
+        setQuestion(consultationHelper.getFirstQuestion());
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +79,7 @@ public class ConsultationActivity extends ActionBarActivity {
             doWhenConsultationDone();
         }
         else {
-            ECAText.setText(nextQuestion);
+            setQuestion(nextQuestion);
         }
     }
 
@@ -92,5 +100,10 @@ public class ConsultationActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    private void setQuestion(String question){
+        ECAText.setText(question);
+        ecaFragment.sendToECAToSpeak(question);
     }
 }

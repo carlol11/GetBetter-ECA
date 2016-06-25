@@ -1,7 +1,11 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +21,8 @@ import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -25,8 +31,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * functionality for adding new patients.
  */
 
-public class AddPatientActivity extends ActionBarActivity {
-
+public class AddPatientActivity extends ECAActivity{
     private String firstName = null;
     private String lastName = null;
     private String birthDate = null;
@@ -57,6 +62,8 @@ public class AddPatientActivity extends ActionBarActivity {
         radioButton0 = (RadioButton)findViewById(R.id.radioButton1);
         radioButton1 = (RadioButton)findViewById(R.id.radioButton2);
         radioGroup = (RadioGroup)findViewById(R.id.newPatientRadioChoice);
+
+        integrateECA();
 
         setQuestion(questions[questionCounter]);
         editText.setVisibility(View.VISIBLE);
@@ -131,6 +138,9 @@ public class AddPatientActivity extends ActionBarActivity {
                                                 "\nGender: " + patient.getGenderString() +
                                                 "\nHandedness: " + patient.getHandednessString();
                         questionView.setText(patientDetails);
+
+                        ecaFragment.sendToECAToSpeak("Are the following information correct?");
+
                         break;
                     case 5:
                         savePatientToDatabase(patient);
@@ -152,6 +162,7 @@ public class AddPatientActivity extends ActionBarActivity {
     //Display question on screen based on resID parameter
     private void setQuestion(int resID){
         questionView.setText(resID);
+        ecaFragment.sendToECAToSpeak(getResources().getString(resID));
     };
 
     //Return String format of contents of search field

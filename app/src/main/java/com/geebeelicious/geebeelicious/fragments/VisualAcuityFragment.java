@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import com.geebeelicious.geebeelicious.models.visualacuity.ChartHelper;
@@ -28,7 +28,7 @@ import com.geebeelicious.geebeelicious.models.visualacuity.VisualAcuityResult;
  */
 
 public class VisualAcuityFragment extends Fragment {
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Record record;
 
     private Button yesButton;
@@ -77,21 +77,21 @@ public class VisualAcuityFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        //TODO: Distance. Fix this. di ata nagwowork
         //distance calculator
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
-        fragmentInteraction.setInstructions("Distance: " + String.format("%.2f", distance) + " meters");
+        fragmentInteraction.setInstructions("Distance yourself " +  String.format("%.2f", distance) +
+                " meters away from the tablet. " + getString(R.string.visualAcuity_instruction_left));
         record = fragmentInteraction.getRecord();
     }
 
@@ -127,19 +127,21 @@ public class VisualAcuityFragment extends Fragment {
             rightEyeResult = new VisualAcuityResult("Right", chartHelper.getResult());
             chartHelper.setIsRightTested();
             chartHelper.startTest();
-            displayResults(rightEyeResult, R.id.rightEyeResultsTextView);
+            displayResults(rightEyeResult);
             record.setVisualActuityRight(rightEyeResult.getVisualAcuity());
+
+            fragmentInteraction.setInstructions(R.string.visualAcuity_instruction_right);
         }
         else if(!chartHelper.isLeftTested() && leftEyeResult == null){
             leftEyeResult = new VisualAcuityResult("Left", chartHelper.getResult());
             chartHelper.setIsLeftTested();
-            displayResults(leftEyeResult, R.id.leftEyeResultsTextView);
+            displayResults(leftEyeResult);
             record.setVisualAcuityLeft(leftEyeResult.getVisualAcuity());
             endTest();
         }
     }
 
-    private void displayResults(VisualAcuityResult result, int id){
+    private void displayResults(VisualAcuityResult result){
         String resultString = "";
         resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
                 result.getLineNumber() + "\nVisual Acuity: " +

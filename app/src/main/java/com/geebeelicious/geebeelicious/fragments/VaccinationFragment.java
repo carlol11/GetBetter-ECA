@@ -3,11 +3,8 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,11 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import com.geebeelicious.geebeelicious.models.vaccination.VaccinationHelper;
 
@@ -40,18 +36,21 @@ public class VaccinationFragment extends Fragment {
     private final static String TAG = "VaccinationFragment";
     private static final int REQUEST_TAKE_PHOTO = 1;
 
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Activity activity;
 
     private VaccinationHelper vaccinationHelper;
+
+    private Button skipButton;
+    private Button pictureButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
-        Button skipButton = (Button) view.findViewById(R.id.skipButton);
-        Button pictureButton = (Button) view.findViewById(R.id.takePictureButton);
+        skipButton = (Button) view.findViewById(R.id.skipButton);
+        pictureButton = (Button) view.findViewById(R.id.takePictureButton);
 
         ImageView imageViewPlaceholder = (ImageView) view.findViewById(R.id.imagePlaceholder);
 
@@ -59,8 +58,10 @@ public class VaccinationFragment extends Fragment {
 
         if(savedInstanceState != null){
             vaccinationHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
-            skipButton.setText("Continue");
-            pictureButton.setText("Take Another Picture");
+        }
+
+        if(vaccinationHelper.getmCurrentPhotoPath() == null){
+            fragmentInteraction.setInstructions(R.string.vaccination_instruction);
         }
 
         skipButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +83,7 @@ public class VaccinationFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 
@@ -95,7 +97,7 @@ public class VaccinationFragment extends Fragment {
                 photoFile = vaccinationHelper.createImageFile(); // also updates mCurrentPhotoPath
             } catch (IOException ex) {
                 Log.e(TAG, "Error occured while creating file");
-                Toast.makeText(activity, "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG);
+                Toast.makeText(activity, "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG).show();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -114,8 +116,11 @@ public class VaccinationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         InputStream stream = null;
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == activity.RESULT_OK) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             vaccinationHelper.setPic();
+            skipButton.setText(R.string.continueWord);
+            pictureButton.setText(R.string.retake);
+            fragmentInteraction.setInstructions(R.string.vaccination_confirm);
         }
     }
 
@@ -127,10 +132,10 @@ public class VaccinationFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 

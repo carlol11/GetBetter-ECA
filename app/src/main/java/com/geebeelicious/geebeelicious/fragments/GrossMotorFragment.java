@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +30,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  */
 
 public class GrossMotorFragment extends Fragment {
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Activity activity;
 
     private GrossMotorTest grossMotorTest;
@@ -124,14 +124,9 @@ public class GrossMotorFragment extends Fragment {
         hideAnswerButtons();
         final CountDownTimer countDownTimer;
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
-        String activityString = "Activity: " + gms.getSkillName();
-        String typeString = "Type: " + gms.getType();
-        String durationString = "Duration: " + String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
-
-        fragmentInteraction.setInstructions(activityString + "\n"
-                + typeString + "\n"
-                + gms.getInstruction() + "\n"
-                + durationString);
+        String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
+        
+        fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
 
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
@@ -183,10 +178,10 @@ public class GrossMotorFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 }

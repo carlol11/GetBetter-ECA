@@ -11,13 +11,10 @@
     style="@style/DefaultBackground"
     tools:context=".activities.MainActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/placeholderECA"
-        android:minHeight="775dp"
-        android:minWidth="775dp"
-        style="@style/ECAPlaceholder"/>
+    <FrameLayout
+        android:layout_width="775dp"
+        android:layout_height="775dp"
+        android:id="@+id/placeholderECA" />
 
     <RelativeLayout
         android:layout_width="match_parent"

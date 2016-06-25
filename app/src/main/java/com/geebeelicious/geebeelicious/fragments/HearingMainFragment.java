@@ -11,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  */
 
 public class HearingMainFragment extends Fragment {
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     private ArrayList<Thread> threads;
     private HearingTest hearingTest;
@@ -72,8 +71,7 @@ public class HearingMainFragment extends Fragment {
                 yesButton.setEnabled(false);
                 ImageView imageView = (ImageView)view.findViewById(R.id.hearingTestImageView);
                 imageView.setImageResource(R.drawable.wait_for_next_test);
-                TextView resultsView = (TextView) view.findViewById(R.id.hearingResultsTV);
-                resultsView.setText(hearingTest.getResults());
+                fragmentInteraction.setResults(hearingTest.getResults());
             }
         };
 
@@ -138,6 +136,8 @@ public class HearingMainFragment extends Fragment {
         timingThread.start();
         testThread.start();
 
+        fragmentInteraction.setInstructions(R.string.hearing_instruction);
+
         return view;
     }
 
@@ -173,10 +173,10 @@ public class HearingMainFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,14 +9,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
@@ -33,9 +37,8 @@ import java.sql.SQLException;
  * Each test are executed through this activity
  */
 
-public class MonitoringMainActivity extends ActionBarActivity implements MonitoringFragmentInteraction {
+public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener{
     private final static String TAG = "MonitoringMainActivity";
-
     private Record record;
 
     private TextView ECAText;
@@ -83,6 +86,8 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
             record = savedInstanceState.getParcelable("record");
         }
 
+        integrateECA();
+
         initializeOldFragment();
     }
 
@@ -102,6 +107,13 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     @Override
     public void setInstructions(String instructions) {
         ECAText.setText(instructions);
+        ecaFragment.sendToECAToSpeak(instructions);
+    }
+
+    @Override
+    public void setInstructions(int resID) {
+        ECAText.setText(resID);
+        ecaFragment.sendToECAToSpeak(getString(resID));
     }
 
     @Override
@@ -145,8 +157,13 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
     }
 
     private void clearTextViews() {
-        ECAText.setText("Placeholder for Instructions");
-        resultsText.setText("Placeholder for Results");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ECAText.setText("Placeholder for Instructions");
+                resultsText.setText("Placeholder for Results");
+            }
+        });
     }
 
     private void nextFragment(){
@@ -184,11 +201,11 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
          * TODO: [Testing Code] Remove this if no longer testing.
          * this is for the shortcut for the hearing fragment
          */
-        final ImageView placeholderECA = (ImageView)findViewById(R.id.placeholderECA);
+        final RelativeLayout ecaLayout = (RelativeLayout)findViewById(R.id.relativeLayoutECA);
         Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
 
         if(newFragment instanceof HearingMainFragment){
-            placeholderECA.setOnClickListener(new View.OnClickListener() {
+            ecaLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     HearingMainFragment hearingFragment = (HearingMainFragment) fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
@@ -196,7 +213,7 @@ public class MonitoringMainActivity extends ActionBarActivity implements Monitor
                 }
             });
         } else if(hearingFragment != null){
-            placeholderECA.setClickable(false);
+            ecaLayout.setClickable(false);
         }
     }
 }

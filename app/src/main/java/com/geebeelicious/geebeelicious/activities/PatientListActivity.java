@@ -2,7 +2,11 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +29,8 @@ import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -35,8 +42,8 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * to the module allowing for new patients to be added.
  */
 
-public class PatientListActivity extends ActionBarActivity {
-
+public class PatientListActivity extends ECAActivity{
+    private boolean hasSpoken;
     private ArrayList<Patient> patients = null;
     private Patient chosenPatient = null;
     private PatientsAdapter patientsAdapter;
@@ -63,6 +70,14 @@ public class PatientListActivity extends ActionBarActivity {
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
         patientListView.setAdapter(patientsAdapter);
 
+        integrateECA();
+
+        if(savedInstanceState == null){
+            hasSpoken = false;
+        } else {
+            hasSpoken = savedInstanceState.getBoolean("hasSpoken");
+        }
+
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -76,6 +91,10 @@ public class PatientListActivity extends ActionBarActivity {
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 mgr.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
+
+                ecaFragment.sendToECAToSpeak("Are you " + chosenPatient.getFirstName() +
+                        " " + chosenPatient.getLastName() + "?");
+
             }
         });
 
@@ -126,6 +145,30 @@ public class PatientListActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            if(!hasSpoken){
+                ecaFragment.sendToECAToSpeak("Is your name in the list?");
+                hasSpoken = true;
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("hasSpoken", hasSpoken);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
+
     //Returns the schoolID fo the preferred school stored in device storage via Settings
     private int getSchoolPreferences(){
         int schoolID = 1; //default schoolID
@@ -142,12 +185,5 @@ public class PatientListActivity extends ActionBarActivity {
         schoolID = b.getInt();
 
         return schoolID;
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
-        finish();
-        startActivity(intent);
     }
 }

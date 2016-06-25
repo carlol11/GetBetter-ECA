@@ -1,7 +1,11 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +17,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
@@ -22,7 +28,8 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
  * consultation modules.
  */
 
-public class MonitoringConsultationChoice extends ActionBarActivity {
+public class MonitoringConsultationChoice extends ECAActivity{
+    private boolean hasSpoken;
 
     private DateFormat dateFormat;
 
@@ -36,6 +43,14 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
         final Patient patient = getIntent().getParcelableExtra("patient");
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        if(savedInstanceState == null){
+            hasSpoken = false;
+        } else {
+            hasSpoken = savedInstanceState.getBoolean("hasSpoken");
+        }
+
+        integrateECA();
 
         mButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -56,6 +71,24 @@ public class MonitoringConsultationChoice extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            if(!hasSpoken){
+                ecaFragment.sendToECAToSpeak("What would you like to do, monitoring or consultation?");
+                hasSpoken = true;
+            }
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("hasSpoken", hasSpoken);
     }
 
     @Override

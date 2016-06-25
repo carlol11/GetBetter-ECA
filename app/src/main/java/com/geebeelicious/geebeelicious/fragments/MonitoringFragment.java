@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-import com.geebeelicious.geebeelicious.interfaces.MonitoringFragmentInteraction;
+import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
@@ -34,14 +34,14 @@ public class MonitoringFragment extends Fragment {
     private TextView unitView;
     private View view;
 
-    private final int[] questions = {R.string.height, R.string.weight};
+    private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};
     private final int numberOfQuestions = 2;
     private int questionsCounter = 0;
 
     private Record record;
 
-    private MonitoringFragmentInteraction fragmentInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +54,8 @@ public class MonitoringFragment extends Fragment {
         numberPicker = (NumberPicker)view.findViewById(R.id.monitoringNumberPicker);
         numberPicker.setMinValue(0);
 
-        questionView.setText(questions[questionsCounter]);
+        setQuestion(questions[questionsCounter]);
+
         unitView.setText(questionUnit[questionsCounter]);
         numberPicker.setMaxValue(250);
 
@@ -74,7 +75,7 @@ public class MonitoringFragment extends Fragment {
                 }
                 questionsCounter++;
                 if(questionsCounter < numberOfQuestions){
-                    questionView.setText(questions[questionsCounter]);
+                    setQuestion(questions[questionsCounter]);
                     unitView.setText(questionUnit[questionsCounter]);
                 }else{
                     endMonitoring();
@@ -85,6 +86,11 @@ public class MonitoringFragment extends Fragment {
         return view;
     }
 
+    private void setQuestion(int resID) {
+        questionView.setText(resID);
+        fragmentInteraction.setInstructions(resID);
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -92,10 +98,10 @@ public class MonitoringFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (MonitoringFragmentInteraction) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement MonitoringFragmentInteraction");
+                    + " must implement OnMonitoringFragmentInteractionListener");
         }
     }
 

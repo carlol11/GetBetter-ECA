@@ -31,7 +31,7 @@ public class FineMotorHelper {
 
     private boolean[] result = new boolean[3]; //result[i] is true if pass, false if fail
 
-    private String[] instructions;
+    private int[] instructions;
 
     public FineMotorHelper(Context context, ImageView imageViewPathToTrace) {
         this.imageViewPathToTrace = imageViewPathToTrace;
@@ -72,7 +72,7 @@ public class FineMotorHelper {
     }
 
     //starts the next test. resets the variables
-    public String doNextTest(int currentTest){
+    public int doNextTest(int currentTest){
         pauseMp();
         result[currentTest] = numWrongs <= MAX_NUM_WRONG;
         numWrongs = 0;
@@ -111,7 +111,7 @@ public class FineMotorHelper {
         return new int[] {x,y};
     }
 
-    public String setInstructions(int index){
+    public int setInstructions(int index){
         return(instructions[index]);
     }
 
@@ -122,17 +122,17 @@ public class FineMotorHelper {
     }
 
     //initialized the instructions depending on the chosen path
-    private String[] getInstructions(int path) {
-        String[] instructionList = null;
+    private int[] getInstructions(int path) {
+        int[] instructionList = null;
         switch(path){
-            case R.drawable.path_to_trace_1: instructionList =  new String[]{"Using a finger of your non dominant hand, trace the path. Start from the butterfly and go to the flowers",
-                    "Using the pen with your dominant hand, trace the path. Start from the butterfly and go to the flowers",
-                    "Assistant, has he/she used the pen without difficulties?"
+            case R.drawable.path_to_trace_1: instructionList =  new int[]{R.string.finemotor_path1_1,
+                    R.string.finemotor_path1_2,
+                    R.string.finemotor_question
                     };
                 break;
-            case R.drawable.path_to_trace_2: instructionList =  new String[]{"Using a finger of your non dominant hand, trace the path. Start from the lion and go to his friends",
-                    "Using the pen with your dominant hand, trace the path. Start from the lion and go to his friends",
-                    "Assistant, has he/she used the pen without difficulties?"
+            case R.drawable.path_to_trace_2: instructionList =  new int[]{R.string.finemotor_path2_1,
+                    R.string.finemotor_path2_2,
+                    R.string.finemotor_question
                     };
                 break;
         }

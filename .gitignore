@@ -43,3 +43,6 @@ build/
 
 #NDK
 obj/
+app/src/main/java/com/geebeelicious/geebeelicious/fragments/PatientPicture.java
+
+app/src/main/res/layout/fragment_patient_picture.xml

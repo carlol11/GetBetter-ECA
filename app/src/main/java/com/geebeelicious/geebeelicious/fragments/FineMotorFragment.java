@@ -148,7 +148,6 @@ public class FineMotorFragment extends Fragment {
         String resultString ;
         boolean[] result = fineMotorHelper.getResults();
         CountDownTimer timer;
-        //TODO: [Testing] remove the resultString na
 
         if(isTestOngoing){ //this is to avoid double clicking
             isTestOngoing = false;

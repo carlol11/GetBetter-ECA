@@ -1,12 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +12,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -94,7 +88,7 @@ public class MonitoringConsultationChoice extends ECAActivity{
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(MonitoringConsultationChoice.this, PatientListActivity.class);
-        finish();
         startActivity(intent);
+        finish();
     }
 }

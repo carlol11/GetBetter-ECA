@@ -16,13 +16,13 @@ public abstract class ECAActivity extends ActionBarActivity implements ECAFragme
 
     protected void integrateECA() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ecaFragment = (ECAFragment) fragmentManager.findFragmentById(R.id.placeholderECA);
+        ecaFragment = (ECAFragment) fragmentManager.findFragmentByTag(ECAFragment.class.getName());
         if(ecaFragment == null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
             ecaFragment = new ECAFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
             transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
             transaction.commit();
-
         }
     }
 

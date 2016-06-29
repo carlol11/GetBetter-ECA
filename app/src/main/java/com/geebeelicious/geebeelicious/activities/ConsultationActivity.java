@@ -1,21 +1,13 @@
 package com.geebeelicious.geebeelicious.activities;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.geebeelicious.geebeelicious.activities.MonitoringConsultationChoice;
 import com.geebeelicious.geebeelicious.R;
 
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.ConsultationHelper;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
@@ -95,9 +87,6 @@ public class ConsultationActivity extends ECAActivity{
             } else { //TODO: [UI PART] put the condition here if no complaints
                 Log.d(TAG, "No chief complaint found ");
             }
-            Intent intent = new Intent(this, MonitoringConsultationChoice.class);
-            intent.putExtra("patient", patient);
-            startActivity(intent);
             finish();
         }
     }

@@ -2,12 +2,7 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +23,6 @@ import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -167,8 +160,8 @@ public class PatientListActivity extends ECAActivity{
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
-        finish();
         startActivity(intent);
+        finish();
     }
 
     //Returns the schoolID fo the preferred school stored in device storage via Settings

@@ -55,6 +55,9 @@ public class VaccinationFragment extends Fragment {
 
         if(savedInstanceState != null){
             vaccinationHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
+            if (vaccinationHelper.getmCurrentPhotoPath() != null){
+                vaccinationHelper.setPic();
+            }
         }
 
         if(vaccinationHelper.getmCurrentPhotoPath() == null){

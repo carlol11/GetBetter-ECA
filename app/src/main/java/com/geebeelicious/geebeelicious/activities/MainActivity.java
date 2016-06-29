@@ -37,6 +37,14 @@ public class MainActivity extends ECAActivity{
 
         if(savedInstanceState == null){
             hasSpoken = false;
+
+            DatabaseAdapter getBetterDb = new DatabaseAdapter(MainActivity.this);
+            try {
+                getBetterDb.createDatabase();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                finish(); //exit app if database creation fails
+            }
         } else {
             hasSpoken = savedInstanceState.getBoolean("hasSpoken");
         }
@@ -46,6 +54,7 @@ public class MainActivity extends ECAActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +64,6 @@ public class MainActivity extends ECAActivity{
                 startActivity(intent);
             }
         });
-
-        DatabaseAdapter getBetterDb = new DatabaseAdapter(MainActivity.this);
-        try {
-            getBetterDb.createDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            finish(); //exit app if database creation fails
-        }
     }
 
     @Override

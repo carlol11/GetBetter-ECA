@@ -114,6 +114,7 @@ public class PatientListActivity extends ECAActivity{
                 Intent intent = new Intent(PatientListActivity.this, MonitoringConsultationChoice.class);
                 intent.putExtra("patient", chosenPatient);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -124,6 +125,7 @@ public class PatientListActivity extends ECAActivity{
                 Intent intent = new Intent(PatientListActivity.this, AddPatientActivity.class);
                 intent.putExtra("schoolID", getSchoolPreferences());
                 startActivity(intent);
+                finish();
             }
         });
 

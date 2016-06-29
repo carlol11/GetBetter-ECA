@@ -17,6 +17,7 @@ import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
+import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
@@ -60,6 +61,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
                 MonitoringFragment.class.getName(),
+                PatientPictureFragment.class.getName(),
                 VaccinationFragment.class.getName(),
                 VisualAcuityFragment.class.getName(),
                 ColorVisionFragment.class.getName(),

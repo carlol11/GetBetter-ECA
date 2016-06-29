@@ -46,7 +46,7 @@ public class AddPatientActivity extends ECAActivity{
     private RadioGroup radioGroup;
     private DatePicker datePicker;
 
-    private int questionCounter = 0;
+    private int questionCounter;
     private final int[] questions = {R.string.first_name, R.string.last_name, R.string.birthdate,
                                     R.string.gender, R.string.handedness};
 
@@ -65,6 +65,12 @@ public class AddPatientActivity extends ECAActivity{
 
         integrateECA();
 
+        if (savedInstanceState != null){
+            questionCounter = savedInstanceState.getInt("questionCounter");
+        } else {
+            questionCounter = 0;
+        }
+
         setQuestion(questions[questionCounter]);
         editText.setVisibility(View.VISIBLE);
 
@@ -76,6 +82,7 @@ public class AddPatientActivity extends ECAActivity{
                 questionCounter = 0;
                 Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -147,6 +154,7 @@ public class AddPatientActivity extends ECAActivity{
                         Intent intent = new Intent(AddPatientActivity.this, MonitoringConsultationChoice.class);
                         intent.putExtra("patient", patient);
                         startActivity(intent);
+                        finish();
                     default:
                         break;
                 }
@@ -157,6 +165,12 @@ public class AddPatientActivity extends ECAActivity{
             }
         });
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("questionCounter", questionCounter);
     }
 
     //Display question on screen based on resID parameter

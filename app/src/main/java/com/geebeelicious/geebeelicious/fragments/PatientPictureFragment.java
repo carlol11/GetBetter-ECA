@@ -55,6 +55,9 @@ public class PatientPictureFragment extends Fragment {
 
         if(savedInstanceState != null){
             patientPictureHelper.setmCurrentPhotoPath(savedInstanceState.getString("photoPath"));
+            if (patientPictureHelper.getmCurrentPhotoPath() != null){
+                patientPictureHelper.setPic();
+            }
         }
 
         if(patientPictureHelper.getmCurrentPhotoPath() == null){

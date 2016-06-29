@@ -1,21 +1,16 @@
 package com.geebeelicious.geebeelicious.activities;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
@@ -89,7 +84,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
 
         integrateECA();
-
         initializeOldFragment();
     }
 
@@ -136,10 +130,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             } catch (SQLException e) {
                 Log.e(TAG, "Database error", e);
             }
-
-            Intent intent = new Intent(this, MonitoringConsultationChoice.class);
             finish();
-            startActivity(intent);
         } else {
             clearTextViews();
             nextFragment();
@@ -183,8 +174,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         try {
             if(oldFragment == null) {
                 oldFragment = (Fragment) Class.forName(fragments[0]).newInstance();
+                replaceFragment(oldFragment);
             }
-            replaceFragment(oldFragment);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             Log.e(TAG, "Error in initializing the fragment", e);
         }

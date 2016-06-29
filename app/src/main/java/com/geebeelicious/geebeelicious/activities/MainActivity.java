@@ -1,18 +1,13 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 
 import java.sql.SQLException;
@@ -37,6 +32,14 @@ public class MainActivity extends ECAActivity{
 
         if(savedInstanceState == null){
             hasSpoken = false;
+
+            DatabaseAdapter getBetterDb = new DatabaseAdapter(MainActivity.this);
+            try {
+                getBetterDb.createDatabase();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                finish(); //exit app if database creation fails
+            }
         } else {
             hasSpoken = savedInstanceState.getBoolean("hasSpoken");
         }
@@ -46,6 +49,7 @@ public class MainActivity extends ECAActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +59,6 @@ public class MainActivity extends ECAActivity{
                 startActivity(intent);
             }
         });
-
-        DatabaseAdapter getBetterDb = new DatabaseAdapter(MainActivity.this);
-        try {
-            getBetterDb.createDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            finish(); //exit app if database creation fails
-        }
     }
 
     @Override
@@ -80,7 +76,6 @@ public class MainActivity extends ECAActivity{
                 hasSpoken = true;
             }
         }
-
     }
 
     @Override

@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:orientation="horizontal"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/activity_eca_small"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
@@ -21,8 +21,8 @@
         style="@style/DefaultBackground">
 
         <FrameLayout
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="@dimen/activity_eca_small"
+            android:layout_height="@dimen/activity_eca_small"
             android:id="@+id/placeholderECA"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"

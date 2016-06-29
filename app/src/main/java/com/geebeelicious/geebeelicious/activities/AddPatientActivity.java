@@ -1,12 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,7 +16,6 @@ import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import java.sql.SQLException;
 import java.util.Date;
 
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -46,7 +40,7 @@ public class AddPatientActivity extends ECAActivity{
     private RadioGroup radioGroup;
     private DatePicker datePicker;
 
-    private int questionCounter = 0;
+    private int questionCounter;
     private final int[] questions = {R.string.first_name, R.string.last_name, R.string.birthdate,
                                     R.string.gender, R.string.handedness};
 
@@ -65,6 +59,12 @@ public class AddPatientActivity extends ECAActivity{
 
         integrateECA();
 
+        if (savedInstanceState != null){
+            questionCounter = savedInstanceState.getInt("questionCounter");
+        } else {
+            questionCounter = 0;
+        }
+
         setQuestion(questions[questionCounter]);
         editText.setVisibility(View.VISIBLE);
 
@@ -76,6 +76,7 @@ public class AddPatientActivity extends ECAActivity{
                 questionCounter = 0;
                 Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -147,6 +148,7 @@ public class AddPatientActivity extends ECAActivity{
                         Intent intent = new Intent(AddPatientActivity.this, MonitoringConsultationChoice.class);
                         intent.putExtra("patient", patient);
                         startActivity(intent);
+                        finish();
                     default:
                         break;
                 }
@@ -157,6 +159,20 @@ public class AddPatientActivity extends ECAActivity{
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("questionCounter", questionCounter);
     }
 
     //Display question on screen based on resID parameter

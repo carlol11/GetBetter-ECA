@@ -75,9 +75,7 @@ public class SettingsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 saveSchool();
-                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 finish();
-                startActivity(intent);
             }
         });
     }

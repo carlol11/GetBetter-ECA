@@ -12,8 +12,8 @@
     tools:context=".activities.MainActivity">
 
     <FrameLayout
-        android:layout_width="775dp"
-        android:layout_height="775dp"
+        android:layout_width="@dimen/activity_eca_big"
+        android:layout_height="@dimen/activity_eca_big"
         android:id="@+id/placeholderECA" />
 
     <RelativeLayout

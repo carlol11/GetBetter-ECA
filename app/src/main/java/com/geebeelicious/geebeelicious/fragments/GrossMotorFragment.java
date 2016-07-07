@@ -37,6 +37,7 @@ public class GrossMotorFragment extends Fragment {
     private GrossMotorTest grossMotorTest;
     private View view;
 
+    private CountDownTimer countDownTimer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +75,9 @@ public class GrossMotorFragment extends Fragment {
     public void onNAButtonClick(){
         TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
 
+        if (countDownTimer != null){
+            countDownTimer.cancel();
+        }
         grossMotorTest.getCurrentSkill().setSkillSkipped();
         goToNextQuestion();
         grossMotorTest.skipTest(timerView, grossMotorInteraction);
@@ -104,6 +108,8 @@ public class GrossMotorFragment extends Fragment {
         countDownIV.setVisibility(View.VISIBLE);
         countDownIV.setImageResource(R.drawable.wait_for_next_test);
 
+        grossMotorInteraction.onHideNAButton();
+
         timer = new CountDownTimer(6000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -123,7 +129,6 @@ public class GrossMotorFragment extends Fragment {
     private void displaySkill(final int i){
         //TODO: Not sure why there are two hideanswerbuttons here
         hideAnswerButtons();
-        final CountDownTimer countDownTimer;
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
         

@@ -159,7 +159,9 @@ public class GrossMotorTest {
 
 
     public void skipTest(TextView timerView, GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction) {
-        countDownTimer.cancel();
+        if(countDownTimer != null){
+            countDownTimer.cancel();
+        }
         timerView.setText("");
         musicPlayer.stopMusic();
     }

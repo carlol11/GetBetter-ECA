@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,8 @@ public class GrossMotorTest {
     private GrossMotorSkill[] testSkills;
     private MusicPlayer musicPlayer;
     private int currentSkill;
+
+    private CountDownTimer countDownTimer;
 
     public GrossMotorTest(Context context){
         musicPlayer = new MusicPlayer(context);
@@ -77,10 +81,10 @@ public class GrossMotorTest {
         currentSkill = skillNumber;
     }
 
-    public void performSkill(int skillNumber, final TextView timerView, final LinearLayout answers){
+    public void performSkill(int skillNumber, final TextView timerView, final LinearLayout answers, final GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction){
         GrossMotorSkill skill = testSkills[skillNumber];
         musicPlayer.setRandomSong(skill.getDuration());
-        CountDownTimer countDownTimer = new CountDownTimer(skill.getDuration(), 1000) {
+        countDownTimer = new CountDownTimer(skill.getDuration(), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 String timerString = "" + String.format("%02d:%02d",
@@ -101,8 +105,7 @@ public class GrossMotorTest {
                     view.setVisibility(View.VISIBLE);
                 }
                 musicPlayer.stopMusic();
-
-
+                grossMotorInteraction.onHideNAButton();
             }
         };
 
@@ -155,8 +158,9 @@ public class GrossMotorTest {
     }
 
 
-
-
-
-
+    public void skipTest(TextView timerView, GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction) {
+        countDownTimer.cancel();
+        timerView.setText("");
+        musicPlayer.stopMusic();
+    }
 }

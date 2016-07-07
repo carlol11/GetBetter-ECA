@@ -31,6 +31,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 public class GrossMotorFragment extends Fragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+    private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
 
     private GrossMotorTest grossMotorTest;
@@ -44,7 +45,6 @@ public class GrossMotorFragment extends Fragment {
 
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
-        Button naButton = (Button) view.findViewById(R.id.NAButton);
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,19 +64,19 @@ public class GrossMotorFragment extends Fragment {
             }
         });
 
-        naButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //set skill to na
-                grossMotorTest.getCurrentSkill().setSkillSkipped();
-                goToNextQuestion();
-            }
-        });
         grossMotorTest = new GrossMotorTest(activity);
         grossMotorTest.makeTest();
         startTest();
 
         return view;
+    }
+
+    public void onNAButtonClick(){
+        TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
+
+        grossMotorTest.getCurrentSkill().setSkillSkipped();
+        goToNextQuestion();
+        grossMotorTest.skipTest(timerView, grossMotorInteraction);
     }
 
     private void startTest(){
@@ -121,6 +121,7 @@ public class GrossMotorFragment extends Fragment {
 
     //Displays the skill as determined by the GrossMotorTest on the screen
     private void displaySkill(final int i){
+        //TODO: Not sure why there are two hideanswerbuttons here
         hideAnswerButtons();
         final CountDownTimer countDownTimer;
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
@@ -139,7 +140,7 @@ public class GrossMotorFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers));
+                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers), grossMotorInteraction);
             }
         };
         hideAnswerButtons();
@@ -168,6 +169,7 @@ public class GrossMotorFragment extends Fragment {
             view.setVisibility(View.GONE);
         }
         answers.setVisibility(View.GONE);
+        grossMotorInteraction.onShowNAButton();
     }
 
     @Override
@@ -179,9 +181,15 @@ public class GrossMotorFragment extends Fragment {
         // the callback interface. If not, it throws an exception
         try {
             fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
+            grossMotorInteraction = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnMonitoringFragmentInteractionListener");
+                    + " must implement OnMonitoringFragmentInteractionListener and OnFragmentInteractionListener");
         }
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onShowNAButton();
+        void onHideNAButton();
     }
 }

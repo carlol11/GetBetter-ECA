@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,12 +34,13 @@ import java.sql.SQLException;
  * Each test are executed through this activity
  */
 
-public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener{
+public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener, GrossMotorFragment.OnFragmentInteractionListener{
     private final static String TAG = "MonitoringMainActivity";
     private Record record;
 
     private TextView ECAText;
     private TextView resultsText;
+    private Button NAButton;
 
     private String[] fragments;
     private int currentFragmentIndex;
@@ -52,6 +54,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
+        NAButton = (Button) findViewById(R.id.NAButton);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -181,8 +184,18 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(final Fragment fragment){
         shortcutForHearingfragment(fragment); //this is only used for testing
+
+        //onclick for NAButton for GrossMotor
+        if(fragment instanceof GrossMotorFragment){
+            NAButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((GrossMotorFragment)fragment).onNAButtonClick();
+                }
+            });
+        }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.monitoringFragmentContainer, fragment, fragments[currentFragmentIndex]);
@@ -208,5 +221,15 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         } else if(hearingFragment != null){
             ecaLayout.setClickable(false);
         }
+    }
+
+    @Override
+    public void onShowNAButton() {
+        NAButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideNAButton() {
+        NAButton.setVisibility(View.GONE);
     }
 }

@@ -72,7 +72,7 @@ public class MainActivity extends ECAActivity{
         if(hasFocus){
             if(!hasSpoken){
                 //Welcome message
-                ecaFragment.sendToECAToSpeak("Hello, I'm Geebee! Are you ready?");
+                ecaFragment.sendToECAToSPeak(R.string.app_intro);
                 hasSpoken = true;
             }
         }

@@ -109,7 +109,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     @Override
     public void setInstructions(int resID) {
         ECAText.setText(resID);
-        ecaFragment.sendToECAToSpeak(getString(resID));
+        ecaFragment.sendToECAToSPeak(resID);
     }
 
     @Override

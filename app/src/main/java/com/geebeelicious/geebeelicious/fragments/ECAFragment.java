@@ -127,4 +127,11 @@ public class ECAFragment extends Fragment {
         Log.d(TAG, "ECA speaks: " + sentence);
         VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
     }
+
+    public void sendToECAToSPeak(int resID){
+        String sentence = getString(resID);
+
+        Log.d(TAG, "ECA speaks: " + sentence);
+        VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
+    }
 }

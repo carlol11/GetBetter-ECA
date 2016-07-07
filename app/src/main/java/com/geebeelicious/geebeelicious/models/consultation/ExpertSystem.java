@@ -99,12 +99,12 @@ public class ExpertSystem {
         ArrayList <ChiefComplaint> chiefComplaints = new ArrayList<>();
 
         chiefComplaints.add(new ChiefComplaint(1, "Do you have fever?"));
-        chiefComplaints.add(new ChiefComplaint(2, "Are you experiencing any pain?"));
-        chiefComplaints.add(new ChiefComplaint(3, "Do you have injury?"));
-        chiefComplaints.add(new ChiefComplaint(4, "Do you have any skin problem?"));
+        chiefComplaints.add(new ChiefComplaint(2, "Are you feeling any pain?"));
+        chiefComplaints.add(new ChiefComplaint(3, "Do you have any injuries?"));
+        chiefComplaints.add(new ChiefComplaint(4, "Do you have a skin problem?"));
         chiefComplaints.add(new ChiefComplaint(5, "Are you having breathing problems?"));
         chiefComplaints.add(new ChiefComplaint(6, "Are you having bowel movement problems?"));
-        chiefComplaints.add(new ChiefComplaint(7, "Are you experiencing general unwellness?"));
+        chiefComplaints.add(new ChiefComplaint(7, "Do you feel unwell?"));
 
         return chiefComplaints;
     }

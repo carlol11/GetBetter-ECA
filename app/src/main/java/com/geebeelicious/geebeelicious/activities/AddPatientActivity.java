@@ -140,8 +140,7 @@ public class AddPatientActivity extends ECAActivity{
                                                 "\nHandedness: " + patient.getHandednessString();
                         questionView.setText(patientDetails);
 
-                        ecaFragment.sendToECAToSpeak("Are the following information correct?");
-
+                        ecaFragment.sendToECAToSPeak(R.string.add_patient_confirm);
                         break;
                     case 5:
                         savePatientToDatabase(patient);

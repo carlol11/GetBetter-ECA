@@ -72,7 +72,7 @@ public class MonitoringConsultationChoice extends ECAActivity{
         super.onWindowFocusChanged(hasFocus);
         if(hasFocus){
             if(!hasSpoken){
-                ecaFragment.sendToECAToSpeak("What would you like to do, monitoring or consultation?");
+                ecaFragment.sendToECAToSPeak(R.string.monitoring_consultation_choice);
                 hasSpoken = true;
             }
         }

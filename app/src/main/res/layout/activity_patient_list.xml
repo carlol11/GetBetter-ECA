@@ -48,7 +48,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Patient"
+                android:text="@string/new_user"
                 android:textSize="35sp"
                 android:padding="15dp"
                 android:layout_marginTop="100dp"
@@ -59,7 +59,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Patient"
+                android:text="@string/select_user"
                 android:textSize="35sp"
                 android:padding="15dp"
                 android:id="@+id/selectPatientButton"

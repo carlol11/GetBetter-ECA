@@ -145,7 +145,7 @@ public class PatientListActivity extends ECAActivity{
         super.onWindowFocusChanged(hasFocus);
         if(hasFocus){
             if(!hasSpoken){
-                ecaFragment.sendToECAToSpeak("Is your name in the list?");
+                ecaFragment.sendToECAToSPeak(R.string.patient_list_instruction);
                 hasSpoken = true;
             }
         }

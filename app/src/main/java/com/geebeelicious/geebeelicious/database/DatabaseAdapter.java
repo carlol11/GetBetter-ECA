@@ -367,6 +367,7 @@ public class DatabaseAdapter {
         values.put(Record.C_HEARING_LEFT, record.getHearingLeft());
         values.put(Record.C_HEARING_RIGHT, record.getHearingRight());
         values.put(Record.C_GROSS_MOTOR, record.getGrossMotor());
+        values.put(Record.C_GROSS_MOTOR_REMARK, record.getGrossMotorRemark());
         values.put(Record.C_FINE_MOTOR_DOMINANT, record.getFineMotorDominant());
         values.put(Record.C_FINE_MOTOR_N_DOMINANT, record.getFineMotorNDominant());
         values.put(Record.C_FINE_MOTOR_HOLD, record.getFineMotorHold());
@@ -440,9 +441,10 @@ public class DatabaseAdapter {
                         c.getDouble(c.getColumnIndex(Record.C_WEIGHT)), c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_LEFT)),
                         c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_RIGHT)), c.getString(c.getColumnIndex(Record.C_COLOR_VISION)),
                         c.getString(c.getColumnIndex(Record.C_HEARING_LEFT)), c.getString(c.getColumnIndex(Record.C_HEARING_RIGHT)),
-                        c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)),
-                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)),
-                        c.getBlob(c.getColumnIndex(Record.C_VACCINATION)), c.getBlob(c.getColumnIndex(Record.C_PATIENT_PICTURE)));
+                        c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getString(c.getColumnIndex(Record.C_GROSS_MOTOR_REMARK)),
+                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)),
+                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)), c.getBlob(c.getColumnIndex(Record.C_VACCINATION)),
+                        c.getBlob(c.getColumnIndex(Record.C_PATIENT_PICTURE)));
 
                 record.printRecord();
                 records.add(record);

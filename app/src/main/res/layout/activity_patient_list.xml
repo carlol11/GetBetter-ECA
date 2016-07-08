@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/relativeLayoutECA"
+        android:id="@+id/linearLayoutECA"
         style="@style/DefaultBackground">
 
         <FrameLayout
@@ -48,7 +48,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Patient"
+                android:text="@string/new_user"
                 android:textSize="35sp"
                 android:padding="15dp"
                 android:layout_marginTop="100dp"
@@ -59,7 +59,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Patient"
+                android:text="@string/select_user"
                 android:textSize="35sp"
                 android:padding="15dp"
                 android:id="@+id/selectPatientButton"
@@ -79,14 +79,14 @@
         android:hint="@string/search_patients_hint"
         android:textSize="25sp"
         android:inputType="text"
-        android:layout_toStartOf="@+id/relativeLayoutECA" />
+        android:layout_toStartOf="@+id/linearLayoutECA" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:showDividers="middle"
-        android:layout_toStartOf="@+id/relativeLayoutECA"
+        android:layout_toStartOf="@+id/linearLayoutECA"
         android:layout_below="@+id/search_input">
 
         <ListView

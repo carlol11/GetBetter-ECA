@@ -31,11 +31,13 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 public class GrossMotorFragment extends Fragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+    private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
 
     private GrossMotorTest grossMotorTest;
     private View view;
 
+    private CountDownTimer countDownTimer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +46,6 @@ public class GrossMotorFragment extends Fragment {
 
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
-        Button naButton = (Button) view.findViewById(R.id.NAButton);
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +65,6 @@ public class GrossMotorFragment extends Fragment {
             }
         });
 
-        naButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //set skill to na
-                grossMotorTest.getCurrentSkill().setSkillSkipped();
-                goToNextQuestion();
-            }
-        });
         grossMotorTest = new GrossMotorTest(activity);
         grossMotorTest.makeTest();
         startTest();
@@ -79,32 +72,28 @@ public class GrossMotorFragment extends Fragment {
         return view;
     }
 
-    private void startTest(){
-        grossMotorTest.setCurrentSkill(0);
-        displaySkill(0);
+    public void onNAButtonClick(){
+        TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
+
+        if (countDownTimer != null){
+            countDownTimer.cancel();
+        }
+        grossMotorTest.getCurrentSkill().setSkillSkipped();
+        goToNextQuestion();
+        grossMotorTest.skipTest(timerView, grossMotorInteraction);
     }
 
-    private void endTest(){
-        String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
+    public void onRemarkSaveButtonClicked() {
         TextView countDownTV = (TextView)view.findViewById(R.id.countdownTV);
         ImageView countDownIV = (ImageView)view.findViewById(R.id.grossMotorIV);
-        CountDownTimer timer;
 
-        Record record = fragmentInteraction.getRecord();
-
-
-        grossMotorTest.endTest();
-        hideAnswerButtons();
-
-        fragmentInteraction.setResults(resultString);
-
-        record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
+        grossMotorInteraction.onHideRemarkLayout();
 
         countDownTV.setVisibility(View.GONE);
         countDownIV.setVisibility(View.VISIBLE);
         countDownIV.setImageResource(R.drawable.wait_for_next_test);
 
-        timer = new CountDownTimer(6000, 1000) {
+        CountDownTimer timer = new CountDownTimer(6000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -116,13 +105,32 @@ public class GrossMotorFragment extends Fragment {
             }
         };
         timer.start();
+    }
+    private void startTest(){
+        grossMotorTest.setCurrentSkill(0);
+        displaySkill(0);
+    }
 
+    private void endTest(){
+        String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
+        Record record = fragmentInteraction.getRecord();
+
+
+        grossMotorTest.endTest();
+        hideAnswerButtons();
+
+        fragmentInteraction.setResults(resultString);
+
+        record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
+
+        grossMotorInteraction.onHideNAButton();
+        grossMotorInteraction.onShowRemarkLayout();
     }
 
     //Displays the skill as determined by the GrossMotorTest on the screen
     private void displaySkill(final int i){
+        //TODO: Not sure why there are two hideanswerbuttons here
         hideAnswerButtons();
-        final CountDownTimer countDownTimer;
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
         
@@ -139,7 +147,7 @@ public class GrossMotorFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers));
+                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers), grossMotorInteraction);
             }
         };
         hideAnswerButtons();
@@ -168,6 +176,7 @@ public class GrossMotorFragment extends Fragment {
             view.setVisibility(View.GONE);
         }
         answers.setVisibility(View.GONE);
+        grossMotorInteraction.onShowNAButton();
     }
 
     @Override
@@ -179,9 +188,17 @@ public class GrossMotorFragment extends Fragment {
         // the callback interface. If not, it throws an exception
         try {
             fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
+            grossMotorInteraction = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnMonitoringFragmentInteractionListener");
+                    + " must implement OnMonitoringFragmentInteractionListener and OnFragmentInteractionListener");
         }
+    }
+
+    public interface OnFragmentInteractionListener extends OnMonitoringFragmentInteractionListener {
+        void onShowNAButton();
+        void onHideNAButton();
+        void onShowRemarkLayout();
+        void onHideRemarkLayout();
     }
 }

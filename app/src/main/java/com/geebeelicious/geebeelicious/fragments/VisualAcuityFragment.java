@@ -90,8 +90,8 @@ public class VisualAcuityFragment extends Fragment {
         //distance calculator
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
-        fragmentInteraction.setInstructions("Distance yourself " +  String.format("%.2f", distance) +
-                " meters away from the tablet. " + getString(R.string.visualAcuity_instruction_left));
+        fragmentInteraction.setInstructions("Move " +  String.format("%.2f", distance) +
+                " meters away from the tablet. Then " + getString(R.string.visualAcuity_instruction_left) + " Then tell me what you see.");
         record = fragmentInteraction.getRecord();
     }
 

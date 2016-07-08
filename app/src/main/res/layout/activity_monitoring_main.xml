@@ -8,15 +8,18 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:keepScreenOn="true"
-    tools:context=".activities.MonitoringMainActivity">
+    tools:context=".activities.MonitoringMainActivity"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    >
 
-    <RelativeLayout
-        android:orientation="horizontal"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="@dimen/activity_eca_small"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/relativeLayoutECA"
+        android:id="@+id/linearLayoutECA"
         style="@style/DefaultBackground">
 
         <FrameLayout
@@ -24,9 +27,7 @@
             android:layout_height="@dimen/activity_eca_small"
             android:id="@+id/placeholderECA"
             android:longClickable="false"
-            style="@style/ECAPlaceholder"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            style="@style/ECAPlaceholder"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -35,9 +36,7 @@
             android:id="@+id/placeholderECAText"
             android:paddingTop="10dp"
             android:padding="5dp"
-            style="@style/DefaultBackground"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/placeholderECA"/>
+            style="@style/DefaultBackground"/>
 
         <TextView
             style="@style/DefaultBackground"
@@ -46,18 +45,71 @@
             android:text="Placeholder for Results"
             android:id="@+id/placeholderResults"
             android:paddingTop="10dp"
-            android:padding="5dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/placeholderECAText" />
+            android:padding="5dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/remarkLayout"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/remarks_or_comments"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:id="@+id/questionMonitoringConsultationChoice"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|left"
+                android:inputType="textCapSentences"
+                android:ems="10"
+                android:id="@+id/remarkText"
+                android:layout_below="@+id/questionMonitoringConsultationChoice"
+                android:layout_alignParentStart="true"
+                android:layout_above="@+id/saveButton"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="@string/save"
+                android:id="@+id/saveButton"
+                style="@style/TestButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:visibility="visible"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="@string/NA"
+                android:id="@+id/NAButton"
+                style="@style/TestButton"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/monitoringFragmentContainer"
-        android:layout_toStartOf="@+id/relativeLayoutECA"
+        android:layout_toStartOf="@+id/linearLayoutECA"
         tools:layout="@layout/fragment_monitoring" />
 
 </RelativeLayout>

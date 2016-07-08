@@ -83,34 +83,17 @@ public class GrossMotorFragment extends Fragment {
         grossMotorTest.skipTest(timerView, grossMotorInteraction);
     }
 
-    private void startTest(){
-        grossMotorTest.setCurrentSkill(0);
-        displaySkill(0);
-    }
-
-    private void endTest(){
-        String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
+    public void onRemarkSaveButtonClicked() {
         TextView countDownTV = (TextView)view.findViewById(R.id.countdownTV);
         ImageView countDownIV = (ImageView)view.findViewById(R.id.grossMotorIV);
-        CountDownTimer timer;
 
-        Record record = fragmentInteraction.getRecord();
-
-
-        grossMotorTest.endTest();
-        hideAnswerButtons();
-
-        fragmentInteraction.setResults(resultString);
-
-        record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
+        grossMotorInteraction.onHideRemarkLayout();
 
         countDownTV.setVisibility(View.GONE);
         countDownIV.setVisibility(View.VISIBLE);
         countDownIV.setImageResource(R.drawable.wait_for_next_test);
 
-        grossMotorInteraction.onHideNAButton();
-
-        timer = new CountDownTimer(6000, 1000) {
+        CountDownTimer timer = new CountDownTimer(6000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -122,7 +105,26 @@ public class GrossMotorFragment extends Fragment {
             }
         };
         timer.start();
+    }
+    private void startTest(){
+        grossMotorTest.setCurrentSkill(0);
+        displaySkill(0);
+    }
 
+    private void endTest(){
+        String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
+        Record record = fragmentInteraction.getRecord();
+
+
+        grossMotorTest.endTest();
+        hideAnswerButtons();
+
+        fragmentInteraction.setResults(resultString);
+
+        record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
+
+        grossMotorInteraction.onHideNAButton();
+        grossMotorInteraction.onShowRemarkLayout();
     }
 
     //Displays the skill as determined by the GrossMotorTest on the screen
@@ -193,8 +195,10 @@ public class GrossMotorFragment extends Fragment {
         }
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener extends OnMonitoringFragmentInteractionListener {
         void onShowNAButton();
         void onHideNAButton();
+        void onShowRemarkLayout();
+        void onHideRemarkLayout();
     }
 }

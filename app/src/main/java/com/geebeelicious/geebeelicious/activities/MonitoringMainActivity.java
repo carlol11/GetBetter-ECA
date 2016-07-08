@@ -1,12 +1,16 @@
 package com.geebeelicious.geebeelicious.activities;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,11 +21,9 @@ import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
-import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.HearingMainFragment;
-import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
@@ -189,10 +191,33 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
         //onclick for NAButton for GrossMotor
         if(fragment instanceof GrossMotorFragment){
+            Button saveButton = (Button) findViewById(R.id.saveButton);
+            final EditText remarkText = (EditText) findViewById(R.id.remarkText);
+
             NAButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((GrossMotorFragment)fragment).onNAButtonClick();
+                }
+            });
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String remark = remarkText.getText().toString();
+                    record.setGrossMotorRemark(remark);
+                    setResults("Remarks:" + remark);
+                    ((GrossMotorFragment)fragment).onRemarkSaveButtonClicked();
+                }
+            });
+
+            remarkText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        hideKeyboard(v);
+                    }
                 }
             });
         }
@@ -202,12 +227,17 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         transaction.commit();
     }
 
+    private void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     private void shortcutForHearingfragment(Fragment newFragment) {
         /*******
          * TODO: [Testing Code] Remove this if no longer testing.
          * this is for the shortcut for the hearing fragment
          */
-        final RelativeLayout ecaLayout = (RelativeLayout)findViewById(R.id.relativeLayoutECA);
+        final LinearLayout ecaLayout = (LinearLayout)findViewById(R.id.linearLayoutECA);
         Fragment hearingFragment = fragmentManager.findFragmentByTag(HearingMainFragment.class.getName());
 
         if(newFragment instanceof HearingMainFragment){
@@ -231,5 +261,17 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     @Override
     public void onHideNAButton() {
         NAButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onShowRemarkLayout() {
+        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
+        remarkLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideRemarkLayout() {
+        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
+        remarkLayout.setVisibility(View.GONE);
     }
 }

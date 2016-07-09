@@ -26,8 +26,6 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 public class ColorVisionFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
-    private ImageView chartView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,9 +42,6 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         ImageButton option5 = (ImageButton) view.findViewById(R.id.cvt_option5);
         final ImageButton[] buttonList = {option1, option2, option3, option4, option5};
         final IshiharaHelper ishiharaHelper = new IshiharaHelper((ImageView) view.findViewById(R.id.ishiharaPlate), buttonList);
-
-        chartView = (ImageView)view.findViewById(R.id.ishiharaPlate);
-
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,8 +116,6 @@ public class ColorVisionFragment extends MonitoringTestFragment {
 
     //Sets view for end of test
     private void endTest(ImageButton[] buttonList){
-        CountDownTimer timer;
-
         for(ImageButton i : buttonList){
             i.setVisibility(View.GONE);
             i.setEnabled(false);

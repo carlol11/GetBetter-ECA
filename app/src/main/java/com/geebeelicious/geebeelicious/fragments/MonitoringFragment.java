@@ -117,9 +117,6 @@ public class MonitoringFragment extends Fragment {
         monitoringView.setVisibility(View.GONE);
         Button saveButton = (Button)view.findViewById(R.id.saveAnswerButton);
         saveButton.setVisibility(View.INVISIBLE);
-        ImageView imageView = (ImageView)view.findViewById(R.id.monitoringIV);
-        imageView.setVisibility(View.VISIBLE);
-        imageView.setImageResource(R.drawable.wait_for_next_test);
 
         fragmentInteraction.doneFragment();
     }

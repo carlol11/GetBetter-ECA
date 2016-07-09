@@ -20,17 +20,6 @@
             android:id="@+id/countdownTV"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/grossMotorIV"
-            android:layout_centerInParent="true"/>
-
     </RelativeLayout>
 
     <LinearLayout

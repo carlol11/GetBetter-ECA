@@ -163,7 +163,6 @@ public class FineMotorFragment extends MonitoringTestFragment {
             record.setFineMotorHold(result[2] ? 0: 1);
             fragmentInteraction.setResults(resultString);
             imageViewPathToTrace.setBackgroundColor(Color.WHITE);
-            imageViewPathToTrace.setImageResource(R.drawable.wait_for_next_test);
             hideAnswerButtons();
         }
 

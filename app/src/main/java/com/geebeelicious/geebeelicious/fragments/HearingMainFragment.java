@@ -73,8 +73,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
             public void run() {
                 yesButton.setVisibility(View.GONE);
                 yesButton.setEnabled(false);
-                ImageView imageView = (ImageView)view.findViewById(R.id.hearingTestImageView);
-                imageView.setImageResource(R.drawable.wait_for_next_test);
+
                 fragmentInteraction.setResults(hearingTest.getResults());
             }
         };

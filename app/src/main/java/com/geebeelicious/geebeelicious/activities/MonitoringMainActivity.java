@@ -132,29 +132,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     @Override
-    public void doneFragment(){
-        if((getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex])) instanceof MonitoringTestFragment){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    CountDownTimer timer;
-                    maximizeECAFragment();
-
-                    timer = new CountDownTimer(6000, 1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            minimizeECAFragment();
-                            callNextFragment();
-                        }
-                    };
-                    timer.start();
-                }
-            });
+    public void doneFragment() { //gets called by the fragments when done
+        final Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+        if (currentFragment instanceof MonitoringTestFragment) {
+            ((MonitoringTestFragment) currentFragment).hideFragmentMainView(); //hide for cleaner transition
+            runTransition();
+        } else if(doesNextHasIntro()){
+            runTransition();
         } else {
             callNextFragment();
         }
@@ -317,6 +301,42 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private void minimizeECAFragment(){
         ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.activity_eca_small),
                 getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
+    }
+
+    private void runTransition() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CountDownTimer timer;
+                maximizeECAFragment();
+
+                timer = new CountDownTimer(6000, 1000) { //timer for the transition
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        minimizeECAFragment();
+                        callNextFragment();
+                    }
+                };
+                timer.start();
+            }
+        });
+    }
+
+    private boolean doesNextHasIntro() {
+        try {
+            if(currentFragmentIndex + 1 < fragments.length &&
+                    MonitoringTestFragment.class.isAssignableFrom(Class.forName(fragments[currentFragmentIndex+1]))){
+                return true;
+            }
+        } catch (ClassNotFoundException e) {
+            Log.e(TAG, "Class not found", e);
+        }
+        return false;
     }
 
     //TODO: Erase this if di na kelangan

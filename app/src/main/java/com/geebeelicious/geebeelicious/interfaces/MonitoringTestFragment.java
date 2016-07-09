@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.interfaces;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 /**
  * Created by mgmalana.
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 public abstract class MonitoringTestFragment extends Fragment{
     protected int introStringResource;
     protected int endStringResource;
+    protected View view;
 
     public int getIntroStringResource() {
         return introStringResource;
@@ -19,11 +21,7 @@ public abstract class MonitoringTestFragment extends Fragment{
         return endStringResource;
     }
 
-    public void setIntroStringResource(int introStringResource) {
-        this.introStringResource = introStringResource;
-    }
-
-    public void setEndStringResource(int endStringResource) {
-        this.endStringResource = endStringResource;
+    public void hideFragmentMainView(){
+        view.setVisibility(View.GONE);
     }
 }

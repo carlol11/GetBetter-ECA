@@ -38,7 +38,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_hearing_main, container, false);
+        view =  inflater.inflate(R.layout.fragment_hearing_main, container, false);
 
         this.introStringResource = R.string.hearing_intro;
         this.endStringResource = R.string.hearing_end_test;

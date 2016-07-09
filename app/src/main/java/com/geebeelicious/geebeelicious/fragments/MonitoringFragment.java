@@ -33,7 +33,6 @@ public class MonitoringFragment extends MonitoringTestFragment {
     private TextView questionView;
     private NumberPicker numberPicker;
     private TextView unitView;
-    private View view;
 
     private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};

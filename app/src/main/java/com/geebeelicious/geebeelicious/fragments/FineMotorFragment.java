@@ -34,9 +34,6 @@ public class FineMotorFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     private static final String TAG = "FineMotorActivity";
-
-    private View view;
-
     private ImageView imageViewPathToTrace;
 
     //Set the color for the start and end of the path

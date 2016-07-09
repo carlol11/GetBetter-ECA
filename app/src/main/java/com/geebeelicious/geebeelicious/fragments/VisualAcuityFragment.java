@@ -39,7 +39,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
+        view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
 
         this.introStringResource = R.string.visualAcuity_intro;
         this.endStringResource = R.string.visualAcuity_end_test;

@@ -35,8 +35,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private Activity activity;
 
     private GrossMotorTest grossMotorTest;
-    private View view;
-
     private CountDownTimer countDownTimer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,8 +87,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     public void onRemarkSaveButtonClicked() {
         TextView countDownTV = (TextView)view.findViewById(R.id.countdownTV);
         grossMotorInteraction.onHideRemarkLayout();
-
-        countDownTV.setVisibility(View.GONE);
         fragmentInteraction.doneFragment();
     }
     private void startTest(){

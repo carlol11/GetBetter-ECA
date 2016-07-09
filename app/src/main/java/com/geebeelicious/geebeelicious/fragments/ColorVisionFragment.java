@@ -30,7 +30,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_color_vision, container, false);
+    iew view = inflater.inflate(R.layout.fragment_color_vision, container, false);
 
         this.introStringResource = R.string.colorVision_intro;
         this.endStringResource = R.string.colorVision_end_test;

@@ -29,6 +29,7 @@
     <string name="title_activity_monitoring">MonitoringActivity</string>
     <string name="centimeters">cm</string>
     <string name="kilograms">kg</string>
+    <string name="remarks_or_comments">Remarks</string>
 
     <!-- Buttons -->
     <string name="Yes">Yes</string>
@@ -73,7 +74,5 @@
     <string name="finemotor_path2_2">Help the lion go to the his friends. Use the pen with your dominant hand to trace the path.</string>
     <string name="finemotor_end_test">Fantastic. Thanks for your help</string>
     <string name="monitoring_end">You\'re check up is done</string>
-    <string name="remarks_or_comments">Remarks</string>
-
 
 </resources>

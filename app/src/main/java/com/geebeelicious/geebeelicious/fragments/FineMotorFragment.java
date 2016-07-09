@@ -160,21 +160,9 @@ public class FineMotorFragment extends MonitoringTestFragment {
             record.setFineMotorHold(result[2] ? 0: 1);
             fragmentInteraction.setResults(resultString);
             imageViewPathToTrace.setBackgroundColor(Color.WHITE);
-            hideAnswerButtons();
         }
 
         fragmentInteraction.doneFragment();
-    }
-
-    private void hideAnswerButtons(){
-        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutAnswers);
-        for (int j = 0; j<answers.getChildCount(); j++){
-            View view = answers.getChildAt(j);
-            view.setEnabled(false);
-            view.setVisibility(View.INVISIBLE);
-        }
-        answers.setVisibility(View.INVISIBLE);
-
     }
 
     private void showAnswerButtons(){

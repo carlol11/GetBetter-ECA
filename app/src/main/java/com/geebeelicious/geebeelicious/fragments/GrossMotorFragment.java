@@ -85,7 +85,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     }
 
     public void onRemarkSaveButtonClicked() {
-        TextView countDownTV = (TextView)view.findViewById(R.id.countdownTV);
         grossMotorInteraction.onHideRemarkLayout();
         fragmentInteraction.doneFragment();
     }

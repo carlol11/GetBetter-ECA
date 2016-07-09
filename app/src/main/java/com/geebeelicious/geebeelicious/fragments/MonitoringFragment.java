@@ -113,11 +113,6 @@ public class MonitoringFragment extends MonitoringTestFragment {
 
     private void endMonitoring(){
         questionsCounter = 0;
-        RelativeLayout monitoringView = (RelativeLayout)getActivity().findViewById(R.id.monitoringQuestionView);
-        monitoringView.setVisibility(View.GONE);
-        Button saveButton = (Button)view.findViewById(R.id.saveAnswerButton);
-        saveButton.setVisibility(View.INVISIBLE);
-
         fragmentInteraction.doneFragment();
     }
 }

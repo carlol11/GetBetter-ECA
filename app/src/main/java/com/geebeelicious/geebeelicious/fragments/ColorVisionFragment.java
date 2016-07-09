@@ -30,7 +30,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-    iew view = inflater.inflate(R.layout.fragment_color_vision, container, false);
+        view = inflater.inflate(R.layout.fragment_color_vision, container, false);
 
         this.introStringResource = R.string.colorVision_intro;
         this.endStringResource = R.string.colorVision_end_test;
@@ -47,7 +47,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(0);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -55,7 +55,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(1);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -63,7 +63,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(2);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -71,7 +71,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(3);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -79,7 +79,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(4);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -91,13 +91,13 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     }
 
     //Allows test to either go to the next question and save results if the test is done
-    private void updateResults(IshiharaHelper ishiharaHelper, ImageButton[] buttonList){
+    private void updateResults(IshiharaHelper ishiharaHelper){
         ishiharaHelper.goToNextQuestion();
         if(ishiharaHelper.isDone()){
             Record record = fragmentInteraction.getRecord();
             record.setColorVision(ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
-            endTest(buttonList);
+            fragmentInteraction.doneFragment();
         }
     }
 
@@ -112,16 +112,6 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         }
         fragmentInteraction.setResults(resultString);
 
-    }
-
-    //Sets view for end of test
-    private void endTest(ImageButton[] buttonList){
-        for(ImageButton i : buttonList){
-            i.setVisibility(View.GONE);
-            i.setEnabled(false);
-        }
-
-        fragmentInteraction.doneFragment();
     }
 
     @Override

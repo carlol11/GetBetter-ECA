@@ -48,7 +48,6 @@ public class MonitoringFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_monitoring, container, false);
 
-
         questionView = (TextView)view.findViewById(R.id.questionView);
         unitView = (TextView)view.findViewById(R.id.unitView);
         numberPicker = (NumberPicker)view.findViewById(R.id.monitoringNumberPicker);

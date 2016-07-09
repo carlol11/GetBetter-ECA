@@ -4,7 +4,6 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import java.util.concurrent.TimeUnit;
@@ -29,7 +29,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * to perform the test.
  */
 
-public class GrossMotorFragment extends Fragment {
+public class GrossMotorFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
@@ -43,6 +43,9 @@ public class GrossMotorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_gross_motor, container, false);
+
+        this.introStringResource = R.string.grossmotor_intro;
+        this.endStringResource = R.string.grossmotor_end_test;
 
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);

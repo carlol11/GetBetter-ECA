@@ -4,7 +4,6 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
@@ -27,7 +27,7 @@ import com.geebeelicious.geebeelicious.models.visualacuity.VisualAcuityResult;
  * to perform the visual acuity test.
  */
 
-public class VisualAcuityFragment extends Fragment {
+public class VisualAcuityFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Record record;
 

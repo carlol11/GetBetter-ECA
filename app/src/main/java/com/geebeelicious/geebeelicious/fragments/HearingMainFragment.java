@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * to perform the hearing test.
  */
 
-public class HearingMainFragment extends Fragment {
+public class HearingMainFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     private ArrayList<Thread> threads;
@@ -39,6 +39,10 @@ public class HearingMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view =  inflater.inflate(R.layout.fragment_hearing_main, container, false);
+
+        this.introStringResource = R.string.hearing_intro;
+        this.endStringResource = R.string.hearing_end_test;
+
         AudioManager audioManager = (AudioManager)activity.getSystemService(activity.AUDIO_SERVICE);
 
         hearingTest = new HearingTest();

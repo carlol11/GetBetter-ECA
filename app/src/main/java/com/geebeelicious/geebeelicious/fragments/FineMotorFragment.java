@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
@@ -30,9 +30,8 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * to perform the test.
  */
 
-public class FineMotorFragment extends Fragment {
+public class FineMotorFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
-
 
     private static final String TAG = "FineMotorActivity";
 
@@ -55,6 +54,9 @@ public class FineMotorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_fine_motor, container, false);
+
+        this.introStringResource = R.string.finemotor_intro;
+        this.endStringResource = R.string.finemotor_end_test;
 
         imageViewPathToTrace = (ImageView) view.findViewById(R.id.imageViewPathToTrace);
 

@@ -4,7 +4,6 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
@@ -23,7 +23,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * the color vision test. The activity utilizes the
  * IshiharaHelper class to perform the test.
  * */
-public class ColorVisionFragment extends Fragment {
+public class ColorVisionFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     private ImageView chartView;
@@ -33,6 +33,9 @@ public class ColorVisionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_color_vision, container, false);
+
+        this.introStringResource = R.string.colorVision_intro;
+        this.endStringResource = R.string.colorVision_end_test;
 
         ImageButton option1 = (ImageButton) view.findViewById(R.id.cvt_option1);
         ImageButton option2 = (ImageButton) view.findViewById(R.id.cvt_option2);

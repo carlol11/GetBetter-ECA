@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
@@ -28,7 +29,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * height and weight.
  */
 
-public class MonitoringFragment extends Fragment {
+public class MonitoringFragment extends MonitoringTestFragment {
     private TextView questionView;
     private NumberPicker numberPicker;
     private TextView unitView;

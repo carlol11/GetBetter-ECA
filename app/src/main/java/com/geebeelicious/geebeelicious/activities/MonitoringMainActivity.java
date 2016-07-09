@@ -24,6 +24,7 @@ import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
@@ -132,27 +133,31 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void doneFragment(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CountDownTimer timer;
-                maximizeECAFragment();
+        if((getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex])) instanceof MonitoringTestFragment){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    CountDownTimer timer;
+                    maximizeECAFragment();
 
-                timer = new CountDownTimer(6000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+                    timer = new CountDownTimer(6000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFinish() {
-                        minimizeECAFragment();
-                        callNextFragment();
-                    }
-                };
-                timer.start();
-            }
-        });
+                        @Override
+                        public void onFinish() {
+                            minimizeECAFragment();
+                            callNextFragment();
+                        }
+                    };
+                    timer.start();
+                }
+            });
+        } else {
+            callNextFragment();
+        }
     }
 
     @Override

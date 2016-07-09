@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
@@ -45,6 +48,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private TextView ECAText;
     private TextView resultsText;
     private Button NAButton;
+    private LinearLayout ecaLinearLayout;
+    private FrameLayout ecaFragmentLayout;
 
     private String[] fragments;
     private int currentFragmentIndex;
@@ -59,6 +64,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         NAButton = (Button) findViewById(R.id.NAButton);
+        ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
+        ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -126,22 +133,27 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void doneFragment(){
-        if(currentFragmentIndex + 1 >= fragments.length){
-            DatabaseAdapter db = new DatabaseAdapter(this);
+        final FrameLayout testContainer = (FrameLayout) findViewById(R.id.monitoringFragmentContainer);
+        CountDownTimer timer;
 
-            try {
-                db.openDatabaseForRead();
-                record.printRecord();
+        testContainer.setVisibility(View.GONE);
+        maximizeECAFragment();
 
-                db.insertRecord(record);
-            } catch (SQLException e) {
-                Log.e(TAG, "Database error", e);
+        timer = new CountDownTimer(6000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
             }
-            finish();
-        } else {
-            clearTextViews();
-            nextFragment();
-        }
+
+            @Override
+            public void onFinish() {
+                minimizeECAFragment();
+                callNextFragment();
+                testContainer.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
+
     }
 
     @Override
@@ -154,6 +166,28 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             default:
                 return 2;
         }
+    }
+
+    @Override
+    public void onShowNAButton() {
+        NAButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideNAButton() {
+        NAButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onShowRemarkLayout() {
+        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
+        remarkLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideRemarkLayout() {
+        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
+        remarkLayout.setVisibility(View.GONE);
     }
 
     private void clearTextViews() {
@@ -255,25 +289,56 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
-    @Override
-    public void onShowNAButton() {
-        NAButton.setVisibility(View.VISIBLE);
+    private void callNextFragment(){
+        if(currentFragmentIndex + 1 >= fragments.length){
+            DatabaseAdapter db = new DatabaseAdapter(this);
+
+            try {
+                db.openDatabaseForRead();
+                record.printRecord();
+
+                db.insertRecord(record);
+            } catch (SQLException e) {
+                Log.e(TAG, "Database error", e);
+            }
+            finish();
+        } else {
+            clearTextViews();
+            nextFragment();
+        }
     }
 
-    @Override
-    public void onHideNAButton() {
-        NAButton.setVisibility(View.GONE);
+    private void maximizeECAFragment(){
+        View parent = (View)ecaLinearLayout.getParent();
+        final int mToHeight = parent.getHeight();
+        final int mToWidth = parent.getWidth();
+        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
     }
 
-    @Override
-    public void onShowRemarkLayout() {
-        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
-        remarkLayout.setVisibility(View.VISIBLE);
+    private void minimizeECAFragment(){
+        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.activity_eca_small),
+                getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
-    @Override
-    public void onHideRemarkLayout() {
-        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
-        remarkLayout.setVisibility(View.GONE);
-    }
+    //TODO: Erase this if di na kelangan
+//    private void resizeView(final View v, final int toHeight, final int toWidth) {
+//        final int fromWidth = v.getWidth();
+//        final int fromHeight = v.getHeight();
+//        Animation animation = new Animation() {
+//            @Override
+//            protected void applyTransformation(float interpolatedTime, Transformation t) {
+//                float height = (toHeight - fromWidth) * interpolatedTime + fromWidth;
+//                float width = (toWidth - fromHeight) * interpolatedTime + fromHeight; //also used by the childView
+//                ViewGroup.LayoutParams q = v.getLayoutParams();
+//
+//                q.width = (int) width;
+//                q.height = (int) height;
+//
+//                v.requestLayout();
+//            }
+//        };
+//        animation.setDuration(500);
+//        v.startAnimation(animation);
+//    }
+
 }

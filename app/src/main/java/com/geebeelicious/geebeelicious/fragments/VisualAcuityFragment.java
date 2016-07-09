@@ -41,6 +41,9 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
 
+        this.introStringResource = R.string.visualAcuity_intro;
+        this.endStringResource = R.string.visualAcuity_end_test;
+
         chartView = (ImageView)view.findViewById(R.id.chartLine);
         final ChartHelper chartHelper = new ChartHelper(chartView);
         yesButton = (Button) view.findViewById(R.id.YesButton);
@@ -96,27 +99,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     }
 
     private void endTest(){
-        CountDownTimer timer;
-
-        yesButton.setVisibility(View.GONE);
-        noButton.setVisibility(View.GONE);
-        yesButton.setEnabled(false);
-        noButton.setEnabled(false);
-
-        chartView.setImageResource(R.drawable.wait_for_next_test);
-
-        timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
+        fragmentInteraction.doneFragment();
     }
 
     private void updateResults(ChartHelper chartHelper){

@@ -149,7 +149,6 @@ public class FineMotorFragment extends MonitoringTestFragment {
     private void sendResults(){
         String resultString ;
         boolean[] result = fineMotorHelper.getResults();
-        CountDownTimer timer;
 
         if(isTestOngoing){ //this is to avoid double clicking
             isTestOngoing = false;
@@ -168,31 +167,7 @@ public class FineMotorFragment extends MonitoringTestFragment {
             hideAnswerButtons();
         }
 
-
-
-        timer = new CountDownTimer(10000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            private int getIntResults(String result){
-                switch(result){
-                    case "Pass":
-                        return 0;
-                    case "Fail":
-                        return 1;
-                    default:
-                        return 2;
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
+        fragmentInteraction.doneFragment();
     }
 
     private void hideAnswerButtons(){

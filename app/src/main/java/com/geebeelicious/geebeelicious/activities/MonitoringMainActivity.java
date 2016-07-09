@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
@@ -133,27 +132,27 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void doneFragment(){
-        final FrameLayout testContainer = (FrameLayout) findViewById(R.id.monitoringFragmentContainer);
-        CountDownTimer timer;
-
-        testContainer.setVisibility(View.GONE);
-        maximizeECAFragment();
-
-        timer = new CountDownTimer(6000, 1000) {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onTick(long millisUntilFinished) {
+            public void run() {
+                CountDownTimer timer;
+                maximizeECAFragment();
 
+                timer = new CountDownTimer(6000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        minimizeECAFragment();
+                        callNextFragment();
+                    }
+                };
+                timer.start();
             }
-
-            @Override
-            public void onFinish() {
-                minimizeECAFragment();
-                callNextFragment();
-                testContainer.setVisibility(View.VISIBLE);
-            }
-        };
-        timer.start();
-
+        });
     }
 
     @Override
@@ -191,13 +190,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     private void clearTextViews() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ECAText.setText("Placeholder for Instructions");
-                resultsText.setText("Placeholder for Results");
-            }
-        });
+        ECAText.setText("Placeholder for Instructions");
+        resultsText.setText("Placeholder for Results");
     }
 
     private void nextFragment(){

@@ -98,10 +98,6 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         record = fragmentInteraction.getRecord();
     }
 
-    private void endTest(){
-        fragmentInteraction.doneFragment();
-    }
-
     private void updateResults(ChartHelper chartHelper){
         VisualAcuityResult rightEyeResult = null;
         VisualAcuityResult leftEyeResult = null;
@@ -120,7 +116,8 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             chartHelper.setIsLeftTested();
             displayResults(leftEyeResult);
             record.setVisualAcuityLeft(leftEyeResult.getVisualAcuity());
-            endTest();
+
+            fragmentInteraction.doneFragment();
         }
     }
 

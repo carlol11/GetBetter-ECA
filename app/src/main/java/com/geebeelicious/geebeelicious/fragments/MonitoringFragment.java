@@ -121,17 +121,6 @@ public class MonitoringFragment extends Fragment {
         imageView.setVisibility(View.VISIBLE);
         imageView.setImageResource(R.drawable.wait_for_next_test);
 
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
+        fragmentInteraction.doneFragment();
     }
 }

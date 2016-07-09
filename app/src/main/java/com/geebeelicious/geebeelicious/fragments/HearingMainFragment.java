@@ -121,11 +121,6 @@ public class HearingMainFragment extends MonitoringTestFragment {
                     activity.runOnUiThread(backgroundFlash);
                     activity.runOnUiThread(disableTest);
                     endTest();
-                    try {
-                        Thread.sleep(6000);
-                    } catch (InterruptedException e) {
-
-                    }
                     fragmentInteraction.doneFragment();
                 }
             }

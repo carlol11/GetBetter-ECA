@@ -19,6 +19,10 @@ import com.geebeelicious.geebeelicious.models.visualacuity.ChartHelper;
 import com.geebeelicious.geebeelicious.models.visualacuity.DistanceCalculator;
 import com.geebeelicious.geebeelicious.models.visualacuity.VisualAcuityResult;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
 /**
  * Created by Kate.
  * The VisualAcuityFragment serves as the fragment
@@ -42,7 +46,7 @@ public class VisualAcuityFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
 
         chartView = (ImageView)view.findViewById(R.id.chartLine);
-        final ChartHelper chartHelper = new ChartHelper(chartView);
+        final ChartHelper chartHelper = new ChartHelper(chartView, getChartPreference());
         yesButton = (Button) view.findViewById(R.id.YesButton);
         noButton = (Button) view.findViewById(R.id.NoButton);
 
@@ -147,6 +151,23 @@ public class VisualAcuityFragment extends Fragment {
                 result.getLineNumber() + "\nVisual Acuity: " +
                 result.getVisualAcuity());
         fragmentInteraction.setResults(resultString);
+    }
+
+    private int getChartPreference(){
+        int chartPreference = 0; //default is 0 for Snellen chart
+        byte[] byteArray = new byte[4];
+        try{
+            FileInputStream fis = getActivity().getApplicationContext().openFileInput("VisualAcuityChartPreferences");
+            fis.read(byteArray, 0, 4);
+            fis.close();
+        } catch(IOException e){
+            return 1;
+        }
+
+        ByteBuffer b = ByteBuffer.wrap(byteArray);
+        chartPreference = b.getInt();
+
+        return chartPreference;
     }
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -13,6 +14,7 @@ import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import com.geebeelicious.geebeelicious.models.consultation.School;
 public class SettingsActivity extends ActionBarActivity {
 
     private School chosenSchool = null;
+    private int chosenVisualAcuityChart;
     private ArrayList<School> schools;
 
     @Override
@@ -40,7 +43,18 @@ public class SettingsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_settings);
 
         addChooseSchoolSetting();
+        addVisualAcuityChartSetting();
         addCalibrationSetting();
+
+        Button saveButton = (Button)findViewById(R.id.saveSettingsButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSchool();
+                saveVisualAcuityChart();
+                finish();
+            }
+        });
     }
 
     //Adds option to select a school to the Settings screen
@@ -69,15 +83,6 @@ public class SettingsActivity extends ActionBarActivity {
                 chosenSchool = schools.get(1);
             }
         });
-
-        Button saveButton = (Button)findViewById(R.id.saveSettingsButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveSchool();
-                finish();
-            }
-        });
     }
 
     //Saves schoolID of preferred school to device storage
@@ -95,6 +100,45 @@ public class SettingsActivity extends ActionBarActivity {
 
             }
         } catch(FileNotFoundException fe){
+
+        }
+    }
+
+    //Add option to select visual acuity chart to be used in test
+    private void addVisualAcuityChartSetting(){
+        Spinner chartSpinner = (Spinner)findViewById(R.id.visualacuitychartSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.visualacuity_chart_names, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chartSpinner.setAdapter(adapter);
+
+        chartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chosenVisualAcuityChart = parent.getSelectedItemPosition();
+                System.out.println("getSelectedItem" + chosenVisualAcuityChart);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                chosenVisualAcuityChart = 0;
+            }
+        });
+    }
+
+    //Save visual acuity chart preference
+    private void saveVisualAcuityChart(){
+        ByteBuffer b = ByteBuffer.allocate(4);
+        b.putInt(chosenVisualAcuityChart);
+        byte[] byteArray = b.array();
+
+        try{
+            FileOutputStream fos = openFileOutput("VisualAcuityChartPreferences", Context.MODE_PRIVATE);
+            try{
+                fos.write(byteArray);
+                fos.close();
+            } catch (IOException ioe){
+
+            }
+        } catch (FileNotFoundException fe){
 
         }
     }

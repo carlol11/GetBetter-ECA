@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -48,9 +47,7 @@ public class FineMotorFragment extends MonitoringTestFragment {
 
     public FineMotorFragment(){
         this.introStringResource = R.string.finemotor_intro;
-        this.endStringResource = R.string.finemotor_end_test;
-        this.introTime = 3000;
-        this.endTime = 5000;
+        this.introTime = 4000;
     }
 
     @Override
@@ -166,7 +163,26 @@ public class FineMotorFragment extends MonitoringTestFragment {
             imageViewPathToTrace.setBackgroundColor(Color.WHITE);
         }
 
+        updateTestEndRemark(fineMotorHelper.getResults());
         fragmentInteraction.doneFragment();
+    }
+
+    private void updateTestEndRemark(boolean[] results) {
+        int numPass = 0;
+
+        for(boolean result: results){
+            if(result){
+                numPass++;
+            }
+        }
+
+        if(numPass < 2){
+            this.endStringResource = R.string.finemotor_fail;
+            this.endTime = 4000;
+        } else {
+            this.endStringResource = R.string.finemotor_pass;
+            this.endTime = 3000;
+        }
     }
 
     private void showAnswerButtons(){

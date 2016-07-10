@@ -3,7 +3,6 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +36,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
 
     public VisualAcuityFragment(){
         this.introStringResource = R.string.visualAcuity_intro;
-        this.endStringResource = R.string.visualAcuity_end_test;
         this.introTime = 3000;
-        this.endTime = 5000;
     }
 
     @Override
@@ -120,6 +117,9 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             chartHelper.setIsLeftTested();
             displayResults(leftEyeResult);
             record.setVisualAcuityLeft(leftEyeResult.getVisualAcuity());
+
+            updateTestEndRemark(leftEyeResult.getLineNumber());
+
             fragmentInteraction.doneFragment();
         }
     }
@@ -132,4 +132,15 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         fragmentInteraction.setResults(resultString);
     }
 
+    private void updateTestEndRemark(String lineNumber) {
+        int lineNum = Integer.parseInt(lineNumber);
+
+        if (lineNum < 8){
+            this.endStringResource = R.string.visual_acuity_fail;
+            this.endTime = 5000;
+        } else {
+            this.endStringResource = R.string.visual_acuity_pass;
+            this.endTime = 3000;
+        }
+    }
 }

@@ -49,7 +49,12 @@ public class BMICalculator {
     };
 
     public static float computeBMIMetric(int height, int weight){
-        return ((float)weight / height / height) * 10000;
+        if (height == 0){
+            return 0;
+        }
+        else{
+            return ((float)weight / height / height) * 10000;
+        }
     }
 
     public static int getBMIResult(boolean isGirl, int age, float patientBMI){

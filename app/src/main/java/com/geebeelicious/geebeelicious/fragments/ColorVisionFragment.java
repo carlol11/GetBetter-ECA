@@ -28,9 +28,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
 
     public ColorVisionFragment(){
         this.introStringResource = R.string.colorVision_intro;
-        this.endStringResource = R.string.colorVision_end_test;
         this.introTime = 3000;
-        this.endTime = 5000;
     }
 
     @Override
@@ -101,7 +99,19 @@ public class ColorVisionFragment extends MonitoringTestFragment {
             Record record = fragmentInteraction.getRecord();
             record.setColorVision(ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
+
+            updateTestEndRemark(ishiharaHelper.isNormal());
             fragmentInteraction.doneFragment();
+        }
+    }
+
+    private void updateTestEndRemark(boolean normal) {
+        if (normal){
+            this.endStringResource = R.string.color_vision_pass;
+            this.endTime = 3000;
+        } else {
+            this.endStringResource = R.string.color_vision_fail;
+            this.endTime = 5000;
         }
     }
 

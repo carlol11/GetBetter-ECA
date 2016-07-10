@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,9 +38,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     public GrossMotorFragment(){
         this.introStringResource = R.string.grossmotor_intro;
-        this.endStringResource = R.string.grossmotor_end_test;
         this.introTime = 3000;
-        this.endTime = 5000;
     }
 
     @Override
@@ -91,8 +88,27 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     public void onRemarkSaveButtonClicked() {
         grossMotorInteraction.onHideRemarkLayout();
+        updateTestEndRemark(grossMotorTest.getIntFinalResult());
         fragmentInteraction.doneFragment();
     }
+
+    private void updateTestEndRemark(int result) {
+        switch (result){
+            case 0:
+                this.endStringResource = R.string.grossmotor_pass;
+                this.endTime = 3000;
+                break;
+            case 1:
+                this.endStringResource = R.string.grossmotor_fail;
+                this.endTime = 5000;
+                break;
+            default:
+                this.endStringResource = R.string.grossmotor_na;
+                this.endTime = 4000;
+                break;
+        }
+    }
+
     private void startTest(){
         grossMotorTest.setCurrentSkill(0);
         displaySkill(0);

@@ -35,6 +35,12 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by MG.
@@ -167,6 +173,30 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             default:
                 return 2;
         }
+    }
+
+    @Override
+    public int getAge() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            Date dateOfBirth = dateFormat.parse(patient.getBirthday());
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(dateOfBirth);
+            Calendar today = Calendar.getInstance();
+            int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR))
+                age--;
+            Log.d(TAG, "Patient age: " + age);
+            return age;
+        } catch (ParseException e) {
+            Log.d(TAG, "Error in reading birthday", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isGirl() {
+        return patient.getGender() == 1;
     }
 
     @Override
@@ -308,6 +338,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
                         if(nextFragment != null){
                             replaceFragment(nextFragment);
+                        } else {
+                            finish();
                         }
                     }
                 };
@@ -350,7 +382,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
             db.insertRecord(record);
         } catch (SQLException e) {
-            Log.e(TAG, "Database error", e);
+            Log.e(TAG, "Database error");
         }
 
         if(currentFragment instanceof MonitoringTestFragment){
@@ -358,10 +390,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             time = ((MonitoringTestFragment) currentFragment).getEndTime();
         }
         ecaText += " " + getString(R.string.monitoring_end);
-        time += 5000;
+        time += 3000;
         runTransition(time, ecaText, null);
-
-        finish();
     }
 
     private String tryGettingStringResource(int res){

@@ -130,26 +130,36 @@ public class GrossMotorTest {
     }
 
     public String getFinalResult(){
+        int result = getIntFinalResult();
+
+        switch (result){
+            case 0:
+                return "Pass";
+            case 1:
+                return "Fail";
+            default:
+                return "N/A";
+        }
+    }
+
+    public int getIntFinalResult(){
         int pass = 0;
-        int fail = 0;
         int na = 0;
         String assessment;
         for(GrossMotorSkill gms : testSkills){
             assessment = gms.getAssessment();
             if(assessment.equals("Pass")){
                 pass++;
-            }else if(assessment.equals("Fail")){
-                fail++;
             }else if(assessment.equals("N/A")){
                 na++;
             }
         }
-        if(pass>=2){
-            return "Pass";
-        } else if(na >=2){
-            return "N/A";
-        } else{
-            return "Fail";
+        if(pass>=2){ //Pass
+            return 0;
+        } else if(na >=2){ //N/A
+            return 2;
+        } else{ //Fail
+            return 1;
         }
     }
 

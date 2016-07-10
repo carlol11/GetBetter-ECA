@@ -16,4 +16,6 @@ public interface OnMonitoringFragmentInteractionListener {
     public void setResults(String results);
     public void doneFragment();
     public int getIntResults(String result);
+    public int getAge();
+    public boolean isGirl();
 }

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
@@ -36,9 +35,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
 
     public HearingMainFragment(){
         this.introStringResource = R.string.hearing_intro;
-        this.endStringResource = R.string.hearing_end_test;
         this.introTime = 3000;
-        this.endTime = 5000;
     }
 
     @Override
@@ -124,7 +121,8 @@ public class HearingMainFragment extends MonitoringTestFragment {
                     activity.runOnUiThread(backgroundFlash);
                     activity.runOnUiThread(disableTest);
                     endTest();
-                    fragmentInteraction.doneFragment();
+
+                    callnextFragment();
                 }
             }
         });
@@ -143,11 +141,23 @@ public class HearingMainFragment extends MonitoringTestFragment {
         return view;
     }
 
+    private void callnextFragment() {
+        Record record = fragmentInteraction.getRecord();
+
+        if (record.getHearingRight().equals("Normal Hearing") && record.getHearingLeft().equals("Normal Hearing")){
+            this.endStringResource = R.string.hearing_pass;
+            this.endTime = 3000;
+        } else {
+            this.endStringResource = R.string.hearing_fail;
+            this.endTime = 5000;
+        }
+        fragmentInteraction.doneFragment();
+    }
+
     private void endTest(){
         Record record = fragmentInteraction.getRecord();
         record.setHearingRight(hearingTest.getPureToneAverageInterpretation("Right"));
         record.setHearingLeft(hearingTest.getPureToneAverageInterpretation("Left"));
-
         stopTest();
     }
 
@@ -165,7 +175,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
         record.setHearingLeft("Moderately-Severe Hearing Loss");
 
         stopTest();
-        fragmentInteraction.doneFragment();
+        callnextFragment();
     }
 
     @Override

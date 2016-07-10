@@ -75,4 +75,26 @@
     <string name="finemotor_end_test">Fantastic. Thanks for your help</string>
     <string name="monitoring_end">You\'re check up is done</string>
 
+    <!-- ECA Remarks-->
+    <string name="monitoring_remark_normal1">Keep eating healthy food!</string>
+    <string name="monitoring_remark_normal2">Don\'t forget to eat vegetables!</string>
+    <string name="monitoring_remark_normal3">Don\'t forget to exercise!</string>
+    <string name="monitoring_remark_below1">Eat more healthy food!</string>
+    <string name="monitoring_remark_below2">Drink milk everyday!</string>
+    <string name="monitoring_remark_below3">Eat fruits and vegetables!</string>
+    <string name="monitoring_remark_above1">Exercise more!</string>
+    <string name="monitoring_remark_above2">Eat healthy food!</string>
+    <string name="monitoring_remark_above3">Eat your fruits and vegetables!</string>
+    <string name="visual_acuity_fail">Your vision seems a bit blurry. Try to visit an eye doctor when you can!</string>
+    <string name="visual_acuity_pass">Your vision is great!</string>
+    <string name="color_vision_fail">It looks like you\'re having with color. Try to visit an eye doctor about it when you can!</string>
+    <string name="color_vision_pass">Your vision is great!</string>
+    <string name="hearing_fail">You seem to have hearing problems. Try to visit an ear doctor when you can!</string>
+    <string name="hearing_pass">Your hearing is great</string>
+    <string name="grossmotor_fail">Work on your gross motor skills! Try to exercise more and play outside</string>
+    <string name="grossmotor_pass">Your gross motor skills are great!</string>
+    <string name="grossmotor_na">That\'s okay! Let\'s move on to the next test.</string>
+    <string name="finemotor_fail">You may need to work on your fine motor skills!</string>
+    <string name="finemotor_pass">Your fine motor skills are great!</string>
+
 </resources>

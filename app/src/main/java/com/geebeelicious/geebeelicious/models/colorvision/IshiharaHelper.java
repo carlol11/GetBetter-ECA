@@ -139,17 +139,15 @@ public class IshiharaHelper {
 
     //Returns String interpretation of test score
     public String getResult(){
-        if(getScore() >= 10){
+        if(isNormal()){
             return "Normal";
         } else{
             return "Abnormal";
         }
     }
 
-
-
-
-
-
+    public boolean isNormal(){
+        return getScore()>= 10;
+    }
 
 }

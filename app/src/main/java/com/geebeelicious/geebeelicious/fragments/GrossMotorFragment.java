@@ -4,16 +4,15 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import java.util.concurrent.TimeUnit;
@@ -29,15 +28,19 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * to perform the test.
  */
 
-public class GrossMotorFragment extends Fragment {
+public class GrossMotorFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
 
     private GrossMotorTest grossMotorTest;
-    private View view;
-
     private CountDownTimer countDownTimer;
+
+    public GrossMotorFragment(){
+        this.introStringResource = R.string.grossmotor_intro;
+        this.introTime = 3000;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,28 +87,28 @@ public class GrossMotorFragment extends Fragment {
     }
 
     public void onRemarkSaveButtonClicked() {
-        TextView countDownTV = (TextView)view.findViewById(R.id.countdownTV);
-        ImageView countDownIV = (ImageView)view.findViewById(R.id.grossMotorIV);
-
         grossMotorInteraction.onHideRemarkLayout();
-
-        countDownTV.setVisibility(View.GONE);
-        countDownIV.setVisibility(View.VISIBLE);
-        countDownIV.setImageResource(R.drawable.wait_for_next_test);
-
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
+        updateTestEndRemark(grossMotorTest.getIntFinalResult());
+        fragmentInteraction.doneFragment();
     }
+
+    private void updateTestEndRemark(int result) {
+        switch (result){
+            case 0:
+                this.endStringResource = R.string.grossmotor_pass;
+                this.endTime = 3000;
+                break;
+            case 1:
+                this.endStringResource = R.string.grossmotor_fail;
+                this.endTime = 5000;
+                break;
+            default:
+                this.endStringResource = R.string.grossmotor_na;
+                this.endTime = 4000;
+                break;
+        }
+    }
+
     private void startTest(){
         grossMotorTest.setCurrentSkill(0);
         displaySkill(0);

@@ -4,7 +4,6 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
@@ -23,16 +23,19 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * the color vision test. The activity utilizes the
  * IshiharaHelper class to perform the test.
  * */
-public class ColorVisionFragment extends Fragment {
+public class ColorVisionFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
-    private ImageView chartView;
+    public ColorVisionFragment(){
+        this.introStringResource = R.string.colorVision_intro;
+        this.introTime = 3000;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_color_vision, container, false);
+        view = inflater.inflate(R.layout.fragment_color_vision, container, false);
 
         ImageButton option1 = (ImageButton) view.findViewById(R.id.cvt_option1);
         ImageButton option2 = (ImageButton) view.findViewById(R.id.cvt_option2);
@@ -42,14 +45,11 @@ public class ColorVisionFragment extends Fragment {
         final ImageButton[] buttonList = {option1, option2, option3, option4, option5};
         final IshiharaHelper ishiharaHelper = new IshiharaHelper((ImageView) view.findViewById(R.id.ishiharaPlate), buttonList);
 
-        chartView = (ImageView)view.findViewById(R.id.ishiharaPlate);
-
-
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(0);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -57,7 +57,7 @@ public class ColorVisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(1);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -65,7 +65,7 @@ public class ColorVisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(2);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -73,7 +73,7 @@ public class ColorVisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(3);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -81,7 +81,7 @@ public class ColorVisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ishiharaHelper.answerQuestion(4);
-                updateResults(ishiharaHelper, buttonList);
+                updateResults(ishiharaHelper);
             }
         });
 
@@ -93,13 +93,25 @@ public class ColorVisionFragment extends Fragment {
     }
 
     //Allows test to either go to the next question and save results if the test is done
-    private void updateResults(IshiharaHelper ishiharaHelper, ImageButton[] buttonList){
+    private void updateResults(IshiharaHelper ishiharaHelper){
         ishiharaHelper.goToNextQuestion();
         if(ishiharaHelper.isDone()){
             Record record = fragmentInteraction.getRecord();
             record.setColorVision(ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
-            endTest(buttonList);
+
+            updateTestEndRemark(ishiharaHelper.isNormal());
+            fragmentInteraction.doneFragment();
+        }
+    }
+
+    private void updateTestEndRemark(boolean normal) {
+        if (normal){
+            this.endStringResource = R.string.color_vision_pass;
+            this.endTime = 3000;
+        } else {
+            this.endStringResource = R.string.color_vision_fail;
+            this.endTime = 5000;
         }
     }
 
@@ -114,31 +126,6 @@ public class ColorVisionFragment extends Fragment {
         }
         fragmentInteraction.setResults(resultString);
 
-    }
-
-    //Sets view for end of test
-    private void endTest(ImageButton[] buttonList){
-        CountDownTimer timer;
-
-        for(ImageButton i : buttonList){
-            i.setVisibility(View.GONE);
-            i.setEnabled(false);
-        }
-
-        chartView.setImageResource(R.drawable.wait_for_next_test);
-
-        timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
     }
 
     @Override

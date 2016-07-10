@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
@@ -30,14 +29,10 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * to perform the test.
  */
 
-public class FineMotorFragment extends Fragment {
+public class FineMotorFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
-
     private static final String TAG = "FineMotorActivity";
-
-    private View view;
-
     private ImageView imageViewPathToTrace;
 
     //Set the color for the start and end of the path
@@ -49,6 +44,11 @@ public class FineMotorFragment extends Fragment {
     private boolean isTestOngoing = true;
     private boolean hasStarted = false; //has user started
     private FineMotorHelper fineMotorHelper;
+
+    public FineMotorFragment(){
+        this.introStringResource = R.string.finemotor_intro;
+        this.introTime = 4000;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,7 +147,6 @@ public class FineMotorFragment extends Fragment {
     private void sendResults(){
         String resultString ;
         boolean[] result = fineMotorHelper.getResults();
-        CountDownTimer timer;
 
         if(isTestOngoing){ //this is to avoid double clicking
             isTestOngoing = false;
@@ -162,46 +161,28 @@ public class FineMotorFragment extends Fragment {
             record.setFineMotorHold(result[2] ? 0: 1);
             fragmentInteraction.setResults(resultString);
             imageViewPathToTrace.setBackgroundColor(Color.WHITE);
-            imageViewPathToTrace.setImageResource(R.drawable.wait_for_next_test);
-            hideAnswerButtons();
         }
 
-
-
-        timer = new CountDownTimer(10000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            private int getIntResults(String result){
-                switch(result){
-                    case "Pass":
-                        return 0;
-                    case "Fail":
-                        return 1;
-                    default:
-                        return 2;
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
+        updateTestEndRemark(fineMotorHelper.getResults());
+        fragmentInteraction.doneFragment();
     }
 
-    private void hideAnswerButtons(){
-        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutAnswers);
-        for (int j = 0; j<answers.getChildCount(); j++){
-            View view = answers.getChildAt(j);
-            view.setEnabled(false);
-            view.setVisibility(View.INVISIBLE);
-        }
-        answers.setVisibility(View.INVISIBLE);
+    private void updateTestEndRemark(boolean[] results) {
+        int numPass = 0;
 
+        for(boolean result: results){
+            if(result){
+                numPass++;
+            }
+        }
+
+        if(numPass < 2){
+            this.endStringResource = R.string.finemotor_fail;
+            this.endTime = 4000;
+        } else {
+            this.endStringResource = R.string.finemotor_pass;
+            this.endTime = 3000;
+        }
     }
 
     private void showAnswerButtons(){

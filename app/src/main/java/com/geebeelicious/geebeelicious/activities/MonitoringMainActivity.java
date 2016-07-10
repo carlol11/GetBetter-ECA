@@ -1,6 +1,8 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
@@ -31,6 +35,12 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by MG.
@@ -45,6 +55,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private TextView ECAText;
     private TextView resultsText;
     private Button NAButton;
+    private LinearLayout ecaLinearLayout;
+    private FrameLayout ecaFragmentLayout;
 
     private String[] fragments;
     private int currentFragmentIndex;
@@ -59,6 +71,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         NAButton = (Button) findViewById(R.id.NAButton);
+        ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
+        ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -125,22 +139,27 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     @Override
-    public void doneFragment(){
-        if(currentFragmentIndex + 1 >= fragments.length){
-            DatabaseAdapter db = new DatabaseAdapter(this);
+    public void doneFragment() { //gets called by the fragments when done
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
 
-            try {
-                db.openDatabaseForRead();
-                record.printRecord();
-
-                db.insertRecord(record);
-            } catch (SQLException e) {
-                Log.e(TAG, "Database error", e);
-            }
-            finish();
+        if(currentFragmentIndex + 1 >= fragments.length){ //if last fragment
+            endActivity(currentFragment);
         } else {
             clearTextViews();
-            nextFragment();
+            try {
+                currentFragmentIndex++;
+                Fragment nextFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
+                if (currentFragment instanceof MonitoringTestFragment){ //if the current has intro
+                    doTransitionWithResult((MonitoringTestFragment) currentFragment, nextFragment);
+                } else if (doesNextHasIntro(nextFragment)){ //if the next has intro
+                    doTransitionWithoutResult((MonitoringTestFragment) nextFragment);
+                } else {
+                    replaceFragment(nextFragment);
+                }
+
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                Log.e(TAG, "Error in initializing the fragment", e);
+            }
         }
     }
 
@@ -156,24 +175,55 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
-    private void clearTextViews() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ECAText.setText("Placeholder for Instructions");
-                resultsText.setText("Placeholder for Results");
-            }
-        });
+    @Override
+    public int getAge() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            Date dateOfBirth = dateFormat.parse(patient.getBirthday());
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(dateOfBirth);
+            Calendar today = Calendar.getInstance();
+            int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR))
+                age--;
+            Log.d(TAG, "Patient age: " + age);
+            return age;
+        } catch (ParseException e) {
+            Log.d(TAG, "Error in reading birthday", e);
+        }
+        return 0;
     }
 
-    private void nextFragment(){
-        try {
-            currentFragmentIndex++;
-            Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
-            replaceFragment(newFragment);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            Log.e(TAG, "Error in initializing the fragment", e);
-        }
+    @Override
+    public boolean isGirl() {
+        return patient.getGender() == 1;
+    }
+
+    @Override
+    public void onShowNAButton() {
+        NAButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideNAButton() {
+        NAButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onShowRemarkLayout() {
+        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
+        remarkLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideRemarkLayout() {
+        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
+        remarkLayout.setVisibility(View.GONE);
+    }
+
+    private void clearTextViews() {
+        ECAText.setText("Placeholder for Instructions");
+        resultsText.setText("Placeholder for Results");
     }
 
     private void initializeOldFragment() {
@@ -255,25 +305,123 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
-    @Override
-    public void onShowNAButton() {
-        NAButton.setVisibility(View.VISIBLE);
+    private void maximizeECAFragment(){
+        View parent = (View)ecaLinearLayout.getParent();
+        final int mToHeight = parent.getHeight();
+        final int mToWidth = parent.getWidth();
+        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
     }
 
-    @Override
-    public void onHideNAButton() {
-        NAButton.setVisibility(View.GONE);
+    private void minimizeECAFragment(){
+        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.activity_eca_small),
+                getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
-    @Override
-    public void onShowRemarkLayout() {
-        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
-        remarkLayout.setVisibility(View.VISIBLE);
+    private void runTransition(final int time, final String ecaText, final Fragment nextFragment) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CountDownTimer timer;
+
+                maximizeECAFragment();
+                ecaFragment.sendToECAToSpeak(ecaText);
+
+                timer = new CountDownTimer(time, 1000) { //timer for the transition
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        minimizeECAFragment();
+
+                        if(nextFragment != null){
+                            replaceFragment(nextFragment);
+                        } else {
+                            finish();
+                        }
+                    }
+                };
+                timer.start();
+            }
+        });
     }
 
-    @Override
-    public void onHideRemarkLayout() {
-        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
-        remarkLayout.setVisibility(View.GONE);
+    private boolean doesNextHasIntro(Fragment nextFragment) {
+        return nextFragment instanceof MonitoringTestFragment;
     }
+
+    private void doTransitionWithResult(MonitoringTestFragment currentFragment, Fragment nextFragment) {
+        String ecaText = tryGettingStringResource(currentFragment.getEndStringResource());
+        int time = currentFragment.getEndTime();
+
+        currentFragment.hideFragmentMainView();
+
+        if (doesNextHasIntro(nextFragment)) { //if next has intro
+            ecaText +=" "+ tryGettingStringResource(((MonitoringTestFragment) nextFragment).getIntroStringResource());
+            time += ((MonitoringTestFragment) nextFragment).getIntroTime();
+        }
+
+        runTransition(time, ecaText, nextFragment);
+
+    }
+
+    private void doTransitionWithoutResult(MonitoringTestFragment nextFragment){
+        String ecaText = tryGettingStringResource(nextFragment.getIntroStringResource());
+        runTransition(nextFragment.getIntroTime(), ecaText, nextFragment);
+    }
+
+    private void endActivity(Fragment currentFragment) {
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        String ecaText = "";
+        int time = 0;
+        try {
+            db.openDatabaseForRead();
+            record.printRecord();
+
+            db.insertRecord(record);
+        } catch (SQLException e) {
+            Log.e(TAG, "Database error");
+        }
+
+        if(currentFragment instanceof MonitoringTestFragment){
+            ecaText = tryGettingStringResource(((MonitoringTestFragment) currentFragment).getEndStringResource());
+            time = ((MonitoringTestFragment) currentFragment).getEndTime();
+        }
+        ecaText += " " + getString(R.string.monitoring_end);
+        time += 3000;
+        runTransition(time, ecaText, null);
+    }
+
+    private String tryGettingStringResource(int res){
+        try {
+            return getString(res);
+        } catch (Resources.NotFoundException e){
+            Log.e(TAG, "Resource not found", e);
+        }
+        return "";
+    }
+
+    //TODO: Erase this if di na kelangan
+//    private void resizeView(final View v, final int toHeight, final int toWidth) {
+//        final int fromWidth = v.getWidth();
+//        final int fromHeight = v.getHeight();
+//        Animation animation = new Animation() {
+//            @Override
+//            protected void applyTransformation(float interpolatedTime, Transformation t) {
+//                float height = (toHeight - fromWidth) * interpolatedTime + fromWidth;
+//                float width = (toWidth - fromHeight) * interpolatedTime + fromHeight; //also used by the childView
+//                ViewGroup.LayoutParams q = v.getLayoutParams();
+//
+//                q.width = (int) width;
+//                q.height = (int) height;
+//
+//                v.requestLayout();
+//            }
+//        };
+//        animation.setDuration(500);
+//        v.startAnimation(animation);
+//    }
+
 }

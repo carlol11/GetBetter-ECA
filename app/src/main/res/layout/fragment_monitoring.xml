@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MonitoringFragment">
 
-   <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/monitoringIV"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

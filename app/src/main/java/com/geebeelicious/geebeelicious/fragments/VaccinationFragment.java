@@ -41,11 +41,13 @@ public class VaccinationFragment extends Fragment {
     private Button skipButton;
     private Button pictureButton;
 
+    private View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
+        view = inflater.inflate(R.layout.fragment_vaccination, container, false);
         skipButton = (Button) view.findViewById(R.id.skipButton);
         pictureButton = (Button) view.findViewById(R.id.takePictureButton);
 
@@ -71,7 +73,7 @@ public class VaccinationFragment extends Fragment {
                     Record record = fragmentInteraction.getRecord();
                     record.setVaccination(vaccinationHelper.getPicture());
                 }
-
+                view.setVisibility(View.GONE);
                 fragmentInteraction.doneFragment();
             }
         });

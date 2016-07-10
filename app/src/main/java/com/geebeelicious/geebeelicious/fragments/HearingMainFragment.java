@@ -5,14 +5,13 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import java.util.ArrayList;
@@ -27,18 +26,24 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * to perform the hearing test.
  */
 
-public class HearingMainFragment extends Fragment {
+public class HearingMainFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     private ArrayList<Thread> threads;
     private HearingTest hearingTest;
     private Activity activity;
 
+    public HearingMainFragment(){
+        this.introStringResource = R.string.hearing_intro;
+        this.introTime = 3000;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_hearing_main, container, false);
+        view =  inflater.inflate(R.layout.fragment_hearing_main, container, false);
+
         AudioManager audioManager = (AudioManager)activity.getSystemService(activity.AUDIO_SERVICE);
 
         hearingTest = new HearingTest();
@@ -69,8 +74,7 @@ public class HearingMainFragment extends Fragment {
             public void run() {
                 yesButton.setVisibility(View.GONE);
                 yesButton.setEnabled(false);
-                ImageView imageView = (ImageView)view.findViewById(R.id.hearingTestImageView);
-                imageView.setImageResource(R.drawable.wait_for_next_test);
+
                 fragmentInteraction.setResults(hearingTest.getResults());
             }
         };
@@ -117,12 +121,8 @@ public class HearingMainFragment extends Fragment {
                     activity.runOnUiThread(backgroundFlash);
                     activity.runOnUiThread(disableTest);
                     endTest();
-                    try {
-                        Thread.sleep(6000);
-                    } catch (InterruptedException e) {
 
-                    }
-                    fragmentInteraction.doneFragment();
+                    callnextFragment();
                 }
             }
         });
@@ -141,11 +141,23 @@ public class HearingMainFragment extends Fragment {
         return view;
     }
 
+    private void callnextFragment() {
+        Record record = fragmentInteraction.getRecord();
+
+        if (record.getHearingRight().equals("Normal Hearing") && record.getHearingLeft().equals("Normal Hearing")){
+            this.endStringResource = R.string.hearing_pass;
+            this.endTime = 3000;
+        } else {
+            this.endStringResource = R.string.hearing_fail;
+            this.endTime = 5000;
+        }
+        fragmentInteraction.doneFragment();
+    }
+
     private void endTest(){
         Record record = fragmentInteraction.getRecord();
         record.setHearingRight(hearingTest.getPureToneAverageInterpretation("Right"));
         record.setHearingLeft(hearingTest.getPureToneAverageInterpretation("Left"));
-
         stopTest();
     }
 
@@ -163,7 +175,7 @@ public class HearingMainFragment extends Fragment {
         record.setHearingLeft("Moderately-Severe Hearing Loss");
 
         stopTest();
-        fragmentInteraction.doneFragment();
+        callnextFragment();
     }
 
     @Override

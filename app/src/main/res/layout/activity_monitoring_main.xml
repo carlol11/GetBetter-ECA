@@ -15,12 +15,14 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="@dimen/activity_eca_small"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/linearLayoutECA"
-        style="@style/DefaultBackground">
+        android:animateLayoutChanges="true"
+        style="@style/DefaultBackground"
+        >
 
         <FrameLayout
             android:layout_width="@dimen/activity_eca_small"
@@ -110,6 +112,8 @@
         android:layout_height="match_parent"
         android:id="@+id/monitoringFragmentContainer"
         android:layout_toStartOf="@+id/linearLayoutECA"
-        tools:layout="@layout/fragment_monitoring" />
+        android:animateLayoutChanges="true"
+        tools:layout="@layout/fragment_monitoring"
+        />
 
 </RelativeLayout>

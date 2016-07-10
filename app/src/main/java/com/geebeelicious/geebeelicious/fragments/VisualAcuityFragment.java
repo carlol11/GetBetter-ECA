@@ -3,8 +3,6 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
@@ -31,7 +30,7 @@ import java.nio.ByteBuffer;
  * to perform the visual acuity test.
  */
 
-public class VisualAcuityFragment extends Fragment {
+public class VisualAcuityFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Record record;
 
@@ -39,11 +38,16 @@ public class VisualAcuityFragment extends Fragment {
     private Button noButton;
     private ImageView chartView;
 
+    public VisualAcuityFragment(){
+        this.introStringResource = R.string.visualAcuity_intro;
+        this.introTime = 3000;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
+        view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
 
         chartView = (ImageView)view.findViewById(R.id.chartLine);
         final ChartHelper chartHelper = new ChartHelper(chartView, getChartPreference());
@@ -99,30 +103,6 @@ public class VisualAcuityFragment extends Fragment {
         record = fragmentInteraction.getRecord();
     }
 
-    private void endTest(){
-        CountDownTimer timer;
-
-        yesButton.setVisibility(View.GONE);
-        noButton.setVisibility(View.GONE);
-        yesButton.setEnabled(false);
-        noButton.setEnabled(false);
-
-        chartView.setImageResource(R.drawable.wait_for_next_test);
-
-        timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
-    }
-
     private void updateResults(ChartHelper chartHelper){
         VisualAcuityResult rightEyeResult = null;
         VisualAcuityResult leftEyeResult = null;
@@ -141,7 +121,10 @@ public class VisualAcuityFragment extends Fragment {
             chartHelper.setIsLeftTested();
             displayResults(leftEyeResult);
             record.setVisualAcuityLeft(leftEyeResult.getVisualAcuity());
-            endTest();
+
+            updateTestEndRemark(leftEyeResult.getLineNumber());
+
+            fragmentInteraction.doneFragment();
         }
     }
 
@@ -170,4 +153,15 @@ public class VisualAcuityFragment extends Fragment {
         return chartPreference;
     }
 
+    private void updateTestEndRemark(String lineNumber) {
+        int lineNum = Integer.parseInt(lineNumber);
+
+        if (lineNum < 8){
+            this.endStringResource = R.string.visual_acuity_fail;
+            this.endTime = 5000;
+        } else {
+            this.endStringResource = R.string.visual_acuity_pass;
+            this.endTime = 3000;
+        }
+    }
 }

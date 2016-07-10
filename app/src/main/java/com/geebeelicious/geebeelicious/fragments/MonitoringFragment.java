@@ -3,21 +3,22 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 
+import com.geebeelicious.geebeelicious.models.bmi.BMICalculator;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
+
+import java.util.Random;
 
 /**
  * Created by Kate.
@@ -28,11 +29,12 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  * height and weight.
  */
 
-public class MonitoringFragment extends Fragment {
+public class MonitoringFragment extends MonitoringTestFragment {
+    private final static String TAG = "MonitoringFragment";
+
     private TextView questionView;
     private NumberPicker numberPicker;
     private TextView unitView;
-    private View view;
 
     private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};
@@ -42,12 +44,12 @@ public class MonitoringFragment extends Fragment {
     private Record record;
 
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_monitoring, container, false);
-
 
         questionView = (TextView)view.findViewById(R.id.questionView);
         unitView = (TextView)view.findViewById(R.id.unitView);
@@ -114,25 +116,35 @@ public class MonitoringFragment extends Fragment {
 
     private void endMonitoring(){
         questionsCounter = 0;
-        RelativeLayout monitoringView = (RelativeLayout)getActivity().findViewById(R.id.monitoringQuestionView);
-        monitoringView.setVisibility(View.GONE);
-        Button saveButton = (Button)view.findViewById(R.id.saveAnswerButton);
-        saveButton.setVisibility(View.INVISIBLE);
-        ImageView imageView = (ImageView)view.findViewById(R.id.monitoringIV);
-        imageView.setVisibility(View.VISIBLE);
-        imageView.setImageResource(R.drawable.wait_for_next_test);
+        updateTestEndRemark();
+        fragmentInteraction.doneFragment();
+    }
 
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+    private void updateTestEndRemark(){
+        boolean isGirl = fragmentInteraction.isGirl();
+        int age = fragmentInteraction.getAge();
+        float bmi = BMICalculator.computeBMIMetric((int) record.getHeight(), (int) record.getWeight());
+        int bmiResult = BMICalculator.getBMIResult(isGirl, age, bmi);
+        Random randomizer = new Random();
+        int randomNum = randomizer.nextInt(3) + 1;
+        String resourseString;
 
-            }
+        switch (bmiResult){
+            case 0:
+                resourseString= "monitoring_remark_below";
+                break;
+            case 1:
+                resourseString= "monitoring_remark_normal";
+                break;
+            default:
+                resourseString= "monitoring_remark_above";
+                break;
+        }
 
-            @Override
-            public void onFinish() {
-                fragmentInteraction.doneFragment();
-            }
-        };
-        timer.start();
+        Log.d(TAG, "Patient BMI: " + bmiResult);
+
+        resourseString += randomNum;
+        this.endStringResource = getResources().getIdentifier(resourseString, "string", getActivity().getPackageName());
+        this.endTime = 3000;
     }
 }

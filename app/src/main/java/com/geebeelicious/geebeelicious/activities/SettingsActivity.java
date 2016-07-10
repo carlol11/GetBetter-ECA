@@ -106,16 +106,14 @@ public class SettingsActivity extends ActionBarActivity {
 
     //Add option to select visual acuity chart to be used in test
     private void addVisualAcuityChartSetting(){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SettingsActivity.this, R.array.visualacuity_chart_names, R.layout.item_eyechart_list);
+        adapter.setDropDownViewResource(R.layout.item_eyechart_list);
         Spinner chartSpinner = (Spinner)findViewById(R.id.visualacuitychartSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.visualacuity_chart_names, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chartSpinner.setAdapter(adapter);
-
         chartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 chosenVisualAcuityChart = parent.getSelectedItemPosition();
-                System.out.println("getSelectedItem" + chosenVisualAcuityChart);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

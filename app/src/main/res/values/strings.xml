@@ -12,6 +12,7 @@
     <string name="title_activity_patient_list">PatientListActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="school_name">School Name</string>
+    <string name="visualacuity_chart_name">Visual Acuity Chart</string>
     <string name="save">Save</string>
     <string name="search_patients_hint">Search patients...</string>
     <string name="calibrate_button">Calibrate</string>
@@ -29,6 +30,12 @@
     <string name="title_activity_monitoring">MonitoringActivity</string>
     <string name="centimeters">cm</string>
     <string name="kilograms">kg</string>
+
+    <!--Spinner Items-->
+    <string-array name="visualacuity_chart_names">
+        <item>Snellen Eye Chart</item>
+        <item>Tumbling E Eye Chart</item>
+    </string-array>
 
     <!-- Buttons -->
     <string name="Yes">Yes</string>

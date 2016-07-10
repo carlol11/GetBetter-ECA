@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:keepScreenOn="true"
+    tools:context=".activities.MonitoringMainActivity">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="@dimen/activity_eca_small"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/relativeLayoutECA"
+        style="@style/DefaultBackground">
+
+        <FrameLayout
+            android:layout_width="@dimen/activity_eca_small"
+            android:layout_height="@dimen/activity_eca_small"
+            android:id="@+id/placeholderECA"
+            android:longClickable="false"
+            style="@style/ECAPlaceholder"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Placeholder for Instructions from GeeBee"
+            android:id="@+id/placeholderECAText"
+            android:paddingTop="10dp"
+            android:padding="5dp"
+            style="@style/DefaultBackground"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/placeholderECA"/>
+
+        <TextView
+            style="@style/DefaultBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Placeholder for Results"
+            android:id="@+id/placeholderResults"
+            android:paddingTop="10dp"
+            android:padding="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/placeholderECAText" />
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/monitoringFragmentContainer"
+        android:layout_toStartOf="@+id/relativeLayoutECA"
+        tools:layout="@layout/fragment_monitoring" />
+
+</RelativeLayout>

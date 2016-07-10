@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -87,8 +88,27 @@ public class ConsultationActivity extends ECAActivity{
             } else { //TODO: [UI PART] put the condition here if no complaints
                 Log.d(TAG, "No chief complaint found ");
             }
-            finish();
+            doneConsultation();
         }
+    }
+
+    private void doneConsultation() {
+        CountDownTimer timer;
+
+        timer = new CountDownTimer(6000, 6000) { //timer for the transition
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                finish();
+            }
+        };
+
+        ecaFragment.sendToECAToSPeak(R.string.consultation_end);
+        timer.start();
     }
 
     private void setQuestion(String question){

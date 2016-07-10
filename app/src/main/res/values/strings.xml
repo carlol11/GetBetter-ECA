@@ -76,6 +76,7 @@
     <string name="finemotor_path2_1">Help the lion go to the his friends. Use a finger of your non dominant hand to trace the path.</string>
     <string name="finemotor_path2_2">Help the lion go to the his friends. Use the pen with your dominant hand to trace the path.</string>
     <string name="monitoring_end">You\'re check up is done</string>
+    <string name="consultation_end">Thanks for telling me about your problem! I\'ll send this to a doctor so they can help you soon.</string>
 
     <!-- ECA Remarks-->
     <string name="monitoring_remark_normal1">Keep eating healthy food!</string>

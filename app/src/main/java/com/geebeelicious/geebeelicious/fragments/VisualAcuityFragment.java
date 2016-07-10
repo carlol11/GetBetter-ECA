@@ -35,14 +35,16 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     private Button noButton;
     private ImageView chartView;
 
+    public VisualAcuityFragment(){
+        this.introStringResource = R.string.visualAcuity_intro;
+        this.endStringResource = R.string.visualAcuity_end_test;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_visual_acuity, container, false);
-
-        this.introStringResource = R.string.visualAcuity_intro;
-        this.endStringResource = R.string.visualAcuity_end_test;
 
         chartView = (ImageView)view.findViewById(R.id.chartLine);
         final ChartHelper chartHelper = new ChartHelper(chartView);

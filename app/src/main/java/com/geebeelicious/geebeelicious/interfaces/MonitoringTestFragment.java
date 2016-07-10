@@ -11,6 +11,9 @@ import android.view.View;
 public abstract class MonitoringTestFragment extends Fragment{
     protected int introStringResource;
     protected int endStringResource;
+    protected int introTime;
+    protected int endTime;
+
     protected View view;
 
     public int getIntroStringResource() {

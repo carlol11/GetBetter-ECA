@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
@@ -133,14 +135,26 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void doneFragment() { //gets called by the fragments when done
-        final Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
-        if (currentFragment instanceof MonitoringTestFragment) {
-            ((MonitoringTestFragment) currentFragment).hideFragmentMainView(); //hide for cleaner transition
-            runTransition();
-        } else if(doesNextHasIntro()){
-            runTransition();
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+
+        if(currentFragmentIndex + 1 >= fragments.length){ //if last fragment
+            endActivity(currentFragment);
         } else {
-            callNextFragment();
+            clearTextViews();
+            try {
+                currentFragmentIndex++;
+                Fragment nextFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
+                if (currentFragment instanceof MonitoringTestFragment){ //if the current has intro
+                    doTransitionWithResult((MonitoringTestFragment) currentFragment, nextFragment);
+                } else if (doesNextHasIntro(nextFragment)){ //if the next has intro
+                    doTransitionWithoutResult((MonitoringTestFragment) nextFragment);
+                } else {
+                    replaceFragment(nextFragment);
+                }
+
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                Log.e(TAG, "Error in initializing the fragment", e);
+            }
         }
     }
 
@@ -181,16 +195,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private void clearTextViews() {
         ECAText.setText("Placeholder for Instructions");
         resultsText.setText("Placeholder for Results");
-    }
-
-    private void nextFragment(){
-        try {
-            currentFragmentIndex++;
-            Fragment newFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
-            replaceFragment(newFragment);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            Log.e(TAG, "Error in initializing the fragment", e);
-        }
     }
 
     private void initializeOldFragment() {
@@ -272,25 +276,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
-    private void callNextFragment(){
-        if(currentFragmentIndex + 1 >= fragments.length){
-            DatabaseAdapter db = new DatabaseAdapter(this);
-
-            try {
-                db.openDatabaseForRead();
-                record.printRecord();
-
-                db.insertRecord(record);
-            } catch (SQLException e) {
-                Log.e(TAG, "Database error", e);
-            }
-            finish();
-        } else {
-            clearTextViews();
-            nextFragment();
-        }
-    }
-
     private void maximizeECAFragment(){
         View parent = (View)ecaLinearLayout.getParent();
         final int mToHeight = parent.getHeight();
@@ -303,14 +288,16 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
-    private void runTransition() {
+    private void runTransition(final int time, final String ecaText, final Fragment nextFragment) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 CountDownTimer timer;
-                maximizeECAFragment();
 
-                timer = new CountDownTimer(6000, 1000) { //timer for the transition
+                maximizeECAFragment();
+                ecaFragment.sendToECAToSpeak(ecaText);
+
+                timer = new CountDownTimer(time, 1000) { //timer for the transition
                     @Override
                     public void onTick(long millisUntilFinished) {
 
@@ -319,7 +306,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                     @Override
                     public void onFinish() {
                         minimizeECAFragment();
-                        callNextFragment();
+
+                        if(nextFragment != null){
+                            replaceFragment(nextFragment);
+                        }
                     }
                 };
                 timer.start();
@@ -327,16 +317,60 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         });
     }
 
-    private boolean doesNextHasIntro() {
-        try {
-            if(currentFragmentIndex + 1 < fragments.length &&
-                    MonitoringTestFragment.class.isAssignableFrom(Class.forName(fragments[currentFragmentIndex+1]))){
-                return true;
-            }
-        } catch (ClassNotFoundException e) {
-            Log.e(TAG, "Class not found", e);
+    private boolean doesNextHasIntro(Fragment nextFragment) {
+        return nextFragment instanceof MonitoringTestFragment;
+    }
+
+    private void doTransitionWithResult(MonitoringTestFragment currentFragment, Fragment nextFragment) {
+        String ecaText = tryGettingStringResource(currentFragment.getEndStringResource());
+        int time = 6000;
+
+        currentFragment.hideFragmentMainView();
+
+        if (doesNextHasIntro(nextFragment)) { //if next has intro
+            ecaText +=" "+ tryGettingStringResource(((MonitoringTestFragment) nextFragment).getIntroStringResource());
+            time = 10000;
         }
-        return false;
+
+        runTransition(time, ecaText, nextFragment);
+
+    }
+
+    private void doTransitionWithoutResult(MonitoringTestFragment nextFragment){
+        String ecaText = tryGettingStringResource(nextFragment.getIntroStringResource());
+
+        runTransition(4000, ecaText, nextFragment);
+    }
+
+    private void endActivity(Fragment currentFragment) {
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        String ecaText = "";
+        try {
+            db.openDatabaseForRead();
+            record.printRecord();
+
+            db.insertRecord(record);
+        } catch (SQLException e) {
+            Log.e(TAG, "Database error", e);
+        }
+
+        if(currentFragment instanceof MonitoringTestFragment){
+            ecaText = tryGettingStringResource(((MonitoringTestFragment) currentFragment).getEndStringResource());
+        }
+        ecaText+= " " + getString(R.string.monitoring_end);
+
+        runTransition(10000, ecaText, null);
+
+        finish();
+    }
+
+    private String tryGettingStringResource(int res){
+        try {
+            return getString(res);
+        } catch (Resources.NotFoundException e){
+            Log.e(TAG, "Resource not found", e);
+        }
+        return "";
     }
 
     //TODO: Erase this if di na kelangan

@@ -46,14 +46,16 @@ public class FineMotorFragment extends MonitoringTestFragment {
     private boolean hasStarted = false; //has user started
     private FineMotorHelper fineMotorHelper;
 
+    public FineMotorFragment(){
+        this.introStringResource = R.string.finemotor_intro;
+        this.endStringResource = R.string.finemotor_end_test;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_fine_motor, container, false);
-
-        this.introStringResource = R.string.finemotor_intro;
-        this.endStringResource = R.string.finemotor_end_test;
 
         imageViewPathToTrace = (ImageView) view.findViewById(R.id.imageViewPathToTrace);
 

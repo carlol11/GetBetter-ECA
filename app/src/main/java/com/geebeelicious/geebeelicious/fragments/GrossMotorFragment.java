@@ -36,14 +36,17 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     private GrossMotorTest grossMotorTest;
     private CountDownTimer countDownTimer;
+
+    public GrossMotorFragment(){
+        this.introStringResource = R.string.grossmotor_intro;
+        this.endStringResource = R.string.grossmotor_end_test;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_gross_motor, container, false);
-
-        this.introStringResource = R.string.grossmotor_intro;
-        this.endStringResource = R.string.grossmotor_end_test;
 
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);

@@ -34,14 +34,16 @@ public class HearingMainFragment extends MonitoringTestFragment {
     private HearingTest hearingTest;
     private Activity activity;
 
+    public HearingMainFragment(){
+        this.introStringResource = R.string.hearing_intro;
+        this.endStringResource = R.string.hearing_end_test;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_hearing_main, container, false);
-
-        this.introStringResource = R.string.hearing_intro;
-        this.endStringResource = R.string.hearing_end_test;
 
         AudioManager audioManager = (AudioManager)activity.getSystemService(activity.AUDIO_SERVICE);
 

@@ -42,6 +42,7 @@ public class MonitoringFragment extends MonitoringTestFragment {
     private Record record;
 
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

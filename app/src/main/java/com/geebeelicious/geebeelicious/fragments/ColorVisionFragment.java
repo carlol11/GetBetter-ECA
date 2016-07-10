@@ -26,14 +26,16 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 public class ColorVisionFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
+    public ColorVisionFragment(){
+        this.introStringResource = R.string.colorVision_intro;
+        this.endStringResource = R.string.colorVision_end_test;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_color_vision, container, false);
-
-        this.introStringResource = R.string.colorVision_intro;
-        this.endStringResource = R.string.colorVision_end_test;
 
         ImageButton option1 = (ImageButton) view.findViewById(R.id.cvt_option1);
         ImageButton option2 = (ImageButton) view.findViewById(R.id.cvt_option2);

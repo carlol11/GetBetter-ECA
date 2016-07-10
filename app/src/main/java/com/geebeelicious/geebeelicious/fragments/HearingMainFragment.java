@@ -37,6 +37,8 @@ public class HearingMainFragment extends MonitoringTestFragment {
     public HearingMainFragment(){
         this.introStringResource = R.string.hearing_intro;
         this.endStringResource = R.string.hearing_end_test;
+        this.introTime = 3000;
+        this.endTime = 5000;
     }
 
     @Override

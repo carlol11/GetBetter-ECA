@@ -29,6 +29,8 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     public ColorVisionFragment(){
         this.introStringResource = R.string.colorVision_intro;
         this.endStringResource = R.string.colorVision_end_test;
+        this.introTime = 3000;
+        this.endTime = 5000;
     }
 
     @Override

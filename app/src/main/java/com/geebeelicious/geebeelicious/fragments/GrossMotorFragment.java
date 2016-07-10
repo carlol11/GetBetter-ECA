@@ -40,6 +40,8 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     public GrossMotorFragment(){
         this.introStringResource = R.string.grossmotor_intro;
         this.endStringResource = R.string.grossmotor_end_test;
+        this.introTime = 3000;
+        this.endTime = 5000;
     }
 
     @Override

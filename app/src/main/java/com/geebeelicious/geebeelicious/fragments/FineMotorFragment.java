@@ -49,6 +49,8 @@ public class FineMotorFragment extends MonitoringTestFragment {
     public FineMotorFragment(){
         this.introStringResource = R.string.finemotor_intro;
         this.endStringResource = R.string.finemotor_end_test;
+        this.introTime = 3000;
+        this.endTime = 5000;
     }
 
     @Override

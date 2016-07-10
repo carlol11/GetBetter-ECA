@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
@@ -323,13 +322,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     private void doTransitionWithResult(MonitoringTestFragment currentFragment, Fragment nextFragment) {
         String ecaText = tryGettingStringResource(currentFragment.getEndStringResource());
-        int time = 6000;
+        int time = currentFragment.getEndTime();
 
         currentFragment.hideFragmentMainView();
 
         if (doesNextHasIntro(nextFragment)) { //if next has intro
             ecaText +=" "+ tryGettingStringResource(((MonitoringTestFragment) nextFragment).getIntroStringResource());
-            time = 10000;
+            time += ((MonitoringTestFragment) nextFragment).getIntroTime();
         }
 
         runTransition(time, ecaText, nextFragment);
@@ -338,13 +337,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     private void doTransitionWithoutResult(MonitoringTestFragment nextFragment){
         String ecaText = tryGettingStringResource(nextFragment.getIntroStringResource());
-
-        runTransition(4000, ecaText, nextFragment);
+        runTransition(nextFragment.getIntroTime(), ecaText, nextFragment);
     }
 
     private void endActivity(Fragment currentFragment) {
         DatabaseAdapter db = new DatabaseAdapter(this);
         String ecaText = "";
+        int time = 0;
         try {
             db.openDatabaseForRead();
             record.printRecord();
@@ -356,10 +355,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
         if(currentFragment instanceof MonitoringTestFragment){
             ecaText = tryGettingStringResource(((MonitoringTestFragment) currentFragment).getEndStringResource());
+            time = ((MonitoringTestFragment) currentFragment).getEndTime();
         }
-        ecaText+= " " + getString(R.string.monitoring_end);
-
-        runTransition(10000, ecaText, null);
+        ecaText += " " + getString(R.string.monitoring_end);
+        time += 5000;
+        runTransition(time, ecaText, null);
 
         finish();
     }

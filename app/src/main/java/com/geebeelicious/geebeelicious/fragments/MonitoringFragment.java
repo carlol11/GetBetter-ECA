@@ -43,6 +43,10 @@ public class MonitoringFragment extends MonitoringTestFragment {
 
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
+    public MonitoringFragment(){
+        this.endTime = 5000;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

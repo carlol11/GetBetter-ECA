@@ -24,6 +24,14 @@ public abstract class MonitoringTestFragment extends Fragment{
         return endStringResource;
     }
 
+    public int getIntroTime() {
+        return introTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
+
     public void hideFragmentMainView(){
         view.setVisibility(View.GONE);
     }

@@ -38,6 +38,8 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     public VisualAcuityFragment(){
         this.introStringResource = R.string.visualAcuity_intro;
         this.endStringResource = R.string.visualAcuity_end_test;
+        this.introTime = 3000;
+        this.endTime = 5000;
     }
 
     @Override

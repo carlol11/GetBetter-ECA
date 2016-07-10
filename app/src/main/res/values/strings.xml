@@ -64,22 +64,17 @@
     <string name="visualAcuity_intro">Let\'s check your eye sight</string>
     <string name="visualAcuity_instruction_left">Cover your left eye.</string>
     <string name="visualAcuity_instruction_right">Now uncover your left eye and cover your right eye.</string>
-    <string name="visualAcuity_end_test">Good job! Now go back.</string>
     <string name="colorVision_intro">Now let\'s check how well you see colors.</string>
     <string name="colorVision_instruction">Tell me the shape you see by pressing the buttons below</string>
-    <string name="colorVision_end_test">Nice work!</string>
     <string name="hearing_intro">Let\'s find how well you can hear.</string>
     <string name="hearing_instruction">Press the button everytime you hear a sound.</string>
-    <string name="hearing_end_test">Well done!</string>
     <string name="grossmotor_intro">Let\'s do some fun exercises</string>
-    <string name="grossmotor_end_test">Awesome!</string>
     <string name="finemotor_intro">Now, let\'s do this fun activity</string>
     <string name="finemotor_path1_1">Help the butterfly go to the flowers. Use a finger of your non dominant hand to trace the path.</string>
     <string name="finemotor_path1_2">Help the butterfly go to the flowers. Use the pen with your dominant hand to trace the path.</string>
     <string name="finemotor_question">Assistant, has the user used the pen without difficulties?</string>
     <string name="finemotor_path2_1">Help the lion go to the his friends. Use a finger of your non dominant hand to trace the path.</string>
     <string name="finemotor_path2_2">Help the lion go to the his friends. Use the pen with your dominant hand to trace the path.</string>
-    <string name="finemotor_end_test">Fantastic. Thanks for your help</string>
     <string name="monitoring_end">You\'re check up is done</string>
 
     <!-- ECA Remarks-->

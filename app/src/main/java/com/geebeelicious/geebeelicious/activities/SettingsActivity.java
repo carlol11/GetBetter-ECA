@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -37,16 +38,22 @@ public class SettingsActivity extends ActionBarActivity {
     private int chosenVisualAcuityChart;
     private ArrayList<School> schools;
 
+    private Typeface chalkFont;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+
 
         addChooseSchoolSetting();
         addVisualAcuityChartSetting();
         addCalibrationSetting();
 
         Button saveButton = (Button)findViewById(R.id.saveSettingsButton);
+        saveButton.setTypeface(chalkFont);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +151,7 @@ public class SettingsActivity extends ActionBarActivity {
     //Adds option to calibrate hearing test
     private void addCalibrationSetting(){
         Button calibrateButton = (Button)findViewById(R.id.calibrateHearingTestButton);
+        calibrateButton.setTypeface(chalkFont);
         calibrateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

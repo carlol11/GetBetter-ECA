@@ -48,6 +48,8 @@ public class PatientListActivity extends ECAActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list);
 
+        final Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+
         DatabaseAdapter getBetterDb = new DatabaseAdapter(PatientListActivity.this);
         try {
             getBetterDb.openDatabaseForRead();
@@ -59,6 +61,7 @@ public class PatientListActivity extends ECAActivity{
         getBetterDb.closeDatabase();
 
         inputSearch = (EditText)findViewById(R.id.search_input);
+        inputSearch.setTypeface(chalkFont);
 
         patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients);
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
@@ -72,16 +75,14 @@ public class PatientListActivity extends ECAActivity{
             hasSpoken = savedInstanceState.getBoolean("hasSpoken");
         }
 
-        final Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
-
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 chosenPatient = patients.get(position);
                 String patientInfo = "First Name: " + chosenPatient.getFirstName() +
-                                    "\nLast Name: " + chosenPatient.getLastName() +
-                                    "\nBirthdate: " + chosenPatient.getBirthday() +
-                                    "\nGender: " + chosenPatient.getGenderString();
+                        "\nLast Name: " + chosenPatient.getLastName() +
+                        "\nBirthdate: " + chosenPatient.getBirthday() +
+                        "\nGender: " + chosenPatient.getGenderString();
                 TextView patientInfoView = (TextView) findViewById(R.id.patientDetailsTV);
                 patientInfoView.setTypeface(chalkFont);
                 patientInfoView.setText(patientInfo);
@@ -106,6 +107,7 @@ public class PatientListActivity extends ECAActivity{
         });
 
         Button selectPatientButton = (Button)findViewById(R.id.selectPatientButton);
+        selectPatientButton.setTypeface(chalkFont);
         selectPatientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +119,7 @@ public class PatientListActivity extends ECAActivity{
         });
 
         Button addNewPatientButton = (Button)findViewById(R.id.addPatientButton);
+        addNewPatientButton.setTypeface(chalkFont);
         addNewPatientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

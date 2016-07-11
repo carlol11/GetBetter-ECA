@@ -64,6 +64,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private FragmentManager fragmentManager;
     private Patient patient;
 
+    private Typeface chalkFont;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +78,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
 
-        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         ECAText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
         remarksText.setTypeface(chalkFont);
+        NAButton.setTypeface(chalkFont);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -251,6 +254,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         //onclick for NAButton for GrossMotor
         if(fragment instanceof GrossMotorFragment){
             Button saveButton = (Button) findViewById(R.id.saveButton);
+            saveButton.setTypeface(chalkFont);
             final EditText remarkText = (EditText) findViewById(R.id.remarkText);
 
             NAButton.setOnClickListener(new View.OnClickListener() {

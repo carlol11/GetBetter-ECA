@@ -55,6 +55,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
 
+        yesButton.setTypeface(chalkFont);
+        noButton.setTypeface(chalkFont);
+
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

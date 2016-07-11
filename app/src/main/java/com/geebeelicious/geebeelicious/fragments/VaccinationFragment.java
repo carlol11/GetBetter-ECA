@@ -3,6 +3,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -50,6 +51,9 @@ public class VaccinationFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_vaccination, container, false);
         skipButton = (Button) view.findViewById(R.id.skipButton);
         pictureButton = (Button) view.findViewById(R.id.takePictureButton);
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+        skipButton.setTypeface(chalkFont);
+        pictureButton.setTypeface(chalkFont);
 
         ImageView imageViewPlaceholder = (ImageView) view.findViewById(R.id.imagePlaceholder);
 

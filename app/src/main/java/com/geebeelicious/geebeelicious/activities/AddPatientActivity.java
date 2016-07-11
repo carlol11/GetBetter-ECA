@@ -61,6 +61,8 @@ public class AddPatientActivity extends ECAActivity{
         integrateECA();
         Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         questionView.setTypeface(chalkFont);
+        radioButton0.setTypeface(chalkFont);
+        radioButton1.setTypeface(chalkFont);
 
         if (savedInstanceState != null){
             questionCounter = savedInstanceState.getInt("questionCounter");
@@ -72,6 +74,7 @@ public class AddPatientActivity extends ECAActivity{
         editText.setVisibility(View.VISIBLE);
 
         Button cancelButton = (Button)findViewById(R.id.cancelNewPatientButton);
+        cancelButton.setTypeface(chalkFont);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +87,7 @@ public class AddPatientActivity extends ECAActivity{
         });
 
         Button saveButton = (Button)findViewById(R.id.saveNewPatientButton);
+        saveButton.setTypeface(chalkFont);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

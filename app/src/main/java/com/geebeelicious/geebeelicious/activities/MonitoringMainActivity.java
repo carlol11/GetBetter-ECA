@@ -256,6 +256,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             Button saveButton = (Button) findViewById(R.id.saveButton);
             saveButton.setTypeface(chalkFont);
             final EditText remarkText = (EditText) findViewById(R.id.remarkText);
+            remarkText.setTypeface(chalkFont);
 
             NAButton.setOnClickListener(new View.OnClickListener() {
                 @Override

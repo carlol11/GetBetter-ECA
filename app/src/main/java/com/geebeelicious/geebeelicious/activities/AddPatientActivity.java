@@ -63,6 +63,7 @@ public class AddPatientActivity extends ECAActivity{
         questionView.setTypeface(chalkFont);
         radioButton0.setTypeface(chalkFont);
         radioButton1.setTypeface(chalkFont);
+        editText.setTypeface(chalkFont);
 
         if (savedInstanceState != null){
             questionCounter = savedInstanceState.getInt("questionCounter");

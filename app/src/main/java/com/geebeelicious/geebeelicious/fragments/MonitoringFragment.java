@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,6 +58,10 @@ public class MonitoringFragment extends MonitoringTestFragment {
         numberPicker.setMinValue(0);
 
         setQuestion(questions[questionsCounter]);
+
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+        questionView.setTypeface(chalkFont);
+        unitView.setTypeface(chalkFont);
 
         unitView.setText(questionUnit[questionsCounter]);
         numberPicker.setMaxValue(250);

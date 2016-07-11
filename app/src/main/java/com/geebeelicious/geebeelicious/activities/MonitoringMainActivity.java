@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -70,9 +71,15 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
+        TextView remarksText = (TextView) findViewById(R.id.questionMonitoringConsultationChoice);
         NAButton = (Button) findViewById(R.id.NAButton);
         ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
+
+        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        ECAText.setTypeface(chalkFont);
+        resultsText.setTypeface(chalkFont);
+        remarksText.setTypeface(chalkFont);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment

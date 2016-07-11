@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -36,9 +37,12 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private GrossMotorTest grossMotorTest;
     private CountDownTimer countDownTimer;
 
+    private Typeface chalkFont;
+
     public GrossMotorFragment(){
         this.introStringResource = R.string.grossmotor_intro;
         this.introTime = 3000;
+
     }
 
     @Override
@@ -46,6 +50,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_gross_motor, container, false);
+        chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
 
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
@@ -77,7 +82,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     public void onNAButtonClick(){
         TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
-
+        timerView.setTypeface(chalkFont);
         if (countDownTimer != null){
             countDownTimer.cancel();
         }
@@ -136,15 +141,15 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         hideAnswerButtons();
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
-        
+
         fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
 
         countDownTimer = new CountDownTimer(6000, 1000) {
-            TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
-
+            TextView timerView = (TextView)(view.findViewById(R.id.countdownTV));
             @Override
             public void onTick(long millisUntilFinished) {
                 String timerString = "" + String.format("%01d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished));
+                timerView.setTypeface(chalkFont);
                 timerView.setText(timerString);
             }
 

@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -71,6 +72,8 @@ public class PatientListActivity extends ECAActivity{
             hasSpoken = savedInstanceState.getBoolean("hasSpoken");
         }
 
+        final Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -80,6 +83,7 @@ public class PatientListActivity extends ECAActivity{
                                     "\nBirthdate: " + chosenPatient.getBirthday() +
                                     "\nGender: " + chosenPatient.getGenderString();
                 TextView patientInfoView = (TextView) findViewById(R.id.patientDetailsTV);
+                patientInfoView.setTypeface(chalkFont);
                 patientInfoView.setText(patientInfo);
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -92,6 +96,7 @@ public class PatientListActivity extends ECAActivity{
         });
 
         TextView patientDetailsView = (TextView)findViewById(R.id.patientDetailsTV);
+        patientDetailsView.setTypeface(chalkFont);
         patientDetailsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

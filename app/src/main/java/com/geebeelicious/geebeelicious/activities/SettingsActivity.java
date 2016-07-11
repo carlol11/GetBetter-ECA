@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.adapters.EyeChartsAdapter;
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 
@@ -75,7 +76,7 @@ public class SettingsActivity extends ActionBarActivity {
         schools = getBetterDb.getAllSchools();
         getBetterDb.closeDatabase();
 
-        SchoolsAdapter schoolsAdapter = new SchoolsAdapter(SettingsActivity.this, schools);
+        SchoolsAdapter schoolsAdapter = new SchoolsAdapter(SettingsActivity.this, schools, chalkFont);
         schoolsAdapter.setDropDownViewResource(R.layout.item_school_list);
         Spinner schoolSpinner = (Spinner)findViewById(R.id.schoolSpinner);
         schoolSpinner.setAdapter(schoolsAdapter);
@@ -113,7 +114,11 @@ public class SettingsActivity extends ActionBarActivity {
 
     //Add option to select visual acuity chart to be used in test
     private void addVisualAcuityChartSetting(){
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SettingsActivity.this, R.array.visualacuity_chart_names, R.layout.item_eyechart_list);
+        ArrayList<String> chartNames = new ArrayList<>();
+        chartNames.add("Snellen Eye Chart");
+        chartNames.add("Tumbling E Eye Chart");
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SettingsActivity.this, R.array.visualacuity_chart_names, R.layout.item_eyechart_list);
+        EyeChartsAdapter adapter = new EyeChartsAdapter(this, chartNames, chalkFont);
         adapter.setDropDownViewResource(R.layout.item_eyechart_list);
         Spinner chartSpinner = (Spinner)findViewById(R.id.visualacuitychartSpinner);
         chartSpinner.setAdapter(adapter);

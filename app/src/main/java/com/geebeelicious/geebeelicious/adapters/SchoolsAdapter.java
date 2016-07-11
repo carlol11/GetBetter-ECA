@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,9 @@ import com.geebeelicious.geebeelicious.models.consultation.School;
  */
 public class SchoolsAdapter extends ArrayAdapter<School>{
 
-    public SchoolsAdapter(Context context, ArrayList<School> schools){
+    private Typeface chalkFont;
+
+    public SchoolsAdapter(Context context, ArrayList<School> schools, Typeface chalkFont){
         super(context, 0, schools);
     }
 
@@ -34,6 +37,8 @@ public class SchoolsAdapter extends ArrayAdapter<School>{
 
         TextView schoolName = (TextView)convertView.findViewById(R.id.school_name_list);
         TextView schoolMunicipality = (TextView) convertView.findViewById(R.id.school_municipality_list);
+        schoolName.setTypeface(chalkFont);
+        schoolMunicipality.setTypeface(chalkFont);
 
         schoolName.setText(school.getSchoolName());
         schoolMunicipality.setText(school.getMunicipality());

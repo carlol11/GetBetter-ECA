@@ -63,7 +63,7 @@ public class PatientListActivity extends ECAActivity{
         inputSearch = (EditText)findViewById(R.id.search_input);
         inputSearch.setTypeface(chalkFont);
 
-        patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients);
+        patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients, chalkFont);
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
         patientListView.setAdapter(patientsAdapter);
 

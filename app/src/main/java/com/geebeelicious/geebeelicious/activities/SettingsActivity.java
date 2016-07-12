@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.adapters.EyeChartsAdapter;
@@ -25,6 +26,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.geebeelicious.geebeelicious.models.consultation.School;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Kate.
@@ -48,6 +51,14 @@ public class SettingsActivity extends ActionBarActivity {
 
         chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
 
+        TextView schoolNameTV = (TextView)findViewById(R.id.schoolnameTV);
+        schoolNameTV.setTypeface(chalkFont);
+
+        TextView chartNameTV = (TextView)findViewById(R.id.visualacuitychartNameTV);
+        chartNameTV.setTypeface(chalkFont);
+
+        TextView calibrateHearingTV = (TextView)findViewById(R.id.calibrateHearingTV);
+        calibrateHearingTV.setTypeface(chalkFont);
 
         addChooseSchoolSetting();
         addVisualAcuityChartSetting();
@@ -117,7 +128,8 @@ public class SettingsActivity extends ActionBarActivity {
         ArrayList<String> chartNames = new ArrayList<>();
         chartNames.add("Snellen Eye Chart");
         chartNames.add("Tumbling E Eye Chart");
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SettingsActivity.this, R.array.visualacuity_chart_names, R.layout.item_eyechart_list);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SettingsActivity.this, R.array.visualacuity_chart_names, R.layout.item_eyechart_list);w
+
         EyeChartsAdapter adapter = new EyeChartsAdapter(this, chartNames, chalkFont);
         adapter.setDropDownViewResource(R.layout.item_eyechart_list);
         Spinner chartSpinner = (Spinner)findViewById(R.id.visualacuitychartSpinner);

@@ -24,6 +24,7 @@ public class EyeChartsAdapter extends ArrayAdapter<String>{
 
     public EyeChartsAdapter(Context context, ArrayList<String> chartNames, Typeface chalkFont){
         super(context, 0, chartNames);
+        this.chalkFont = chalkFont;
     }
 
     @Override

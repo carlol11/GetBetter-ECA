@@ -25,6 +25,7 @@ public class SchoolsAdapter extends ArrayAdapter<School>{
 
     public SchoolsAdapter(Context context, ArrayList<School> schools, Typeface chalkFont){
         super(context, 0, schools);
+        this.chalkFont = chalkFont;
     }
 
     @Override
@@ -56,6 +57,8 @@ public class SchoolsAdapter extends ArrayAdapter<School>{
 
         TextView schoolName = (TextView)convertView.findViewById(R.id.school_name_list);
         TextView schoolMunicipality = (TextView) convertView.findViewById(R.id.school_municipality_list);
+        schoolName.setTypeface(chalkFont);
+        schoolMunicipality.setTypeface(chalkFont);
 
         schoolName.setText(school.getSchoolName());
         schoolMunicipality.setText(school.getMunicipality());

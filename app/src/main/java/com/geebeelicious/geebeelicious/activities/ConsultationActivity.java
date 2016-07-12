@@ -83,16 +83,13 @@ public class ConsultationActivity extends ECAActivity{
         if(isOnGoingFlag){
             isOnGoingFlag = false;
 
-            if(consultationHelper.isTherePatientComplaints()) {
-                String hpi = consultationHelper.getHPI();
-                TextView hpiTextView = (TextView) findViewById(R.id.hpiPlaceholder);
+            String hpi = consultationHelper.getHPI();
+            TextView hpiTextView = (TextView) findViewById(R.id.hpiPlaceholder);
 
-                Log.d(TAG, "HPI: " + hpi);
-                consultationHelper.saveToDatabase(hpi); //closes the database after saving the hpi
-                hpiTextView.setText(hpi);
-            } else { //TODO: [UI PART] put the condition here if no complaints
-                Log.d(TAG, "No chief complaint found ");
-            }
+            Log.d(TAG, "HPI: " + hpi);
+            consultationHelper.saveToDatabase(hpi); //closes the database after saving the hpi
+            hpiTextView.setText(hpi);
+
             doneConsultation();
         }
     }

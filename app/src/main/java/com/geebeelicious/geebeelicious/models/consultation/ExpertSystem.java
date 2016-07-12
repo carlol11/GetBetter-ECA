@@ -13,15 +13,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
 
-import com.geebeelicious.geebeelicious.models.consultation.ChiefComplaint;
-import com.geebeelicious.geebeelicious.models.consultation.HPI;
-import com.geebeelicious.geebeelicious.models.consultation.Impressions;
-import com.geebeelicious.geebeelicious.models.consultation.Patient;
-import com.geebeelicious.geebeelicious.models.consultation.PatientAnswers;
-import com.geebeelicious.geebeelicious.models.consultation.PositiveResults;
-import com.geebeelicious.geebeelicious.models.consultation.Symptom;
-import com.geebeelicious.geebeelicious.models.consultation.SymptomFamily;
-
 /*
 * The original code was created by Mike Dayupay 2015.
 * For the purpose of integration, the code was modified by Mary Grace Malana (2015).
@@ -299,15 +290,7 @@ public class ExpertSystem {
 
     private void checkForRuledOutImpression(int impressionId) {
 
-        //Log.d("Impression id", impressionId + "");
         ArrayList<String> hardSymptoms = getBetterDb.getHardSymptoms(impressionId);
-
-//        for(String hard : hardSymptoms) {
-//            Log.d("Hard symptoms: ", hard);
-//        }
-
-//        for(int i = 0; i < ruledOutSymptomList.size(); i++)
-//            Log.d("ruled out", ruledOutSymptomList.get(i));
 
         if(ruledOutSymptomList.containsAll(hardSymptoms)) {
             ruledOutImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
@@ -323,32 +306,40 @@ public class ExpertSystem {
     }
 
     public String getHPI(){
-        String HPI = generateIntroductionSentence();
-        ArrayList<PositiveResults> positiveSymptoms;
+        StringBuilder HPI = new StringBuilder(generateIntroductionSentence());
 
-        positiveSymptoms = getBetterDb.getPositiveSymptoms(answers);
+        if(patientChiefComplaints != null) {
+            ArrayList<PositiveResults> positiveSymptoms;
 
-        //TODO:[NOT SCOPE] Use of 'his' it should be gender specific
-        for(int i = 0; i < positiveSymptoms.size(); i++) {
-            if (positiveSymptoms.get(i).getPositiveName() == "High Fever") {
-                HPI += "His " + positiveSymptoms.get(i).getPositiveAnswerPhrase() + " ";
-            } else {
-                HPI += "He " + positiveSymptoms.get(i).getPositiveAnswerPhrase() + " ";
+            positiveSymptoms = getBetterDb.getPositiveSymptoms(answers);
+
+            //TODO:[NOT SCOPE] Use of 'his' it should be gender specific
+            for(int i = 0; i < positiveSymptoms.size(); i++) {
+                if (positiveSymptoms.get(i).getPositiveName() == "High Fever") {
+                    HPI.append("His ").append(positiveSymptoms.get(i).getPositiveAnswerPhrase()).append(" ");
+                } else {
+                    HPI.append("He ").append(positiveSymptoms.get(i).getPositiveAnswerPhrase()).append(" ");
+                }
             }
         }
 
-        return HPI;
+        return HPI.toString();
     }
 
     private String generateIntroductionSentence () {
 
-        String introductionSentence = "";
+        String introductionSentence;
         String patientGender = getGender(patient.getGender());
         String patientName = patient.getFirstName() + " " + patient.getLastName();
         int patientAge = getAge(patient.getBirthday());
 
-        introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge + " years old, " +
-                " is complaining about " + attachComplaints();
+        if (patientChiefComplaints == null){
+            introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge +
+                    " years old. Patient's complaint is not within the scope of the expert system.";
+        } else {
+            introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge + " years old, " +
+                    " is complaining about " + attachComplaints();
+        }
 
         return introductionSentence;
     }

@@ -77,8 +77,4 @@ public class ConsultationHelper {
     public void saveToDatabase(String hpi){
         expertSystem.saveToDatabase(new HPI(patient.getPatientID(), hpi, dateConsultation));
     }
-
-    public boolean isTherePatientComplaints(){
-        return patientChiefComplaints.size() > 0;
-    }
 }

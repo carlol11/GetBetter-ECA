@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:background="@style/DefaultBackground"
+        style="@style/DefaultBackground"
         android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:id="@+id/ishiharaPlate"
             android:layout_centerInParent="true"
-            android:background="#ffffff" />
+            style="@style/DefaultBackground" />
 
     </RelativeLayout>
 
@@ -26,7 +26,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:padding="10dp"
@@ -40,7 +39,7 @@
             android:layout_marginRight="10dp"
             android:scaleType="fitCenter"
             android:id="@+id/cvt_option1"
-            android:background="#FF80AB"
+            android:background="@drawable/testbutton_pink"
             android:layout_weight="0.2" />
         <ImageButton
             android:layout_width="wrap_content"
@@ -49,7 +48,7 @@
             android:layout_marginRight="10dp"
             android:scaleType="fitCenter"
             android:id="@+id/cvt_option2"
-            android:background="#FFE57F"
+            android:background="@drawable/testbutton_yellow"
             android:layout_weight="0.2" />
         <ImageButton
             android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
             android:layout_marginRight="10dp"
             android:scaleType="fitCenter"
             android:id="@+id/cvt_option3"
-            android:background="#CCFF90"
+            android:background="@drawable/testbutton_green"
             android:layout_weight="0.2" />
         <ImageButton
             android:layout_width="wrap_content"
@@ -67,7 +66,7 @@
             android:layout_marginRight="10dp"
             android:scaleType="fitCenter"
             android:id="@+id/cvt_option4"
-            android:background="#8C9EFF"
+            android:background="@drawable/testbutton_blue"
             android:layout_weight="0.2" />
         <ImageButton
             android:layout_width="wrap_content"
@@ -75,7 +74,7 @@
             android:padding="5dp"
             android:scaleType="fitCenter"
             android:id="@+id/cvt_option5"
-            android:background="#B388FF"
+            android:background="@drawable/testbutton_purple"
             android:layout_weight="0.2" />
     </LinearLayout>
 

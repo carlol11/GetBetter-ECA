@@ -5,6 +5,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:buttonStyle">@style/DefaultButton</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#FFF9C4</item>
         <item name="android:textColorTertiary">#FFFDE7</item>
@@ -25,8 +26,9 @@
     </style>
 
     <style name="TestButton" parent="android:Widget.Button">
-        <item name="android:textSize">30sp</item>
-        <item name="android:background">#81C784</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/chalkoutline</item>
         <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
     </style>

@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FineMotorFragment">
+    tools:context=".fragments.FineMotorFragment"
+    style="@style/DefaultBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:background="#ffffff"
         android:padding="10dp"
         android:layout_above="@+id/linearLayoutAnswers">
 
@@ -24,12 +24,12 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:padding="10dp"
         android:id="@+id/linearLayoutAnswers"
         android:weightSum="1"
+        style="@style/DefaultBackground"
         android:visibility="invisible">
 
         <Button

@@ -232,8 +232,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     private void clearTextViews() {
-        ECAText.setText("Placeholder for Instructions");
-        resultsText.setText("Placeholder for Results");
+        ECAText.setText("");
+        resultsText.setText("");
     }
 
     private void initializeOldFragment() {

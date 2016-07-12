@@ -5,6 +5,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
@@ -83,8 +85,11 @@ public class ConsultationActivity extends ECAActivity{
 
             if(consultationHelper.isTherePatientComplaints()) {
                 String hpi = consultationHelper.getHPI();
+                TextView hpiTextView = (TextView) findViewById(R.id.hpiPlaceholder);
+
                 Log.d(TAG, "HPI: " + hpi);
                 consultationHelper.saveToDatabase(hpi); //closes the database after saving the hpi
+                hpiTextView.setText(hpi);
             } else { //TODO: [UI PART] put the condition here if no complaints
                 Log.d(TAG, "No chief complaint found ");
             }
@@ -94,6 +99,8 @@ public class ConsultationActivity extends ECAActivity{
 
     private void doneConsultation() {
         CountDownTimer timer;
+        LinearLayout hpiLayout = (LinearLayout) findViewById(R.id.hpiLayout);
+        RelativeLayout choicesLayout = (RelativeLayout) findViewById(R.id.choicesLayout);
 
         timer = new CountDownTimer(6000, 6000) { //timer for the transition
             @Override
@@ -106,6 +113,9 @@ public class ConsultationActivity extends ECAActivity{
                 finish();
             }
         };
+
+        hpiLayout.setVisibility(View.VISIBLE);
+        choicesLayout.setVisibility(View.GONE);
 
         ecaFragment.sendToECAToSPeak(R.string.consultation_end);
         timer.start();

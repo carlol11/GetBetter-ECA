@@ -117,6 +117,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public Record getRecord(){
         return record;
     }
@@ -276,7 +281,9 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.monitoringFragmentContainer, fragment, fragments[currentFragmentIndex]);
-        transaction.commit();
+        if(!isFinishing()){
+            transaction.commit();
+        }
     }
 
     private void hideKeyboard(View v) {
@@ -402,6 +409,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
         return "";
     }
+
+
 
     //TODO: Erase this if di na kelangan
 //    private void resizeView(final View v, final int toHeight, final int toWidth) {

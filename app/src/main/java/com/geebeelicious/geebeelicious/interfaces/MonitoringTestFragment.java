@@ -13,6 +13,7 @@ public abstract class MonitoringTestFragment extends Fragment{
     protected int endStringResource;
     protected int introTime;
     protected int endTime;
+    protected boolean isEndEmotionHappy; //true happy, false concern
 
     protected View view;
 
@@ -30,6 +31,10 @@ public abstract class MonitoringTestFragment extends Fragment{
 
     public int getEndTime() {
         return endTime;
+    }
+
+    public boolean isEndEmotionHappy() {
+        return isEndEmotionHappy;
     }
 
     public void hideFragmentMainView(){

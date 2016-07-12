@@ -177,9 +177,11 @@ public class FineMotorFragment extends MonitoringTestFragment {
         }
 
         if(numPass < 2){
+            this.isEndEmotionHappy = false;
             this.endStringResource = R.string.finemotor_fail;
             this.endTime = 4000;
         } else {
+            this.isEndEmotionHappy = true;
             this.endStringResource = R.string.finemotor_pass;
             this.endTime = 3000;
         }

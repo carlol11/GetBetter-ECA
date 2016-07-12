@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
@@ -324,13 +325,17 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
-    private void runTransition(final int time, final String ecaText, final Fragment nextFragment) {
+    private void runTransition(final int time, final String ecaText, final Fragment nextFragment, final boolean isConcern) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 CountDownTimer timer;
 
                 maximizeECAFragment();
+                if(isConcern){
+                    ecaFragment.sendToECAToEmote(ECAFragment.Emotion.CONCERN, 1);
+                }
+
                 ecaFragment.sendToECAToSpeak(ecaText);
 
                 timer = new CountDownTimer(time, 1000) { //timer for the transition
@@ -342,6 +347,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                     @Override
                     public void onFinish() {
                         minimizeECAFragment();
+
+                        if (isConcern){
+                            ecaFragment.sendToECAToEmote(ECAFragment.Emotion.HAPPY, 2);
+                        }
 
                         if(nextFragment != null){
                             replaceFragment(nextFragment);
@@ -362,6 +371,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private void doTransitionWithResult(MonitoringTestFragment currentFragment, Fragment nextFragment) {
         String ecaText = tryGettingStringResource(currentFragment.getEndStringResource());
         int time = currentFragment.getEndTime();
+        boolean isHappy = currentFragment.isEndEmotionHappy();
 
         currentFragment.hideFragmentMainView();
 
@@ -370,13 +380,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             time += ((MonitoringTestFragment) nextFragment).getIntroTime();
         }
 
-        runTransition(time, ecaText, nextFragment);
+        runTransition(time, ecaText, nextFragment, isHappy);
 
     }
 
     private void doTransitionWithoutResult(MonitoringTestFragment nextFragment){
         String ecaText = tryGettingStringResource(nextFragment.getIntroStringResource());
-        runTransition(nextFragment.getIntroTime(), ecaText, nextFragment);
+        runTransition(nextFragment.getIntroTime(), ecaText, nextFragment, true);
     }
 
     private void endActivity(Fragment currentFragment) {
@@ -398,7 +408,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
         ecaText += " " + getString(R.string.monitoring_end);
         time += 3000;
-        runTransition(time, ecaText, null);
+        runTransition(time, ecaText, null, true);
     }
 
     private String tryGettingStringResource(int res){

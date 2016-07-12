@@ -95,14 +95,17 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private void updateTestEndRemark(int result) {
         switch (result){
             case 0:
+                this.isEndEmotionHappy = true;
                 this.endStringResource = R.string.grossmotor_pass;
                 this.endTime = 3000;
                 break;
             case 1:
+                this.isEndEmotionHappy = false;
                 this.endStringResource = R.string.grossmotor_fail;
                 this.endTime = 5000;
                 break;
             default:
+                this.isEndEmotionHappy = true;
                 this.endStringResource = R.string.grossmotor_na;
                 this.endTime = 4000;
                 break;

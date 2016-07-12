@@ -3,7 +3,6 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,9 +106,11 @@ public class ColorVisionFragment extends MonitoringTestFragment {
 
     private void updateTestEndRemark(boolean normal) {
         if (normal){
+            this.isEndEmotionHappy = true;
             this.endStringResource = R.string.color_vision_pass;
             this.endTime = 3000;
         } else {
+            this.isEndEmotionHappy = false;
             this.endStringResource = R.string.color_vision_fail;
             this.endTime = 5000;
         }

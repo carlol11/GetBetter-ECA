@@ -157,9 +157,11 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         int lineNum = Integer.parseInt(lineNumber);
 
         if (lineNum < 8){
+            this.isEndEmotionHappy = false;
             this.endStringResource = R.string.visual_acuity_fail;
             this.endTime = 5000;
         } else {
+            this.isEndEmotionHappy = true;
             this.endStringResource = R.string.visual_acuity_pass;
             this.endTime = 3000;
         }

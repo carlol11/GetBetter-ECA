@@ -145,9 +145,11 @@ public class HearingMainFragment extends MonitoringTestFragment {
         Record record = fragmentInteraction.getRecord();
 
         if (record.getHearingRight().equals("Normal Hearing") && record.getHearingLeft().equals("Normal Hearing")){
+            this.isEndEmotionHappy = true;
             this.endStringResource = R.string.hearing_pass;
             this.endTime = 3000;
         } else {
+            this.isEndEmotionHappy = false;
             this.endStringResource = R.string.hearing_fail;
             this.endTime = 5000;
         }

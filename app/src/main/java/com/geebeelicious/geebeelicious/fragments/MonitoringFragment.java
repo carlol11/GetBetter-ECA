@@ -131,12 +131,15 @@ public class MonitoringFragment extends MonitoringTestFragment {
 
         switch (bmiResult){
             case 0:
+                this.isEndEmotionHappy = false;
                 resourseString= "monitoring_remark_below";
                 break;
             case 1:
+                this.isEndEmotionHappy = true;
                 resourseString= "monitoring_remark_normal";
                 break;
             default:
+                this.isEndEmotionHappy = false;
                 resourseString= "monitoring_remark_above";
                 break;
         }

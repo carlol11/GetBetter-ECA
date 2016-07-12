@@ -29,10 +29,13 @@ public class ECAFragment extends Fragment {
     protected VHMobileMain vhmain = null;
     protected VHMobileSurfaceView _VHview = null;
 
+    public enum Emotion {
+        HAPPY, CONCERN
+    }
+
     public ECAFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,6 +122,7 @@ public class ECAFragment extends Fragment {
         Log.d(TAG, "The onDestroy() event");
     }
 
+    //TODO: Delete this na lang. no need na
     public interface OnFragmentInteractionListener {
         void onClickECAFragment();
     }
@@ -133,5 +137,16 @@ public class ECAFragment extends Fragment {
 
         Log.d(TAG, "ECA speaks: " + sentence);
         VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
+    }
+
+    public void sendToECAToEmote(Emotion emotion, int i){
+        switch (emotion){
+            case HAPPY:
+                VHMobileLib.executeSB("doHappiness(characterName, "+i+")");
+                break;
+            case CONCERN:
+                VHMobileLib.executeSB("doConcern(characterName, "+i+")");
+                break;
+        }
     }
 }

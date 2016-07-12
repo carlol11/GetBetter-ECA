@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:background="#ffffff"
+        android:background="@style/DefaultBackground"
         android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView

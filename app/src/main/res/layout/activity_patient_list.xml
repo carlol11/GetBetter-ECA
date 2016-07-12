@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Placeholder for Instructions from GeeBee"
+            android:text=""
             android:id="@+id/placeholderECAText"
             android:paddingTop="10dp"
             android:padding="5dp"

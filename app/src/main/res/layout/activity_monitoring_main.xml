@@ -34,7 +34,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Placeholder for Instructions from GeeBee"
             android:id="@+id/placeholderECAText"
             android:paddingTop="10dp"
             android:padding="5dp"
@@ -44,7 +43,7 @@
             style="@style/DefaultBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Placeholder for Results"
+            android:text=""
             android:id="@+id/placeholderResults"
             android:paddingTop="10dp"
             android:padding="5dp"/>

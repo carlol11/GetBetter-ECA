@@ -52,7 +52,7 @@
     <string name="cancel">Cancel</string>
 
     <!-- ECA Strings-->
-    <string name="app_intro">"Hi, I'm Geebee! I'm your personal healthcare assistant. Let's get started!"</string>
+    <string name="app_intro">"Hi, I'm Jeebee! I'm your personal healthcare assistant. Let's get started!"</string>
     <string name="patient_list_instruction">What\'s your name? Find your name in the list. If it\'s not there, press new user so I can get to know you better.</string>
     <string name="add_patient_confirm">Is this correct?</string>
     <string name="monitoring_consultation_choice">What do you want to do? If you want to have a check up, press monitoring. If you feel sick, press consultation, and let\'s talk about it.</string>

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/chartLine"
             android:layout_centerInParent="true"
-            style="@style/DefaultBackground" />
+            android:background="#FFFFFF"/>
 
     </RelativeLayout>
 

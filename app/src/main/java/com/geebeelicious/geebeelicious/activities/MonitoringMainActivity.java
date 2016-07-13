@@ -129,6 +129,14 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+
+        if (currentFragment instanceof GrossMotorFragment){
+            ((GrossMotorFragment) currentFragment).onBackPressed();
+        } else if (currentFragment instanceof HearingMainFragment) {
+            ((HearingMainFragment) currentFragment).onBackPressed();
+        }
+
         finish();
     }
 

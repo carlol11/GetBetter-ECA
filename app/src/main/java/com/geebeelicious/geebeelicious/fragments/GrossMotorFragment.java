@@ -100,6 +100,10 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         fragmentInteraction.doneFragment();
     }
 
+    public void onBackPressed(){
+        grossMotorTest.endTest();
+    }
+
     private void updateTestEndRemark(int result) {
         switch (result){
             case 0:
@@ -192,6 +196,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         answers.setVisibility(View.GONE);
         grossMotorInteraction.onShowNAButton();
     }
+
 
     @Override
     public void onAttach(Activity activity) {

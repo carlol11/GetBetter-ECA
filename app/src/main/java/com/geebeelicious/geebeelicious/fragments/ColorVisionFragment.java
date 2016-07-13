@@ -25,6 +25,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 public class ColorVisionFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
+    private boolean isTestOngoing;
     public ColorVisionFragment(){
         this.introStringResource = R.string.colorVision_intro;
         this.introTime = 3000;
@@ -43,6 +44,8 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         ImageButton option5 = (ImageButton) view.findViewById(R.id.cvt_option5);
         final ImageButton[] buttonList = {option1, option2, option3, option4, option5};
         final IshiharaHelper ishiharaHelper = new IshiharaHelper((ImageView) view.findViewById(R.id.ishiharaPlate), buttonList);
+
+        isTestOngoing = true;
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +95,10 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     }
 
     //Allows test to either go to the next question and save results if the test is done
-    private void updateResults(IshiharaHelper ishiharaHelper){
+    private synchronized void updateResults(IshiharaHelper ishiharaHelper){
         ishiharaHelper.goToNextQuestion();
-        if(ishiharaHelper.isDone()){
+        if(ishiharaHelper.isDone() && isTestOngoing){
+            isTestOngoing = false;
             Record record = fragmentInteraction.getRecord();
             record.setColorVision(ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());

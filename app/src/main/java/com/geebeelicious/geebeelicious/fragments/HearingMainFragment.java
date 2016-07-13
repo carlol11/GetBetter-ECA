@@ -197,4 +197,8 @@ public class HearingMainFragment extends MonitoringTestFragment {
         }
     }
 
+
+    public void onBackPressed() {
+        stopTest();
+    }
 }

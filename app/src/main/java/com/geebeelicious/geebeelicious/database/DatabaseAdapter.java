@@ -150,7 +150,8 @@ public class DatabaseAdapter {
                     c.getString(c.getColumnIndexOrThrow("question_tagalog")),
                     c.getString(c.getColumnIndexOrThrow("responses_english")),
                     c.getString(c.getColumnIndexOrThrow("responses_tagalog")),
-                    c.getInt(c.getColumnIndexOrThrow("symptom_family_id")));
+                    c.getInt(c.getColumnIndexOrThrow("symptom_family_id")),
+                    c.getInt(c.getColumnIndexOrThrow("emotion")));
 
             results.add(symptom);
         }
@@ -186,7 +187,8 @@ public class DatabaseAdapter {
                     c.getString(c.getColumnIndexOrThrow("question_tagalog")),
                     c.getString(c.getColumnIndexOrThrow("responses_english")),
                     c.getString(c.getColumnIndexOrThrow("responses_tagalog")),
-                    c.getInt(c.getColumnIndexOrThrow("symptom_family_id")));
+                    c.getInt(c.getColumnIndexOrThrow("symptom_family_id")),
+                    c.getInt(c.getColumnIndexOrThrow("emotion")));
 
             results.add(symptom);
         }

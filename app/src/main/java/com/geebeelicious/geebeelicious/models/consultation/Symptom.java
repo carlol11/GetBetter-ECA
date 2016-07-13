@@ -13,10 +13,11 @@ public class Symptom {
     private String responsesEnglish;
     private String responsesTagalog;
     private int symptomFamilyId;
+    private int emotion; //1 = happy1, 2 = happy2, 3 = happy3, 4 = concern1, 5 = concern2, 6 = concern3
 
     public Symptom(int symptomId, String symptomNameEnglish, String symptomNameTagalog,
                    String questionEnglish, String questionTagalog, String responsesEnglish,
-                   String responsesTagalog, int symptomFamilyId) {
+                   String responsesTagalog, int symptomFamilyId, int emotion) {
 
         this.symptomId = symptomId;
         this.symptomNameEnglish = symptomNameEnglish;
@@ -26,12 +27,12 @@ public class Symptom {
         this.responsesEnglish = responsesEnglish;
         this.responsesTagalog = responsesTagalog;
         this.symptomFamilyId = symptomFamilyId;
+        this.emotion = emotion;
     }
 
-    public Symptom(int symptomId, String symptomNameEnglish) {
-
-        this.symptomId = symptomId;
+    public Symptom(String symptomNameEnglish, int emotion) {
         this.symptomNameEnglish = symptomNameEnglish;
+        this.emotion = emotion;
     }
 
     public int getSymptomId() {
@@ -96,5 +97,13 @@ public class Symptom {
 
     public void setSymptomFamilyId(int symptomFamilyId) {
         this.symptomFamilyId = symptomFamilyId;
+    }
+
+    public int getEmotion() {
+        return emotion;
+    }
+
+    public void setEmotion(int emotion) {
+        this.emotion = emotion;
     }
 }

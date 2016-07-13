@@ -6,7 +6,7 @@ package com.geebeelicious.geebeelicious.models.consultation;
  * question and the emotion of the question.
  */
 public class Question {
-    int emotion;
+    int emotion; //1 = happy1, 2 = happy2, 3 = happy3, 4 = concern1, 5 = concern2, 6 = concern3
     String questionstring;
 
     public Question(int emotion, String questionstring) {

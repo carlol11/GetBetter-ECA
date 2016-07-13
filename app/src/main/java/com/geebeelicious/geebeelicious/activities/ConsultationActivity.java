@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.ConsultationHelper;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
+import com.geebeelicious.geebeelicious.models.consultation.Question;
+import com.geebeelicious.geebeelicious.models.consultation.Symptom;
 
 /**
  * Created by Mary Grace Malana.
@@ -76,7 +79,7 @@ public class ConsultationActivity extends ECAActivity{
 
     //Determines the course of action depending on user input (Yes or No)
     private void onAnswer(boolean isYes) {
-        String nextQuestion = consultationHelper.getNextQuestion(isYes);
+        Question nextQuestion = consultationHelper.getNextQuestion(isYes);
         if(nextQuestion == null) {
             doWhenConsultationDone();
         }
@@ -128,8 +131,18 @@ public class ConsultationActivity extends ECAActivity{
         timer.start();
     }
 
-    private void setQuestion(String question){
-        ECAText.setText(question);
-        ecaFragment.sendToECAToSpeak(question);
+    private void setQuestion(Question question){
+        String questionString = question.getQuestionstring();
+        int emotion = question.getEmotion();
+
+        ECAText.setText(questionString);
+        ecaFragment.sendToECAToSpeak(questionString);
+
+        if (emotion < 4) {
+            ecaFragment.sendToECAToEmote(ECAFragment.Emotion.HAPPY, emotion - 1);
+        } else if (emotion < 7) {
+            ecaFragment.sendToECAToEmote(ECAFragment.Emotion.CONCERN, emotion - 4);
+        }
+
     }
 }

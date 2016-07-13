@@ -65,7 +65,7 @@ public class ExpertSystem {
         caseRecordId = 0; //just used for placeholder, since the old code saves the users' answers
     }
 
-    public String startExpertSystem(ArrayList<ChiefComplaint> patientChiefComplaints){
+    public Question startExpertSystem(ArrayList<ChiefComplaint> patientChiefComplaints){
         this.patientChiefComplaints = patientChiefComplaints;
 
         resetDatabaseFlags();
@@ -146,15 +146,16 @@ public class ExpertSystem {
         //Log.d("questions size", questions.size() + "");
     }
 
-    private String getQuestion() {
-        String questionAsked;
+    private Question getQuestion() {
+        Question questionAsked;
 
         if(isSymptomFamilyQuestionAnswered(questions.get(currentSymptomIndex).getSymptomFamilyId())) {
-            questionAsked = questions.get(currentSymptomIndex).getQuestionEnglish();
+            Symptom symptom = questions.get(currentSymptomIndex);
+            questionAsked = new Question(symptom.getEmotion(), symptom.getQuestionEnglish());
             flag = true;
         } else {
             getGeneralQuestion(questions.get(currentSymptomIndex).getSymptomFamilyId());
-            questionAsked = generalQuestion.getGeneralQuestionEnglish();
+            questionAsked = new Question(2, generalQuestion.getGeneralQuestionEnglish());
             symptomFamilyId = generalQuestion.getSymptomFamilyId();
             flag = false;
         }
@@ -171,7 +172,7 @@ public class ExpertSystem {
         generalQuestion = getBetterDb.getGeneralQuestion(symptomFamilyId);
     }
 
-    public String getNextQuestion(boolean isYes) { //returns null if no more question
+    public Question getNextQuestion(boolean isYes) { //returns null if no more question
 
 
         if(isYes){

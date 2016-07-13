@@ -39,7 +39,7 @@ public class ConsultationHelper {
         return isConsultationDone;
     }
 
-    public String getNextQuestion(boolean isYes) { //returns null if there's no more questions
+    public Question getNextQuestion(boolean isYes) { //returns null if there's no more questions
         if(isAskingChiefComplaint){ //if asking about chief complaint
             if(isYes){ //if isYes, adds to patient's chief complaints
                 ChiefComplaint complaint = chiefComplaints.get(currentChiefComplaint);
@@ -54,10 +54,10 @@ public class ConsultationHelper {
                     return null;
                 return expertSystem.startExpertSystem(patientChiefComplaints);
             } else {
-                return chiefComplaints.get(currentChiefComplaint).getQuestion();
+                return new Question(3, chiefComplaints.get(currentChiefComplaint).getQuestion());
             }
         } else {
-            String question = expertSystem.getNextQuestion(isYes);
+            Question question = expertSystem.getNextQuestion(isYes);
             if(question == null) { //if there's no more question, consultation is done. also saves the answers
                 isConsultationDone = true;
             }
@@ -65,9 +65,8 @@ public class ConsultationHelper {
         }
     }
 
-
-    public String getFirstQuestion(){
-        return chiefComplaints.get(0).getQuestion();
+    public Question getFirstQuestion(){
+        return new Question(3, chiefComplaints.get(0).getQuestion());
     }
 
     public String getHPI(){

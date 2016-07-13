@@ -2,27 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/DefaultBackground"
-    tools:context=".fragments.VisualAcuityFragment">
+    tools:context=".fragments.VisualAcuityFragment"
+    style="@style/DefaultBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        style="@style/DefaultBackground"
         android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/chartLine"
-            android:layout_centerInParent="true"
-            android:background="#FFFFFF"/>
+            android:background="#FFFFFF"
+            android:layout_centerInParent="true"/>
 
     </RelativeLayout>
 
     <LinearLayout
+        style="@style/DefaultBackground"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -33,6 +33,8 @@
 
         <Button
             android:drawableTop="@drawable/button_face_happy"
+            android:paddingTop="5dp"
+            android:drawablePadding="-5dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
@@ -45,6 +47,8 @@
 
         <Button
             android:drawableTop="@drawable/button_face_sad"
+            android:paddingTop="5dp"
+            android:drawablePadding="-5dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"

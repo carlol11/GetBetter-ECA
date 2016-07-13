@@ -36,6 +36,7 @@
             android:layout_alignParentTop="true" />
 
         <Button
+            android:drawableLeft="@drawable/button_yes_check"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:text="@string/Yes"
@@ -48,6 +49,7 @@
             android:layout_alignEnd="@+id/NoButton" />
 
         <Button
+            android:drawableLeft="@drawable/button_no_cross"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:text="@string/No"

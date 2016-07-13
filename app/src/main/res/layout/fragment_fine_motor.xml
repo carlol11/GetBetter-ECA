@@ -33,6 +33,7 @@
         android:visibility="invisible">
 
         <Button
+            android:drawableLeft="@drawable/button_face_happy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/Yes"
@@ -46,6 +47,7 @@
             style="@style/TestButton"/>
 
         <Button
+            android:drawableLeft="@drawable/button_face_sad"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/No"

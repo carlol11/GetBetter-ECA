@@ -32,6 +32,8 @@
         android:weightSum="1">
 
         <Button
+            android:drawablePadding="-100dp"
+            android:drawableLeft="@drawable/button_face_happy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
@@ -44,6 +46,7 @@
             style="@style/TestButton"/>
 
         <Button
+            android:drawableLeft="@drawable/button_face_sad"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/No"

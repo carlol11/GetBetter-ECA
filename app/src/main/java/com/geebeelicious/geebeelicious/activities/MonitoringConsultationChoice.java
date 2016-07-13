@@ -1,10 +1,12 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
@@ -34,6 +36,13 @@ public class MonitoringConsultationChoice extends ECAActivity{
 
         Button mButton = (Button)findViewById(R.id.monitoringButton);
         Button cButton = (Button)findViewById(R.id.consultationButton);
+        TextView questionView = (TextView)findViewById(R.id.questionMonitoringConsultationChoice);
+
+        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        mButton.setTypeface(chalkFont);
+        cButton.setTypeface(chalkFont);
+        questionView.setTypeface(chalkFont);
+
         final Patient patient = getIntent().getParcelableExtra("patient");
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");

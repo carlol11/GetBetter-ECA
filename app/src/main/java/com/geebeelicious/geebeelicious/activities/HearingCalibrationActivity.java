@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -62,6 +63,8 @@ public class HearingCalibrationActivity extends ActionBarActivity {
                 public void run() {
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.calibrationProgressBar);
                     TextView textView = (TextView) findViewById(R.id.calibrationInProgressTextView);
+                    Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+                    textView.setTypeface(chalkFont);
                     progressBar.setVisibility(View.INVISIBLE);
                     textView.setText("Calibration Done!");
                 }

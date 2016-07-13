@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#1B5E20">
 
     <TextView
+        android:textColor="#FFFFFF"
         android:id="@+id/school_name_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,6 +15,7 @@
         android:padding="5dp"/>
 
     <TextView
+        android:textColor="#FFFFFF"
         android:id="@+id/school_municipality_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

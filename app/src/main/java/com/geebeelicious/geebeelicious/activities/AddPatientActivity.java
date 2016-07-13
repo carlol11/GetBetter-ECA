@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +59,11 @@ public class AddPatientActivity extends ECAActivity{
         radioGroup = (RadioGroup)findViewById(R.id.newPatientRadioChoice);
 
         integrateECA();
+        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        questionView.setTypeface(chalkFont);
+        radioButton0.setTypeface(chalkFont);
+        radioButton1.setTypeface(chalkFont);
+        editText.setTypeface(chalkFont);
 
         if (savedInstanceState != null){
             questionCounter = savedInstanceState.getInt("questionCounter");
@@ -69,6 +75,7 @@ public class AddPatientActivity extends ECAActivity{
         editText.setVisibility(View.VISIBLE);
 
         Button cancelButton = (Button)findViewById(R.id.cancelNewPatientButton);
+        cancelButton.setTypeface(chalkFont);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +88,7 @@ public class AddPatientActivity extends ECAActivity{
         });
 
         Button saveButton = (Button)findViewById(R.id.saveNewPatientButton);
+        saveButton.setTypeface(chalkFont);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

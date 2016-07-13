@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,10 +59,15 @@ public class MonitoringFragment extends MonitoringTestFragment {
 
         setQuestion(questions[questionsCounter]);
 
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+        questionView.setTypeface(chalkFont);
+        unitView.setTypeface(chalkFont);
+
         unitView.setText(questionUnit[questionsCounter]);
         numberPicker.setMaxValue(250);
 
         Button saveButton = (Button)view.findViewById(R.id.saveAnswerButton);
+        saveButton.setTypeface(chalkFont);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

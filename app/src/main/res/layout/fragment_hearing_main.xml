@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/DefaultBackground"
     tools:context=".fragments.HearingMainFragment">
 
     <RelativeLayout
@@ -9,16 +10,21 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:background="#ffffff"
-        android:layout_above="@+id/linearLayoutAnswers"
-        style="@style/DefaultBackground">
+        android:layout_above="@+id/linearLayoutAnswers">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hearingTestImage"
+            android:layout_centerInParent="true"
+            android:src="@drawable/hearing_test"/>
+
     </RelativeLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayoutAnswers"

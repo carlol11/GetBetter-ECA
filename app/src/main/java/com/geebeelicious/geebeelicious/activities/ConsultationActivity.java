@@ -1,5 +1,6 @@
 package com.geebeelicious.geebeelicious.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -37,12 +38,17 @@ public class ConsultationActivity extends ECAActivity{
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
 
+        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        yesButton.setTypeface(chalkFont);
+        noButton.setTypeface(chalkFont);
+
         patient = getIntent().getExtras().getParcelable("patient");
         String dateConsultation = getIntent().getStringExtra("currentDate");
 
         isOnGoingFlag = true;
         consultationHelper = new ConsultationHelper(this, patient, dateConsultation);
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
+        ECAText.setTypeface(chalkFont);
 
         integrateECA();
 

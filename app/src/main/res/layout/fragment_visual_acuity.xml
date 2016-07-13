@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/DefaultBackground"
     tools:context=".fragments.VisualAcuityFragment">
 
     <RelativeLayout
@@ -9,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:background="#ffffff"
+        style="@style/DefaultBackground"
         android:layout_above="@+id/linearLayoutAnswers">
 
         <ImageView
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/chartLine"
             android:layout_centerInParent="true"
-            android:background="#ffffff" />
+            style="@style/DefaultBackground" />
 
     </RelativeLayout>
 

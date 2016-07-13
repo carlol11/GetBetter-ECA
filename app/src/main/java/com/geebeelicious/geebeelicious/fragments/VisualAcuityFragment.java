@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,9 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         final ChartHelper chartHelper = new ChartHelper(chartView, getChartPreference());
         yesButton = (Button) view.findViewById(R.id.YesButton);
         noButton = (Button) view.findViewById(R.id.NoButton);
-
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+        yesButton.setTypeface(chalkFont);
+        noButton.setTypeface(chalkFont);
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override

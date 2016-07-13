@@ -3,6 +3,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,7 +50,9 @@ public class HearingMainFragment extends MonitoringTestFragment {
         hearingTest = new HearingTest();
         final double[] calibrationData = hearingTest.getCalibrationData(activity);
 
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
         final Button yesButton = (Button)view.findViewById(R.id.YesButton);
+        yesButton.setTypeface(chalkFont);
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,13 +62,13 @@ public class HearingMainFragment extends MonitoringTestFragment {
 
         final Runnable backgroundFlash = new Runnable(){
             public void run(){
-                yesButton.setBackgroundColor(Color.parseColor("#18FFFF"));
+                yesButton.setBackgroundColor(Color.parseColor("#69F0AE"));
             }
         };
 
         final Runnable backgroundNormal = new Runnable(){
             public void run(){
-                yesButton.setBackgroundColor(Color.parseColor("#80DEEA"));
+                yesButton.setBackgroundColor(Color.parseColor("#81C784"));
             }
         };
 

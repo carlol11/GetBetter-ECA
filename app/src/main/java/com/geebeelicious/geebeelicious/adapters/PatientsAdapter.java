@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,15 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
 
     private List<Patient> patientList = null;
     private ArrayList<Patient> arrayPatientList;
+    private Typeface chalkFont;
 
 
-    public PatientsAdapter(Context context, ArrayList<Patient> patients) {
+    public PatientsAdapter(Context context, ArrayList<Patient> patients, Typeface chalkFont) {
         super(context, 0, patients);
         this.patientList = patients;
         this.arrayPatientList = new ArrayList<>();
         this.arrayPatientList.addAll(patientList);
+        this.chalkFont = chalkFont;
     }
 
     @Override
@@ -54,10 +57,12 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_patient_list, parent, false);
         }
-
         TextView patientName = (TextView)convertView.findViewById(R.id.patient_name_list);
         TextView patientGender = (TextView)convertView.findViewById(R.id.patient_gender_list);
         TextView patientBirthDate = (TextView)convertView.findViewById(R.id.patient_birthdate_list);
+        patientName.setTypeface(chalkFont);
+        patientGender.setTypeface(chalkFont);
+        patientBirthDate.setTypeface(chalkFont);
         patientName.setText(patient.getFirstName() + " " + patient.getLastName());
         patientGender.setText(patient.getGenderString());
         patientBirthDate.setText(patient.getBirthday());

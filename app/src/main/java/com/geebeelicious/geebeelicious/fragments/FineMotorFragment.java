@@ -4,6 +4,7 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -126,6 +127,9 @@ public class FineMotorFragment extends MonitoringTestFragment {
         Button buttonYes = (Button) view.findViewById(R.id.YesButton);
         Button buttonNo = (Button) view.findViewById(R.id.NoButton);
 
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+        buttonYes.setTypeface(chalkFont);
+        buttonNo.setTypeface(chalkFont);
 
         buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override

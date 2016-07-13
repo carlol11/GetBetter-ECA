@@ -26,8 +26,8 @@ public class ConsultationHelper {
         isConsultationDone = false;
         isAskingChiefComplaint = true;
         currentChiefComplaint = 0;
-        chiefComplaints = new ArrayList<ChiefComplaint>();
-        patientChiefComplaints = new ArrayList<ChiefComplaint>();
+        chiefComplaints = new ArrayList<>();
+        patientChiefComplaints = new ArrayList<>();
         this.patient = patient;
         this.dateConsultation = dateConsultation;
         expertSystem = new ExpertSystem(context, patient);

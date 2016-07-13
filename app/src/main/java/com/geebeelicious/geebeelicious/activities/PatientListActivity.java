@@ -75,27 +75,6 @@ public class PatientListActivity extends ECAActivity{
             hasSpoken = savedInstanceState.getBoolean("hasSpoken");
         }
 
-        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                chosenPatient = patients.get(position);
-                String patientInfo = "First Name: " + chosenPatient.getFirstName() +
-                        "\nLast Name: " + chosenPatient.getLastName() +
-                        "\nBirthdate: " + chosenPatient.getBirthday() +
-                        "\nGender: " + chosenPatient.getGenderString();
-                TextView patientInfoView = (TextView) findViewById(R.id.patientDetailsTV);
-                patientInfoView.setTypeface(chalkFont);
-                patientInfoView.setText(patientInfo);
-
-                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                mgr.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
-
-                ecaFragment.sendToECAToSpeak("Are you " + chosenPatient.getFirstName() +
-                        " " + chosenPatient.getLastName() + "?");
-
-            }
-        });
-
         TextView patientDetailsView = (TextView)findViewById(R.id.patientDetailsTV);
         patientDetailsView.setTypeface(chalkFont);
         patientDetailsView.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +85,7 @@ public class PatientListActivity extends ECAActivity{
             }
         });
 
-        Button selectPatientButton = (Button)findViewById(R.id.selectPatientButton);
+        final Button selectPatientButton = (Button)findViewById(R.id.selectPatientButton);
         selectPatientButton.setTypeface(chalkFont);
         selectPatientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +108,30 @@ public class PatientListActivity extends ECAActivity{
                 finish();
             }
         });
+
+        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                chosenPatient = patients.get(position);
+                String patientInfo = "First Name: " + chosenPatient.getFirstName() +
+                        "\nLast Name: " + chosenPatient.getLastName() +
+                        "\nBirthdate: " + chosenPatient.getBirthday() +
+                        "\nGender: " + chosenPatient.getGenderString();
+                TextView patientInfoView = (TextView) findViewById(R.id.patientDetailsTV);
+                patientInfoView.setTypeface(chalkFont);
+                patientInfoView.setText(patientInfo);
+
+                selectPatientButton.setEnabled(true);
+
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
+
+                ecaFragment.sendToECAToSpeak("Are you " + chosenPatient.getFirstName() +
+                        " " + chosenPatient.getLastName() + "?");
+
+            }
+        });
+
 
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override

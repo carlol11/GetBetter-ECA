@@ -65,7 +65,8 @@
                 android:id="@+id/selectPatientButton"
                 android:layout_marginTop="30dp"
                 android:layout_below="@+id/addPatientButton"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:enabled="false"/>
 
         </RelativeLayout>
 

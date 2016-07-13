@@ -29,6 +29,7 @@ public class ConsultationActivity extends ECAActivity{
     private final static String TAG = "ConsultationActivity";
     private boolean isOnGoingFlag;
     private Patient patient;
+    private Typeface chalkFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class ConsultationActivity extends ECAActivity{
         Button yesButton = (Button) findViewById(R.id.YesButton);
         Button noButton = (Button) findViewById(R.id.NoButton);
 
-        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         yesButton.setTypeface(chalkFont);
         noButton.setTypeface(chalkFont);
 
@@ -90,7 +91,10 @@ public class ConsultationActivity extends ECAActivity{
             isOnGoingFlag = false;
 
             String hpi = consultationHelper.getHPI();
+            TextView hpiTitle = (TextView)findViewById(R.id.hpiTitle);
             TextView hpiTextView = (TextView) findViewById(R.id.hpiPlaceholder);
+            hpiTitle.setTypeface(chalkFont);
+            hpiTextView.setTypeface(chalkFont);
 
             Log.d(TAG, "HPI: " + hpi);
             consultationHelper.saveToDatabase(hpi); //closes the database after saving the hpi

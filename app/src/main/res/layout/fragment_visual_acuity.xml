@@ -32,24 +32,21 @@
         android:weightSum="1">
 
         <Button
-            android:drawablePadding="-100dp"
-            android:drawableLeft="@drawable/button_face_happy"
+            android:drawableTop="@drawable/button_face_happy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/Yes"
             android:id="@+id/YesButton"
             android:minWidth="250dp"
             android:layout_weight="0.50"
-            style="@style/TestButton"/>
+            style="@style/DefaultButton"/>
 
         <Button
-            android:drawableLeft="@drawable/button_face_sad"
+            android:drawableTop="@drawable/button_face_sad"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/No"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"

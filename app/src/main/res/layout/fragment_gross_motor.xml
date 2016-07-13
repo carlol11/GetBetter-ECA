@@ -35,10 +35,9 @@
         style="@style/DefaultBackground">
 
         <Button
-            android:drawableLeft="@drawable/button_face_happy"
+            android:drawableTop="@drawable/button_face_happy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/Yes"
             android:id="@+id/YesButton"
             android:minWidth="250dp"
             android:layout_marginRight="10dp"
@@ -49,10 +48,9 @@
             style="@style/TestButton"/>
 
         <Button
-            android:drawableLeft="@drawable/button_face_sad"
+            android:drawableTop="@drawable/button_face_sad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/No"
             android:id="@+id/NoButton"
             android:minWidth="250dp"
             android:layout_marginRight="10dp"

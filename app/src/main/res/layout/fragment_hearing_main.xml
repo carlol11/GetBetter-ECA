@@ -31,10 +31,9 @@
         android:weightSum="1">
 
         <Button
-            android:drawableLeft="@drawable/button_face_happy"
+            android:drawableTop="@drawable/button_face_happy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/Yes"
             android:id="@+id/YesButton"
             style="@style/TestButton"/>
 

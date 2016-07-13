@@ -21,6 +21,7 @@
             android:id="@+id/countdownTV"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -61,4 +62,14 @@
             style="@style/TestButton"/>
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="@string/NA"
+        android:id="@+id/NAButton"
+        style="@style/TestButton"
+        android:layout_alignParentBottom="true"
+        />
+
 </RelativeLayout>

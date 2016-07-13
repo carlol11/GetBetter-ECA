@@ -39,6 +39,8 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     private Typeface chalkFont;
 
+    private Button naButton;
+
     public GrossMotorFragment(){
         this.introStringResource = R.string.grossmotor_intro;
         this.introTime = 3000;
@@ -54,9 +56,11 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
+        naButton = (Button) view.findViewById(R.id.NAButton);
 
         yesButton.setTypeface(chalkFont);
         noButton.setTypeface(chalkFont);
+        naButton.setTypeface(chalkFont);
 
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +80,19 @@ public class GrossMotorFragment extends MonitoringTestFragment {
             }
         });
 
+        naButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              onNAButtonClick();
+            }
+        });
+
+
         grossMotorTest = new GrossMotorTest(activity);
         grossMotorTest.makeTest();
         startTest();
 
+        grossMotorInteraction.expandECAToMatchHeight();
         return view;
     }
 
@@ -141,7 +154,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
         record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
 
-        grossMotorInteraction.onHideNAButton();
+        naButton.setVisibility(View.GONE);
+
+        grossMotorInteraction.shrinkECAToOriginalHeight();
         grossMotorInteraction.onShowRemarkLayout();
     }
 
@@ -165,7 +180,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
             @Override
             public void onFinish() {
-                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers), grossMotorInteraction);
+                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers), naButton);
             }
         };
         hideAnswerButtons();
@@ -194,7 +209,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
             view.setVisibility(View.GONE);
         }
         answers.setVisibility(View.GONE);
-        grossMotorInteraction.onShowNAButton();
+        naButton.setVisibility(View.VISIBLE);
     }
 
 
@@ -214,10 +229,11 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         }
     }
 
+
     public interface OnFragmentInteractionListener extends OnMonitoringFragmentInteractionListener {
-        void onShowNAButton();
-        void onHideNAButton();
         void onShowRemarkLayout();
         void onHideRemarkLayout();
+        void expandECAToMatchHeight();
+        void shrinkECAToOriginalHeight();
     }
 }

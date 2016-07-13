@@ -3,6 +3,7 @@ package com.geebeelicious.geebeelicious.models.grossmotor;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,7 +82,7 @@ public class GrossMotorTest {
         currentSkill = skillNumber;
     }
 
-    public void performSkill(int skillNumber, final TextView timerView, final LinearLayout answers, final GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction){
+    public void performSkill(int skillNumber, final TextView timerView, final LinearLayout answers, final Button NAButton){
         GrossMotorSkill skill = testSkills[skillNumber];
         musicPlayer.setRandomSong(skill.getDuration());
         countDownTimer = new CountDownTimer(skill.getDuration(), 1000) {
@@ -105,7 +106,7 @@ public class GrossMotorTest {
                     view.setVisibility(View.VISIBLE);
                 }
                 musicPlayer.stopMusic();
-                grossMotorInteraction.onHideNAButton();
+                NAButton.setVisibility(View.GONE);
             }
         };
 

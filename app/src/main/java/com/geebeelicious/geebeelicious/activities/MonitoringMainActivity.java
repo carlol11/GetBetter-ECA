@@ -56,7 +56,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     private TextView ECAText;
     private TextView resultsText;
-    private Button NAButton;
     private LinearLayout ecaLinearLayout;
     private FrameLayout ecaFragmentLayout;
 
@@ -75,7 +74,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         TextView remarksText = (TextView) findViewById(R.id.questionMonitoringConsultationChoice);
-        NAButton = (Button) findViewById(R.id.NAButton);
         ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
 
@@ -83,7 +81,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ECAText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
         remarksText.setTypeface(chalkFont);
-        NAButton.setTypeface(chalkFont);
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -224,16 +221,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     @Override
-    public void onShowNAButton() {
-        NAButton.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onHideNAButton() {
-        NAButton.setVisibility(View.GONE);
-    }
-
-    @Override
     public void onShowRemarkLayout() {
         RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
         remarkLayout.setVisibility(View.VISIBLE);
@@ -243,6 +230,19 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     public void onHideRemarkLayout() {
         RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
         remarkLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void expandECAToMatchHeight() {
+        View parent = (View)ecaLinearLayout.getParent();
+        final int mToHeight = parent.getHeight();
+        final int mToWidth = mToHeight;
+        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
+    }
+
+    @Override
+    public void shrinkECAToOriginalHeight() {
+        minimizeECAFragment();
     }
 
     private void clearTextViews() {
@@ -271,13 +271,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             saveButton.setTypeface(chalkFont);
             final EditText remarkText = (EditText) findViewById(R.id.remarkText);
             remarkText.setTypeface(chalkFont);
-
-            NAButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((GrossMotorFragment)fragment).onNAButtonClick();
-                }
-            });
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override

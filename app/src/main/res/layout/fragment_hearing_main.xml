@@ -10,8 +10,15 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:layout_above="@+id/linearLayoutAnswers"
-        style="@style/DefaultBackground">
+        android:layout_above="@+id/linearLayoutAnswers">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hearingTestImage"
+            android:layout_centerInParent="true"
+            android:src="@drawable/hearing_test"/>
+
     </RelativeLayout>
 
     <LinearLayout

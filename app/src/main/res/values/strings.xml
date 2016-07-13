@@ -57,7 +57,7 @@
     <string name="monitoring_consultation_choice">What do you want to do? If you want to have a check up, press monitoring. If you feel sick, press consultation, and let\'s talk about it.</string>
     <string name="monitoring_weight">What is your weight?</string>
     <string name="monitoring_height">What is your height?</string>
-    <string name="vaccination_instruction">Do you have a vaccination form? If not, just press skip.</string>
+    <string name="vaccination_instruction">Do you have a vaccination record? If not, just press skip.</string>
     <string name="vaccination_confirm">Is the picture okay? If yes, press continue.</string>
     <string name="patientPicture_instruction">Take a selfie!</string>
     <string name="patientPicture_confirm">Is your picture okay? If yes, press continue.</string>

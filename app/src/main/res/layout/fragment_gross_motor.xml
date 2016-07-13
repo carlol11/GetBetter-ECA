@@ -37,6 +37,8 @@
 
         <Button
             android:drawableTop="@drawable/button_face_happy"
+            android:paddingTop="5dp"
+            android:drawablePadding="-5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/YesButton"
@@ -50,6 +52,8 @@
 
         <Button
             android:drawableTop="@drawable/button_face_sad"
+            android:paddingTop="5dp"
+            android:drawablePadding="-5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/NoButton"

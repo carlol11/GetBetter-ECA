@@ -31,6 +31,8 @@
         android:weightSum="1">
 
         <Button
+            android:paddingTop="15dp"
+            android:drawablePadding="-15dp"
             android:drawableTop="@drawable/button_face_happy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

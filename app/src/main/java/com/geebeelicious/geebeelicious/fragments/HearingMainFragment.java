@@ -68,7 +68,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
 
         final Runnable backgroundNormal = new Runnable(){
             public void run(){
-                yesButton.setBackgroundColor(Color.parseColor("#81C784"));
+                yesButton.setBackgroundResource(R.drawable.chalkoutline);
             }
         };
 

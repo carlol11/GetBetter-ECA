@@ -311,15 +311,24 @@ public class ExpertSystem {
 
         if(patientChiefComplaints != null) {
             ArrayList<PositiveResults> positiveSymptoms;
+            String subjectivePronoun;
+            String objectivePronoun;
+
+            if (patient.getGender() == 0){
+                subjectivePronoun = "He";
+                objectivePronoun = "His";
+            } else {
+                subjectivePronoun = "She";
+                objectivePronoun = "Her";
+            }
 
             positiveSymptoms = getBetterDb.getPositiveSymptoms(answers);
 
-            //TODO:[NOT SCOPE] Use of 'his' it should be gender specific
             for(int i = 0; i < positiveSymptoms.size(); i++) {
-                if (positiveSymptoms.get(i).getPositiveName() == "High Fever") {
-                    HPI.append("His ").append(positiveSymptoms.get(i).getPositiveAnswerPhrase()).append(" ");
+                if (positiveSymptoms.get(i).getPositiveName().equals("High fever")) {
+                    HPI.append(objectivePronoun).append(" ").append(positiveSymptoms.get(i).getPositiveAnswerPhrase()).append(". ");
                 } else {
-                    HPI.append("He ").append(positiveSymptoms.get(i).getPositiveAnswerPhrase()).append(" ");
+                    HPI.append(subjectivePronoun).append(" ").append(positiveSymptoms.get(i).getPositiveAnswerPhrase()).append(". ");
                 }
             }
         }
@@ -338,8 +347,8 @@ public class ExpertSystem {
             introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge +
                     " years old. Patient's complaint is not within the scope of the expert system.";
         } else {
-            introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge + " years old, " +
-                    " is complaining about " + attachComplaints();
+            introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge +
+                    " years old, is complaining about " + attachComplaints();
         }
 
         return introductionSentence;
@@ -347,23 +356,24 @@ public class ExpertSystem {
 
     private String attachComplaints () {
 
-        String complaints = "";
+        StringBuilder complaints = new StringBuilder("");
 
         String [] chiefComplaints = getChiefComplaints();
 
-        //TODO:[NOT SCOPE] Have a default value. what if more than 3.
-        switch (chiefComplaints.length) {
+        if (chiefComplaints.length == 1){
+            complaints.append(chiefComplaints[0].toLowerCase());
+        } else if(chiefComplaints.length > 1) {
+            complaints.append(chiefComplaints[0].toLowerCase());
 
-            case 1: complaints += " " + chiefComplaints[0] + ". ";
-                break;
-            case 2: complaints += " " + chiefComplaints[0] + " and " + chiefComplaints[1] + ". ";
-                break;
-            case 3: complaints += " " + chiefComplaints[0] + ", " + chiefComplaints[1] + ", and " + chiefComplaints[2] + ". ";
-                break;
+            for (int i = 1; i < chiefComplaints.length - 1; i++){
+                complaints.append(", ").append(chiefComplaints[i].toLowerCase());
+            }
+
+            complaints.append(", and ").append(chiefComplaints[chiefComplaints.length-1].toLowerCase());
         }
 
-
-        return complaints;
+        complaints.append(". ");
+        return complaints.toString();
     }
 
     private String[] getChiefComplaints () {

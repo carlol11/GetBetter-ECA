@@ -24,7 +24,7 @@ public class ECAFragment extends Fragment {
 
     private static final String TAG = "ECAFragment";
 
-    private OnFragmentInteractionListener mListener;
+    private Activity activity;
 
     protected VHMobileMain vhmain = null;
     protected VHMobileSurfaceView _VHview = null;
@@ -42,7 +42,6 @@ public class ECAFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_eca, container, false);
-        Activity activity = (Activity) mListener;
 
         //ECA integration
         VHMobileMain.setupVHMobile();
@@ -61,18 +60,13 @@ public class ECAFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) activity;
-        } else {
-            throw new RuntimeException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        this.activity = activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        activity = null;
     }
 
     @Override
@@ -120,11 +114,6 @@ public class ECAFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "The onDestroy() event");
-    }
-
-    //TODO: Delete this na lang. no need na
-    public interface OnFragmentInteractionListener {
-        void onClickECAFragment();
     }
 
     public void sendToECAToSpeak(String sentence){

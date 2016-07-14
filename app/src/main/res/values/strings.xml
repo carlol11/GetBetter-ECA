@@ -68,7 +68,7 @@
     <string name="colorVision_intro">Now let\'s check how well you can see colors.</string>
     <string name="colorVision_instruction">Tell me the shape you see by pressing the buttons below.</string>
     <string name="hearing_intro">Let\'s find out how well you can hear.</string>
-    <string name="hearing_instruction">Press the button every time you hear a sound.</string>
+    <string name="hearing_instruction">Please wear the earphones. Press the button every time you hear a sound.</string>
     <string name="grossmotor_intro">Let\'s do some fun exercises!</string>
     <string name="finemotor_intro">Now, let\'s do this fun activity.</string>
     <string name="finemotor_path1_1">Help the butterfly go to the flowers. Use a finger from your non-dominant hand to trace the path.</string>

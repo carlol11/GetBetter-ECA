@@ -162,8 +162,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     //Displays the skill as determined by the GrossMotorTest on the screen
     private void displaySkill(final int i){
-        //TODO: Not sure why there are two hideanswerbuttons here
-        hideAnswerButtons();
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 

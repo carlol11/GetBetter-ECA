@@ -11,7 +11,7 @@ import com.geebeelicious.geebeelicious.fragments.ECAFragment;
  * Created by mgmalana.
  * The ECAActivity serves as the abstract class for activities that uses the ECAFragment
  */
-public abstract class ECAActivity extends ActionBarActivity implements ECAFragment.OnFragmentInteractionListener {
+public abstract class ECAActivity extends ActionBarActivity {
     protected ECAFragment ecaFragment;
 
     protected void integrateECA() {
@@ -24,10 +24,5 @@ public abstract class ECAActivity extends ActionBarActivity implements ECAFragme
             transaction.add(R.id.placeholderECA, ecaFragment, ECAFragment.class.getName());
             transaction.commit();
         }
-    }
-
-    @Override
-    public void onClickECAFragment() {
-
     }
 }

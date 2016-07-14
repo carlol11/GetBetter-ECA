@@ -45,12 +45,21 @@ public class Calibrator {
     private double[] calibrationArray;
     private Context context;
     private boolean isDone = false;
+    private boolean isValid = false;
 
     public Calibrator(Context context){
         soundHelper = new SoundHelper(numSamples, sampleRate);
         calibrationArray = new double[frequencies.length];
         this.context = context;
         isDone = true;
+        isValid = false;
+    }
+
+    public void resetCalibrator(){
+        soundHelper = new SoundHelper(numSamples, sampleRate);
+        calibrationArray = new double[frequencies.length];
+        isDone = true;
+        isValid = false;
     }
 
     private int newBitReverse(int i){
@@ -189,6 +198,37 @@ public class Calibrator {
         return isDone;
     }
 
+    private void writeToFile(byte[] calibrationByteArray){
+        try{
+            FileOutputStream fos = context.openFileOutput("HearingTestCalibrationPreferences", Context.MODE_PRIVATE);
+            try{
+                fos.write(calibrationByteArray);
+                fos.close();
+            } catch(IOException ioe){
+
+            }
+        } catch(FileNotFoundException fe){
+
+        }
+        endCalibration();
+    }
+
+    private boolean isValidCalibration(){
+        for(double d:calibrationArray){
+            System.out.println("cArray: " + d);
+            Double temp = new Double(d);
+            if(temp.isInfinite()){
+                return false;
+            }
+        }
+        isValid = true;
+        return true;
+    }
+
+    public boolean isValid(){
+        return isValid;
+    }
+
     public void calibrate(){
         int counter = 0;
         startThread();
@@ -256,20 +296,13 @@ public class Calibrator {
             }
         }
 
+        if(isValidCalibration()){
+            writeToFile(calibrationByteArray);
+        } //else error message to fix earphone distance
+
         //TODO: [NOT URGENT, Kate] Fix calibration such that if there is an infinite value, alert user, give instructions, and recalibrate
-
-        try{
-            FileOutputStream fos = context.openFileOutput("HearingTestCalibrationPreferences", Context.MODE_PRIVATE);
-            try{
-                fos.write(calibrationByteArray);
-                fos.close();
-            } catch(IOException ioe){
-
-            }
-        } catch(FileNotFoundException fe){
-
-        }
-        endCalibration();
     }
+
+
 
 }

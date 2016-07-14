@@ -246,8 +246,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     private void clearTextViews() {
-        ECAText.setText("");
-        resultsText.setText("");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ECAText.setText("");
+                resultsText.setText("");
+            }
+        });
     }
 
     private void initializeOldFragment() {

@@ -20,7 +20,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/linearLayoutECA"
-        android:animateLayoutChanges="true"
         style="@style/DefaultBackground"
         >
 

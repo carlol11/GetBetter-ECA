@@ -267,7 +267,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
         //onclick for NAButton for GrossMotor
         if(fragment instanceof GrossMotorFragment){
-            Button saveButton = (Button) findViewById(R.id.saveButton);
+            final Button saveButton = (Button) findViewById(R.id.saveButton);
             saveButton.setTypeface(chalkFont);
             final EditText remarkText = (EditText) findViewById(R.id.remarkText);
             remarkText.setTypeface(chalkFont);
@@ -279,6 +279,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                     record.setGrossMotorRemark(remark);
                     setResults("Remarks:" + remark);
                     ((GrossMotorFragment)fragment).onRemarkSaveButtonClicked();
+                    saveButton.setOnClickListener(null);
                 }
             });
 

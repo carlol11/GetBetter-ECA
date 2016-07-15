@@ -318,8 +318,10 @@ public class DatabaseAdapter {
                 " FROM tbl_symptom_list WHERE ");
 
         for(PatientAnswers answer: patientAnswers){
-            sql.append(delim).append("_id = ").append(answer.getSymptomId());
-            delim = " OR ";
+            if(answer.getAnswer().equals("Yes")){
+                sql.append(delim).append("_id = ").append(answer.getSymptomId());
+                delim = " OR ";
+            }
         }
 
         Log.d(TAG, "SQL Statement: " + sql);

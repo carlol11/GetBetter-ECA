@@ -112,7 +112,7 @@ public class ConsultationActivity extends ECAActivity{
         LinearLayout hpiLayout = (LinearLayout) findViewById(R.id.hpiLayout);
         RelativeLayout choicesLayout = (RelativeLayout) findViewById(R.id.choicesLayout);
 
-        timer = new CountDownTimer(6000, 6000) { //timer for the transition
+        timer = new CountDownTimer(15000, 15000) { //timer for the transition
             @Override
             public void onTick(long millisUntilFinished) {
 

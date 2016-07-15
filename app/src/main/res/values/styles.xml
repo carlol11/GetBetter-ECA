@@ -15,6 +15,7 @@
     <style name="DefaultButton" parent="android:style/Widget.Button">
         <item name="android:background">@drawable/chalkoutline</item>
         <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorPrimaryDisableOnly">#E0E0E0</item>
     </style>
 
     <style name="DefaultBackground">

@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -122,6 +123,7 @@ public class PatientListActivity extends ECAActivity{
                 patientInfoView.setText(patientInfo);
 
                 selectPatientButton.setEnabled(true);
+                selectPatientButton.setTextColor(Color.WHITE);
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 mgr.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);

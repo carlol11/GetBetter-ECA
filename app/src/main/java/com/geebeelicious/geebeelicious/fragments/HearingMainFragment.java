@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
             }
         };
 
-        Thread screenThread = new Thread(new Runnable(){
+        final Thread screenThread = new Thread(new Runnable(){
             public void run(){
                 while(hearingTest.isInLoop()){
                     if(!hearingTest.isRunning()){
@@ -98,7 +99,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
             }
         });
 
-        Thread timingThread = new Thread(new Runnable(){
+        final Thread timingThread = new Thread(new Runnable(){
             public void run(){
                 while(hearingTest.isInLoop()){
                     if(!hearingTest.isRunning()){
@@ -116,7 +117,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
             }
         });
 
-        Thread testThread = new Thread(new Runnable() {
+        final Thread testThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 hearingTest.performTest(calibrationData);
@@ -135,11 +136,24 @@ public class HearingMainFragment extends MonitoringTestFragment {
         threads.add(screenThread);
         threads.add(timingThread);
         threads.add(testThread);
-        screenThread.start();
-        timingThread.start();
-        testThread.start();
+
+        CountDownTimer countDownTimer = new CountDownTimer(5000, 3000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                screenThread.start();
+                timingThread.start();
+                testThread.start();
+            }
+        };
 
         fragmentInteraction.setInstructions(R.string.hearing_instruction);
+        countDownTimer.start();
 
         return view;
     }

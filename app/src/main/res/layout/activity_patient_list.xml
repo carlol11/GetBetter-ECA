@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/select_user"
                 android:textSize="35sp"
+                android:textColor="#757575"
                 android:padding="15dp"
                 android:id="@+id/selectPatientButton"
                 android:layout_marginTop="30dp"

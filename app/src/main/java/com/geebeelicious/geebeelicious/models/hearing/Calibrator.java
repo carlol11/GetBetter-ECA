@@ -215,7 +215,6 @@ public class Calibrator {
 
     private boolean isValidCalibration(){
         for(double d:calibrationArray){
-            System.out.println("cArray: " + d);
             Double temp = new Double(d);
             if(temp.isInfinite()){
                 return false;

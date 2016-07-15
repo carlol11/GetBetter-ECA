@@ -161,27 +161,32 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void doneFragment() { //gets called by the fragments when done
-        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
 
-        if(currentFragmentIndex + 1 >= fragments.length){ //if last fragment
-            endActivity(currentFragment);
-        } else {
-            clearTextViews();
-            try {
-                currentFragmentIndex++;
-                Fragment nextFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
-                if (currentFragment instanceof MonitoringTestFragment){ //if the current has intro
-                    doTransitionWithResult((MonitoringTestFragment) currentFragment, nextFragment);
-                } else if (doesNextHasIntro(nextFragment)){ //if the next has intro
-                    doTransitionWithoutResult((MonitoringTestFragment) nextFragment);
+                if(currentFragmentIndex + 1 >= fragments.length){ //if last fragment
+                    endActivity(currentFragment);
                 } else {
-                    replaceFragment(nextFragment);
-                }
+                    clearTextViews();
+                    try {
+                        currentFragmentIndex++;
+                        Fragment nextFragment = (Fragment) Class.forName(fragments[currentFragmentIndex]).newInstance();
+                        if (currentFragment instanceof MonitoringTestFragment){ //if the current has intro
+                            doTransitionWithResult((MonitoringTestFragment) currentFragment, nextFragment);
+                        } else if (doesNextHasIntro(nextFragment)){ //if the next has intro
+                            doTransitionWithoutResult((MonitoringTestFragment) nextFragment);
+                        } else {
+                            replaceFragment(nextFragment);
+                        }
 
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                Log.e(TAG, "Error in initializing the fragment", e);
+                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                        Log.e(TAG, "Error in initializing the fragment", e);
+                    }
+                }
             }
-        }
+        });
     }
 
     @Override
@@ -246,13 +251,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     private void clearTextViews() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ECAText.setText("");
-                resultsText.setText("");
-            }
-        });
+        ECAText.setText("");
+        resultsText.setText("");
     }
 
     private void initializeOldFragment() {

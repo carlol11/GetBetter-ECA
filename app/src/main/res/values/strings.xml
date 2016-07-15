@@ -91,7 +91,7 @@
     <string name="monitoring_remark_above3">Eat your fruits and vegetables!</string>
     <string name="visual_acuity_fail">Your seem to have some problems seeing. Try to visit an eye doctor when you can!</string>
     <string name="visual_acuity_pass">Your vision is great!</string>
-    <string name="color_vision_fail">It looks like you\'re having problems seeing color. Try to visit an eye doctor about it when you can!</string>
+    <string name="color_vision_fail">It looks like you\'re having problems seeing colors. Try to visit an eye doctor about it when you can!</string>
     <string name="color_vision_pass">Your vision is great!</string>
     <string name="hearing_fail">You seem to have hearing problems. Try to visit an ear doctor when you can!</string>
     <string name="hearing_pass">Your hearing is great!</string>

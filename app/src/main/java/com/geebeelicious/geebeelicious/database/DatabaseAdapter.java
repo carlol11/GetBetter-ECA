@@ -394,29 +394,6 @@ public class DatabaseAdapter {
         Log.d(TAG, "insertHPI Result: " + row);
     }
 
-    //Return a list of possible patients matching the given first name, last name, gender, birthday, and school
-    public ArrayList<Patient> getPossiblePatients(String firstName, String lastName, int gender, String birthday, int schoolId){
-        ArrayList<Patient> patients = new ArrayList<>();
-        Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_FIRST_NAME + " = ? AND "
-                + Patient.C_LAST_NAME + " = ? AND " + Patient.C_GENDER + " = "+ gender+" AND "
-                + Patient.C_BIRTHDAY + " = ? AND " + Patient.C_SCHOOL_ID + " = " + schoolId,
-                new String[]{firstName, lastName, birthday}, null, null, null, null);
-
-        if(c.moveToFirst()){
-            do{
-                    patients.add(new Patient(c.getInt(c.getColumnIndex(Patient.C_PATIENT_ID)),
-                            c.getString(c.getColumnIndex(Patient.C_FIRST_NAME)),
-                            c.getString(c.getColumnIndex(Patient.C_LAST_NAME)),
-                            c.getString(c.getColumnIndex(Patient.C_BIRTHDAY)),
-                            c.getInt(c.getColumnIndex(Patient.C_GENDER)),
-                            c.getInt(c.getColumnIndex(Patient.C_SCHOOL_ID)),
-                            c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS))));
-            }while(c.moveToNext());
-        }
-        c.close();
-        return patients;
-    }
-
     //Return a list of all schools
     public ArrayList<School> getAllSchools(){
         ArrayList<School> schools = new ArrayList<>();

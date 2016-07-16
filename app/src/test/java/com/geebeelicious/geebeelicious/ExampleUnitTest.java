@@ -22,20 +22,20 @@ public class ExampleUnitTest {
 
     @Test
     public void computeBMIPercentile() throws Exception {
-        assertEquals(0, BMICalculator.getBMIResult(true, 2, 14));
-        assertEquals(3, BMICalculator.getBMIResult(true, 2, 20));
-        assertEquals(2, BMICalculator.getBMIResult(true, 2, 17.97371413f));
-        assertEquals(1, BMICalculator.getBMIResult(true, 2, 17));
+        assertEquals(0, BMICalculator.getBMIResult(true, 5, 12.8f));
+        assertEquals(3, BMICalculator.getBMIResult(true, 5, 19));
+        assertEquals(2, BMICalculator.getBMIResult(true, 5, 17));
+        assertEquals(1, BMICalculator.getBMIResult(true, 5, 15));
         assertEquals(4, BMICalculator.getBMIResult(true, 1, 17));
         assertEquals(4, BMICalculator.getBMIResult(true, 21, 17));
     }
 
     @Test
     public void computeBMIPercentileString() throws Exception {
-        assertEquals("Underweight", BMICalculator.getBMIResultString(true, 2, 14));
-        assertEquals("Obese", BMICalculator.getBMIResultString(true, 2, 20));
-        assertEquals("Overweight", BMICalculator.getBMIResultString(true, 2, 17.97371413f));
-        assertEquals("Normal", BMICalculator.getBMIResultString(true, 2, 17));
-        assertEquals("N/A", BMICalculator.getBMIResultString(true, 1, 17));
+        assertEquals("Underweight", BMICalculator.getBMIResultString(true, 5, 11));
+        assertEquals("Obese", BMICalculator.getBMIResultString(true, 5, 19));
+        assertEquals("Overweight", BMICalculator.getBMIResultString(true, 5, 17));
+        assertEquals("Normal", BMICalculator.getBMIResultString(true, 5, 14));
+        assertEquals("N/A", BMICalculator.getBMIResultString(true, 2, 17));
     }
 }

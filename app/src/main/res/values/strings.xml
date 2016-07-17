@@ -74,8 +74,8 @@
     <string name="finemotor_path1_1">Help the butterfly go to the flowers. Use a finger from your non-dominant hand to trace the path.</string>
     <string name="finemotor_path1_2">Help the butterfly go to the flowers. Use the pen with your dominant hand to trace the path.</string>
     <string name="finemotor_question">Assistant, has the user used the pen without difficulties?</string>
-    <string name="finemotor_path2_1">Help the lion go to the his friends. Use a finger of your non dominant hand to trace the path.</string>
-    <string name="finemotor_path2_2">Help the lion go to the his friends. Use the pen with your dominant hand to trace the path.</string>
+    <string name="finemotor_path2_1">Help the lion go to his friends. Use a finger of your non dominant hand to trace the path.</string>
+    <string name="finemotor_path2_2">Help the lion go to his friends. Use the pen with your dominant hand to trace the path.</string>
     <string name="monitoring_end">Your check up is done!</string>
     <string name="consultation_end">Thanks for telling me about your problem! I\'ll send this to a doctor so they can help you soon.</string>
 

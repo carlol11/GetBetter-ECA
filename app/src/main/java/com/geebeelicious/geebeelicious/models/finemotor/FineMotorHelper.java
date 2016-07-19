@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.MediaPlayer;
-
 import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;

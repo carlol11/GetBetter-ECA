@@ -9,13 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
-import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
  * Created by Kate.

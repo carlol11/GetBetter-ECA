@@ -15,11 +15,10 @@ import android.widget.Button;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
-
-import java.util.ArrayList;
-
 import com.geebeelicious.geebeelicious.models.hearing.HearingTest;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
+
+import java.util.ArrayList;
 
 /**
  * Created by Kate.

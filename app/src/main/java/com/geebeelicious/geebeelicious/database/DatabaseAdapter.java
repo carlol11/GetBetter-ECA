@@ -6,10 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import com.geebeelicious.geebeelicious.models.consultation.ChiefComplaint;
 import com.geebeelicious.geebeelicious.models.consultation.HPI;
 import com.geebeelicious.geebeelicious.models.consultation.Impressions;
@@ -17,10 +13,14 @@ import com.geebeelicious.geebeelicious.models.consultation.Municipality;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.consultation.PatientAnswers;
 import com.geebeelicious.geebeelicious.models.consultation.PositiveResults;
-import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import com.geebeelicious.geebeelicious.models.consultation.School;
 import com.geebeelicious.geebeelicious.models.consultation.Symptom;
 import com.geebeelicious.geebeelicious.models.consultation.SymptomFamily;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Mary Grace Malana

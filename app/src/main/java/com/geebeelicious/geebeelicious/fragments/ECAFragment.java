@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.geebeelicious.geebeelicious.R;
 
-
 import edu.usc.ict.vhmobile.VHMobileLib;
 import edu.usc.ict.vhmobile.VHMobileMain;
 import edu.usc.ict.vhmobile.VHMobileSurfaceView;

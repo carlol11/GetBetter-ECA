@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,18 +15,14 @@ import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.adapters.EyeChartsAdapter;
 import com.geebeelicious.geebeelicious.adapters.SchoolsAdapter;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.models.consultation.School;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.geebeelicious.geebeelicious.models.consultation.School;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Kate.

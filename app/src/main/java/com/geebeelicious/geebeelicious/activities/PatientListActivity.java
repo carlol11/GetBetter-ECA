@@ -18,15 +18,14 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.adapters.PatientsAdapter;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
-import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
  * Created by Kate.

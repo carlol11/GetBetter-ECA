@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
-
 import com.geebeelicious.geebeelicious.models.finemotor.FineMotorHelper;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 

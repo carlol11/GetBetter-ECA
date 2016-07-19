@@ -9,11 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
 /**
  * Created by Kate on 03/30/2016.

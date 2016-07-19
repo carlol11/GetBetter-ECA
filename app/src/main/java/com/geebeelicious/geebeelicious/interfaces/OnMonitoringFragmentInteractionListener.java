@@ -1,6 +1,5 @@
 package com.geebeelicious.geebeelicious.interfaces;
 
-import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 /**

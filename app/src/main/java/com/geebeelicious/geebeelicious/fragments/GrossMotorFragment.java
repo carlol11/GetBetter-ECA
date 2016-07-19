@@ -15,12 +15,11 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
-
-import java.util.concurrent.TimeUnit;
-
 import com.geebeelicious.geebeelicious.models.grossmotor.GrossMotorSkill;
 import com.geebeelicious.geebeelicious.models.grossmotor.GrossMotorTest;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Kate.

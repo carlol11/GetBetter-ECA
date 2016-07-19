@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
-
 import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 

@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
-
 import com.geebeelicious.geebeelicious.models.hearing.Calibrator;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Kate.

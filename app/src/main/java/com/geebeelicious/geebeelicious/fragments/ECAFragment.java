@@ -52,7 +52,7 @@ public class ECAFragment extends Fragment {
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                int viewHeight = view.getHeight() / 5;
+                int viewHeight = view.getHeight() / 10;
                 ViewGroup.LayoutParams params = replayButton.getLayoutParams();
                 params.width = viewHeight;
                 params.height = viewHeight;

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
 
 import com.geebeelicious.geebeelicious.R;
 
@@ -24,10 +26,11 @@ public class ECAFragment extends Fragment {
     private static final String TAG = "ECAFragment";
 
     private Activity activity;
+    private String ecaString;
 
     protected VHMobileMain vhmain = null;
     protected VHMobileSurfaceView _VHview = null;
-
+    
     public enum Emotion {
         HAPPY, CONCERN
     }
@@ -40,7 +43,34 @@ public class ECAFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_eca, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_eca, container, false);
+        final Button replayButton = (Button) view.findViewById(R.id.replayButton);
+
+        ViewTreeObserver vto = view.getViewTreeObserver();
+
+        //sets the size of the replayButton depending on the size of the fragment
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int viewHeight = view.getHeight() / 5;
+                ViewGroup.LayoutParams params = replayButton.getLayoutParams();
+                params.width = viewHeight;
+                params.height = viewHeight;
+
+                replayButton.setLayoutParams(params);
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        replayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ecaString != null){
+                    sendToECAToSpeak(ecaString);
+                }
+            }
+        });
+
 
         //ECA integration
         VHMobileMain.setupVHMobile();
@@ -116,15 +146,15 @@ public class ECAFragment extends Fragment {
     }
 
     public void sendToECAToSpeak(String sentence){
+        ecaString = sentence;
+
         Log.d(TAG, "ECA speaks: " + sentence);
         VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
     }
 
     public void sendToECAToSPeak(int resID){
         String sentence = getString(resID);
-
-        Log.d(TAG, "ECA speaks: " + sentence);
-        VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
+        sendToECAToSpeak(sentence);
     }
 
     public void sendToECAToEmote(Emotion emotion, int i){

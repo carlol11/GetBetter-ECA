@@ -11,4 +11,13 @@
         >
     </edu.usc.ict.vhmobile.VHMobileSurfaceView>
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/replayButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/ic_replay_black_48dp"
+        />
+
 </RelativeLayout>

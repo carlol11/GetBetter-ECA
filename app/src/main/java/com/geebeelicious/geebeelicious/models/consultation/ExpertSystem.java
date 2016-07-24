@@ -337,15 +337,14 @@ public class ExpertSystem {
     }
 
     private String generateIntroductionSentence () {
-
         String introductionSentence;
         String patientGender = getGender(patient.getGender());
         String patientName = patient.getFirstName() + " " + patient.getLastName();
         int patientAge = getAge(patient.getBirthday());
 
-        if (patientChiefComplaints == null){
+        if (patientChiefComplaints == null){ //if patient has no chief complaints
             introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge +
-                    " years old. Patient's complaint is not within the scope of the expert system.";
+                    " years old, has a complaint that is not within the scope of the expert system.";
         } else {
             introductionSentence = "A " + patientGender + " patient, " + patientName + ", who is " + patientAge +
                     " years old, is complaining about " + attachComplaints();

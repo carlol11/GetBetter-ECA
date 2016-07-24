@@ -17,7 +17,7 @@
         android:id="@+id/replayButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/ic_replay_black_48dp"
+        android:background="@drawable/replay"
         />
 
 </RelativeLayout>

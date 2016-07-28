@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -79,6 +80,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ECAText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
         remarksText.setTypeface(chalkFont);
+
+        resultsText.setMovementMethod(new ScrollingMovementMethod());
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -233,19 +236,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     public void onHideRemarkLayout() {
         RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
         remarkLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void expandECAToMatchHeight() {
-        View parent = (View)ecaLinearLayout.getParent();
-        final int mToHeight = parent.getHeight();
-        final int mToWidth = mToHeight;
-        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
-    }
-
-    @Override
-    public void shrinkECAToOriginalHeight() {
-        minimizeECAFragment();
     }
 
     private void clearTextViews() {

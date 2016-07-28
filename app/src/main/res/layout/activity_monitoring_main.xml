@@ -45,7 +45,10 @@
             android:text=""
             android:id="@+id/placeholderResults"
             android:paddingTop="10dp"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:maxLines = "3"
+            android:scrollbars = "vertical"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -67,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|left"
-                android:inputType="textCapSentences"
+                android:inputType="textCapSentences|textMultiLine"
                 android:ems="10"
                 android:id="@+id/remarkText"
                 android:layout_below="@+id/questionMonitoringConsultationChoice"

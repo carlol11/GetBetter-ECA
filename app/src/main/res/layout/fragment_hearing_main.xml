@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:id="@+id/relativeLayoutTest"
-        android:layout_above="@+id/linearLayoutAnswers">
+        android:layout_above="@+id/linearLayoutYesNo">
 
         <ImageView
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayoutAnswers"
+        android:id="@+id/linearLayoutYesNo"
         android:weightSum="1">
 
         <Button

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -171,9 +172,11 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
         fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
-        String url = "file:///android_res/drawable/" + getResources().getResourceEntryName(gms.getSkillResImage());
-        Log.d(TAG, "Loading url to webview: " + url);
-        gifWebView.loadUrl(url);
+        String html = getHTMLData(getResources().getResourceEntryName(gms.getSkillResImage()));
+
+        Log.d(TAG, "Loading html to webview: " + html);
+
+        gifWebView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", null);
 
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)(view.findViewById(R.id.countdownTV));
@@ -192,6 +195,13 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         hideAnswerButtons();
         countDownTimer.start();
 
+    }
+
+    private String getHTMLData(String imageURL) {
+        String head = "<head><style>img{max-width: 100%; width:auto; height: auto;}</style></head>";
+        return "<html>" + head + "<body>" +
+                "<img src=\"" + imageURL + "\">" +
+                "</body></html>";
     }
 
     //Allows the test to move to the next question or ends the test

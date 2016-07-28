@@ -8,21 +8,21 @@ print sys.modules.keys()
 print "hola"
 
 characterName = "ChrLindsay"
-
+bmlID = 0
 
 def saySomething(actor, message):
 	bmlMsg = androidEngine.getNonverbalBehavior(message)
 	print bmlMsg
 	stopTalking(actor)
-	bml.execXML(actor, bmlMsg)
+	bmlID = bml.execXML(actor, bmlMsg)
 
 def doBehavior(actor, message):
 	bmlMsg = androidEngine.getBehavior(message, 0, 5)
 	bml.execXML(actor, bmlMsg)
 
 def stopTalking(actor):
-	bml.interruptCharacter(actor, 0)
-
+	bml.interruptCharacter(actor, bmlID)
+	print "interrupt talking"
 
 class MyVHEngine(VHEngine):
 	currQuestion = 0
@@ -164,7 +164,6 @@ scene.setBoolAttribute("internalAudio", True)
 scene.run("camera.py")
 scene.run("light.py")
 scene.run("setupCharacter.py")
-scene.run("init-emotions.py")
 setupCharacter(characterName, characterName, "", "")
 character = scene.getCharacter(characterName)
 bml.execBML(characterName, '<body posture="ChrBrad@Idle01"/>')

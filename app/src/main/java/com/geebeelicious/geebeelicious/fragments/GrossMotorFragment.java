@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -48,7 +49,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     public GrossMotorFragment(){
         this.introStringResource = R.string.grossmotor_intro;
-        this.introTime = 3000;
+        this.introTime = 4000;
 
     }
 
@@ -177,6 +178,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         Log.d(TAG, "Loading html to webview: " + html);
 
         gifWebView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", null);
+        gifWebView.setBackgroundColor(Color.TRANSPARENT);
 
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)(view.findViewById(R.id.countdownTV));

@@ -15,14 +15,16 @@ public class GrossMotorSkill {
     private String type;
     private String instruction;
     private int duration; //milliseconds (1s = 1000ms)
+    private int skillResImage;
     private String assessment;
     private boolean isTested;
 
-    public GrossMotorSkill(String skillName, String type, String instruction, int duration) {
+    public GrossMotorSkill(String skillName, String type, String instruction, int duration, int skillResImage) {
         this.skillName = skillName;
         this.type = type;
         this.instruction = instruction;
         this.duration = duration;
+        this.skillResImage = skillResImage;
         this.isTested = false;
         this.assessment = "No Results";
     }
@@ -41,6 +43,10 @@ public class GrossMotorSkill {
 
     public int getDuration() {
         return duration;
+    }
+
+    public int getSkillResImage(){
+        return skillResImage;
     }
 
     public boolean isTested(){

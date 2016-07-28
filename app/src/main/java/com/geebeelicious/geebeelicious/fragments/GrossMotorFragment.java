@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class GrossMotorFragment extends MonitoringTestFragment {
+    private static final String TAG = "GrossMotorFragment";
+
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
@@ -168,6 +171,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
         fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
+        String url = "file:///android_res/drawable/" + getResources().getResourceEntryName(gms.getSkillResImage());
+        Log.d(TAG, "Loading url to webview: " + url);
+        gifWebView.loadUrl(url);
 
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)(view.findViewById(R.id.countdownTV));

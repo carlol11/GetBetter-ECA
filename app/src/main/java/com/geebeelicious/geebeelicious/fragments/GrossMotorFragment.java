@@ -200,9 +200,12 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     }
 
     private String getHTMLData(String imageURL) {
-        String head = "<head><style>img{max-height: 100%; width:auto; height: auto;}</style></head>";
+        String head = "<head><style>img{max-width: 100%; width:auto; height: auto; margin : auto;}" +
+                "html, body { height: 100%; margin:0; padding:0;}\n" +
+                "div { position:relative;height: 100%; width:100%; }\n" +
+                "div img {position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; }</style></head>";
         return "<html>" + head + "<body>" +
-                "<img src=\"" + imageURL + "\">" +
+                "<div><img src=\"" + imageURL + "\"></div>" +
                 "</body></html>";
     }
 

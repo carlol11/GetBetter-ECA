@@ -6,8 +6,8 @@
     tools:context=".fragments.GrossMotorFragment">
 
     <WebView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
         android:id="@+id/gifWebView"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"

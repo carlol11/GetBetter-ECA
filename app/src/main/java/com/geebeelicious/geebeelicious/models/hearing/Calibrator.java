@@ -298,8 +298,6 @@ public class Calibrator {
         if(isValidCalibration()){
             writeToFile(calibrationByteArray);
         } //else error message to fix earphone distance
-
-        //TODO: [NOT URGENT, Kate] Fix calibration such that if there is an infinite value, alert user, give instructions, and recalibrate
     }
 
 

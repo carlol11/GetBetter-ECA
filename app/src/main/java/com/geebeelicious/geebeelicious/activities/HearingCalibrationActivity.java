@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -77,32 +78,35 @@ public class HearingCalibrationActivity extends ActionBarActivity {
                     textView.setText("Calibration Done!");
                 }
             });
-
-            Intent intent = new Intent(HearingCalibrationActivity.this, SettingsActivity.class);
-            finish();
-            startActivity(intent);
-        }
-
-        while(!calibrator.isValid()){
+        }else {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    ProgressBar progressBar = (ProgressBar) findViewById(R.id.calibrationProgressBar);
                     TextView textView = (TextView) findViewById(R.id.calibrationInProgressTextView);
-                    Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+                    chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
                     textView.setTypeface(chalkFont);
+                    progressBar.setVisibility(View.INVISIBLE);
                     textView.setText("Calibration failed. Let's try again. Please move your earphones 2cm from the mic.");
-                    calibrator.resetCalibrator();
-                    calibrationThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            calibrator.calibrate();
-                            endCalibration();
-                        }
-                    });
-                    calibrationThread.start();
                 }
             });
         }
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(HearingCalibrationActivity.this, SettingsActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                }, 5000);
+            }
+        });
     }
 
 }

@@ -69,6 +69,15 @@
                 android:layout_centerHorizontal="true"
                 android:enabled="false"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/secretButton"
+                android:background="@android:color/transparent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:enabled="false" />
+
         </RelativeLayout>
 
 
@@ -96,12 +105,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/patientListView" />
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/patientDetailsTV"
-            android:padding="20dp"
-            android:textSize="50sp"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/patientDetailsTV"
+                android:padding="20dp"
+                android:textSize="50sp"
+                android:layout_above="@+id/patientRecordsTextView" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/patientRecordsTextView"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                />
+        </RelativeLayout>
 
     </LinearLayout>
 

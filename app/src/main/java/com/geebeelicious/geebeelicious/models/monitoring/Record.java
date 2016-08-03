@@ -231,14 +231,18 @@ public class Record implements Parcelable {
     }
 
     public void printRecord(){
-        Log.d(TAG, "recordID: " + recordID + ", patientID: " + patient_id + ", dateCreated: " + dateCreated +
-            ", height: " + height + ", weight " + weight + ", visualAcuityLeft: " + visualAcuityLeft +
-            ", visualAcuityRight: " + visualActuityRight + ", colorVision " + colorVision +
-            ", hearingLeft: " + hearingLeft + ", hearingRight: " + hearingRight +
-            ", grossMotor: " + grossMotor + ", grossMotorRemark: "+ grossMotorRemark +
-            ", fineMotorDominant: " + fineMotorDominant + ", fineMotorNonDominant: " + fineMotorNDominant +
-            ", fineMotorPen: " + fineMotorHold + ", vaccination: " + vaccination +
-            ", patientPicture: " + patientPicture);
+        Log.d(TAG, getCompleteRecordInfo());
+    }
+
+    public String getCompleteRecordInfo(){
+        return "recordID: " + recordID + ", patientID: " + patient_id + ", dateCreated: " + dateCreated +
+                ", height: " + height + ", weight " + weight + ", visualAcuityLeft: " + visualAcuityLeft +
+                ", visualAcuityRight: " + visualActuityRight + ", colorVision " + colorVision +
+                ", hearingLeft: " + hearingLeft + ", hearingRight: " + hearingRight +
+                ", grossMotor: " + grossMotor + ", grossMotorRemark: "+ grossMotorRemark +
+                ", fineMotorDominant: " + fineMotorDominant + ", fineMotorNonDominant: " + fineMotorNDominant +
+                ", fineMotorPen: " + fineMotorHold + ", vaccination: " + vaccination +
+                ", patientPicture: " + patientPicture;
     }
 
     @Override

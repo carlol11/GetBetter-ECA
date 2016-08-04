@@ -12,13 +12,14 @@ bmlID = 0
 
 def saySomething(actor, message):
 	bmlMsg = androidEngine.getNonverbalBehavior(message)
-	print bmlMsg
+	print "bmlMsg: " + bmlMsg
 	stopTalking(actor)
 	bmlID = bml.execXML(actor, bmlMsg)
 
 def doBehavior(actor, message):
 	bmlMsg = androidEngine.getBehavior(message, 0, 5)
-	bml.execXML(actor, bmlMsg)
+	bml.execBML(actor, bmlMsg)
+	print bmlMsg
 
 def stopTalking(actor):
 	bml.interruptCharacter(actor, bmlID)
@@ -41,6 +42,7 @@ scene.setBoolAttribute("internalAudio", True)
 scene.run("camera.py")
 scene.run("light.py")
 scene.run("setupCharacter.py")
+scene.run("init-emotions.py")
 setupCharacter(characterName, characterName, "", "")
 character = scene.getCharacter(characterName)
 bml.execBML(characterName, '<body posture="ChrBrad@Idle01"/>')

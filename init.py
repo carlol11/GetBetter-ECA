@@ -103,6 +103,8 @@ def doBehavior(actor, message):
 def stopTalking(actor):
 	bml.interruptCharacter(actor, bmlID)
 	print "interrupt talking"
+	bml.execBML(characterName, '<body posture="ChrBrad@Idle01"/>')
+	bml.execBML(characterName, '<saccade mode="listen"/>')
 
 def setToHappy(characterName, intensity):
 	emotion = intensity

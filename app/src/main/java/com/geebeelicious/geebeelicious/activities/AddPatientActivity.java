@@ -151,8 +151,7 @@ public class AddPatientActivity extends ECAActivity{
                         break;
                     case 5:
                         savePatientToDatabase(patient);
-                        Intent intent = new Intent(AddPatientActivity.this, MonitoringConsultationChoice.class);
-                        intent.putExtra("patient", patient);
+                        Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
                         startActivity(intent);
                         finish();
                     default:

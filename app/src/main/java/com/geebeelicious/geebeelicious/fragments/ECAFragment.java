@@ -160,10 +160,10 @@ public class ECAFragment extends Fragment {
     public void sendToECAToEmote(Emotion emotion, int i){
         switch (emotion){
             case HAPPY:
-                VHMobileLib.executeSB("doHappiness(characterName, "+i+")");
+                VHMobileLib.executeSB("setToHappy(characterName, "+i+")");
                 break;
             case CONCERN:
-                VHMobileLib.executeSB("doConcern(characterName, "+i+")");
+                VHMobileLib.executeSB("setToConcern(characterName, "+i+")");
                 break;
         }
     }

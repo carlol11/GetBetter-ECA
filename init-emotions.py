@@ -107,7 +107,7 @@ def doHeadGesture(characterName):
 def saySomething(actor, message):
 	# bmlMsg = androidEngine.getNonverbalBehavior(message)
     # print bmlMsg
-    bmlMsg = '<speech>' + message + '</speech>'
+	bmlMsg = '<speech>' + message + '</speech>'
 	stopTalking(actor)
 	bmlID = bml.execBML(actor, bmlMsg)
 	if emotion < 3:

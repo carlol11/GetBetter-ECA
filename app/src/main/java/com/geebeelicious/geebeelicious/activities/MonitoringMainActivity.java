@@ -436,28 +436,4 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
         return "";
     }
-
-
-
-    //TODO: Erase this if di na kelangan
-//    private void resizeView(final View v, final int toHeight, final int toWidth) {
-//        final int fromWidth = v.getWidth();
-//        final int fromHeight = v.getHeight();
-//        Animation animation = new Animation() {
-//            @Override
-//            protected void applyTransformation(float interpolatedTime, Transformation t) {
-//                float height = (toHeight - fromWidth) * interpolatedTime + fromWidth;
-//                float width = (toWidth - fromHeight) * interpolatedTime + fromHeight; //also used by the childView
-//                ViewGroup.LayoutParams q = v.getLayoutParams();
-//
-//                q.width = (int) width;
-//                q.height = (int) height;
-//
-//                v.requestLayout();
-//            }
-//        };
-//        animation.setDuration(500);
-//        v.startAnimation(animation);
-//    }
-
 }

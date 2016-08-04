@@ -48,4 +48,9 @@ public class HPI {
     public String getDateCreated() {
         return dateCreated;
     }
+
+    public String getCompleteHPIRecord(){
+        return "hpiID: " + hpi_id + ", patientID: " + patientId +
+                ", hpiText: " + hpiText + ", dateCreated: " + dateCreated;
+    }
 }

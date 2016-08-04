@@ -63,12 +63,7 @@ public class MainActivity extends ECAActivity{
             }
         });
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
+    
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

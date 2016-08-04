@@ -2,12 +2,16 @@ package com.geebeelicious.geebeelicious.fragments;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +33,8 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class GrossMotorFragment extends MonitoringTestFragment {
+    private static final String TAG = "GrossMotorFragment";
+
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
@@ -39,10 +45,11 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private Typeface chalkFont;
 
     private Button naButton;
+    private WebView gifWebView;
 
     public GrossMotorFragment(){
         this.introStringResource = R.string.grossmotor_intro;
-        this.introTime = 3000;
+        this.introTime = 4000;
 
     }
 
@@ -56,6 +63,8 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
         naButton = (Button) view.findViewById(R.id.NAButton);
+
+        gifWebView = (WebView) view.findViewById(R.id.gifWebView);
 
         yesButton.setTypeface(chalkFont);
         noButton.setTypeface(chalkFont);
@@ -91,7 +100,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         grossMotorTest.makeTest();
         startTest();
 
-        grossMotorInteraction.expandECAToMatchHeight();
         return view;
     }
 
@@ -103,7 +111,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         }
         grossMotorTest.getCurrentSkill().setSkillSkipped();
         goToNextQuestion();
-        grossMotorTest.skipTest(timerView, grossMotorInteraction);
+        grossMotorTest.skipTest(timerView);
     }
 
     public void onRemarkSaveButtonClicked() {
@@ -154,8 +162,8 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
 
         naButton.setVisibility(View.GONE);
+        gifWebView.setVisibility(View.GONE);
 
-        grossMotorInteraction.shrinkECAToOriginalHeight();
         grossMotorInteraction.onShowRemarkLayout();
     }
 
@@ -165,6 +173,12 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
         fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
+        String html = getHTMLData(getResources().getResourceEntryName(gms.getSkillResImage()));
+
+        Log.d(TAG, "Loading html to webview: " + html);
+
+        gifWebView.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", null);
+        gifWebView.setBackgroundColor(Color.TRANSPARENT);
 
         countDownTimer = new CountDownTimer(6000, 1000) {
             TextView timerView = (TextView)(view.findViewById(R.id.countdownTV));
@@ -177,12 +191,22 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
             @Override
             public void onFinish() {
-                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutAnswers), naButton);
+                grossMotorTest.performSkill(i, timerView, (LinearLayout) view.findViewById(R.id.linearLayoutYesNo), naButton);
             }
         };
         hideAnswerButtons();
         countDownTimer.start();
 
+    }
+
+    private String getHTMLData(String imageURL) {
+        String head = "<head><style>img{max-width: 100%; width:auto; height: auto; margin : auto;}" +
+                "html, body { height: 100%; margin:0; padding:0;}\n" +
+                "div { position:relative;height: 100%; width:100%; }\n" +
+                "div img {position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; }</style></head>";
+        return "<html>" + head + "<body>" +
+                "<div><img src=\"" + imageURL + "\"></div>" +
+                "</body></html>";
     }
 
     //Allows the test to move to the next question or ends the test
@@ -199,7 +223,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     }
 
     private void hideAnswerButtons(){
-        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutAnswers);
+        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutYesNo);
         for (int j = 0; j<answers.getChildCount(); j++){
             View view = answers.getChildAt(j);
             view.setEnabled(false);
@@ -230,7 +254,5 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     public interface OnFragmentInteractionListener extends OnMonitoringFragmentInteractionListener {
         void onShowRemarkLayout();
         void onHideRemarkLayout();
-        void expandECAToMatchHeight();
-        void shrinkECAToOriginalHeight();
     }
 }

@@ -44,7 +44,6 @@ public class PatientListActivity extends ECAActivity{
     private ArrayList<Patient> patients = null;
     private Patient chosenPatient = null;
     private PatientsAdapter patientsAdapter;
-    private EditText inputSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class PatientListActivity extends ECAActivity{
         patients = getBetterDb.getPatientsFromSchool(getSchoolPreferences());
         getBetterDb.closeDatabase();
 
-        inputSearch = (EditText)findViewById(R.id.search_input);
+        final EditText inputSearch = (EditText)findViewById(R.id.search_input);
         inputSearch.setTypeface(chalkFont);
 
         patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients, chalkFont);

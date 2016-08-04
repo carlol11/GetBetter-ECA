@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -54,7 +55,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     private TextView ECAText;
     private TextView resultsText;
-    private LinearLayout ecaLinearLayout;
     private FrameLayout ecaFragmentLayout;
 
     private String[] fragments;
@@ -72,13 +72,14 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         TextView remarksText = (TextView) findViewById(R.id.questionMonitoringConsultationChoice);
-        ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
 
         chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         ECAText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
         remarksText.setTypeface(chalkFont);
+
+        resultsText.setMovementMethod(new ScrollingMovementMethod());
 
         //so that the fragments can be dynamically initialized
         fragments = new String[]{ //does not include the initial fragment
@@ -124,7 +125,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void onBackPressed() {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+        Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
 
         if (currentFragment instanceof GrossMotorFragment){
             ((GrossMotorFragment) currentFragment).onBackPressed();
@@ -162,7 +163,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+                Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
 
                 if(currentFragmentIndex + 1 >= fragments.length){ //if last fragment
                     endActivity(currentFragment);
@@ -235,26 +236,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         remarkLayout.setVisibility(View.GONE);
     }
 
-    @Override
-    public void expandECAToMatchHeight() {
-        View parent = (View)ecaLinearLayout.getParent();
-        final int mToHeight = parent.getHeight();
-        final int mToWidth = mToHeight;
-        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
-    }
-
-    @Override
-    public void shrinkECAToOriginalHeight() {
-        minimizeECAFragment();
-    }
-
     private void clearTextViews() {
         ECAText.setText("");
         resultsText.setText("");
     }
 
     private void initializeOldFragment() {
-        Fragment oldFragment = getSupportFragmentManager().findFragmentByTag(fragments[currentFragmentIndex]);
+        Fragment oldFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
         try {
             if(oldFragment == null) {
                 oldFragment = (Fragment) Class.forName(fragments[0]).newInstance();
@@ -331,6 +319,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     private void maximizeECAFragment(){
+        LinearLayout ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
+
         View parent = (View)ecaLinearLayout.getParent();
         final int mToHeight = parent.getHeight();
         final int mToWidth = parent.getWidth();
@@ -342,14 +332,14 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
-    private void runTransition(final int time, final String ecaText, final Fragment nextFragment, final boolean isConcern) {
+    private void runTransition(final int time, final String ecaText, final Fragment nextFragment, final boolean isHappy) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 CountDownTimer timer;
 
                 maximizeECAFragment();
-                if(isConcern){
+                if(!isHappy){
                     ecaFragment.sendToECAToEmote(ECAFragment.Emotion.CONCERN, 1);
                 }
 
@@ -365,7 +355,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                     public void onFinish() {
                         minimizeECAFragment();
 
-                        if (isConcern){
+                        if (!isHappy){
                             ecaFragment.sendToECAToEmote(ECAFragment.Emotion.HAPPY, 2);
                         }
 

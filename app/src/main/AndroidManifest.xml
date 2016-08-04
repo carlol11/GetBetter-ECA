@@ -49,7 +49,9 @@
         <activity
             android:name=".activities.MonitoringMainActivity"
             android:label="@string/title_activity_monitoring"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
     </application>
 
 </manifest><!--

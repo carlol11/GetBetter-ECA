@@ -191,7 +191,7 @@ public class FineMotorFragment extends MonitoringTestFragment {
     }
 
     private void showAnswerButtons(){
-        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutAnswers);
+        LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutYesNo);
         for (int j = 0; j<answers.getChildCount(); j++){
             View view = answers.getChildAt(j);
             view.setEnabled(true);

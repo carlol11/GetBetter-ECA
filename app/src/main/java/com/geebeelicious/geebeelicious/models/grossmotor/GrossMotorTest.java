@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
 
 import java.util.Random;
@@ -37,14 +38,14 @@ public class GrossMotorTest {
         grossMotorSkills = new GrossMotorSkill[8];
         testSkills = new GrossMotorSkill[3];
         currentSkill = 0;
-        grossMotorSkills[0] = new GrossMotorSkill("Jumping Jacks", "Jumping", "Do jumping jacks", 30000);
-        grossMotorSkills[1] = new GrossMotorSkill("Jump in Place", "Jumping", "Jump in place", 30000);
-        grossMotorSkills[2] = new GrossMotorSkill("Run in Place", "Running", "Run in place", 40000);
-        grossMotorSkills[3] = new GrossMotorSkill("Hop in Place", "Hopping", "Hop on one foot", 20000);
-        grossMotorSkills[4] = new GrossMotorSkill("One Foot Balance", "Balance", "Stand and balance on one foot", 15000);
-        grossMotorSkills[5] = new GrossMotorSkill("Walk in Place", "Walking","Walk in place", 60000);
-        grossMotorSkills[6] = new GrossMotorSkill("March in Place", "Marching", "March in place", 60000);
-        grossMotorSkills[7] = new GrossMotorSkill("Jog in Place", "Jogging", "Jog in place", 40000);
+        grossMotorSkills[0] = new GrossMotorSkill("Jumping Jacks", "Jumping", "Do jumping jacks", 30000, R.drawable.grossmotor_jumping_jacks);
+        grossMotorSkills[1] = new GrossMotorSkill("Jump in Place", "Jumping", "Jump in place", 30000, R.drawable.grossmotor_jump);
+        grossMotorSkills[2] = new GrossMotorSkill("Run in Place", "Running", "Run in place", 40000, R.drawable.grossmotor_run);
+        grossMotorSkills[3] = new GrossMotorSkill("Hop in Place", "Hopping", "Hop on one foot", 20000, R.drawable.grossmotor_hop);
+        grossMotorSkills[4] = new GrossMotorSkill("One Foot Balance", "Balance", "Stand and balance on one foot", 15000, R.drawable.grossmotor_one_foot_balance);
+        grossMotorSkills[5] = new GrossMotorSkill("Walk in Place", "Walking","Walk in place", 60000, R.drawable.grossmotor_walk);
+        grossMotorSkills[6] = new GrossMotorSkill("March in Place", "Marching", "March in place", 60000, R.drawable.grossmotor_march);
+        grossMotorSkills[7] = new GrossMotorSkill("Jog in Place", "Jogging", "Jog in place", 40000, R.drawable.grossmotor_jog);
     }
 
     private GrossMotorSkill getRandomSkill(int testSkillCounter){
@@ -168,7 +169,7 @@ public class GrossMotorTest {
     }
 
 
-    public void skipTest(TextView timerView, GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction) {
+    public void skipTest(TextView timerView) {
         if(countDownTimer != null){
             countDownTimer.cancel();
         }

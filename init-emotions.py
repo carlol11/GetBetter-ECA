@@ -2,8 +2,6 @@
 #CALL doConcern(characterName, 0 to 2)
 #CALL doHeadGesture(characterName)
 #change saySomething
-emotion = 2; #0-2 happy, 3-5 concern
-
 
 def doHappiness(characterName, intensity):
 	from random import *
@@ -34,12 +32,6 @@ def doHappiness(characterName, intensity):
 	
 	bmlExec = '<face type="FACS" stroke="3" au="1" velocity="0.5" amount="' + str(eyebrow1Random) + '" /><face type="FACS" stroke="3" velocity="0.5" au="2" amount="'+ str(eyebrow2Random) + '" /><face type="FACS" stroke="3" velocity="0.5" au="5" amount="'+ str(lidRandom) +'" /><face type="FACS" stroke="3" velocity="0.5" au="6" amount="' + str(cheekRandom) +'" /><face type="FACS" stroke="3" velocity="0.5" au="12" amount="' + str(mouthRandom) + '" />'
 	bml.execBML(characterName, bmlExec)
-	
-def setToHappy(characterName, intensity):
-	emotion = intensity
-
-def setToConcern(characterName, intensity):
-	emotion = intensity - 3
 
 def doConcern(characterName, intensity):
 	from random import *
@@ -117,9 +109,9 @@ def saySomething(actor, message):
     # print bmlMsg
     bmlMsg = '<speech>' + message + '</speech>'
 	stopTalking(actor)
-    bmlID = bml.execBML(actor, bmlMsg)
-    if emotion < 3:
-    	doHappiness(characterName, emotion)
-    else:
-    	doConcern(characterName, emotion - 3)
-    doHeadGesture(actor)
+	bmlID = bml.execBML(actor, bmlMsg)
+	if emotion < 3:
+		doHappiness(characterName, emotion)
+	else:
+		doConcern(characterName, emotion - 3)
+	doHeadGesture(actor)

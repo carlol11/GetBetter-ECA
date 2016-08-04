@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -19,7 +20,9 @@ import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.adapters.PatientsAdapter;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.models.consultation.HPI;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
+import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -108,6 +111,38 @@ public class PatientListActivity extends ECAActivity{
             }
         });
 
+        final Button secretButton = (Button) findViewById(R.id.secretButton);
+        secretButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                TextView patientRecordsTextView = (TextView) findViewById(R.id.patientRecordsTextView);
+                patientRecordsTextView.setText("");
+                patientRecordsTextView.setMovementMethod(new ScrollingMovementMethod());
+                patientRecordsTextView.setTypeface(chalkFont);
+
+                DatabaseAdapter getBetterDb = new DatabaseAdapter(PatientListActivity.this);
+                try {
+                    getBetterDb.openDatabaseForRead();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                ArrayList<Record> records = getBetterDb.getRecords(chosenPatient.getPatientID());
+                ArrayList<HPI> hpis = getBetterDb.getHPIs(chosenPatient.getPatientID());
+
+                for (Record record: records){
+                    patientRecordsTextView.append(record.getCompleteRecordInfo() + "\n\n");
+                }
+
+                for (HPI hpi: hpis){
+                    patientRecordsTextView.append(hpi.getCompleteHPIRecord() + "\n\n");
+                }
+
+                getBetterDb.closeDatabase();
+                return true;
+            }
+        });
+
+
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,6 +156,7 @@ public class PatientListActivity extends ECAActivity{
                 patientInfoView.setText(patientInfo);
 
                 selectPatientButton.setEnabled(true);
+                secretButton.setEnabled(true);
                 selectPatientButton.setTextColor(Color.WHITE);
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

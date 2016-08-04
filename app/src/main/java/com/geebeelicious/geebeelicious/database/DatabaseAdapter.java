@@ -376,7 +376,7 @@ public class DatabaseAdapter {
         values.put(Record.C_FINE_MOTOR_N_DOMINANT, record.getFineMotorNDominant());
         values.put(Record.C_FINE_MOTOR_HOLD, record.getFineMotorHold());
         values.put(Record.C_VACCINATION, record.getVaccination());
-        values.put(Record.C_VACCINATION, record.getPatientPicture());
+        values.put(Record.C_PATIENT_PICTURE, record.getPatientPicture());
 
         row = (int) getBetterDb.insert(Record.TABLE_NAME, null, values);
         Log.d(TAG, "insertRecord Result: " + row);

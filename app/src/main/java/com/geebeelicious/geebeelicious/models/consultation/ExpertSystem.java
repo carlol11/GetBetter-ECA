@@ -89,7 +89,7 @@ public class ExpertSystem {
     public ArrayList<ChiefComplaint> getChiefComplaintsQuestions(){
         ArrayList <ChiefComplaint> chiefComplaints = new ArrayList<>();
 
-        chiefComplaints.add(new ChiefComplaint(1, "Do you have fever?"));
+        chiefComplaints.add(new ChiefComplaint(1, "Do you have a fever?"));
         chiefComplaints.add(new ChiefComplaint(2, "Are you feeling any pain?"));
         chiefComplaints.add(new ChiefComplaint(3, "Do you have any injuries?"));
         chiefComplaints.add(new ChiefComplaint(4, "Do you have a skin problem?"));

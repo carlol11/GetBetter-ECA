@@ -85,7 +85,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/NA"
+            android:text="@string/cant_perform_task"
             android:id="@+id/NAButton"
             style="@style/TestButton"
             />

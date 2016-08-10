@@ -27,6 +27,8 @@ import java.util.Random;
  * monitoring activity. The fragment will allow users to
  * input updates for certain health determinants such as
  * height and weight.
+ *
+ * Default height and weight were chosen using the data from the World Health Organization
  */
 
 public class MonitoringFragment extends MonitoringTestFragment {
@@ -38,6 +40,7 @@ public class MonitoringFragment extends MonitoringTestFragment {
 
     private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};
+    private final int[] defaultValues = {132, 28};
     private final int numberOfQuestions = 2;
     private int questionsCounter = 0;
 
@@ -55,15 +58,16 @@ public class MonitoringFragment extends MonitoringTestFragment {
         unitView = (TextView)view.findViewById(R.id.unitView);
         numberPicker = (NumberPicker)view.findViewById(R.id.monitoringNumberPicker);
         numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(250);
 
         setQuestion(questions[questionsCounter]);
+        numberPicker.setValue(defaultValues[questionsCounter]);
 
         Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
         questionView.setTypeface(chalkFont);
         unitView.setTypeface(chalkFont);
 
         unitView.setText(questionUnit[questionsCounter]);
-        numberPicker.setMaxValue(250);
 
         Button saveButton = (Button)view.findViewById(R.id.saveAnswerButton);
         saveButton.setTypeface(chalkFont);
@@ -83,6 +87,7 @@ public class MonitoringFragment extends MonitoringTestFragment {
                 questionsCounter++;
                 if(questionsCounter < numberOfQuestions){
                     setQuestion(questions[questionsCounter]);
+                    numberPicker.setValue(defaultValues[questionsCounter]);
                     unitView.setText(questionUnit[questionsCounter]);
                 }else{
                     endMonitoring();

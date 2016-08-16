@@ -34,13 +34,11 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Record record;
 
-    private Button yesButton;
-    private Button noButton;
     private ImageView chartView;
 
     public VisualAcuityFragment(){
-        this.introStringResource = R.string.visualAcuity_intro;
-        this.introTime = 3000;
+        this.intro = R.string.visualAcuity_intro;
+        this.hasEarlyInstruction = true;
     }
 
     @Override
@@ -51,8 +49,8 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
 
         chartView = (ImageView)view.findViewById(R.id.chartLine);
         final ChartHelper chartHelper = new ChartHelper(chartView, getChartPreference());
-        yesButton = (Button) view.findViewById(R.id.YesButton);
-        noButton = (Button) view.findViewById(R.id.NoButton);
+        Button yesButton = (Button) view.findViewById(R.id.YesButton);
+        Button noButton = (Button) view.findViewById(R.id.NoButton);
         Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
         yesButton.setTypeface(chalkFont);
         noButton.setTypeface(chalkFont);
@@ -77,6 +75,9 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             }
         });
         chartHelper.startTest();
+
+        fragmentInteraction.showTransitionTextLayout();
+
         return view;
     }
 
@@ -100,9 +101,12 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         //distance calculator
         DistanceCalculator distanceCalculator = new DistanceCalculator();
         float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
-        fragmentInteraction.setInstructions("Move " +  String.format("%.2f", distance) +
-                " meters away from the tablet. Then " + getString(R.string.visualAcuity_instruction_left) + " Then tell me what you see.");
+        String instructions = "Move " +  String.format("%.2f", distance) +
+                " meters away from the tablet. " + getString(R.string.visualAcuity_instruction_left) + " Then tell me what you see.";
+
+        fragmentInteraction.setInstructions(instructions);
         record = fragmentInteraction.getRecord();
+        fragmentInteraction.appendTransitionIntructions(instructions);
     }
 
     private void updateResults(ChartHelper chartHelper){
@@ -161,7 +165,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         if (lineNum < 8){
             this.isEndEmotionHappy = false;
             this.endStringResource = R.string.visual_acuity_fail;
-            this.endTime = 5000;
+            this.endTime = 7000;
         } else {
             this.isEndEmotionHappy = true;
             this.endStringResource = R.string.visual_acuity_pass;

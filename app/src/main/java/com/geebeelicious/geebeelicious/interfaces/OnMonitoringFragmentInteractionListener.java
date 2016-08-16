@@ -18,4 +18,6 @@ public interface OnMonitoringFragmentInteractionListener {
     public int getIntResults(String result);
     public int getAge();
     public boolean isGirl();
+    public void showTransitionTextLayout();
+    public void appendTransitionIntructions(String instructions);
 }

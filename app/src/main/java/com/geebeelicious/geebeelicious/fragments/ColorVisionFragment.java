@@ -25,9 +25,9 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     private boolean isTestOngoing;
+
     public ColorVisionFragment(){
-        this.introStringResource = R.string.colorVision_intro;
-        this.introTime = 3000;
+        this.intro = R.string.colorVision_intro;
     }
 
     @Override
@@ -88,8 +88,6 @@ public class ColorVisionFragment extends MonitoringTestFragment {
 
         ishiharaHelper.startTest();
 
-        fragmentInteraction.setInstructions(R.string.colorVision_instruction);
-
         return view;
     }
 
@@ -115,7 +113,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         } else {
             this.isEndEmotionHappy = false;
             this.endStringResource = R.string.color_vision_fail;
-            this.endTime = 5000;
+            this.endTime = 7000;
         }
     }
 

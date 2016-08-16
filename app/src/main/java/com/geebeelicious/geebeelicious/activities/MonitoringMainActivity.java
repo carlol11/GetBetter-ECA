@@ -49,13 +49,16 @@ import java.util.Date;
  * Each test are executed through this activity
  */
 
-public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener, GrossMotorFragment.OnFragmentInteractionListener{
+public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener,
+        GrossMotorFragment.OnFragmentInteractionListener{
     private final static String TAG = "MonitoringMainActivity";
     private Record record;
 
-    private TextView ECAText;
+    private TextView ecaText;
     private TextView resultsText;
     private FrameLayout ecaFragmentLayout;
+    private Button readyButton;
+    private TextView ecaTransitionText;
 
     private String[] fragments;
     private int currentFragmentIndex;
@@ -69,15 +72,19 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_main);
 
-        ECAText = (TextView) findViewById(R.id.placeholderECAText);
-        resultsText = (TextView) findViewById(R.id.placeholderResults);
         TextView remarksText = (TextView) findViewById(R.id.questionMonitoringConsultationChoice);
+        ecaText = (TextView) findViewById(R.id.placeholderECAText);
+        resultsText = (TextView) findViewById(R.id.placeholderResults);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
+        readyButton = (Button) findViewById(R.id.readyButton);
+        ecaTransitionText = (TextView) findViewById(R.id.ecaTransitionTextView);
 
         chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
-        ECAText.setTypeface(chalkFont);
+        ecaText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
         remarksText.setTypeface(chalkFont);
+        readyButton.setTypeface(chalkFont);
+        ecaTransitionText.setTypeface(chalkFont);
 
         resultsText.setMovementMethod(new ScrollingMovementMethod());
 
@@ -143,13 +150,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void setInstructions(String instructions) {
-        ECAText.setText(instructions);
+        ecaText.setText(instructions);
         ecaFragment.sendToECAToSpeak(instructions);
     }
 
     @Override
     public void setInstructions(int resID) {
-        ECAText.setText(resID);
+        ecaText.setText(resID);
         ecaFragment.sendToECAToSPeak(resID);
     }
 
@@ -175,7 +182,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                         if (currentFragment instanceof MonitoringTestFragment){ //if the current has intro
                             doTransitionWithResult((MonitoringTestFragment) currentFragment, nextFragment);
                         } else if (doesNextHasIntro(nextFragment)){ //if the next has intro
-                            doTransitionWithoutResult((MonitoringTestFragment) nextFragment);
+                            runTransition(1000, "", nextFragment, true);
                         } else {
                             replaceFragment(nextFragment);
                         }
@@ -225,6 +232,17 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     @Override
+    public void showTransitionTextLayout() {
+        ((View)ecaTransitionText.getParent()).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void appendTransitionIntructions(String instructions) {
+        ecaTransitionText.append(" " + instructions);
+        ecaFragment.sendToECAToSpeak(instructions);
+    }
+
+    @Override
     public void onShowRemarkLayout() {
         RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
         remarkLayout.setVisibility(View.VISIBLE);
@@ -237,7 +255,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     private void clearTextViews() {
-        ECAText.setText("");
+        ecaText.setText("");
         resultsText.setText("");
     }
 
@@ -318,7 +336,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
-    private void maximizeECAFragment(){
+    private void maximizeToFullScreenECAFragment(){
         LinearLayout ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
 
         View parent = (View)ecaLinearLayout.getParent();
@@ -327,48 +345,91 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
     }
 
+    private void maximizeToBigECAFragment(){
+        LinearLayout ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
+
+        View parent = (View)ecaLinearLayout.getParent();
+        final int mToHeight = parent.getHeight();
+        ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.activity_eca_big),
+                mToHeight));
+    }
+
     private void minimizeECAFragment(){
         ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.activity_eca_small),
                 getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
-    private void runTransition(final int time, final String ecaText, final Fragment nextFragment, final boolean isHappy) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CountDownTimer timer;
+    private void runTransition(int time, String ecaText, final Fragment nextFragment, final boolean isHappy) {
+        CountDownTimer timer;
 
-                maximizeECAFragment();
-                if(!isHappy){
-                    ecaFragment.sendToECAToEmote(ECAFragment.Emotion.CONCERN, 1);
+        if (doesNextHasIntro(nextFragment)) { //if next is a monitoring test and has intro
+            String ecaIntroText = getString(((MonitoringTestFragment) nextFragment).getIntro());
+            ecaTransitionText.setText(ecaIntroText);
+            ecaText +=" " + ecaIntroText;
+            maximizeToBigECAFragment();
+        } else {
+            maximizeToFullScreenECAFragment();
+        }
+
+        if(!isHappy){
+            ecaFragment.sendToECAToEmote(ECAFragment.Emotion.CONCERN, 1);
+        }
+
+        ecaFragment.sendToECAToSpeak(ecaText);
+
+        timer = new CountDownTimer(time, 10000) { //timer for the transition
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                if (!isHappy){
+                    ecaFragment.sendToECAToEmote(ECAFragment.Emotion.HAPPY, 2);
                 }
 
-                ecaFragment.sendToECAToSpeak(ecaText);
+                if(nextFragment != null){
+                    if (doesNextHasIntro(nextFragment)) { //if next is a monitoring test and has intro
+                        final LinearLayout ecaTransitionTextLayout = (LinearLayout) findViewById(R.id.ecaTextTransitionLayout);
 
-                timer = new CountDownTimer(time, 1000) { //timer for the transition
-                    @Override
-                    public void onTick(long millisUntilFinished) {
 
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        minimizeECAFragment();
-
-                        if (!isHappy){
-                            ecaFragment.sendToECAToEmote(ECAFragment.Emotion.HAPPY, 2);
-                        }
-
-                        if(nextFragment != null){
+                        if (((MonitoringTestFragment)nextFragment).hasEarlyInstruction()){
                             replaceFragment(nextFragment);
+
+                            readyButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                ecaTransitionTextLayout.setVisibility(View.GONE);
+                                minimizeECAFragment();
+                                }
+                            });
                         } else {
-                            finish();
+                            ecaTransitionTextLayout.setVisibility(View.VISIBLE);
+                            readyButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ecaTransitionTextLayout.setVisibility(View.GONE);
+                                    transitionToNextFragment(nextFragment);
+                                }
+                            });
                         }
+
+                    } else {
+                        transitionToNextFragment(nextFragment);
                     }
-                };
-                timer.start();
+                } else {
+                    finish();
+                }
             }
-        });
+        };
+        timer.start();
+
+    }
+
+    private void transitionToNextFragment(Fragment nextFragment){
+        minimizeECAFragment();
+        replaceFragment(nextFragment);
     }
 
     private boolean doesNextHasIntro(Fragment nextFragment) {
@@ -381,19 +442,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         boolean isHappy = currentFragment.isEndEmotionHappy();
 
         currentFragment.hideFragmentMainView();
-
-        if (doesNextHasIntro(nextFragment)) { //if next has intro
-            ecaText +=" "+ tryGettingStringResource(((MonitoringTestFragment) nextFragment).getIntroStringResource());
-            time += ((MonitoringTestFragment) nextFragment).getIntroTime();
-        }
-
         runTransition(time, ecaText, nextFragment, isHappy);
 
-    }
-
-    private void doTransitionWithoutResult(MonitoringTestFragment nextFragment){
-        String ecaText = tryGettingStringResource(nextFragment.getIntroStringResource());
-        runTransition(nextFragment.getIntroTime(), ecaText, nextFragment, true);
     }
 
     private void endActivity(Fragment currentFragment) {

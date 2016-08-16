@@ -35,8 +35,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
     private Activity activity;
 
     public HearingMainFragment(){
-        this.introStringResource = R.string.hearing_intro;
-        this.introTime = 3000;
+        this.intro = R.string.hearing_intro;
     }
 
     @Override
@@ -150,8 +149,6 @@ public class HearingMainFragment extends MonitoringTestFragment {
                 testThread.start();
             }
         };
-
-        fragmentInteraction.setInstructions(R.string.hearing_instruction);
         countDownTimer.start();
 
         return view;

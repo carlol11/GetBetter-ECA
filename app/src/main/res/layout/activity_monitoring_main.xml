@@ -86,7 +86,6 @@
                 style="@style/TestButton"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:visibility="visible"
                 />
         </RelativeLayout>
 
@@ -99,6 +98,38 @@
         android:layout_toStartOf="@+id/linearLayoutECA"
         android:animateLayoutChanges="true"
         tools:layout="@layout/fragment_monitoring"
+        style="@style/DefaultBackground"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toStartOf="@+id/linearLayoutECA"
+        android:orientation="vertical"
+        style="@style/DefaultBackground"
+        android:gravity="center"
+        android:id="@+id/ecaTextTransitionLayout"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:id="@+id/ecaTransitionTextView"
+            android:gravity="center"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ready"
+            android:id="@+id/readyButton"
+            android:textSize="35sp"
+            android:padding="20dp"
+        />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

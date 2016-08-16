@@ -46,8 +46,7 @@ public class FineMotorFragment extends MonitoringTestFragment {
     private FineMotorHelper fineMotorHelper;
 
     public FineMotorFragment(){
-        this.introStringResource = R.string.finemotor_intro;
-        this.introTime = 4000;
+        this.intro = R.string.finemotor_intro;
     }
 
     @Override

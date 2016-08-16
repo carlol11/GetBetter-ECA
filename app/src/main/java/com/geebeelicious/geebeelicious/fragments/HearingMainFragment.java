@@ -35,8 +35,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
     private Activity activity;
 
     public HearingMainFragment(){
-        this.introStringResource = R.string.hearing_intro;
-        this.introTime = 3000;
+        this.intro = R.string.hearing_intro;
     }
 
     @Override
@@ -136,7 +135,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
         threads.add(timingThread);
         threads.add(testThread);
 
-        CountDownTimer countDownTimer = new CountDownTimer(5000, 3000) {
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 4000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -150,8 +149,6 @@ public class HearingMainFragment extends MonitoringTestFragment {
                 testThread.start();
             }
         };
-
-        fragmentInteraction.setInstructions(R.string.hearing_instruction);
         countDownTimer.start();
 
         return view;

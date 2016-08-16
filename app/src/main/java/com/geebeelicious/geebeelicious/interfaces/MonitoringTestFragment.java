@@ -9,24 +9,20 @@ import android.view.View;
  * used in MonitoringMainActivity
  */
 public abstract class MonitoringTestFragment extends Fragment{
-    protected int introStringResource;
+    protected int intro;
     protected int endStringResource;
-    protected int introTime;
     protected int endTime;
     protected boolean isEndEmotionHappy; //true happy, false concern
+    protected boolean hasEarlyInstruction;
 
     protected View view;
 
-    public int getIntroStringResource() {
-        return introStringResource;
+    public int getIntro() {
+        return intro;
     }
 
     public int getEndStringResource() {
         return endStringResource;
-    }
-
-    public int getIntroTime() {
-        return introTime;
     }
 
     public int getEndTime() {
@@ -35,6 +31,10 @@ public abstract class MonitoringTestFragment extends Fragment{
 
     public boolean isEndEmotionHappy() {
         return isEndEmotionHappy;
+    }
+
+    public boolean hasEarlyInstruction() {
+        return hasEarlyInstruction;
     }
 
     public void hideFragmentMainView(){

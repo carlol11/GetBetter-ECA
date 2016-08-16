@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 public class GrossMotorFragment extends MonitoringTestFragment {
     private static final String TAG = "GrossMotorFragment";
 
-    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
     private Activity activity;
 
@@ -48,9 +46,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private WebView gifWebView;
 
     public GrossMotorFragment(){
-        this.introStringResource = R.string.grossmotor_intro;
-        this.introTime = 4000;
-
+        this.intro = R.string.grossmotor_intro;
     }
 
     @Override
@@ -117,7 +113,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     public void onRemarkSaveButtonClicked() {
         grossMotorInteraction.onHideRemarkLayout();
         updateTestEndRemark(grossMotorTest.getIntFinalResult());
-        fragmentInteraction.doneFragment();
+        grossMotorInteraction.doneFragment();
     }
 
     public void onBackPressed(){
@@ -151,15 +147,15 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     private void endTest(){
         String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
-        Record record = fragmentInteraction.getRecord();
+        Record record = grossMotorInteraction.getRecord();
 
 
         grossMotorTest.endTest();
         hideAnswerButtons();
 
-        fragmentInteraction.setResults(resultString);
+        grossMotorInteraction.setResults(resultString);
 
-        record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
+        record.setGrossMotor(grossMotorInteraction.getIntResults(grossMotorTest.getFinalResult()));
 
         naButton.setVisibility(View.GONE);
         gifWebView.setVisibility(View.GONE);
@@ -172,7 +168,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
-        fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
+        grossMotorInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
         String html = getHTMLData(getResources().getResourceEntryName(gms.getSkillResImage()));
 
         Log.d(TAG, "Loading html to webview: " + html);
@@ -242,7 +238,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
             grossMotorInteraction = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()

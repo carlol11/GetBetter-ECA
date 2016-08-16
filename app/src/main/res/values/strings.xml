@@ -50,6 +50,9 @@
     <string name="new_user">New User</string>
     <string name="select_user">Select User</string>
     <string name="cancel">Cancel</string>
+    <string name="cant_perform_task">Cannot Perform Task</string>
+    <string name="ready">Ready!</string>
+
 
     <!-- ECA Strings-->
     <string name="app_intro">"Hi, I'm Jeebee! I'm your personal healthcare assistant. Let's get started!"</string>
@@ -76,6 +79,7 @@
     <string name="finemotor_path2_2">Help the lion go to his friends. Use the pen with your dominant hand to trace the path.</string>
     <string name="monitoring_end">Your check up is done!</string>
     <string name="consultation_end">Thanks for telling me about your problem! I\'ll send this to a doctor so they can help you soon.</string>
+    <string name="monitoring_ready">Assistant, press ready button when the child is ready.</string>
 
     <!-- ECA Remarks-->
     <string name="monitoring_remark_normal1">Keep eating healthy food!</string>
@@ -98,8 +102,5 @@
     <string name="grossmotor_na">That\'s okay! Let\'s move on to the next test.</string>
     <string name="finemotor_fail">You may need to work on your fine motor skills!</string>
     <string name="finemotor_pass">Your fine motor skills are great!</string>
-    <string name="cant_perform_task">Cannot Perform Task</string>
-    <string name="ready">Ready!</string>
-
 
 </resources>

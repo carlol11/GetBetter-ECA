@@ -135,7 +135,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
         threads.add(timingThread);
         threads.add(testThread);
 
-        CountDownTimer countDownTimer = new CountDownTimer(5000, 3000) {
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 4000) {
 
             @Override
             public void onTick(long millisUntilFinished) {

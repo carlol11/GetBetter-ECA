@@ -182,7 +182,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                         if (currentFragment instanceof MonitoringTestFragment){ //if the current has intro
                             doTransitionWithResult((MonitoringTestFragment) currentFragment, nextFragment);
                         } else if (doesNextHasIntro(nextFragment)){ //if the next has intro
-                            runTransition(1000, "", nextFragment, true);
+                            runTransition(100, "", nextFragment, true);
                         } else {
                             replaceFragment(nextFragment);
                         }
@@ -238,8 +238,9 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     @Override
     public void appendTransitionIntructions(String instructions) {
-        ecaTransitionText.append(" " + instructions);
-        ecaFragment.sendToECAToSpeak(instructions);
+        instructions = " " + instructions + " " + getString(R.string.monitoring_ready);
+        ecaTransitionText.append(instructions);
+        ecaFragment.sendToECAToSpeak(ecaTransitionText.getText().toString());
     }
 
     @Override
@@ -363,9 +364,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         CountDownTimer timer;
 
         if (doesNextHasIntro(nextFragment)) { //if next is a monitoring test and has intro
-            String ecaIntroText = getString(((MonitoringTestFragment) nextFragment).getIntro());
-            ecaTransitionText.setText(ecaIntroText);
-            ecaText +=" " + ecaIntroText;
             maximizeToBigECAFragment();
         } else {
             maximizeToFullScreenECAFragment();
@@ -392,11 +390,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 if(nextFragment != null){
                     if (doesNextHasIntro(nextFragment)) { //if next is a monitoring test and has intro
                         final LinearLayout ecaTransitionTextLayout = (LinearLayout) findViewById(R.id.ecaTextTransitionLayout);
+                        String ecaIntroText = getString(((MonitoringTestFragment) nextFragment).getIntro());
 
-
-                        if (((MonitoringTestFragment)nextFragment).hasEarlyInstruction()){
+                        if (((MonitoringTestFragment)nextFragment).hasEarlyInstruction()){ //has an early instruction
+                            ecaTransitionText.setText(ecaIntroText);
                             replaceFragment(nextFragment);
-
                             readyButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -405,6 +403,9 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                                 }
                             });
                         } else {
+                            ecaIntroText += " " + getString(R.string.monitoring_ready);
+                            ecaTransitionText.setText(ecaIntroText);
+                            ecaFragment.sendToECAToSpeak(ecaIntroText);
                             ecaTransitionTextLayout.setVisibility(View.VISIBLE);
                             readyButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -414,7 +415,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                                 }
                             });
                         }
-
                     } else {
                         transitionToNextFragment(nextFragment);
                     }

@@ -103,8 +103,6 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         float distance = distanceCalculator.getUserDistance(getActivity(), chartView);
         String instructions = "Move " +  String.format("%.2f", distance) +
                 " meters away from the tablet. " + getString(R.string.visualAcuity_instruction_left) + " Then tell me what you see.";
-
-        fragmentInteraction.setInstructions(instructions);
         record = fragmentInteraction.getRecord();
         fragmentInteraction.appendTransitionIntructions(instructions);
     }

@@ -352,6 +352,8 @@ public class DatabaseAdapter {
         values.put(Patient.C_GENDER, patient.getGender());
         values.put(Patient.C_SCHOOL_ID, patient.getSchoolId());
         values.put(Patient.C_HANDEDNESS, patient.getHandedness());
+        values.put(Patient.C_REMARKS_STRING, patient.getRemarksString());
+        values.put(Patient.C_REMARKS_AUDIO, patient.getRemarksAudio());
 
         row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
         Log.d(TAG, "insertPatient Result: " + row);
@@ -464,7 +466,9 @@ public class DatabaseAdapter {
                         c.getString(c.getColumnIndex(Patient.C_BIRTHDAY)),
                         c.getInt(c.getColumnIndex(Patient.C_GENDER)),
                         c.getInt(c.getColumnIndex(Patient.C_SCHOOL_ID)),
-                        c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS))));
+                        c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS)),
+                        c.getString(c.getColumnIndex(Patient.C_REMARKS_STRING)),
+                        c.getBlob(c.getColumnIndex(Patient.C_REMARKS_AUDIO))));
             }while(c.moveToNext());
         }
         c.close();

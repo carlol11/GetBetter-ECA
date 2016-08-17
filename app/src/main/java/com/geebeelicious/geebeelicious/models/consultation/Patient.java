@@ -17,6 +17,8 @@ public class Patient implements Parcelable {
     private int gender; // 0 for MALE, 1 for FEMALE
     private int schoolId;
     private int handedness; //0 for RIGHT, 1 for LEFT
+    private String remarksString;
+    private byte[] remarksAudio;
 
     public final static String C_PATIENT_ID = "patient_id";
     public final static String C_FIRST_NAME = "first_name";
@@ -25,6 +27,9 @@ public class Patient implements Parcelable {
     public final static String C_GENDER = "gender";
     public final static String C_SCHOOL_ID = "school_id";
     public final static String C_HANDEDNESS = "handedness";
+    public final static String C_REMARKS_STRING = "remarks_string";
+    public final static String C_REMARKS_AUDIO = "remarks_audio";
+
     public final static String FEMALE = "Female";
     public final static String MALE = "Male";
 
@@ -46,7 +51,9 @@ public class Patient implements Parcelable {
             };
 
 
-    public Patient(int patientID, String firstName, String lastName, String birthday, int gender, int schoolId, int handedness) {
+
+
+    public Patient(int patientID, String firstName, String lastName, String birthday, int gender, int schoolId, int handedness, String remarksString, byte[] remarksAudio) {
         this.patientID = patientID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,15 +61,19 @@ public class Patient implements Parcelable {
         this.gender = gender;
         this.schoolId = schoolId;
         this.handedness = handedness;
+        this.remarksString = remarksString;
+        this.remarksAudio = remarksAudio;
     }
 
-    public Patient(String firstName, String lastName, String birthday, int gender, int schoolId, int handedness) {
+    public Patient(String firstName, String lastName, String birthday, int gender, int schoolId, int handedness, String remarksString, byte[] remarksAudio) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
         this.schoolId = schoolId;
         this.handedness = handedness;
+        this.remarksString = remarksString;
+        this.remarksAudio = remarksAudio;
     }
 
     public Patient(Parcel in){
@@ -83,6 +94,8 @@ public class Patient implements Parcelable {
         dest.writeInt(gender);
         dest.writeInt(schoolId);
         dest.writeInt(handedness);
+        dest.writeString(remarksString);
+        dest.writeByteArray(remarksAudio);
     }
 
     public void readFromParcel(Parcel in){ //read back each field in the order that it was written to the parcel
@@ -93,6 +106,8 @@ public class Patient implements Parcelable {
         gender = in.readInt();
         schoolId = in.readInt();
         handedness = in.readInt();
+        remarksString = in.readString();
+        remarksAudio = in.createByteArray();
     }
 
     public int getPatientID() {
@@ -137,5 +152,13 @@ public class Patient implements Parcelable {
         }else{
             return "Left-Handed";
         }
+    }
+
+    public String getRemarksString() {
+        return remarksString;
+    }
+
+    public byte[] getRemarksAudio() {
+        return remarksAudio;
     }
 }

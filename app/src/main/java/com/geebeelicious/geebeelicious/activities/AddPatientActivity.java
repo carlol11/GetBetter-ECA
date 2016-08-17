@@ -139,7 +139,8 @@ public class AddPatientActivity extends ECAActivity{
                             handedness = 1;
                         }
                         radioGroup.setVisibility(View.GONE);
-                        patient = new Patient(firstName, lastName, birthDate, gender, getIntent().getIntExtra("schoolID", 1), handedness);
+                        //TODO: change the null as remarks
+                        patient = new Patient(firstName, lastName, birthDate, gender, getIntent().getIntExtra("schoolID", 1), handedness, null, null);
                         String patientDetails = "First Name: " + patient.getFirstName() +
                                                 "\nLast Name: " + patient.getLastName() +
                                                 "\nBirthdate: " + patient.getBirthday() +

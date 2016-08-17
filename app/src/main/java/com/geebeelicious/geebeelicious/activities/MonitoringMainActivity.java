@@ -28,6 +28,7 @@ import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.HearingMainFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
+import com.geebeelicious.geebeelicious.fragments.RemarksFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
@@ -50,7 +51,7 @@ import java.util.Date;
  */
 
 public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener,
-        GrossMotorFragment.OnFragmentInteractionListener{
+        GrossMotorFragment.OnFragmentInteractionListener, RemarksFragment.OnFragmentInteractionListener{
     private final static String TAG = "MonitoringMainActivity";
     private Record record;
 
@@ -98,6 +99,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 HearingMainFragment.class.getName(),
                 GrossMotorFragment.class.getName(),
                 FineMotorFragment.class.getName(),
+                RemarksFragment.class.getName()
         };
 
         fragmentManager = getSupportFragmentManager();
@@ -282,11 +284,12 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             final EditText remarkText = (EditText) findViewById(R.id.remarkText);
             remarkText.setTypeface(chalkFont);
 
+            //TODO: Change thisssssssss. kasi remove na this part
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String remark = remarkText.getText().toString();
-                    record.setGrossMotorRemark(remark);
+                    //record.setGrossMotorRemark(remark);
                     setResults("Remarks:" + remark);
                     ((GrossMotorFragment)fragment).onRemarkSaveButtonClicked();
                     saveButton.setOnClickListener(null);
@@ -475,5 +478,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             Log.e(TAG, "Resource not found", e);
         }
         return "";
+    }
+
+    @Override
+    public void onDoneRemarks() {
+        //TODO: Implement this
     }
 }

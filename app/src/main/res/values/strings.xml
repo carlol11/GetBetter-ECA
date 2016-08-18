@@ -32,6 +32,7 @@
     <string name="kilograms">kg</string>
     <string name="remarks_or_comments">Remarks</string>
     <string name="hpi">HPI</string>
+    <string name="add_remarks">Type remarks here...</string>
 
     <!--Spinner Items-->
     <string-array name="visualacuity_chart_names">

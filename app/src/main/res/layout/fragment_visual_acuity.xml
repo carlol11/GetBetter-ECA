@@ -43,7 +43,7 @@
             android:id="@+id/YesButton"
             android:minWidth="250dp"
             android:layout_weight="0.50"
-            style="@style/DefaultButton"/>
+            style="@style/TestButton"/>
 
         <Button
             android:drawableTop="@drawable/button_face_sad"

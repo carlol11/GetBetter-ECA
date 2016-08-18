@@ -486,4 +486,18 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         record.setRemarksAudio(remarkAudio);
         doneFragment();
     }
+
+    @Override
+    public void onDoneRemarks() {
+        doneFragment();
+    }
+
+    @Override
+    public void setRemarksQuestion() {
+        Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
+
+        if (currentFragment instanceof RemarksFragment){
+            ((RemarksFragment) currentFragment).setRemarkQuestion(R.string.remarks_monitoring);
+        }
+    }
 }

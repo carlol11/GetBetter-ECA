@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 
@@ -32,25 +35,24 @@ import java.io.InputStream;
 public class RemarksFragment extends Fragment {
     private final static String TAG = "RemarksFragment";
 
+    private View view;
+
     private OnFragmentInteractionListener mListener;
     private MediaRecorder mRecorder;
     private String mFileName;
     private MediaPlayer mPlayer;
 
-    public RemarksFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_remarks, container, false);
+        view =  inflater.inflate(R.layout.fragment_remarks, container, false);
 
         final Button recordButton = (Button) view.findViewById(R.id.recordButton);
         final Button playButton = (Button) view.findViewById(R.id.playButton);
         Button saveButton = (Button) view.findViewById(R.id.saveButton);
+        Button yesButton = (Button) view.findViewById(R.id.yesButton);
+        Button noButton = (Button) view.findViewById(R.id.noButton);
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
@@ -110,7 +112,32 @@ public class RemarksFragment extends Fragment {
             }
         });
 
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout remarkLayout = (RelativeLayout) view.findViewById(R.id.remarkLayout);
+                RelativeLayout remarkQuestionLayout = (RelativeLayout) view.findViewById(R.id.remarksQuestionLayout);
+
+                remarkLayout.setVisibility(View.VISIBLE);
+                remarkQuestionLayout.setVisibility(View.GONE);
+            }
+        });
+
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onDoneRemarks();
+            }
+        });
+
+        mListener.setRemarksQuestion();
+
         return view;
+    }
+
+    public void setRemarkQuestion(int question){
+        TextView remarkQuestion = (TextView) view.findViewById(R.id.remarksQuestion);
+        remarkQuestion.setText(question);
     }
 
     @Override
@@ -157,6 +184,8 @@ public class RemarksFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onDoneRemarks(String remarkString, byte[] remarkAudio);
+        void onDoneRemarks();
+        void setRemarksQuestion();
     }
 
     private void onRecord(boolean start) {

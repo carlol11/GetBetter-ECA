@@ -2,6 +2,7 @@ package com.geebeelicious.geebeelicious.models.consultation;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by mgmalana on 24/03/2016.
@@ -10,6 +11,7 @@ import android.os.Parcelable;
  * The class contains patient information.
  */
 public class Patient implements Parcelable {
+    private static final String TAG = "Patient";
     private int patientID;
     private String firstName;
     private String lastName;
@@ -65,15 +67,13 @@ public class Patient implements Parcelable {
         this.remarksAudio = remarksAudio;
     }
 
-    public Patient(String firstName, String lastName, String birthday, int gender, int schoolId, int handedness, String remarksString, byte[] remarksAudio) {
+    public Patient(String firstName, String lastName, String birthday, int gender, int schoolId, int handedness) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
         this.schoolId = schoolId;
         this.handedness = handedness;
-        this.remarksString = remarksString;
-        this.remarksAudio = remarksAudio;
     }
 
     public Patient(Parcel in){
@@ -160,5 +160,21 @@ public class Patient implements Parcelable {
 
     public byte[] getRemarksAudio() {
         return remarksAudio;
+    }
+
+    public void setRemarksString(String remarksString) {
+        this.remarksString = remarksString;
+    }
+
+    public void setRemarksAudio(byte[] remarksAudio) {
+        this.remarksAudio = remarksAudio;
+    }
+
+    public void printPatient(){
+        Log.d(TAG, "patientID: " + patientID + ", firstName: " + firstName +
+                ", lastName: " + lastName + ", birthday: " + birthday +
+                ", gender: " + gender + ", schoolId: " + schoolId +
+                ", handedness: " + handedness + ", remarkString: " + remarksString +
+                ", remarksAudio: " + remarksAudio);
     }
 }

@@ -1,10 +1,8 @@
 package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -88,30 +85,6 @@ public class RemarksFragment extends Fragment {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
-                byte[] remarkAudio = null;
-
-                try {
-                InputStream is = new BufferedInputStream(new FileInputStream(mFileName));
-
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-
-                    while (is.available() > 0) {
-                        bos.write(is.read());
-                    }
-                    remarkAudio = bos.toByteArray();
-
-                } catch (IOException e) {
-                    Log.e(TAG, "File error", e);
-                }
-                mListener.onDoneRemarks(remarkText.getText().toString(), remarkAudio);
-            }
-        });
-
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +100,34 @@ public class RemarksFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.onDoneRemarks();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
+                byte[] remarkAudio = null;
+
+                try {
+                    InputStream is = new BufferedInputStream(new FileInputStream(mFileName));
+
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+                    while (is.available() > 0) {
+                        bos.write(is.read());
+                    }
+
+                    remarkAudio = bos.toByteArray();
+
+                    if (remarkAudio.length == 0){
+                        remarkAudio = null;
+                    }
+
+                } catch (IOException e) {
+                    Log.e(TAG, "File error", e);
+                }
+                mListener.onDoneRemarks(remarkText.getText().toString(), remarkAudio);
             }
         });
 

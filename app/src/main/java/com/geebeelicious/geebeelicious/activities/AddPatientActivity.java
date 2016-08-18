@@ -3,16 +3,21 @@ package com.geebeelicious.geebeelicious.activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.fragments.RemarksFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -25,7 +30,7 @@ import java.util.Date;
  * functionality for adding new patients.
  */
 
-public class AddPatientActivity extends ECAActivity{
+public class AddPatientActivity extends ECAActivity implements RemarksFragment.OnFragmentInteractionListener{
     private String firstName = null;
     private String lastName = null;
     private String birthDate = null;
@@ -43,6 +48,8 @@ public class AddPatientActivity extends ECAActivity{
     private int questionCounter;
     private final int[] questions = {R.string.first_name, R.string.last_name, R.string.birthdate,
                                     R.string.gender, R.string.handedness};
+
+    RemarksFragment remarksFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +146,7 @@ public class AddPatientActivity extends ECAActivity{
                             handedness = 1;
                         }
                         radioGroup.setVisibility(View.GONE);
-                        //TODO: change the null as remarks
-                        patient = new Patient(firstName, lastName, birthDate, gender, getIntent().getIntExtra("schoolID", 1), handedness, null, null);
+                        patient = new Patient(firstName, lastName, birthDate, gender, getIntent().getIntExtra("schoolID", 1), handedness);
                         String patientDetails = "First Name: " + patient.getFirstName() +
                                                 "\nLast Name: " + patient.getLastName() +
                                                 "\nBirthdate: " + patient.getBirthday() +
@@ -151,10 +157,17 @@ public class AddPatientActivity extends ECAActivity{
                         ecaFragment.sendToECAToSPeak(R.string.add_patient_confirm);
                         break;
                     case 5:
-                        savePatientToDatabase(patient);
-                        Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
-                        startActivity(intent);
-                        finish();
+                        RelativeLayout saveCancelLayout = (RelativeLayout) findViewById(R.id.saveCancelLayout);
+                        questionView.setVisibility(View.GONE);
+                        saveCancelLayout.setVisibility(View.GONE);
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        remarksFragment = new RemarksFragment();
+
+                        transaction.add(R.id.remarksFragmentContainer, remarksFragment, RemarksFragment.class.getName());
+                        transaction.commit();
+                        break;
                     default:
                         break;
                 }
@@ -204,8 +217,29 @@ public class AddPatientActivity extends ECAActivity{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        patient.printPatient();
         getBetterDb.insertPatient(patient);
 
         getBetterDb.closeDatabase();
+    }
+
+    @Override
+    public void onDoneRemarks(String remarkString, byte[] remarkAudio) {
+        patient.setRemarksString(remarkString);
+        patient.setRemarksAudio(remarkAudio);
+        onDoneRemarks();
+    }
+
+    @Override
+    public void onDoneRemarks() {
+        savePatientToDatabase(patient);
+        Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void setRemarksQuestion() { //do not call this inside the addPatientActivity
+        remarksFragment.setRemarkQuestion(R.string.remarks_add_patient);
     }
 }

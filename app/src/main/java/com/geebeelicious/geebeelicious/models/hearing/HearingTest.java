@@ -49,12 +49,26 @@ public class HearingTest {
     private int getRandomGapDuration() {
         int time;
         double random = Math.random();
-        if (random < 0.3) {
+        if (random < 0.1) {
             time = 2000;
-        } else if (random < 0.67 && random >= 0.3) {
-            time = 2500;
-        } else {
+        } else if (random < 0.2 && random >= 0.1) {
             time = 3000;
+        } else if (random < 0.3 && random >= 0.2) {
+            time = 4000;
+        } else if (random < 0.4 && random >= 0.3) {
+            time = 5000;
+        } else if (random < 0.5 && random >= 0.4) {
+            time = 6000;
+        } else if (random < 0.6 && random >= 0.5) {
+            time = 2500;
+        } else if (random < 0.7 && random >= 0.6) {
+            time = 3500;
+        } else if (random < 0.8 && random >= 0.7) {
+            time = 4500;
+        } else if (random < 0.9 && random >= 0.8) {
+            time = 5500;
+        } else {
+            time = 6500;
         }
         return time;
     }

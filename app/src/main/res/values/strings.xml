@@ -102,5 +102,6 @@
     <string name="grossmotor_na">That\'s okay! Let\'s move on to the next test.</string>
     <string name="finemotor_fail">You may need to work on your fine motor skills!</string>
     <string name="finemotor_pass">Your fine motor skills are great!</string>
+    <string name="remarks">Remarks</string>
 
 </resources>

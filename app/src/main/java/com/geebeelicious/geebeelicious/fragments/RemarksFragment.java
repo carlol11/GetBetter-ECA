@@ -13,10 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.geebeelicious.geebeelicious.R;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,15 +46,11 @@ public class RemarksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_remarks, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_remarks, container, false);
 
         final Button recordButton = (Button) view.findViewById(R.id.recordButton);
         final Button playButton = (Button) view.findViewById(R.id.playButton);
-
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        Button saveButton = (Button) view.findViewById(R.id.saveButton);
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
@@ -82,6 +83,30 @@ public class RemarksFragment extends Fragment {
                     playButton.setText("Play");
                 }
                 mStartPlaying = !mStartPlaying;
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
+                byte[] remarkAudio = null;
+
+                try {
+                InputStream is = new BufferedInputStream(new FileInputStream(mFileName));
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+
+                    while (is.available() > 0) {
+                        bos.write(is.read());
+                    }
+                    remarkAudio = bos.toByteArray();
+
+                } catch (IOException e) {
+                    Log.e(TAG, "File error", e);
+                }
+                mListener.onDoneRemarks(remarkText.getText().toString(), remarkAudio);
             }
         });
 
@@ -131,11 +156,16 @@ public class RemarksFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onDoneRemarks();
+        void onDoneRemarks(String remarkString, byte[] remarkAudio);
     }
 
     private void onRecord(boolean start) {
         if (start) {
+            mRecorder = new MediaRecorder();
+            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
             startRecording();
         } else {
             stopRecording();

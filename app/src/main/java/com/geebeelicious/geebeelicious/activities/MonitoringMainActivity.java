@@ -481,7 +481,9 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     @Override
-    public void onDoneRemarks() {
-        //TODO: Implement this
+    public void onDoneRemarks(String remarkString, byte[] remarkAudio) {
+        record.setRemarksString(remarkString);
+        record.setRemarksAudio(remarkAudio);
+        doneFragment();
     }
 }

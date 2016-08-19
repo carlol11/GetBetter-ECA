@@ -33,6 +33,7 @@
     <string name="remarks_or_comments">Remarks</string>
     <string name="hpi">HPI</string>
     <string name="remarks">Remarks</string>
+    <string name="add_remarks">Type remarks here...</string>
 
     <!--Spinner Items-->
     <string-array name="visualacuity_chart_names">
@@ -70,7 +71,7 @@
     <string name="visualAcuity_instruction_left">Cover your left eye.</string>
     <string name="visualAcuity_instruction_right">Now, uncover your left eye. Then, cover your right eye.</string>
     <string name="colorVision_intro">Now let\'s check how well you can see colors. Tell me the shape you see by pressing the buttons below.</string>
-    <string name="hearing_intro">Let\'s find out how well you can hear. Please wear the earphones. Press the button every time you hear a sound.</string>
+    <string name="hearing_intro">Let\'s find out how well you can hear. Please wear the earphones. Press the Yes button every time you hear a sound.</string>
     <string name="grossmotor_intro">Let\'s do some fun exercises!</string>
     <string name="finemotor_intro">Now, let\'s do this fun activity.</string>
     <string name="finemotor_path1_1">Help the butterfly go to the flowers. Use a finger from your non-dominant hand to trace the path.</string>

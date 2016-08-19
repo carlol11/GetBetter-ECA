@@ -31,20 +31,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Kate.
  * The PatientsListActivity serves as the activity allowing
  * the user to view the patient list from a given school.
  * The user can view the list, search for patients, and
  * is given the option to select the patient or be redirected
  * to the module allowing for new patients to be added.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class PatientListActivity extends ECAActivity{
+    /**
+     * Used as a flag whether the ECA has spoken.
+     */
     private boolean hasSpoken;
-    private ArrayList<Patient> patients = null;
-    private Patient chosenPatient = null;
-    private PatientsAdapter patientsAdapter;
 
+    /**
+     * Keeps all the patients of the school.
+     */
+    private ArrayList<Patient> patients = null;
+
+    /**
+     * Patient chosen by the user.
+     */
+    private Patient chosenPatient = null;
+
+    /**
+     * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +81,7 @@ public class PatientListActivity extends ECAActivity{
         final EditText inputSearch = (EditText)findViewById(R.id.search_input);
         inputSearch.setTypeface(chalkFont);
 
-        patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients, chalkFont);
+        final PatientsAdapter patientsAdapter = new PatientsAdapter(PatientListActivity.this, patients, chalkFont);
         ListView patientListView = (ListView)findViewById(R.id.patientListView);
         patientListView.setAdapter(patientsAdapter);
 
@@ -187,6 +203,12 @@ public class PatientListActivity extends ECAActivity{
         });
     }
 
+    /**
+     * Called when the current Window of the activity gains or loses focus.
+     * @param hasFocus whether the window of this activity has focus
+     *
+     * @see android.app.Activity#onWindowFocusChanged(boolean)
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -198,6 +220,11 @@ public class PatientListActivity extends ECAActivity{
         }
     }
 
+    /**
+     * Saves {@link PatientListActivity#hasSpoken} inside {@code outState}
+     *
+     * @see android.app.Activity#onSaveInstanceState(Bundle)
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

@@ -122,7 +122,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
-        Button readyButton = (Button) findViewById(R.id.readyButton);
+        readyButton = (Button) findViewById(R.id.readyButton);
         ecaTransitionText = (TextView) findViewById(R.id.ecaTransitionTextView);
 
         Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");

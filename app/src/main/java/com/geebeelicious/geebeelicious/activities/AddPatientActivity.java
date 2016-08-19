@@ -291,6 +291,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
+     * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
      * Sets the {@link Patient#remarksString} and {@link Patient#remarksAudio} of the patient
      * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks(String remarkString, byte[] remarkAudio)
      */
@@ -302,6 +303,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
+     * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
      * Calls {@link AddPatientActivity#savePatientToDatabase(Patient)} and starts the {@link PatientListActivity}.
      * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks()
      */
@@ -314,6 +316,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
+     * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
      * Sends the question to the ECA
      * @see RemarksFragment.OnFragmentInteractionListener#setRemarksQuestion()
      */

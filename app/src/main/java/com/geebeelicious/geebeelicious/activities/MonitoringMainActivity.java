@@ -45,29 +45,75 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by MG.
  * The MonitoringMainActivity serves as the main activity for all the monitoring activities
- * Each test are executed through this activity
+ * Each test are executed through this activity.
+ * @author Mary Grace Malana
  */
 
 public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener,
         RemarksFragment.OnFragmentInteractionListener{
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "MonitoringMainActivity";
+
+    /**
+     * Record of the patient
+     */
     private Record record;
 
+    /**
+     * TextView to show the instructions during the specific monitoring test
+     * @see MonitoringMainActivity#ecaTransitionText
+     */
     private TextView ecaText;
+
+    /**
+     * TextView to show the results of the test
+     */
     private TextView resultsText;
+
+    /**
+     * Contains the {@link ECAFragment}
+     */
     private FrameLayout ecaFragmentLayout;
+
+    /**
+     * Clicked by the assitant when the child is ready to take the specific monitoring test
+     */
     private Button readyButton;
+
+    /**
+     * TextView to show the instructions before the specific monitoring test
+     * @see MonitoringMainActivity#ecaText
+     */
     private TextView ecaTransitionText;
 
+    /**
+     * Contains the fragment names of the monitoring tests and other module fragments
+     */
     private String[] fragments;
+
+    /**
+     * Serves as the index counter for the {@link MonitoringMainActivity#fragments}
+     */
     private int currentFragmentIndex;
+
+    /**
+     * Contains the fragmentManager of the activity
+     */
     private FragmentManager fragmentManager;
+
+    /**
+     * Contains the information of current patient having the monitoring activity
+     */
     private Patient patient;
 
-    private Typeface chalkFont;
-
+    /**
+     * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +122,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
-        readyButton = (Button) findViewById(R.id.readyButton);
+        Button readyButton = (Button) findViewById(R.id.readyButton);
         ecaTransitionText = (TextView) findViewById(R.id.ecaTransitionTextView);
 
-        chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
+        Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         ecaText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
         readyButton.setTypeface(chalkFont);
@@ -122,6 +168,12 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         initializeOldFragment();
     }
 
+    /**
+     * Saves {@link MonitoringMainActivity#record}, {@link MonitoringMainActivity#patient},
+     * and {@link MonitoringMainActivity#currentFragmentIndex} inside {@code outState}
+     *
+     * @see android.app.Activity#onSaveInstanceState(Bundle)
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -130,6 +182,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         outState.putInt("fragmentIndex", currentFragmentIndex);
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Calls onBackPressed of current monitoring test and ends the current activity.
+     */
     @Override
     public void onBackPressed() {
         Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
@@ -143,30 +199,49 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         finish();
     }
 
+    /**
+     * @return {@link MonitoringMainActivity#record}
+     */
     @Override
     public Record getRecord(){
         return record;
     }
 
+    /**
+     * Sets text of {@link MonitoringMainActivity#ecaText} and sends instructions to ECA.
+     * @param instructions instructions to be sent.
+     */
     @Override
     public void setInstructions(String instructions) {
         ecaText.setText(instructions);
         ecaFragment.sendToECAToSpeak(instructions);
     }
 
+    /**
+     * Sets text of {@link MonitoringMainActivity#ecaText} and sends instructions to ECA.
+     * @param resID String resource ID of the instructions to be sent.
+     */
     @Override
     public void setInstructions(int resID) {
         ecaText.setText(resID);
         ecaFragment.sendToECAToSPeak(resID);
     }
 
+    /**
+     * Appends text in {@link MonitoringMainActivity#resultsText}.
+     * @param results coming from the monitoring test.
+     */
     @Override
     public void setResults(String results) {
         resultsText.append("\n" + results);
     }
 
+    /**
+     * Gets called by the fragments when done.
+     * Handles the changing of fragments depending on the next fragment.
+     */
     @Override
-    public void doneFragment() { //gets called by the fragments when done
+    public void doneFragment() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -195,6 +270,12 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         });
     }
 
+    /**
+     * Gets the int value of the result depending from the given string result.
+     * Returns 0 if “Pass”, 1 if “Fail”, else 2.
+     *
+     * @see OnMonitoringFragmentInteractionListener#getIntResults(String)
+     */
     @Override
     public int getIntResults(String result){
         switch(result){
@@ -207,6 +288,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
+    /**
+     * Computes for the age of the patient using the birthdate of the patient
+     * @return age of patient on the current day
+     */
     @Override
     public int getAge() {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -226,16 +311,28 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         return 0;
     }
 
+    /**
+     * Gets the patient's gender.
+     * @return True if patient is female, else False.
+     */
     @Override
     public boolean isGirl() {
         return patient.getGender() == 1;
     }
 
+    /**
+     * Shows {@link MonitoringMainActivity#ecaTransitionText} parent view
+     */
     @Override
     public void showTransitionTextLayout() {
         ((View)ecaTransitionText.getParent()).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Appends the instructions of the monitoring test with the ready instructions.
+     * Also sends the complete instructions to the {@link MonitoringMainActivity#ecaFragment}.
+     * @param instructions to before the monitoring test starts.
+     */
     @Override
     public void appendTransitionIntructions(String instructions) {
         instructions = " " + instructions + " " + getString(R.string.monitoring_ready);
@@ -243,11 +340,19 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaFragment.sendToECAToSpeak(ecaTransitionText.getText().toString());
     }
 
+    /**
+     * Clears the {@link MonitoringMainActivity#ecaText} and {@link MonitoringMainActivity#resultsText}
+     * after the monitoring test.
+     */
     private void clearTextViews() {
         ecaText.setText("");
         resultsText.setText("");
     }
 
+    /**
+     * Iniitializes the current or the first fragment for the activity depending
+     * on the {@link MonitoringMainActivity#currentFragmentIndex}.
+     */
     private void initializeOldFragment() {
         Fragment oldFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
         try {
@@ -260,6 +365,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
+    /**
+     * Replaces the old fragment by the next fragment.
+     * @param fragment to be attached to monitoringFragmentContainer.
+     */
     private void replaceFragment(final Fragment fragment){
         shortcutForHearingfragment(fragment); //this is only used for testing
 
@@ -291,6 +400,9 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
     }
 
+    /**
+     * Sets the ECA frame to full screen.
+     */
     private void maximizeToFullScreenECAFragment(){
         LinearLayout ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
 
@@ -300,6 +412,9 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(mToWidth, mToHeight));
     }
 
+    /**
+     * Sets the ECA frame to full height and adjust the width as equal to the new height.
+     */
     private void maximizeToBigECAFragment(){
         LinearLayout ecaLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutECA);
 
@@ -309,11 +424,23 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 mToHeight));
     }
 
+    /**
+     * Sets the ECA back to its original size
+     */
     private void minimizeECAFragment(){
         ecaFragmentLayout.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.activity_eca_small),
                 getResources().getDimensionPixelSize(R.dimen.activity_eca_small)));
     }
 
+    /**
+     * Runs the transition between the fragments.
+     * @param time milliseconds on which the transition is to be run before the start
+     *             of next fragment or showing of {@link MonitoringMainActivity#ecaTransitionText}
+     *             parent view.
+     * @param ecaText initial string sent to ECA to speak.
+     * @param nextFragment the next Fragment to be run.
+     * @param isHappy whether the ecaText has happy emotion or not.
+     */
     private void runTransition(int time, String ecaText, final Fragment nextFragment, final boolean isHappy) {
         CountDownTimer timer;
 
@@ -381,15 +508,30 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     }
 
+    /**
+     * Calls {@link MonitoringMainActivity#minimizeECAFragment()}
+     * and {@link MonitoringMainActivity#replaceFragment(Fragment)}.
+     * @param nextFragment the next Fragment to be run.
+     */
     private void transitionToNextFragment(Fragment nextFragment){
         minimizeECAFragment();
         replaceFragment(nextFragment);
     }
 
+    /**
+     * Gets whether the nextFragment has an intro or not.
+     * @param nextFragment nextFragment to be run.
+     * @return true if nextFragment has intro, else false.
+     */
     private boolean doesNextHasIntro(Fragment nextFragment) {
         return nextFragment instanceof MonitoringTestFragment;
     }
 
+    /**
+     * Runs transition with result from the current fragment.
+     * @param currentFragment fragment of the current test.
+     * @param nextFragment  fragment of the next test.
+     */
     private void doTransitionWithResult(MonitoringTestFragment currentFragment, Fragment nextFragment) {
         String ecaText = tryGettingStringResource(currentFragment.getEndStringResource());
         int time = currentFragment.getEndTime();
@@ -400,6 +542,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     }
 
+    /**
+     * Runs conclusion segment of the activity, then ends the activity.
+     * If the currentFragment has results, it sends the results to the ECA.
+     * @param currentFragment fragment of the current test
+     */
     private void endActivity(Fragment currentFragment) {
         DatabaseAdapter db = new DatabaseAdapter(this);
         String ecaText = "";
@@ -422,6 +569,12 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         runTransition(time, ecaText, null, true);
     }
 
+    /**
+     * Tries to get string, given resource ID. If invalid returns "",
+     * else returns string corresponding to the string resource ID.
+     * @param res resource id of the string.
+     * @return String resource
+     */
     private String tryGettingStringResource(int res){
         try {
             return getString(res);
@@ -431,6 +584,12 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         return "";
     }
 
+    /**
+     * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
+     * Sets the {@link Record#remarksString} and {@link Record#remarksAudio} of the patient.
+     * calls {@link  MonitoringMainActivity#doneFragment()}
+     * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks(String remarkString, byte[] remarkAudio).
+     */
     @Override
     public void onDoneRemarks(String remarkString, byte[] remarkAudio) {
         record.setRemarksString(remarkString);
@@ -438,11 +597,21 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         doneFragment();
     }
 
+    /**
+     * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
+     * Calls {@link  MonitoringMainActivity#doneFragment()}
+     * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks(String remarkString, byte[] remarkAudio).
+     */
     @Override
     public void onDoneRemarks() {
         doneFragment();
     }
 
+    /**
+     * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
+     * Sends the question to the ECA
+     * @see RemarksFragment.OnFragmentInteractionListener#setRemarksQuestion()
+     */
     @Override
     public void setRemarksQuestion() {
         Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);

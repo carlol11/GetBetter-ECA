@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 
 import com.geebeelicious.geebeelicious.R;
@@ -46,19 +45,22 @@ public class ECAFragment extends Fragment {
         final View view =  inflater.inflate(R.layout.fragment_eca, container, false);
         final Button replayButton = (Button) view.findViewById(R.id.replayButton);
 
-        ViewTreeObserver vto = view.getViewTreeObserver();
-
-        //sets the size of the replayButton depending on the size of the fragment
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
-            public void onGlobalLayout() {
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight,
+                                       int oldBottom) {
+                // its possible that the layout is not complete in which case
+                // we will get all zero values for the positions, so ignore the event
+                if (left == 0 && top == 0 && right == 0 && bottom == 0) {
+                    return;
+                }
+
                 int viewHeight = view.getHeight() / 10;
                 ViewGroup.LayoutParams params = replayButton.getLayoutParams();
                 params.width = viewHeight;
                 params.height = viewHeight;
 
                 replayButton.setLayoutParams(params);
-                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 

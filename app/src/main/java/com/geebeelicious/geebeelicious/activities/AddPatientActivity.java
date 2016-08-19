@@ -122,7 +122,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
                         } else if(selectedID == radioButton1.getId()){
                             gender = 1;
                         }
-                        radioGroup.clearCheck();
+                        radioGroup.check(R.id.radioButton1);
                         radioButton0.setText(R.string.right_handed);
                         radioButton1.setText(R.string.left_handed);
                         radioButton0.setOnClickListener(new View.OnClickListener() {

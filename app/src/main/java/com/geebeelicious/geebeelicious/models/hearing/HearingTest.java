@@ -32,7 +32,10 @@ public class HearingTest {
     private boolean isHeard = false;
     private boolean inLoop = true;
     private boolean isDone = false;
+    private boolean isGap = false;
+    private int hasCheated = 0;
 
+    private int tempResponse;
     private static boolean isRunning = true;
     private double[] thresholdsRight = {0, 0, 0};
     private double[] thresholdsLeft = {0, 0, 0};
@@ -107,7 +110,7 @@ public class HearingTest {
 
                 //Loop for each individual sample using binary search algorithm
                 for (; ; ) {
-                    int tempResponse = 0;
+                    tempResponse = 0;
                     int actualVolume = (minVolume + maxVolume) / 2;
                     if ((maxVolume - minVolume) < 50) {
                         if(e == 0){
@@ -121,24 +124,33 @@ public class HearingTest {
                         break;
                     } else {
                         for (int z = 0; z < 3; z++) {
+                            System.out.println("z: " + z);
                             AudioTrack audioTrack;
                             isHeard = false;
+                            hasCheated = 0;
                             if (!isRunning) {
                                 return;
                             }
-
-                            audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, actualVolume), e);
-
                             try {
+                                isGap = true;
                                 Thread.sleep(getRandomGapDuration());
-
                             } catch (InterruptedException ie) {
 
                             }
-                            audioTrack.release();
-                            if (isHeard) {
+
+                            isGap = false;
+                            audioTrack = soundHelper.playSound(soundHelper.generateSound(increment, actualVolume), e);
+                            try{
+                                Thread.sleep(1000); //1 second to allow sound to play and wait for response
+                            } catch( InterruptedException ie){
+
+                            }
+                            if (isHeard){
                                 tempResponse++;
                             }
+
+                            audioTrack.release();
+
                             //Check if first two test were positive, skips the third to speed up the test
                             if (tempResponse >= 2) {
                                 break;
@@ -161,6 +173,18 @@ public class HearingTest {
         }
         inLoop = false;
         isDone = true;
+    }
+
+    public int hasCheated(){
+        return hasCheated;
+    }
+
+    public void setCheated(){
+        hasCheated++;
+    }
+
+    public boolean isGap(){
+        return isGap;
     }
 
     public void setHeard(){

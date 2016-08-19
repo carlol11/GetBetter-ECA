@@ -55,21 +55,16 @@ public class HearingMainFragment extends MonitoringTestFragment {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hearingTest.setHeard();
+                if(!hearingTest.isGap()){ //if not pressed during gap
+                    if(hearingTest.hasCheated()<=3){ //if <=3 cheating attempt (random presses) made, consider as correct answer
+                        System.out.println("setHeard");
+                        hearingTest.setHeard();
+                    } //if more than 3 cheat attempts, answer is no longer considered for that round (for z loop in hearing test)
+                } else if(hearingTest.isGap()) { //if pressed during gap, consider as cheating attempt (max 3 allowed)
+                    hearingTest.setCheated();
+                }
             }
         });
-
-        final Runnable backgroundFlash = new Runnable(){
-            public void run(){
-                yesButton.setBackgroundColor(Color.parseColor("#69F0AE"));
-            }
-        };
-
-        final Runnable backgroundNormal = new Runnable(){
-            public void run(){
-                yesButton.setBackgroundResource(R.drawable.chalkoutline);
-            }
-        };
 
         final Runnable disableTest = new Runnable() {
             @Override
@@ -87,12 +82,6 @@ public class HearingMainFragment extends MonitoringTestFragment {
                     if(!hearingTest.isRunning()){
                         return;
                     }
-                    if(hearingTest.isHeard()){
-                        activity.runOnUiThread(backgroundFlash);
-                        while(hearingTest.isHeard()){
-
-                        }
-                    }
                 }
             }
         });
@@ -104,12 +93,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
                         return;
                     }
                     if(hearingTest.isHeard()){
-                        try{
-                            Thread.sleep(500);
-                        } catch(InterruptedException ie){
 
-                        }
-                        activity.runOnUiThread(backgroundNormal);
                     }
                 }
             }
@@ -120,7 +104,6 @@ public class HearingMainFragment extends MonitoringTestFragment {
             public void run() {
                 hearingTest.performTest(calibrationData);
                 if(hearingTest.isDone()){
-                    activity.runOnUiThread(backgroundFlash);
                     activity.runOnUiThread(disableTest);
                     endTest();
 

@@ -27,6 +27,7 @@ import java.util.ArrayList;
  * The original class used as a basis for this current version was
  * created by Mike Dayupay for HPI Generation module of the GetBetter project.
  *
+ * @author Mike Dayupay
  * @author Mary Grace Malana
  */
 

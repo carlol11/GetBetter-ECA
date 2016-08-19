@@ -124,7 +124,6 @@ public class HearingTest {
                         break;
                     } else {
                         for (int z = 0; z < 3; z++) {
-                            System.out.println("z: " + z);
                             AudioTrack audioTrack;
                             isHeard = false;
                             hasCheated = 0;

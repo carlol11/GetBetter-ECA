@@ -18,20 +18,49 @@ import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.consultation.Question;
 
 /**
- * Created by Mary Grace Malana.
  * The ConsultationActivity class is the main activity for consultation.
  * This covers consultation with patients and the succeeding generation of HPI.
  * It allows the user to view questions and answer with Yes or No inputs.
+ *
+ * @author Mary Grace Malana
  */
 
 public class ConsultationActivity extends ECAActivity{
-    private TextView ECAText;
-    private ConsultationHelper consultationHelper;
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "ConsultationActivity";
+
+    /**
+     * TextView to show the consultation question
+     */
+    private TextView ECAText;
+
+    /**
+     * Contains the helper class of the activity
+     */
+    private ConsultationHelper consultationHelper;
+
+    /**
+     * Serves as the flag whether the consultation is on going or not.
+     */
     private boolean isOnGoingFlag;
+
+    /**
+     * Contains the information of current patient having the consultation
+     */
     private Patient patient;
+
+    /**
+     * Used as font for the different UI properties.
+     */
     private Typeface chalkFont;
 
+    /**
+     * {@inheritDoc}
+     *
+     * Initializes views and other activity objects.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +104,11 @@ public class ConsultationActivity extends ECAActivity{
         });
     }
 
-    //Determines the course of action depending on user input (Yes or No)
+    /**
+     * Determines the course of action depending on user input (Yes or No)
+     * @param isYes user’s answer to the consultation question. If true Yes, else No
+
+     */
     private void onAnswer(boolean isYes) {
         Question nextQuestion = consultationHelper.getNextQuestion(isYes);
         if(nextQuestion == null) {
@@ -86,7 +119,9 @@ public class ConsultationActivity extends ECAActivity{
         }
     }
 
-    //Performed when consultation is done; Saves generated HPI to database if patient has complaints
+    /**
+     * Performed when consultation is done; Saves generated HPI to database if patient has complaints
+     */
     private synchronized void doWhenConsultationDone(){
         if(isOnGoingFlag){
             isOnGoingFlag = false;
@@ -105,6 +140,9 @@ public class ConsultationActivity extends ECAActivity{
         }
     }
 
+    /**
+     * Shows the hpi to user; Ends consultation activity.
+     */
     private void doneConsultation() {
         CountDownTimer timer;
         LinearLayout hpiLayout = (LinearLayout) findViewById(R.id.hpiLayout);
@@ -129,6 +167,10 @@ public class ConsultationActivity extends ECAActivity{
         timer.start();
     }
 
+    /**
+     * Sets the question shown to the user; Sends the question and emotion to ecaFragment.
+     * @param question Next question to be asked to the user
+     */
     private void setQuestion(Question question){
         String questionString = question.getQuestionstring();
         int emotion = question.getEmotion();

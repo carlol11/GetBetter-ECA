@@ -57,7 +57,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     private int handedness;
 
     /**
-     * Patient object that will be created and added to the database
+     * Patient that will be created and added to the database
      */
     private Patient patient = null;
 
@@ -95,7 +95,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     /**
      * {@inheritDoc}
      *
-     * Initializes UI objects of the activity and its listeners.
+     * Initializes views and other activity objects.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

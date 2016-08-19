@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Kate on
  * The PatientsAdapter class extends the ArrayAdapter class to allow
  * a customized ListView to display Patient objects.
  *
@@ -40,7 +39,7 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
     private Typeface chalkFont;
 
     /**
-     * Constructs a String ArrayAdapter using the {@code context} and {@code chartNames}.
+     * Constructs a Patient ArrayAdapter using the {@code context} and {@code patient}.
      * Copy all the patients to both {@link PatientsAdapter#patientList}
      * and {@link PatientsAdapter#arrayPatientList}
      *

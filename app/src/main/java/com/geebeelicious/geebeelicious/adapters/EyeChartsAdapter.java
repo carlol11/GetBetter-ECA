@@ -15,6 +15,7 @@ import java.util.ArrayList;
 /**
  * The SchoolsAdapter class extends the ArrayAdapter class to allow
  * a customized ListView to display School objects.
+ *
  * @author Katrina Lacsamana
  * @since 03/30/2016.
  */

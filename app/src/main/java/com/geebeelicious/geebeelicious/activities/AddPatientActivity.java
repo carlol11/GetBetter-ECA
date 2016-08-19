@@ -240,6 +240,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
 
     @Override
     public void setRemarksQuestion() { //do not call this inside the addPatientActivity
-        remarksFragment.setRemarkQuestion(R.string.remarks_add_patient);
+        int question = R.string.remarks_add_patient;
+        remarksFragment.setRemarkQuestion(question);
+        ecaFragment.sendToECAToSPeak(question);
     }
 }

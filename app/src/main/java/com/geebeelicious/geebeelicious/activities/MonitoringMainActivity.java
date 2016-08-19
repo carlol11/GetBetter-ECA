@@ -448,7 +448,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
 
         if (currentFragment instanceof RemarksFragment){
-            ((RemarksFragment) currentFragment).setRemarkQuestion(R.string.remarks_monitoring);
+            int question = R.string.remarks_monitoring;
+
+            ((RemarksFragment) currentFragment).setRemarkQuestion(question);
+            ecaFragment.sendToECAToSPeak(question);
+
         }
     }
 }

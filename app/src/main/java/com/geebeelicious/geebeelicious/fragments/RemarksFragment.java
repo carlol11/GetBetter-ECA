@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,8 +49,8 @@ public class RemarksFragment extends Fragment {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_remarks, container, false);
 
-        final Button recordButton = (Button) view.findViewById(R.id.recordButton);
-        final Button playButton = (Button) view.findViewById(R.id.playButton);
+        final ImageButton recordButton = (ImageButton) view.findViewById(R.id.recordButton);
+        final ImageButton playButton = (ImageButton) view.findViewById(R.id.playButton);
         Button saveButton = (Button) view.findViewById(R.id.saveButton);
         Button yesButton = (Button) view.findViewById(R.id.yesButton);
         Button noButton = (Button) view.findViewById(R.id.noButton);
@@ -60,14 +62,17 @@ public class RemarksFragment extends Fragment {
 
         recordButton.setOnClickListener(new View.OnClickListener() {
             boolean mStartRecording = true;
+            LinearLayout recordingProgressBar = (LinearLayout) view.findViewById(R.id.recordingProgressLayout);
 
             @Override
             public void onClick(View v) {
                 onRecord(mStartRecording);
+
                 if (mStartRecording) {
-                    recordButton.setText("Stop");
+                    recordingProgressBar.setVisibility(View.VISIBLE);
                 } else {
-                    recordButton.setText("Record");
+                    recordingProgressBar.setVisibility(View.GONE);
+                    playButton.setVisibility(View.VISIBLE);
                 }
                 mStartRecording = !mStartRecording;
 
@@ -81,9 +86,9 @@ public class RemarksFragment extends Fragment {
             public void onClick(View v) {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    playButton.setText("Stop");
+                    playButton.setImageResource(R.drawable.btn_stop);
                 } else {
-                    playButton.setText("Play");
+                    playButton.setImageResource(R.drawable.btn_play);
                 }
                 mStartPlaying = !mStartPlaying;
             }

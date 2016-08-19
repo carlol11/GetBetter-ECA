@@ -31,7 +31,7 @@
             android:layout_centerHorizontal="true"
             android:inputType="textCapSentences|textMultiLine"
             android:layout_margin="20dp"
-            android:layout_above="@+id/linearLayout"
+            android:layout_above="@+id/recordPlayButtonLayout"
             android:gravity="top|start" />
 
         <RelativeLayout
@@ -40,21 +40,25 @@
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/linearLayout">
+            android:id="@+id/recordPlayButtonLayout">
 
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Record"
-                android:id="@+id/recordButton" />
+                android:id="@+id/recordButton"
+                android:src="@drawable/btn_record"
+                />
 
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Play"
                 android:id="@+id/playButton"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/recordButton" />
+                android:layout_toEndOf="@+id/recordButton"
+                android:src="@drawable/btn_play"
+                android:visibility="gone"
+                />
 
             <Button
                 android:layout_width="wrap_content"
@@ -64,7 +68,37 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
 
+
+
         </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recordingProgressLayout"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/recordPlayButtonLayout"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recording_in_progress"
+                android:textSize="75sp"
+                android:id="@+id/calibrationInProgressTextView" />
+            <ProgressBar
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/recordingProgressBar" />
+
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -115,6 +149,7 @@
                 android:text="@string/No"
                 style="@style/TestButton"/>
         </LinearLayout>
+
     </RelativeLayout>
 
 

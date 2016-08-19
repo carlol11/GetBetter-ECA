@@ -16,20 +16,38 @@ import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
 
 /**
- * Created by Kate.
  * The ColorVisionMainFragment serves as the main fragment for
  * the color vision test. The activity utilizes the
  * IshiharaHelper class to perform the test.
+ *
+ * @author Katrina Lacsamana
  * */
 public class ColorVisionFragment extends MonitoringTestFragment {
+
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
+    /**
+     * Serves as the flag whether the test is on going or not.
+     */
     private boolean isTestOngoing;
 
+    /**
+     * Constructor.
+     *
+     * @see MonitoringTestFragment#intro
+     */
     public ColorVisionFragment(){
         this.intro = R.string.colorVision_intro;
     }
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,7 +109,10 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         return view;
     }
 
-    //Allows test to either go to the next question and save results if the test is done
+    /**
+     * Allows test to either go to the next question and save results if the test is done.
+     * @param ishiharaHelper helper class of the fragment.
+     */
     private synchronized void updateResults(IshiharaHelper ishiharaHelper){
         ishiharaHelper.goToNextQuestion();
         if(ishiharaHelper.isDone() && isTestOngoing){
@@ -105,6 +126,14 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         }
     }
 
+    /**
+     * Updates the end test attributes of the test fragment namely
+     * {@link ColorVisionFragment#isEndEmotionHappy}, {@link ColorVisionFragment#endStringResource},
+     * and {@link ColorVisionFragment#endTime}.
+     *
+     * @param normal test result of the patient. true if normal, false if not normal.
+     * @see MonitoringTestFragment
+     */
     private void updateTestEndRemark(boolean normal) {
         if (normal){
             this.isEndEmotionHappy = true;
@@ -117,7 +146,10 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         }
     }
 
-    //Displays test results in a TextView
+    /**
+     * Sends the test results to the activity that this fragment is attached to.
+     * @param score patient's final test score.
+     */
     private void displayResults(int score){
         String resultString = "SCORE: " + score;
 
@@ -130,12 +162,21 @@ public class ColorVisionFragment extends MonitoringTestFragment {
 
     }
 
+
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {

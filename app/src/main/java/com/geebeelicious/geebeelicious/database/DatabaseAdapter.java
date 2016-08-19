@@ -23,25 +23,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Mary Grace Malana
  * The DatabaseAdapter class contains methods which serve as database queries.
  * The original class used as a basis for this current version was
  * created by Mike Dayupay for HPI Generation module of the GetBetter project.
+ *
+ * @author Mary Grace Malana
  */
 
 public class DatabaseAdapter {
+
+    /**
+     * Used to identify the source of a log message
+     */
     protected static final String TAG = "DatabaseAdapter";
 
+    /**
+     * use as the database of the app
+     */
     private SQLiteDatabase getBetterDb;
+
+    /**
+     * Contains the helper class of the database
+     */
     private DatabaseHelper getBetterDatabaseHelper;
 
+    /**
+     * Table name of the symptoms in the database
+     */
     private static final String SYMPTOM_LIST = "tbl_symptom_list";
+
+    /**
+     * Table name of the symptom families in the database
+     */
     private static final String SYMPTOM_FAMILY = "tbl_symptom_family";
 
+    /**
+     * Creates a new instance of {@link DatabaseHelper}.
+     * @param context current context.
+     */
     public DatabaseAdapter(Context context) {
         getBetterDatabaseHelper  = new DatabaseHelper(context);
     }
 
+    /**
+     * Creates the database using the helper class
+     *
+     * @return a reference of itself
+     * @throws SQLException if a database error occured
+     */
     public DatabaseAdapter createDatabase() throws SQLException {
 
         try {
@@ -53,6 +82,15 @@ public class DatabaseAdapter {
         return this;
     }
 
+    /**
+     * Opens the database for read or write unless the database problem occurs
+     * that limits the user from writing to the database.
+     *
+     * @return a reference of itself
+     * @throws SQLException if a database error occured
+     *
+     * @see DatabaseAdapter#openDatabaseForRead()
+     */
     public DatabaseAdapter openDatabaseForRead() throws SQLException {
 
         try {
@@ -66,6 +104,15 @@ public class DatabaseAdapter {
         return this;
     }
 
+    /**
+     * Opens the database for read or write. Method call may fail
+     * if a database problem occurs.
+     *
+     * @return a reference of itself
+     * @throws SQLException if a database error occured
+     *
+     * @see DatabaseAdapter#openDatabaseForRead()
+     */
     public DatabaseAdapter openDatabaseForWrite() throws SQLException {
 
         try {
@@ -79,10 +126,17 @@ public class DatabaseAdapter {
         return this;
     }
 
+    /**
+     * Closes the database
+     */
     public void closeDatabase() {
         getBetterDatabaseHelper.close();
     }
 
+    /**
+     * Sets all symptom's {@code is_answered} column to 0.
+     * 0 means that the symptom hasn't been answered yet.
+     */
     public void resetSymptomAnsweredFlag () {
 
         ContentValues values = new ContentValues();
@@ -92,6 +146,10 @@ public class DatabaseAdapter {
         //Log.d("updated rows reset", count + "");
     }
 
+    /**
+     * Sets all symptom family's {@code answered_flag} to 0
+     * and {@code answer_status} to 1.
+     */
     public void resetSymptomFamilyFlags() {
 
         ContentValues values = new ContentValues();
@@ -103,6 +161,11 @@ public class DatabaseAdapter {
         //Log.d("updated rows reset", count +"");
     }
 
+    /**
+     * Gets the list of impressions that were filtered using the chief complaints.
+     * @param chiefComplaints list of complaints used for filtering the impressions.
+     * @return list of impression that is related to each of the chief complaints specified.
+     */
     public ArrayList<Impressions> getImpressions (ArrayList<ChiefComplaint> chiefComplaints) {
 
         ArrayList<Impressions> results = new ArrayList<>();
@@ -135,6 +198,12 @@ public class DatabaseAdapter {
         return results;
     }
 
+    /**
+     * Gets the symptoms that are related to the specified impression.
+     * @param impressionId ID of the impression.
+     * @return list of symptoms that is associated to the corresponding
+     * impression which has an ID value of {@code impressionId}.
+     */
     public ArrayList<Symptom> getSymptoms(int impressionId) {
 
         ArrayList<Symptom> results = new ArrayList<>();
@@ -160,6 +229,11 @@ public class DatabaseAdapter {
         return results;
     }
 
+    /**
+     * Updates the answered_flag and answer_status row to 1 of the chief complaint
+     * which has an ID value of {@code chiefComplaintId}.
+     * @param chiefComplaintId ID of the chief complaint to be updated.
+     */
     public void updateAnsweredStatusSymptomFamily(int chiefComplaintId) {
 
         ContentValues values = new ContentValues();
@@ -171,6 +245,15 @@ public class DatabaseAdapter {
         //Log.d("updated rows symptom family flags", count + "");
     }
 
+    /**
+     * Like {@link DatabaseAdapter#getSymptoms(int)} this method gets the symptoms
+     * that are related to the specified impression. However only the symptoms that
+     * haven't been answered will be returned.
+     *
+     * @param impressionId ID of the impression.
+     * @return list of unanswered symptoms that is associated to the corresponding
+     * impression which has an ID value of {@code impressionId}
+     */
     public ArrayList<Symptom> getQuestions(int impressionId) {
 
         ArrayList<Symptom> results = new ArrayList<>();
@@ -197,6 +280,11 @@ public class DatabaseAdapter {
         return results;
     }
 
+    /**
+     * Returns whether the symptom family with the specified ID is answered.
+     * @param symptomFamilyId ID of the symptom family to be queried.
+     * @return true if the symptom family is answered, else false.
+     */
     public boolean symptomFamilyIsAnswered (int symptomFamilyId) {
 
         Log.d("id", symptomFamilyId + "");
@@ -220,6 +308,11 @@ public class DatabaseAdapter {
         }
     }
 
+    /**
+     * Gets the symptom family which has an ID value of {@code symptomFamilyId}
+     * @param symptomFamilyId ID of the symptom family to be searched
+     * @return symptom family with the corresponding ID
+     */
     public SymptomFamily getGeneralQuestion (int symptomFamilyId) {
 
         String sql = "SELECT * FROM tbl_symptom_family WHERE _id = " + symptomFamilyId;
@@ -239,6 +332,12 @@ public class DatabaseAdapter {
         return generalQuestion;
     }
 
+
+    /**
+     * Updates the is_answered row to 1 of the symptom
+     * which has an ID value of {@code symptomId}.
+     * @param symptomId ID of the symptom to be updated.
+     */
     public void updateAnsweredFlagPositive(int symptomId) {
 
         ContentValues values = new ContentValues();
@@ -248,6 +347,14 @@ public class DatabaseAdapter {
         //Log.d("update rows flag positive", count + "");
     }
 
+    /**
+     * Updates the answer_flag row to 1 of the symptom family
+     * which has an ID value of {@code symptomId}. Also
+     * updates the value of answer_status row of the symptom family
+     * to the value of {@code answer}.
+     * @param symptomFamilyId ID of the symptom to be updated.
+     * @param answer of the user to the symptom family question.
+     */
     public void updateAnsweredStatusSymptomFamily(int symptomFamilyId, int answer) {
 
         String sql = "UPDATE tbl_symptom_family SET answered_flag = 1, answer_status = " + answer +
@@ -256,6 +363,12 @@ public class DatabaseAdapter {
         getBetterDb.execSQL(sql);
     }
 
+    /**
+     * Gets the symptoms that are associated as hard symptoms to the
+     * which has an ID value of {@code impressionId}
+     * @param impressionId ID of the impression to be queried.
+     * @return hard symptoms of the specified impression
+     */
     public ArrayList<String> getHardSymptoms (int impressionId) {
 
         ArrayList<String> results = new ArrayList<>();
@@ -274,6 +387,11 @@ public class DatabaseAdapter {
         return results;
     }
 
+    /**
+     * Returns whether the symptom family with the specified ID row answer_status is equal to 1.
+     * @param symptomFamilyId ID of the symptom family to be queried.
+     * @return true if the symptom family row answer_status is equal to 1, else false.
+     */
     public boolean symptomFamilyAnswerStatus (int symptomFamilyId) {
 
         Log.d("symptom family id", symptomFamilyId + "");
@@ -296,6 +414,12 @@ public class DatabaseAdapter {
         }
     }
 
+    /**
+     * Gets the English phrase of the chief complaint which
+     * has an ID value of {@code chiefComplaintIds}.
+     * @param chiefComplaintIds ID of the chief complaint to be queried.
+     * @return english phrase of the chief complaint.
+     */
     public String getChiefComplaints(int chiefComplaintIds) {
 
         String result = "";
@@ -310,6 +434,12 @@ public class DatabaseAdapter {
         return result;
     }
 
+    /**
+     * Gets the symptoms that the user answered positively (Yes) to.
+     * The symptoms are returned as PositiveResults objects.
+     * @param patientAnswers list of patient answers.
+     * @return list of positive results.
+     */
     public ArrayList<PositiveResults> getPositiveSymptoms (ArrayList<PatientAnswers> patientAnswers) {
         ArrayList<PositiveResults> results = new ArrayList<>();
         String delim = "";
@@ -338,10 +468,14 @@ public class DatabaseAdapter {
         return results;
     }
 
-/*
- * The succeeding code are not part of the original code created by Mike Dayupay
- */
+    /*************************
+     * The succeeding code are not part of the original code created by Mike Dayupay
+     */
 
+    /**
+     * Insert {@code patient} to the database.
+     * @param patient Patient to be added to the database.
+     */
     public void insertPatient(Patient patient){
         ContentValues values = new ContentValues();
         int row;
@@ -359,6 +493,10 @@ public class DatabaseAdapter {
         Log.d(TAG, "insertPatient Result: " + row);
     }
 
+    /**
+     * Insert {@code record} to the database.
+     * @param record Record to be inserted to the database.
+     */
     public void insertRecord(Record record){
         ContentValues values = new ContentValues();
         int row;
@@ -385,6 +523,10 @@ public class DatabaseAdapter {
         Log.d(TAG, "insertRecord Result: " + row);
     }
 
+    /**
+     * Insert {@code hpi} to the database.
+     * @param hpi HPI to be inserted to the database.
+     */
     public void insertHPI(HPI hpi){
         ContentValues values = new ContentValues();
         int row;
@@ -397,7 +539,10 @@ public class DatabaseAdapter {
         Log.d(TAG, "insertHPI Result: " + row);
     }
 
-    //Return a list of all schools
+    /**
+     * Get all the schools in the database
+     * @return list of school retrieved from the database.
+     */
     public ArrayList<School> getAllSchools(){
         ArrayList<School> schools = new ArrayList<>();
         Cursor c = getBetterDb.rawQuery("SELECT "+ School.C_SCHOOL_ID + ", s." + School.C_SCHOOLNAME + ", m." +
@@ -413,7 +558,12 @@ public class DatabaseAdapter {
         return schools;
     }
 
-    //Return a list of all records associated with a given patient
+    /**
+     * Get all records of the patient which has an ID value of
+     * {@code patientID}.
+     * @param patientId ID of the patient to be queried.
+     * @return list of records of the patient.
+     */
     public ArrayList<Record> getRecords(int patientId){
         ArrayList<Record> records = new ArrayList<>();
         Cursor c = getBetterDb.query(Record.TABLE_NAME, null, Record.C_PATIENT_ID + " = " + patientId, null, null, null, null, null);
@@ -439,7 +589,12 @@ public class DatabaseAdapter {
         return records;
     }
 
-    //Return a list of all the generated HPIs associated with a given patients
+    /**
+     * Get all HPI of the patient which has an ID value of
+     * {@code patientID}.
+     * @param patientId ID of the patient to be queried.
+     * @return list of HPI of the patient.
+     */
     public ArrayList<HPI> getHPIs(int patientId){
         ArrayList<HPI> HPIs = new ArrayList<>();
         Cursor c = getBetterDb.query(HPI.TABLE_NAME, null, HPI.C_PATIENT_ID + " = " + patientId, null, null, null, null, null);
@@ -454,7 +609,13 @@ public class DatabaseAdapter {
         return HPIs;
     }
 
-    //Return a list of patients from a given school
+    /**
+     * Get all patients of the school which has an ID value of
+     * {@code schoolID}.
+     * @param schoolID ID of the school to be queried.
+     * @return list of records of the patient.
+     */
+
     public ArrayList<Patient> getPatientsFromSchool(int schoolID){
         ArrayList<Patient> patients = new ArrayList<>();
         Cursor c = getBetterDb.query(Patient.TABLE_NAME, null, Patient.C_SCHOOL_ID + " = " + schoolID, null, null, null, Patient.C_LAST_NAME +" ASC");

@@ -37,27 +37,29 @@
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/recordPlayButtonLayout">
+            android:id="@+id/recordPlayButtonLayout"
+            android:layout_margin="20dp"
+            >
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/recordButton"
                 android:src="@drawable/btn_record"
+                android:background="@drawable/button_selector"
                 />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Play"
                 android:id="@+id/playButton"
-                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/recordButton"
                 android:src="@drawable/btn_play"
                 android:visibility="gone"
+                android:background="@drawable/button_selector"
                 />
 
             <Button

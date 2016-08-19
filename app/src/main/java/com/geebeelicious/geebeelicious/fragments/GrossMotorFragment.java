@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class GrossMotorFragment extends MonitoringTestFragment {
     private static final String TAG = "GrossMotorFragment";
 
-    private GrossMotorFragment.OnFragmentInteractionListener grossMotorInteraction;
+    private OnMonitoringFragmentInteractionListener fragmentInteraction;
     private Activity activity;
 
     private GrossMotorTest grossMotorTest;
@@ -110,12 +110,6 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         grossMotorTest.skipTest(timerView);
     }
 
-    public void onRemarkSaveButtonClicked() {
-        grossMotorInteraction.onHideRemarkLayout();
-        updateTestEndRemark(grossMotorTest.getIntFinalResult());
-        grossMotorInteraction.doneFragment();
-    }
-
     public void onBackPressed(){
         grossMotorTest.endTest();
     }
@@ -147,20 +141,20 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     private void endTest(){
         String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
-        Record record = grossMotorInteraction.getRecord();
-
+        Record record = fragmentInteraction.getRecord();
 
         grossMotorTest.endTest();
         hideAnswerButtons();
 
-        grossMotorInteraction.setResults(resultString);
+        fragmentInteraction.setResults(resultString);
 
-        record.setGrossMotor(grossMotorInteraction.getIntResults(grossMotorTest.getFinalResult()));
+        record.setGrossMotor(fragmentInteraction.getIntResults(grossMotorTest.getFinalResult()));
 
         naButton.setVisibility(View.GONE);
         gifWebView.setVisibility(View.GONE);
 
-        grossMotorInteraction.onShowRemarkLayout();
+        updateTestEndRemark(grossMotorTest.getIntFinalResult());
+        fragmentInteraction.doneFragment();
     }
 
     //Displays the skill as determined by the GrossMotorTest on the screen
@@ -168,7 +162,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
 
-        grossMotorInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
+        fragmentInteraction.setInstructions(gms.getInstruction() +" for " + durationString +" seconds.");
         String html = getHTMLData(getResources().getResourceEntryName(gms.getSkillResImage()));
 
         Log.d(TAG, "Loading html to webview: " + html);
@@ -238,16 +232,10 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            grossMotorInteraction = (OnFragmentInteractionListener) activity;
+            fragmentInteraction = (OnMonitoringFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnMonitoringFragmentInteractionListener and OnFragmentInteractionListener");
         }
-    }
-
-
-    public interface OnFragmentInteractionListener extends OnMonitoringFragmentInteractionListener {
-        void onShowRemarkLayout();
-        void onHideRemarkLayout();
     }
 }

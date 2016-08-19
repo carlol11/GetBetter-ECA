@@ -50,45 +50,6 @@
             android:scrollbars = "vertical"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:id="@+id/remarkLayout"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/remarks_or_comments"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:id="@+id/questionMonitoringConsultationChoice"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|start"
-                android:inputType="textCapSentences|textMultiLine"
-                android:ems="10"
-                android:id="@+id/remarkText"
-                android:layout_below="@+id/questionMonitoringConsultationChoice"
-                android:layout_alignParentStart="true"
-                android:layout_above="@+id/saveButton"
-                android:layout_alignParentEnd="true" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="@string/save"
-                android:id="@+id/saveButton"
-                style="@style/TestButton"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                />
-        </RelativeLayout>
-
     </LinearLayout>
 
     <FrameLayout

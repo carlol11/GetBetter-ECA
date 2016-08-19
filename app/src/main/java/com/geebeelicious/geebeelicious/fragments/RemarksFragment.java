@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.geebeelicious.geebeelicious.R;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,6 +55,8 @@ public class RemarksFragment extends Fragment {
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
+
+        replaceFonts((ViewGroup) view);
 
         recordButton.setOnClickListener(new View.OnClickListener() {
             boolean mStartRecording = true;
@@ -124,9 +128,13 @@ public class RemarksFragment extends Fragment {
                         remarkAudio = null;
                     }
 
+
+                    File file = new File(mFileName);
+                    file.delete();
                 } catch (IOException e) {
                     Log.e(TAG, "File error", e);
                 }
+
                 mListener.onDoneRemarks(remarkText.getText().toString(), remarkAudio);
             }
         });
@@ -242,4 +250,26 @@ public class RemarksFragment extends Fragment {
         mPlayer.release();
         mPlayer = null;
     }
+
+    public void replaceFonts(ViewGroup viewTree)
+    {
+        View child;
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+
+        for(int i = 0; i < viewTree.getChildCount(); ++i)
+        {
+            child = viewTree.getChildAt(i);
+            if(child instanceof ViewGroup)
+            {
+                // recursive call
+                replaceFonts((ViewGroup)child);
+            }
+            else if(child instanceof TextView)
+            {
+                // base case
+                ((TextView) child).setTypeface(chalkFont);
+            }
+        }
+    }
+
 }

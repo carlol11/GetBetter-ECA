@@ -163,7 +163,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         if (lineNum < 8){
             this.isEndEmotionHappy = false;
             this.endStringResource = R.string.visual_acuity_fail;
-            this.endTime = 7000;
+            this.endTime = 6000;
         } else {
             this.isEndEmotionHappy = true;
             this.endStringResource = R.string.visual_acuity_pass;

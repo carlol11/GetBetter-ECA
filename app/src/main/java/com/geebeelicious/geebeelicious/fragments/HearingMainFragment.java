@@ -164,7 +164,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
         } else {
             this.isEndEmotionHappy = false;
             this.endStringResource = R.string.hearing_fail;
-            this.endTime = 5000;
+            this.endTime = 6000;
         }
         fragmentInteraction.doneFragment();
     }

@@ -32,6 +32,7 @@
     <string name="kilograms">kg</string>
     <string name="remarks_or_comments">Remarks</string>
     <string name="hpi">HPI</string>
+    <string name="remarks">Remarks</string>
     <string name="add_remarks">Type remarks here...</string>
 
     <!--Spinner Items-->
@@ -81,6 +82,8 @@
     <string name="monitoring_end">Your check up is done!</string>
     <string name="consultation_end">Thanks for telling me about your problem! I\'ll send this to a doctor so they can help you soon.</string>
     <string name="monitoring_ready">Assistant, press ready button when the child is ready.</string>
+    <string name="remarks_monitoring">Assistant, do you want to add remarks regarding the child\'s monitoring tests?</string>
+    <string name="remarks_add_patient">Assistant, do you want to add remarks to the child\'s profile?</string>
 
     <!-- ECA Remarks-->
     <string name="monitoring_remark_normal1">Keep eating healthy food!</string>
@@ -103,5 +106,6 @@
     <string name="grossmotor_na">That\'s okay! Let\'s move on to the next test.</string>
     <string name="finemotor_fail">You may need to work on your fine motor skills!</string>
     <string name="finemotor_pass">Your fine motor skills are great!</string>
+    <string name="recording_in_progress">Recording...</string>
 
 </resources>

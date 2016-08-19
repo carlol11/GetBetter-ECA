@@ -352,6 +352,8 @@ public class DatabaseAdapter {
         values.put(Patient.C_GENDER, patient.getGender());
         values.put(Patient.C_SCHOOL_ID, patient.getSchoolId());
         values.put(Patient.C_HANDEDNESS, patient.getHandedness());
+        values.put(Patient.C_REMARKS_STRING, patient.getRemarksString());
+        values.put(Patient.C_REMARKS_AUDIO, patient.getRemarksAudio());
 
         row = (int) getBetterDb.insert(Patient.TABLE_NAME, null, values);
         Log.d(TAG, "insertPatient Result: " + row);
@@ -371,12 +373,13 @@ public class DatabaseAdapter {
         values.put(Record.C_HEARING_LEFT, record.getHearingLeft());
         values.put(Record.C_HEARING_RIGHT, record.getHearingRight());
         values.put(Record.C_GROSS_MOTOR, record.getGrossMotor());
-        values.put(Record.C_GROSS_MOTOR_REMARK, record.getGrossMotorRemark());
         values.put(Record.C_FINE_MOTOR_DOMINANT, record.getFineMotorDominant());
         values.put(Record.C_FINE_MOTOR_N_DOMINANT, record.getFineMotorNDominant());
         values.put(Record.C_FINE_MOTOR_HOLD, record.getFineMotorHold());
         values.put(Record.C_VACCINATION, record.getVaccination());
         values.put(Record.C_PATIENT_PICTURE, record.getPatientPicture());
+        values.put(Record.C_REMARKS_STRING, record.getRemarksString());
+        values.put(Record.C_REMARKS_AUDIO, record.getRemarksAudio());
 
         row = (int) getBetterDb.insert(Record.TABLE_NAME, null, values);
         Log.d(TAG, "insertRecord Result: " + row);
@@ -422,10 +425,10 @@ public class DatabaseAdapter {
                         c.getDouble(c.getColumnIndex(Record.C_WEIGHT)), c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_LEFT)),
                         c.getString(c.getColumnIndex(Record.C_VISUAL_ACUITY_RIGHT)), c.getString(c.getColumnIndex(Record.C_COLOR_VISION)),
                         c.getString(c.getColumnIndex(Record.C_HEARING_LEFT)), c.getString(c.getColumnIndex(Record.C_HEARING_RIGHT)),
-                        c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getString(c.getColumnIndex(Record.C_GROSS_MOTOR_REMARK)),
-                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)),
-                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)), c.getBlob(c.getColumnIndex(Record.C_VACCINATION)),
-                        c.getBlob(c.getColumnIndex(Record.C_PATIENT_PICTURE)));
+                        c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)),
+                        c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)),
+                        c.getBlob(c.getColumnIndex(Record.C_VACCINATION)), c.getBlob(c.getColumnIndex(Record.C_PATIENT_PICTURE)),
+                        c.getString(c.getColumnIndex(Record.C_REMARKS_STRING)), c.getBlob(c.getColumnIndex(Record.C_REMARKS_AUDIO)));
 
                 record.printRecord();
                 records.add(record);
@@ -463,7 +466,9 @@ public class DatabaseAdapter {
                         c.getString(c.getColumnIndex(Patient.C_BIRTHDAY)),
                         c.getInt(c.getColumnIndex(Patient.C_GENDER)),
                         c.getInt(c.getColumnIndex(Patient.C_SCHOOL_ID)),
-                        c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS))));
+                        c.getInt(c.getColumnIndex(Patient.C_HANDEDNESS)),
+                        c.getString(c.getColumnIndex(Patient.C_REMARKS_STRING)),
+                        c.getBlob(c.getColumnIndex(Patient.C_REMARKS_AUDIO))));
             }while(c.moveToNext());
         }
         c.close();

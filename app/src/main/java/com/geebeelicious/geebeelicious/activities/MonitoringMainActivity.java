@@ -28,6 +28,7 @@ import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.HearingMainFragment;
 import com.geebeelicious.geebeelicious.fragments.MonitoringFragment;
 import com.geebeelicious.geebeelicious.fragments.PatientPictureFragment;
+import com.geebeelicious.geebeelicious.fragments.RemarksFragment;
 import com.geebeelicious.geebeelicious.fragments.VaccinationFragment;
 import com.geebeelicious.geebeelicious.fragments.VisualAcuityFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
@@ -50,7 +51,7 @@ import java.util.Date;
  */
 
 public class MonitoringMainActivity extends ECAActivity implements OnMonitoringFragmentInteractionListener,
-        GrossMotorFragment.OnFragmentInteractionListener{
+        RemarksFragment.OnFragmentInteractionListener{
     private final static String TAG = "MonitoringMainActivity";
     private Record record;
 
@@ -72,7 +73,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_main);
 
-        TextView remarksText = (TextView) findViewById(R.id.questionMonitoringConsultationChoice);
         ecaText = (TextView) findViewById(R.id.placeholderECAText);
         resultsText = (TextView) findViewById(R.id.placeholderResults);
         ecaFragmentLayout = (FrameLayout) findViewById(R.id.placeholderECA);
@@ -82,7 +82,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         ecaText.setTypeface(chalkFont);
         resultsText.setTypeface(chalkFont);
-        remarksText.setTypeface(chalkFont);
         readyButton.setTypeface(chalkFont);
         ecaTransitionText.setTypeface(chalkFont);
 
@@ -98,6 +97,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 HearingMainFragment.class.getName(),
                 GrossMotorFragment.class.getName(),
                 FineMotorFragment.class.getName(),
+                RemarksFragment.class.getName()
         };
 
         fragmentManager = getSupportFragmentManager();
@@ -243,18 +243,6 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaFragment.sendToECAToSpeak(ecaTransitionText.getText().toString());
     }
 
-    @Override
-    public void onShowRemarkLayout() {
-        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
-        remarkLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onHideRemarkLayout() {
-        RelativeLayout remarkLayout = (RelativeLayout) findViewById(R.id.remarkLayout);
-        remarkLayout.setVisibility(View.GONE);
-    }
-
     private void clearTextViews() {
         ecaText.setText("");
         resultsText.setText("");
@@ -275,45 +263,11 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private void replaceFragment(final Fragment fragment){
         shortcutForHearingfragment(fragment); //this is only used for testing
 
-        //onclick for NAButton for GrossMotor
-        if(fragment instanceof GrossMotorFragment){
-            final Button saveButton = (Button) findViewById(R.id.saveButton);
-            saveButton.setTypeface(chalkFont);
-            final EditText remarkText = (EditText) findViewById(R.id.remarkText);
-            remarkText.setTypeface(chalkFont);
-
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String remark = remarkText.getText().toString();
-                    record.setGrossMotorRemark(remark);
-                    setResults("Remarks:" + remark);
-                    ((GrossMotorFragment)fragment).onRemarkSaveButtonClicked();
-                    saveButton.setOnClickListener(null);
-                }
-            });
-
-            remarkText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
-                        hideKeyboard(v);
-                    }
-                }
-            });
-        }
-
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.monitoringFragmentContainer, fragment, fragments[currentFragmentIndex]);
         if(!isFinishing()){
             transaction.commit();
         }
-    }
-
-    private void hideKeyboard(View v) {
-        InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     private void shortcutForHearingfragment(Fragment newFragment) {
@@ -475,5 +429,30 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             Log.e(TAG, "Resource not found", e);
         }
         return "";
+    }
+
+    @Override
+    public void onDoneRemarks(String remarkString, byte[] remarkAudio) {
+        record.setRemarksString(remarkString);
+        record.setRemarksAudio(remarkAudio);
+        doneFragment();
+    }
+
+    @Override
+    public void onDoneRemarks() {
+        doneFragment();
+    }
+
+    @Override
+    public void setRemarksQuestion() {
+        Fragment currentFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
+
+        if (currentFragment instanceof RemarksFragment){
+            int question = R.string.remarks_monitoring;
+
+            ((RemarksFragment) currentFragment).setRemarkQuestion(question);
+            ecaFragment.sendToECAToSPeak(question);
+
+        }
     }
 }

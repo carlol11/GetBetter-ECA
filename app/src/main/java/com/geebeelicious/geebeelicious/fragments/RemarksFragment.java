@@ -1,6 +1,7 @@
 package com.geebeelicious.geebeelicious.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -51,11 +53,13 @@ public class RemarksFragment extends Fragment {
 
         final ImageButton recordButton = (ImageButton) view.findViewById(R.id.recordButton);
         final ImageButton playButton = (ImageButton) view.findViewById(R.id.playButton);
+        final EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
+        final RelativeLayout remarkLayout = (RelativeLayout) view.findViewById(R.id.remarkLayout);
+
         Button saveButton = (Button) view.findViewById(R.id.saveButton);
         Button yesButton = (Button) view.findViewById(R.id.yesButton);
-        Button noButton = (Button) view.findViewById(R.id.noButton);
+        final Button noButton = (Button) view.findViewById(R.id.noButton);
 
-        final EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
@@ -101,7 +105,6 @@ public class RemarksFragment extends Fragment {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RelativeLayout remarkLayout = (RelativeLayout) view.findViewById(R.id.remarkLayout);
                 RelativeLayout remarkQuestionLayout = (RelativeLayout) view.findViewById(R.id.remarksQuestionLayout);
 
                 remarkLayout.setVisibility(View.VISIBLE);
@@ -147,6 +150,13 @@ public class RemarksFragment extends Fragment {
             }
         });
 
+        remarkLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(v);
+            }
+        });
+        
         mListener.setRemarksQuestion();
 
         return view;
@@ -171,6 +181,26 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    public void replaceFonts(ViewGroup viewTree)
+    {
+        View child;
+        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
+
+        for(int i = 0; i < viewTree.getChildCount(); ++i)
+        {
+            child = viewTree.getChildAt(i);
+            if(child instanceof ViewGroup)
+            {
+                // recursive call
+                replaceFonts((ViewGroup)child);
+            }
+            else if(child instanceof TextView)
+            {
+                // base case
+                ((TextView) child).setTypeface(chalkFont);
+            }
+        }
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -259,25 +289,9 @@ public class RemarksFragment extends Fragment {
         mPlayer = null;
     }
 
-    public void replaceFonts(ViewGroup viewTree)
-    {
-        View child;
-        Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
-
-        for(int i = 0; i < viewTree.getChildCount(); ++i)
-        {
-            child = viewTree.getChildAt(i);
-            if(child instanceof ViewGroup)
-            {
-                // recursive call
-                replaceFonts((ViewGroup)child);
-            }
-            else if(child instanceof TextView)
-            {
-                // base case
-                ((TextView) child).setTypeface(chalkFont);
-            }
-        }
+    private void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager)((Activity)mListener).getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 }

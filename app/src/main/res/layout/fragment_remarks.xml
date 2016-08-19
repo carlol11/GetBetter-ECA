@@ -32,7 +32,12 @@
             android:inputType="textCapSentences|textMultiLine"
             android:layout_margin="20dp"
             android:layout_above="@+id/recordPlayButtonLayout"
-            android:gravity="top|start" />
+            android:gravity="top|start"
+            android:background="@drawable/chalkoutline3"
+            android:hint="@string/add_remarks"
+            android:padding="10dp"
+            android:textSize="40sp"
+            />
 
         <RelativeLayout
             android:orientation="horizontal"

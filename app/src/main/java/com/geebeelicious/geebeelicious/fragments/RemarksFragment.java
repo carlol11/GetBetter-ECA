@@ -55,6 +55,8 @@ public class RemarksFragment extends Fragment {
         Button yesButton = (Button) view.findViewById(R.id.yesButton);
         Button noButton = (Button) view.findViewById(R.id.noButton);
 
+        final EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
+
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
 
@@ -70,8 +72,10 @@ public class RemarksFragment extends Fragment {
 
                 if (mStartRecording) {
                     recordingProgressBar.setVisibility(View.VISIBLE);
+                    remarkText.setVisibility(View.GONE);
                 } else {
                     recordingProgressBar.setVisibility(View.GONE);
+                    remarkText.setVisibility(View.VISIBLE);
                     playButton.setVisibility(View.VISIBLE);
                 }
                 mStartRecording = !mStartRecording;
@@ -115,7 +119,6 @@ public class RemarksFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText remarkText = (EditText) view.findViewById(R.id.remarkText);
                 byte[] remarkAudio = null;
 
                 try {

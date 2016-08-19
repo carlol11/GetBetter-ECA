@@ -231,6 +231,10 @@ public class PatientListActivity extends ECAActivity{
         outState.putBoolean("hasSpoken", hasSpoken);
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Starts {@link MainActivity} and ends the current activity.
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(PatientListActivity.this, MainActivity.class);
@@ -238,7 +242,10 @@ public class PatientListActivity extends ECAActivity{
         finish();
     }
 
-    //Returns the schoolID fo the preferred school stored in device storage via Settings
+    /**
+     * Gets the schoolID of the preferred school stored in device storage.
+     * @return ID of the preferred school stored in device storage via Settings.
+     */
     private int getSchoolPreferences(){
         int schoolID = 1; //default schoolID
         byte[] byteArray = new byte[4];

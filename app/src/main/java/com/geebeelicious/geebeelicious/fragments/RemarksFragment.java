@@ -233,6 +233,10 @@ public class RemarksFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onDoneRemarks(String remarkString, byte[] remarkAudio);
         void onDoneRemarks();
+
+        /**
+         * Sets the remarkQuestion that is specific for the implementing class
+         */
         void setRemarksQuestion();
     }
 

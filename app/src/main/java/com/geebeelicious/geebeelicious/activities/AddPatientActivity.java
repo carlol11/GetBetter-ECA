@@ -3,7 +3,6 @@ package com.geebeelicious.geebeelicious.activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -25,32 +24,79 @@ import java.sql.SQLException;
 import java.util.Date;
 
 /**
- * Created by Kate.
  * The AddPatientActivity serves as the activity containing
  * functionality for adding new patients.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class AddPatientActivity extends ECAActivity implements RemarksFragment.OnFragmentInteractionListener{
+    /**
+     * First name of the patient
+     */
     private String firstName = null;
+
+    /**
+     * Last name of the patient
+     */
     private String lastName = null;
+
+    /**
+     * Birthdate of the patient
+     */
     private String birthDate = null;
+
+    /**
+     * Gender of the patient. Gender = 0, else Gender = 1
+     */
     private int gender;
+
+    /**
+     * Handedness of the patient.
+     */
     private int handedness;
+
+    /**
+     * Patient object that will be created and added to the database
+     */
     private Patient patient = null;
 
+    /**
+     * Textview for the questions that is shown to the user
+     */
     private TextView questionView;
+
+    /**
+     * Where the user enters {@link AddPatientActivity#firstName} and {@link AddPatientActivity#lastName}
+     */
     private EditText editText;
-    private RadioButton radioButton0;
-    private RadioButton radioButton1;
-    private RadioGroup radioGroup;
+
+    /**
+     * Where the user enters {@link AddPatientActivity#birthDate}
+     */
     private DatePicker datePicker;
 
+    /**
+     *Serves as the index counter for questions
+     */
     private int questionCounter;
+
+    /**
+     * contains string resource of questions shown in {@link AddPatientActivity#questionView}
+     */
     private final int[] questions = {R.string.first_name, R.string.last_name, R.string.birthdate,
                                     R.string.gender, R.string.handedness};
 
+    /**
+     * contains the fragment that asks for remarks from the assistant
+     */
     RemarksFragment remarksFragment = null;
 
+    /**
+     * {@inheritDoc}
+     *
+     * Initializes UI objects of the activity and its listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +106,9 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         editText = (EditText)findViewById(R.id.newPatientStringInput);
         datePicker = (DatePicker)findViewById(R.id.newPatientDatePicker);
         datePicker.setMaxDate(new Date().getTime());
-        radioButton0 = (RadioButton)findViewById(R.id.radioButton1);
-        radioButton1 = (RadioButton)findViewById(R.id.radioButton2);
-        radioGroup = (RadioGroup)findViewById(R.id.newPatientRadioChoice);
+        final RadioButton radioButton0 = (RadioButton)findViewById(R.id.radioButton1);
+        final RadioButton radioButton1 = (RadioButton)findViewById(R.id.radioButton2);
+        final RadioGroup radioGroup = (RadioGroup)findViewById(R.id.newPatientRadioChoice);
 
         integrateECA();
         Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
@@ -180,6 +226,11 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
 
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Starts {@link PatientListActivity} and ends the current activity.
+     */
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);
@@ -187,29 +238,46 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         finish();
     }
 
-
+    /**
+     * {@inheritDoc}
+     *
+     * Saves {@link AddPatientActivity#questionCounter} inside {@code outState}
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("questionCounter", questionCounter);
     }
 
-    //Display question on screen based on resID parameter
+    /**
+     * Display question on screen based on resID parameter
+     * @param resID string resource ID of the question
+     */
     private void setQuestion(int resID){
         questionView.setText(resID);
         ecaFragment.sendToECAToSpeak(getResources().getString(resID));
     };
 
-    //Return String format of contents of search field
+    /**
+     * @return the text from {@link AddPatientActivity#editText}
+     */
     private String getEditText(){
         return editText.getText().toString();
     };
 
-    //Return String format of selected date on Number Picker
+
+    /**
+     * Gets the String of the birthdate of patient in the format of MM/DD/YYYY
+     * @return the date from {@link AddPatientActivity#datePicker}
+     */
     private String getSelectedDate(){
         return (datePicker.getMonth() + "/" + datePicker.getDayOfMonth() + "/" + datePicker.getYear());
     }
 
+    /**
+     * Saves patient to database.
+     * @param patient to be saved to the database
+     */
     private void savePatientToDatabase(Patient patient){
         DatabaseAdapter getBetterDb = new DatabaseAdapter(AddPatientActivity.this);
         try {
@@ -223,6 +291,10 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         getBetterDb.closeDatabase();
     }
 
+    /**
+     * {@inheritDoc}
+     * Sets the {@link Patient#remarksString} and {@link Patient#remarksAudio} of the patient
+     */
     @Override
     public void onDoneRemarks(String remarkString, byte[] remarkAudio) {
         patient.setRemarksString(remarkString);
@@ -230,6 +302,10 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         onDoneRemarks();
     }
 
+    /**
+     * {@inheritDoc}
+     * Calls {@link AddPatientActivity#savePatientToDatabase(Patient)} and starts the {@link PatientListActivity}.
+     */
     @Override
     public void onDoneRemarks() {
         savePatientToDatabase(patient);
@@ -238,8 +314,12 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         finish();
     }
 
+    /**
+     * {@inheritDoc}
+     * Sends the question to the ECA
+     */
     @Override
-    public void setRemarksQuestion() { //do not call this inside the addPatientActivity
+    public void setRemarksQuestion() { //do not call this method inside the addPatientActivity
         int question = R.string.remarks_add_patient;
         remarksFragment.setRemarkQuestion(question);
         ecaFragment.sendToECAToSPeak(question);

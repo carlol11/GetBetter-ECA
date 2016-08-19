@@ -239,9 +239,9 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
-     * {@inheritDoc}
-     *
      * Saves {@link AddPatientActivity#questionCounter} inside {@code outState}
+     *
+     * @see android.app.Activity#onSaveInstanceState(Bundle)
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -292,8 +292,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
-     * {@inheritDoc}
      * Sets the {@link Patient#remarksString} and {@link Patient#remarksAudio} of the patient
+     * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks(String remarkString, byte[] remarkAudio)
      */
     @Override
     public void onDoneRemarks(String remarkString, byte[] remarkAudio) {
@@ -303,8 +303,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
-     * {@inheritDoc}
      * Calls {@link AddPatientActivity#savePatientToDatabase(Patient)} and starts the {@link PatientListActivity}.
+     * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks()
      */
     @Override
     public void onDoneRemarks() {
@@ -315,8 +315,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
-     * {@inheritDoc}
      * Sends the question to the ECA
+     * @see RemarksFragment.OnFragmentInteractionListener#setRemarksQuestion()
      */
     @Override
     public void setRemarksQuestion() { //do not call this method inside the addPatientActivity

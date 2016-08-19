@@ -37,9 +37,9 @@ public class HearingCalibrationActivity extends ActionBarActivity {
     private Typeface chalkFont;
 
     /**
-     * {@inheritDoc}
-     *
      * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -26,9 +26,9 @@ public class MainActivity extends ECAActivity{
     private boolean hasSpoken;
 
     /**
-     * {@inheritDoc}
-     *
      * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

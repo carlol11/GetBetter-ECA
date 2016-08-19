@@ -93,9 +93,9 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     RemarksFragment remarksFragment = null;
 
     /**
-     * {@inheritDoc}
-     *
      * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +230,6 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
      * Called when the activity has detected the user's press of the back key.
      * Starts {@link PatientListActivity} and ends the current activity.
      */
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(AddPatientActivity.this, PatientListActivity.class);

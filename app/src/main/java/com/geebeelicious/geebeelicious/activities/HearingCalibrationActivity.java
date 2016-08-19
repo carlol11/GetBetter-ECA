@@ -14,18 +14,33 @@ import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.models.hearing.Calibrator;
 
 /**
- * Created by Kate.
  * The HearingCalibrationActivity serves as the activity
  * for the hearing test calibration module. It uses the
  * Calibrator class to perform the calibration.
+ * @author Katrina Lacsamana
  */
 
 public class HearingCalibrationActivity extends ActionBarActivity {
-
+    /**
+     * Used for calibrating the volume of the sounds used for the hearing test
+     */
     private Calibrator calibrator;
+
+    /**
+     * Runs the calibration process
+     */
     private Thread calibrationThread;
+
+    /**
+     * Used as font for the different UI properties.
+     */
     private Typeface chalkFont;
 
+    /**
+     * {@inheritDoc}
+     *
+     * Initializes views and other activity objects.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +64,10 @@ public class HearingCalibrationActivity extends ActionBarActivity {
         calibrationThread.start();
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Stops the {@link HearingCalibrationActivity#calibrator}from calibrating. Interrupts {@link HearingCalibrationActivity#calibrationThread}.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -56,6 +75,10 @@ public class HearingCalibrationActivity extends ActionBarActivity {
         calibrationThread.interrupt();
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Stops the {@link HearingCalibrationActivity#calibrator}from calibrating. Interrupts {@link HearingCalibrationActivity#calibrationThread}.
+     */
     @Override
     protected void onStop() {
         super.onStop();
@@ -63,6 +86,10 @@ public class HearingCalibrationActivity extends ActionBarActivity {
         calibrationThread.interrupt();
     }
 
+    /**
+     * If calibration is successful, it ends the calibration and starts SettingsActivity,
+     * else it loops the calibration process until successful.
+     */
     private void endCalibration(){
         calibrator.stopThread();
         calibrationThread.interrupt();

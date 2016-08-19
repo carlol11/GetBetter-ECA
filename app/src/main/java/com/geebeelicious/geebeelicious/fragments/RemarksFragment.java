@@ -77,6 +77,7 @@ public class RemarksFragment extends Fragment {
                 if (mStartRecording) {
                     recordingProgressBar.setVisibility(View.VISIBLE);
                     remarkText.setVisibility(View.GONE);
+                    playButton.setVisibility(View.GONE);
                 } else {
                     recordingProgressBar.setVisibility(View.GONE);
                     remarkText.setVisibility(View.VISIBLE);

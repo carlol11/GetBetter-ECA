@@ -130,7 +130,9 @@
                     android:textSize="50sp"
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp"
-                    android:layout_marginRight="100dp"/>
+                    android:layout_marginRight="100dp"
+                    android:textColor="#FFFFFF"
+                    />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -138,7 +140,9 @@
                     android:id="@+id/radioButton2"
                     android:textSize="50sp"
                     android:paddingRight="20dp"
-                    android:paddingLeft="20dp"/>
+                    android:paddingLeft="20dp"
+                    android:textColor="#FFFFFF"
+                    />
 
             </RadioGroup>
 

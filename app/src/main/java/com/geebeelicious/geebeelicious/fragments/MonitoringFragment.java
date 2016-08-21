@@ -21,14 +21,15 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import java.util.Random;
 
 /**
- * Created by Kate.
  * The MonitoringFragment class serves as the first fragment
  * that users will encounter when they choose to perform a
  * monitoring activity. The fragment will allow users to
  * input updates for certain health determinants such as
  * height and weight.
  *
- * Default height and weight were chosen using the data from the World Health Organization
+ * Default height and weight were chosen using the data from the World Health Organization.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class MonitoringFragment extends MonitoringTestFragment {

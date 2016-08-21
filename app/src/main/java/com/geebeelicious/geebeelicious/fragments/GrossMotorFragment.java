@@ -44,7 +44,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
     /**
-     * Contains the activity this fragment is attached to
+     * Contains the activity this fragment is attached to.
      */
     private Activity activity;
 

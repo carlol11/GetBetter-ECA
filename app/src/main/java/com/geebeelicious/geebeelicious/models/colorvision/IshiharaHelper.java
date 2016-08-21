@@ -6,22 +6,61 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 
 /**
- * Created by Kate on 03/04/2016.
  * The IshiharaHelper class functions to help
  * generate the test and conduct the test.
  * It contains all possible plates and options
  * that may be used in test generation.
+ *
+ * @author Katrina Lacsamana.
+ * @since 03/04/2016
  */
 public class IshiharaHelper {
 
+    /**
+     * Array of all Ishihara plates that may be shown to the user.
+     */
     private IshiharaPlate[] ishiharaPlates;
+
+    /**
+     * Keeps track of the user's score and contains
+     * the different Ishihara plates.
+     */
     private IshiharaTest ishiharaTest;
+
+    /**
+     * List of possible options for the user to choose from.
+     */
     private Option[] options;
+
+    /**
+     * View where the Ishihara plate is shown.
+     */
     private ImageView plateView;
+
+    /**
+     * Serves as the index counter on how many Ishihara plates were shown.
+     */
     private int currentPlate;
+
+    /**
+     * List of image buttons for the {@link IshiharaHelper#options}
+     */
     private ImageButton[] buttonList;
+
+    /**
+     * Serves as the flag whether the test is on going or not.
+     */
     private boolean isDone;
 
+    /**
+     * Constructor.
+     *
+     * Initializes the {@link IshiharaHelper#ishiharaPlates}, {@link IshiharaHelper#options},
+     * and the {@link IshiharaHelper#ishiharaTest}.
+     *
+     * @param plateView {@link IshiharaHelper#plateView}
+     * @param buttonList {@link IshiharaHelper#buttonList}
+     */
     public IshiharaHelper(ImageView plateView, ImageButton[] buttonList){
         this.plateView = plateView;
         this.buttonList = buttonList;
@@ -81,29 +120,41 @@ public class IshiharaHelper {
         ishiharaTest = new IshiharaTest(ishiharaPlates, options);
     }
 
-    //Displays current plate on screen
+    /**
+     * Displays current plate on screen.
+     */
     private void displayPlate(){
         plateView.setImageResource(getCurrentPlate().getIshiharaPlateDrawable());
     }
 
-    //Displays possible answers on buttons on screen
+    /**
+     * Displays possible answers on buttons on screen.
+     */
     private void displayOptions(){
         for(int i = 0; i<5; i++){
             buttonList[i].setImageResource(getCurrentOptions()[i].getOptionDrawable());
         }
     }
 
-    //Returns current IshiharaPlate
+    /**
+     * Gets current IshiharaPlate
+     * @return current IshiharaPlate
+     */
     private IshiharaPlate getCurrentPlate(){
         return ishiharaTest.getPlate(currentPlate);
     }
 
-    //Returns possible answers for current IshiharaPlate
+    /**
+     * Gets possible answers for current IshiharaPlate
+     * @return possible answers
+     */
     private Option[] getCurrentOptions(){
         return ishiharaTest.getOptions(currentPlate);
     }
 
-    //Resets values and screen for start of test
+    /**
+     * Resets values and screen for start of test
+     */
     public void startTest(){
         currentPlate = 0;
         ishiharaTest.generateTest();
@@ -112,7 +163,9 @@ public class IshiharaHelper {
         isDone = false;
     }
 
-    //Determines course of action for next question as test progresses
+    /**
+     * Determines course of action for next question as test progresses
+     */
     public void goToNextQuestion(){
         if(currentPlate<10){
             currentPlate++;
@@ -124,20 +177,34 @@ public class IshiharaHelper {
         }
     }
 
-    //Sets the answer of the user for the current plate
+    /**
+     * Sets the answer of the user for the current plate
+     * @param i index of the answer of the user.
+     */
     public void answerQuestion(int i){
         ishiharaTest.checkAnswer(currentPlate, i);
     }
 
+    /**
+     * Get {@link IshiharaHelper#isDone()}
+     * @return {@link IshiharaHelper#isDone()}
+     */
     public boolean isDone(){
         return isDone;
     }
 
+    /**
+     * Gets the final test score of user
+     * @return score of user.
+     */
     public int getScore(){
         return ishiharaTest.getScore();
     }
 
-    //Returns String interpretation of test score
+    /**
+     * Gets String interpretation of test score
+     * @return string interpretation
+     */
     public String getResult(){
         if(isNormal()){
             return "Normal";
@@ -146,6 +213,11 @@ public class IshiharaHelper {
         }
     }
 
+    /**
+     * Returns whether the color vision test result
+     * of the person is normal or not.
+     * @return if higher or equal to 10, return true. Else, false.
+     */
     public boolean isNormal(){
         return getScore()>= 10;
     }

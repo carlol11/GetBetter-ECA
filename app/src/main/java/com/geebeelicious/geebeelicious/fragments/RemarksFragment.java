@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,15 +37,42 @@ import java.io.InputStream;
  * to handle interaction events.
  */
 public class RemarksFragment extends Fragment {
+
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "RemarksFragment";
 
+    /**
+     * Main view of the fragment
+     */
     private View view;
 
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnFragmentInteractionListener mListener;
+
+    /**
+     * Used for recording audio from the microphone.
+     */
     private MediaRecorder mRecorder;
+
+    /**
+     * File path on where the temporary recorded audio is saved.
+     */
     private String mFileName;
+
+    /**
+     * Used for playing the recorded audio.
+     */
     private MediaPlayer mPlayer;
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -163,11 +191,23 @@ public class RemarksFragment extends Fragment {
         return view;
     }
 
+    /**
+     * This method is called by the activity this
+     * fragment is attached to. The activity will set
+     * the question asked before letting the user
+     * add a remark.
+     * @param question remark question to be asked to the user.
+     */
     public void setRemarkQuestion(int question){
         TextView remarkQuestion = (TextView) view.findViewById(R.id.remarksQuestion);
         remarkQuestion.setText(question);
     }
 
+    /**
+     * Override Method.
+     * Releases the media recorder and media player object.
+     * @see Fragment#onPause()
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -182,6 +222,10 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    /**
+     * Replaces all the fonts of the children of the specified {@code viewTree}
+     * @param viewTree
+     */
     public void replaceFonts(ViewGroup viewTree)
     {
         View child;
@@ -203,6 +247,15 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link RemarksFragment.OnFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link RemarksFragment.OnFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -214,6 +267,11 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    /**
+     * Override method.
+     * Null is assigned to OnFragmentInteractionListener.
+     * @see Fragment#onDetach()
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -240,6 +298,12 @@ public class RemarksFragment extends Fragment {
         void setRemarksQuestion();
     }
 
+    /**
+     * If {@code start} is true, sets up the media recorder and
+     * calls the method that starts the recording, else calls
+     * the method that stops the recording.
+     * @param start whether the media recorder has started recording.
+     */
     private void onRecord(boolean start) {
         if (start) {
             mRecorder = new MediaRecorder();
@@ -253,6 +317,9 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    /**
+     * Starts the recording.
+     */
     private void startRecording() {
         mRecorder.setOutputFile(mFileName);
         try {
@@ -264,12 +331,21 @@ public class RemarksFragment extends Fragment {
         mRecorder.start();
     }
 
+    /**
+     * Stops the recording.
+     */
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
     }
 
+    /**
+     * Calls the appropriate method
+     * depending on {@code start}. Either starts or
+     * stops playing the recording.
+     * @param start whether the media player has started recording.
+     */
     private void onPlay(boolean start) {
         if (start) {
             startPlaying();
@@ -278,6 +354,9 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    /**
+     * Starts playing the recording.
+     */
     private void startPlaying() {
         mPlayer = new MediaPlayer();
         try {
@@ -289,11 +368,19 @@ public class RemarksFragment extends Fragment {
         }
     }
 
+    /**
+     * Stops playing the recording
+     */
     private void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
     }
 
+    /**
+     * Hides the keyboard
+     * @param v View to be used for
+     * {@link android.view.inputmethod.InputMethodManager#hideSoftInputFromInputMethod(IBinder, int)}.
+     */
     private void hideKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager)((Activity)mListener).getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

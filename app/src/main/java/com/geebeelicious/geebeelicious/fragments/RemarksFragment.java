@@ -35,6 +35,9 @@ import java.io.InputStream;
  * Activities that contain this fragment must implement the
  * {@link RemarksFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
+ *
+ * This fragment is for taking remarks about the patient.
+ * @author Mary Grace Malana.
  */
 public class RemarksFragment extends Fragment {
 

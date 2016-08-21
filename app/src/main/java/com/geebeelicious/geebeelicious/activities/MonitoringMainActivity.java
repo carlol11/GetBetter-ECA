@@ -434,6 +434,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     /**
      * Runs the transition between the fragments.
+     *
+     * If the {@code} has an early instruction, the instruction is shown
+     * at the same as the ready button.
+     *
      * @param time milliseconds on which the transition is to be run before the start
      *             of next fragment or showing of {@link MonitoringMainActivity#ecaTransitionText}
      *             parent view.

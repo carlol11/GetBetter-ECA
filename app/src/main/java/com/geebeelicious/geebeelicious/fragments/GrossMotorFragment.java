@@ -32,23 +32,61 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class GrossMotorFragment extends MonitoringTestFragment {
+
+    /**
+     * Used to identify the source of a log message
+     */
     private static final String TAG = "GrossMotorFragment";
 
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+
+    /**
+     * Contains the activity this fragment is attached to
+     */
     private Activity activity;
 
+    /**
+     * Contains the helper class of the activity
+     */
     private GrossMotorTest grossMotorTest;
+
+    /**
+     * Used for timing each skill in the test.
+     */
     private CountDownTimer countDownTimer;
 
+    /**
+     * Used as font for the different UI properties.
+     */
     private Typeface chalkFont;
 
+    /**
+     * Clicked if the skill cannot be performed
+     */
     private Button naButton;
+
+    /**
+     * Used for showing .gif pictures of skill
+     */
     private WebView gifWebView;
 
+    /**
+     * Constructor.
+     *
+     * @see MonitoringTestFragment#intro
+     */
     public GrossMotorFragment(){
         this.intro = R.string.grossmotor_intro;
     }
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,6 +137,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         return view;
     }
 
+    /**
+     * Called when NAButton is clicked. Stops the current skill and starts the next.
+     */
     public void onNAButtonClick(){
         TextView timerView = (TextView)view.findViewById(R.id.countdownTV);
         timerView.setTypeface(chalkFont);
@@ -110,10 +151,22 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         grossMotorTest.skipTest(timerView);
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Ends the grossmotor test.
+     */
     public void onBackPressed(){
         grossMotorTest.endTest();
     }
 
+    /**
+     * Updates the end test attributes of the test fragment namely
+     * {@link GrossMotorFragment#isEndEmotionHappy}, {@link GrossMotorFragment#endStringResource},
+     * and {@link GrossMotorFragment#endTime}.
+     *
+     * @param result test result of the patient. 0 if passed, 1 if fail, 2 if n/a.
+     * @see MonitoringTestFragment
+     */
     private void updateTestEndRemark(int result) {
         switch (result){
             case 0:
@@ -134,11 +187,18 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         }
     }
 
+    /**
+     * Starts the test.
+     */
     private void startTest(){
         grossMotorTest.setCurrentSkill(0);
         displaySkill(0);
     }
 
+    /**
+     * Ends the test and sends result to the
+     * activity this fragment is attached to.
+     */
     private void endTest(){
         String resultString = grossMotorTest.getAllResults() + "\nOverall: " + grossMotorTest.getFinalResult();
         Record record = fragmentInteraction.getRecord();
@@ -157,7 +217,10 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         fragmentInteraction.doneFragment();
     }
 
-    //Displays the skill as determined by the GrossMotorTest on the screen
+    /**
+     * Displays the skill as determined by the GrossMotorTest on the screen
+     * @param i index to know how many skill test has been done.
+     */
     private void displaySkill(final int i){
         final GrossMotorSkill gms = grossMotorTest.getCurrentSkill();
         String durationString = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(gms.getDuration()));
@@ -189,6 +252,11 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     }
 
+    /**
+     * Get the html code used for the {@link GrossMotorFragment#gifWebView}
+     * @param imageURL URL of the image to be shown in the {@link GrossMotorFragment#gifWebView}
+     * @return html code to show the image in the {@link GrossMotorFragment#gifWebView}.
+     */
     private String getHTMLData(String imageURL) {
         String head = "<head><style>img{max-width: 100%; width:auto; height: auto; margin : auto;}" +
                 "html, body { height: 100%; margin:0; padding:0;}\n" +
@@ -199,7 +267,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
                 "</body></html>";
     }
 
-    //Allows the test to move to the next question or ends the test
+    /**
+     * Allows the test to move to the next question or ends the test
+     */
     private void goToNextQuestion(){
         grossMotorTest.getCurrentSkill().setTested();
         int currentSkill = grossMotorTest.getCurrentSkillNumber();
@@ -212,6 +282,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         }
     }
 
+    /**
+     * Hides the yes and no buttons
+     */
     private void hideAnswerButtons(){
         LinearLayout answers = (LinearLayout)view.findViewById(R.id.linearLayoutYesNo);
         for (int j = 0; j<answers.getChildCount(); j++){
@@ -223,7 +296,15 @@ public class GrossMotorFragment extends MonitoringTestFragment {
         naButton.setVisibility(View.VISIBLE);
     }
 
-
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

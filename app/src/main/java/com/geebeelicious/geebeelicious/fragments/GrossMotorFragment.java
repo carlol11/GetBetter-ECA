@@ -49,7 +49,8 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     private Activity activity;
 
     /**
-     * Contains the helper class of the activity
+     * Contains the gross motor test that the child will
+     * take.
      */
     private GrossMotorTest grossMotorTest;
 

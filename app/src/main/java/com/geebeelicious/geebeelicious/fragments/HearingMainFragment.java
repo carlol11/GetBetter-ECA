@@ -21,23 +21,51 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import java.util.ArrayList;
 
 /**
- * Created by Kate.
  * The HearingMainFragment serves as the fragment
  * for the hearing test. It uses the HearingTest class
  * to perform the hearing test.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class HearingMainFragment extends MonitoringTestFragment {
+
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
+    /**
+     * Contains the different threads used in the test namely
+     * screenThread, timingThread, and testThread.
+     */
     private ArrayList<Thread> threads;
+
+    /**
+     * Contains the instance of {@link HearingTest} that helps
+     * manage the audiometry hearing test.
+     */
     private HearingTest hearingTest;
+
+    /**
+     * Contains the activity this fragment is attached to
+     */
     private Activity activity;
 
+    /**
+     * Constructor.
+     *
+     * @see MonitoringTestFragment#intro
+     */
     public HearingMainFragment(){
         this.intro = R.string.hearing_intro;
     }
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -137,6 +165,13 @@ public class HearingMainFragment extends MonitoringTestFragment {
         return view;
     }
 
+    /**
+     * Updates the end test attributes of the test fragment namely
+     * {@link FineMotorFragment#isEndEmotionHappy}, {@link FineMotorFragment#endStringResource},
+     * and {@link FineMotorFragment#endTime}, and ends the test.
+     *
+     * @see MonitoringTestFragment
+     */
     private void callnextFragment() {
         Record record = fragmentInteraction.getRecord();
 
@@ -152,6 +187,9 @@ public class HearingMainFragment extends MonitoringTestFragment {
         fragmentInteraction.doneFragment();
     }
 
+    /**
+     * Sends results to the activity this fragment is attached to.
+     */
     private void endTest(){
         Record record = fragmentInteraction.getRecord();
         record.setHearingRight(hearingTest.getPureToneAverageInterpretation("Right"));
@@ -159,6 +197,10 @@ public class HearingMainFragment extends MonitoringTestFragment {
         stopTest();
     }
 
+    /**
+     * Stops the tests. Interrupts all the threads inside the
+     * {@link HearingMainFragment#threads}.
+     */
     private void stopTest(){
         hearingTest.setIsNotRunning();
         for(int i = 0; i<threads.size(); i++){
@@ -166,8 +208,11 @@ public class HearingMainFragment extends MonitoringTestFragment {
         }
     }
 
-    //For testing purposes only
-    public void endTestShortCut(){
+    /**
+     * Called by the activity to skip the hearing test.
+     * Sends dummy result to the activity this fragment is attached to.
+     */
+    public void endTestShortCut(){ //For testing purposes only
         Record record = fragmentInteraction.getRecord();
         record.setHearingRight("Mild Hearing Loss");
         record.setHearingLeft("Moderately-Severe Hearing Loss");
@@ -176,6 +221,16 @@ public class HearingMainFragment extends MonitoringTestFragment {
         callnextFragment();
     }
 
+
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -190,7 +245,10 @@ public class HearingMainFragment extends MonitoringTestFragment {
         }
     }
 
-
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Stops the hearing test.
+     */
     public void onBackPressed() {
         stopTest();
     }

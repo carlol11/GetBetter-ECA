@@ -47,47 +47,47 @@ public abstract class MonitoringTestFragment extends Fragment{
     protected View view;
 
     /**
-     * Gets {@link MonitoringTestFragment#intro}
-     * @return {@link MonitoringTestFragment#intro}
+     * Gets {@link #intro}
+     * @return {@link #intro}
      */
     public int getIntro() {
         return intro;
     }
 
     /**
-     * Gets {@link MonitoringTestFragment#endStringResource}
-     * @return {@link MonitoringTestFragment#endStringResource}
+     * Gets {@link #endStringResource}
+     * @return {@link #endStringResource}
      */
     public int getEndStringResource() {
         return endStringResource;
     }
 
     /**
-     * Gets {@link MonitoringTestFragment#endTime}
-     * @return {@link MonitoringTestFragment#endTime}
+     * Gets {@link #endTime}
+     * @return {@link #endTime}
      */
     public int getEndTime() {
         return endTime;
     }
 
     /**
-     * Gets {@link MonitoringTestFragment#isEndEmotionHappy}
-     * @return {@link MonitoringTestFragment#isEndEmotionHappy}
+     * Gets {@link #isEndEmotionHappy}
+     * @return {@link #isEndEmotionHappy}
      */
     public boolean isEndEmotionHappy() {
         return isEndEmotionHappy;
     }
 
     /**
-     * Gets {@link MonitoringTestFragment#hasEarlyInstruction}
-     * @return {@link MonitoringTestFragment#hasEarlyInstruction}
+     * Gets {@link #hasEarlyInstruction}
+     * @return {@link #hasEarlyInstruction}
      */
     public boolean hasEarlyInstruction() {
         return hasEarlyInstruction;
     }
 
     /**
-     * Hides the {@link MonitoringTestFragment#view}
+     * Hides the {@link #view}
      */
     public void hideFragmentMainView(){
         view.setVisibility(View.GONE);

@@ -66,7 +66,7 @@ public class HearingCalibrationActivity extends ActionBarActivity {
 
     /**
      * Called when the activity has detected the user's press of the back key.
-     * Stops the {@link HearingCalibrationActivity#calibrator}from calibrating. Interrupts {@link HearingCalibrationActivity#calibrationThread}.
+     * Stops the {@link #calibrator}from calibrating. Interrupts {@link #calibrationThread}.
      */
     @Override
     public void onBackPressed() {
@@ -77,7 +77,7 @@ public class HearingCalibrationActivity extends ActionBarActivity {
 
     /**
      * Called when the activity has detected the user's press of the back key.
-     * Stops the {@link HearingCalibrationActivity#calibrator}from calibrating. Interrupts {@link HearingCalibrationActivity#calibrationThread}.
+     * Stops the {@link #calibrator}from calibrating. Interrupts {@link #calibrationThread}.
      */
     @Override
     protected void onStop() {

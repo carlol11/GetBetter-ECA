@@ -74,13 +74,13 @@ public class BMICalculator {
 
     /**
      * Get the weight category of the person given the parameters.
-     * Calls {@link BMICalculator#getBMIResult(int, float, float[][])}
+     * Calls {@link #getBMIResult(int, float, float[][])}
      * @param isGirl gender of the person, true if female, false if male.
      * @param age age of the person
      * @param patientBMI BMI of the person
      * @return corresponding int value of the weight category of the person.
      *
-     * @see BMICalculator#getBMIResultString(boolean, int, float)
+     * @see #getBMIResultString(boolean, int, float)
      */
     public static int getBMIResult(boolean isGirl, int age, float patientBMI){
         int ageIndex = age - 5;
@@ -97,7 +97,7 @@ public class BMICalculator {
 
     /**
      * Get the weight category of the person given the parameters.
-     * Calls {@link BMICalculator#getBMIResult(boolean, int, float)}
+     * Calls {@link #getBMIResult(boolean, int, float)}
      * @param isGirl gender of the person, true if female, false if male.
      * @param age age of the person
      * @param patientBMI BMI of the person
@@ -124,12 +124,12 @@ public class BMICalculator {
      * Get the weight category of the person given the parameters.
      * @param ageIndex index adjusted age of the person.
      * @param patientBMI BMI of the person
-     * @param bmiChart bmiChart can either be {@link BMICalculator#boyBMI} or  {@link BMICalculator#girlBMI}
+     * @param bmiChart bmiChart can either be {@link #boyBMI} or  {@link #girlBMI}
      *                 depending on the age of the person
      * @return weight category of the person.
      *
-     * @see BMICalculator#getBMIResultString(boolean, int, float)
-     * @see BMICalculator#getBMIResult(boolean, int, float)
+     * @see #getBMIResultString(boolean, int, float)
+     * @see #getBMIResult(boolean, int, float)
      */
     private static int getBMIResult(int ageIndex, float patientBMI, float bmiChart[][]){
         if (patientBMI < bmiChart[0][ageIndex]){ //less than 5P

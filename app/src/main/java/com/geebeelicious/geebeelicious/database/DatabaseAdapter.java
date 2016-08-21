@@ -90,7 +90,7 @@ public class DatabaseAdapter {
      * @return a reference of itself
      * @throws SQLException if a database error occured
      *
-     * @see DatabaseAdapter#openDatabaseForRead()
+     * @see #openDatabaseForRead()
      */
     public DatabaseAdapter openDatabaseForRead() throws SQLException {
 
@@ -112,7 +112,7 @@ public class DatabaseAdapter {
      * @return a reference of itself
      * @throws SQLException if a database error occured
      *
-     * @see DatabaseAdapter#openDatabaseForRead()
+     * @see #openDatabaseForRead()
      */
     public DatabaseAdapter openDatabaseForWrite() throws SQLException {
 
@@ -247,7 +247,7 @@ public class DatabaseAdapter {
     }
 
     /**
-     * Like {@link DatabaseAdapter#getSymptoms(int)} this method gets the symptoms
+     * Like {@link #getSymptoms(int)} this method gets the symptoms
      * that are related to the specified impression. However only the symptoms that
      * haven't been answered will be returned.
      *

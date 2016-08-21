@@ -210,8 +210,8 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
 
     /**
      * Updates the end test attributes of the test fragment namely
-     * {@link VisualAcuityFragment#isEndEmotionHappy}, {@link VisualAcuityFragment#endStringResource},
-     * and {@link VisualAcuityFragment#endTime} depending on the result of the test.
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime} depending on the result of the test.
      *
      * @param lineNumberLeft line number in the eye chart that the user is able to read correctly last using
      *                       just her left eye.

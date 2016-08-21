@@ -114,7 +114,7 @@ public class ECAFragment extends Fragment {
 
     /**
      * Overrides method. Keeps a reference of the activity
-     * that the fragment is attached to in {@link ECAFragment#activity}
+     * that the fragment is attached to in {@link #activity}
      * @param activity activity that the fragment is attached to.
      *
      * @see Fragment#onAttach(Activity)

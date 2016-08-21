@@ -128,8 +128,8 @@ public class ColorVisionFragment extends MonitoringTestFragment {
 
     /**
      * Updates the end test attributes of the test fragment namely
-     * {@link ColorVisionFragment#isEndEmotionHappy}, {@link ColorVisionFragment#endStringResource},
-     * and {@link ColorVisionFragment#endTime} depending on the result of the test.
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime}  on the result of the test.
      *
      * @param normal test result of the patient. true if normal, false if not normal.
      * @see MonitoringTestFragment

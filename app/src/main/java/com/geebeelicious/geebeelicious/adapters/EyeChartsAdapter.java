@@ -39,7 +39,7 @@ public class EyeChartsAdapter extends ArrayAdapter<String>{
 
     /**
      * {@inheritDoc}
-     * Sets the font of the view as {@link EyeChartsAdapter#chalkFont}
+     * Sets the font of the view as {@link #chalkFont}
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,7 +58,7 @@ public class EyeChartsAdapter extends ArrayAdapter<String>{
 
     /**
      * {@inheritDoc}
-     * Sets the font of the view as {@link EyeChartsAdapter#chalkFont}
+     * Sets the font of the view as {@link #chalkFont}
      */
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {

@@ -21,7 +21,7 @@ public abstract class ECAActivity extends ActionBarActivity {
     protected ECAFragment ecaFragment;
 
     /**
-     * Integrates {@link ECAActivity#ecaFragment} to the view for the ECA.
+     * Integrates {@link #ecaFragment} to the view for the ECA.
      */
     protected void integrateECA() {
         FragmentManager fragmentManager = getSupportFragmentManager();

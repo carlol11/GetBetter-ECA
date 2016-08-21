@@ -91,7 +91,7 @@ public class MainActivity extends ECAActivity{
     }
 
     /**
-     * Saves {@link MainActivity#hasSpoken} inside {@code outState}
+     * Saves {@link #hasSpoken} inside {@code outState}
      *
      * @see android.app.Activity#onSaveInstanceState(Bundle)
      */

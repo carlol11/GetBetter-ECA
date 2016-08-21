@@ -221,7 +221,7 @@ public class PatientListActivity extends ECAActivity{
     }
 
     /**
-     * Saves {@link PatientListActivity#hasSpoken} inside {@code outState}
+     * Saves {@link #hasSpoken} inside {@code outState}
      *
      * @see android.app.Activity#onSaveInstanceState(Bundle)
      */

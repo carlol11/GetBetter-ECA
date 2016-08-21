@@ -43,7 +43,7 @@ public class IshiharaHelper {
     private int currentPlate;
 
     /**
-     * List of image buttons for the {@link IshiharaHelper#options}
+     * List of image buttons for the {@link #options}
      */
     private ImageButton[] buttonList;
 
@@ -55,11 +55,11 @@ public class IshiharaHelper {
     /**
      * Constructor.
      *
-     * Initializes the {@link IshiharaHelper#ishiharaPlates}, {@link IshiharaHelper#options},
-     * and the {@link IshiharaHelper#ishiharaTest}.
+     * Initializes the {@link #ishiharaPlates}, {@link #options},
+     * and the {@link #ishiharaTest}.
      *
-     * @param plateView {@link IshiharaHelper#plateView}
-     * @param buttonList {@link IshiharaHelper#buttonList}
+     * @param plateView {@link #plateView}
+     * @param buttonList {@link #buttonList}
      */
     public IshiharaHelper(ImageView plateView, ImageButton[] buttonList){
         this.plateView = plateView;
@@ -186,8 +186,8 @@ public class IshiharaHelper {
     }
 
     /**
-     * Get {@link IshiharaHelper#isDone()}
-     * @return {@link IshiharaHelper#isDone()}
+     * Get {@link #isDone()}
+     * @return {@link #isDone()}
      */
     public boolean isDone(){
         return isDone;

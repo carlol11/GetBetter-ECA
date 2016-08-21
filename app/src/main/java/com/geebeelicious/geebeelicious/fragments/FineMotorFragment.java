@@ -226,8 +226,8 @@ public class FineMotorFragment extends MonitoringTestFragment {
 
     /**
      * Updates the end test attributes of the test fragment namely
-     * {@link FineMotorFragment#isEndEmotionHappy}, {@link FineMotorFragment#endStringResource},
-     * and {@link FineMotorFragment#endTime} depending on the result of the test.
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime} depending on the result of the test.
      *
      * @param results list of results from the different rounds of the finemotor test.
      * @see MonitoringTestFragment

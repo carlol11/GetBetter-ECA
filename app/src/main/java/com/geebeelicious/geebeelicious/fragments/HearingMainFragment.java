@@ -199,7 +199,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
 
     /**
      * Stops the tests. Interrupts all the threads inside the
-     * {@link HearingMainFragment#threads}.
+     * {@link #threads}.
      */
     private void stopTest(){
         hearingTest.setIsNotRunning();

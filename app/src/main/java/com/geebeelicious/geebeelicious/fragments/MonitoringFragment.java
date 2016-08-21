@@ -55,17 +55,17 @@ public class MonitoringFragment extends MonitoringTestFragment {
     private TextView unitView;
 
     /**
-     * List of string resource of the questions to be shown in {@link MonitoringFragment#questionView}
+     * List of string resource of the questions to be shown in {@link #questionView}
      */
     private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
 
     /**
-     * List of string resource of the unit of measurement to be shown in {@link MonitoringFragment#unitView}
+     * List of string resource of the unit of measurement to be shown in {@link #unitView}
      */
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};
 
     /**
-     * List of default values for the {@link MonitoringFragment#numberPicker} for each monitoring question.
+     * List of default values for the {@link #numberPicker} for each monitoring question.
      */
     private final int[] defaultValues = {132, 28};
 
@@ -203,8 +203,8 @@ public class MonitoringFragment extends MonitoringTestFragment {
 
     /**
      * Updates the end test attributes of the test fragment namely
-     * {@link MonitoringFragment#isEndEmotionHappy}, {@link MonitoringFragment#endStringResource},
-     * and {@link MonitoringFragment#endTime} depending on the BMI result, and ends the test.
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime} depending on the BMI result, and ends the test.
      *
      * @see MonitoringTestFragment
      */

@@ -64,7 +64,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     /**
      * TextView to show the instructions during the specific monitoring test
-     * @see MonitoringMainActivity#ecaTransitionText
+     * @see #ecaTransitionText
      */
     private TextView ecaText;
 
@@ -85,7 +85,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     /**
      * TextView to show the instructions before the specific monitoring test
-     * @see MonitoringMainActivity#ecaText
+     * @see #ecaText
      */
     private TextView ecaTransitionText;
 
@@ -95,7 +95,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     private String[] fragments;
 
     /**
-     * Serves as the index counter for the {@link MonitoringMainActivity#fragments}
+     * Serves as the index counter for the {@link #fragments}
      */
     private int currentFragmentIndex;
 
@@ -169,8 +169,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Saves {@link MonitoringMainActivity#record}, {@link MonitoringMainActivity#patient},
-     * and {@link MonitoringMainActivity#currentFragmentIndex} inside {@code outState}
+     * Saves {@link #record}, {@link #patient},
+     * and {@link #currentFragmentIndex} inside {@code outState}
      *
      * @see android.app.Activity#onSaveInstanceState(Bundle)
      */
@@ -200,7 +200,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * @return {@link MonitoringMainActivity#record}
+     * @return {@link #record}
      */
     @Override
     public Record getRecord(){
@@ -208,7 +208,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Sets text of {@link MonitoringMainActivity#ecaText} and sends instructions to ECA.
+     * Sets text of {@link #ecaText} and sends instructions to ECA.
      * @param instructions instructions to be sent.
      */
     @Override
@@ -218,7 +218,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Sets text of {@link MonitoringMainActivity#ecaText} and sends instructions to ECA.
+     * Sets text of {@link #ecaText} and sends instructions to ECA.
      * @param resID String resource ID of the instructions to be sent.
      */
     @Override
@@ -228,7 +228,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Appends text in {@link MonitoringMainActivity#resultsText}.
+     * Appends text in {@link #resultsText}.
      * @param results coming from the monitoring test.
      */
     @Override
@@ -321,7 +321,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Shows {@link MonitoringMainActivity#ecaTransitionText} parent view
+     * Shows {@link #ecaTransitionText} parent view
      */
     @Override
     public void showTransitionTextLayout() {
@@ -330,7 +330,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     /**
      * Appends the instructions of the monitoring test with the ready instructions.
-     * Also sends the complete instructions to the {@link MonitoringMainActivity#ecaFragment}.
+     * Also sends the complete instructions to the {@link #ecaFragment}.
      * @param instructions to before the monitoring test starts.
      */
     @Override
@@ -341,7 +341,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Clears the {@link MonitoringMainActivity#ecaText} and {@link MonitoringMainActivity#resultsText}
+     * Clears the {@link #ecaText} and {@link #resultsText}
      * after the monitoring test.
      */
     private void clearTextViews() {
@@ -351,7 +351,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     /**
      * Iniitializes the current or the first fragment for the activity depending
-     * on the {@link MonitoringMainActivity#currentFragmentIndex}.
+     * on the {@link #currentFragmentIndex}.
      */
     private void initializeOldFragment() {
         Fragment oldFragment = fragmentManager.findFragmentByTag(fragments[currentFragmentIndex]);
@@ -439,7 +439,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
      * at the same as the ready button.
      *
      * @param time milliseconds on which the transition is to be run before the start
-     *             of next fragment or showing of {@link MonitoringMainActivity#ecaTransitionText}
+     *             of next fragment or showing of {@link #ecaTransitionText}
      *             parent view.
      * @param ecaText initial string sent to ECA to speak.
      * @param nextFragment the next Fragment to be run.
@@ -513,8 +513,8 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     }
 
     /**
-     * Calls {@link MonitoringMainActivity#minimizeECAFragment()}
-     * and {@link MonitoringMainActivity#replaceFragment(Fragment)}.
+     * Calls {@link #minimizeECAFragment()}
+     * and {@link #replaceFragment(Fragment)}.
      * @param nextFragment the next Fragment to be run.
      */
     private void transitionToNextFragment(Fragment nextFragment){
@@ -591,7 +591,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
     /**
      * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
      * Sets the {@link Record#remarksString} and {@link Record#remarksAudio} of the patient.
-     * calls {@link  MonitoringMainActivity#doneFragment()}
+     * calls {@link  #doneFragment()}
      * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks(String remarkString, byte[] remarkAudio).
      */
     @Override
@@ -603,7 +603,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
 
     /**
      * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
-     * Calls {@link  MonitoringMainActivity#doneFragment()}
+     * Calls {@link  #doneFragment()}
      * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks(String remarkString, byte[] remarkAudio).
      */
     @Override

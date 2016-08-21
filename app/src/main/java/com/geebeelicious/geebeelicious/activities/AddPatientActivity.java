@@ -238,7 +238,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     }
 
     /**
-     * Saves {@link AddPatientActivity#questionCounter} inside {@code outState}
+     * Saves {@link #questionCounter} inside {@code outState}
      *
      * @see android.app.Activity#onSaveInstanceState(Bundle)
      */
@@ -258,7 +258,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
     };
 
     /**
-     * @return the text from {@link AddPatientActivity#editText}
+     * @return the text from {@link #editText}
      */
     private String getEditText(){
         return editText.getText().toString();
@@ -267,7 +267,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
 
     /**
      * Gets the String of the birthdate of patient in the format of MM/DD/YYYY
-     * @return the date from {@link AddPatientActivity#datePicker}
+     * @return the date from {@link #datePicker}
      */
     private String getSelectedDate(){
         return (datePicker.getMonth() + "/" + datePicker.getDayOfMonth() + "/" + datePicker.getYear());
@@ -304,7 +304,7 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
 
     /**
      * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
-     * Calls {@link AddPatientActivity#savePatientToDatabase(Patient)} and starts the {@link PatientListActivity}.
+     * Calls {@link #savePatientToDatabase(Patient)} and starts the {@link PatientListActivity}.
      * @see RemarksFragment.OnFragmentInteractionListener#onDoneRemarks()
      */
     @Override

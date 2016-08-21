@@ -36,9 +36,9 @@ public class IshiharaPlate {
 
     /**
      * Constructor.
-     * @param shape {@link IshiharaPlate#shape}
-     * @param style {@link IshiharaPlate#style}
-     * @param ishiharaPlateDrawable {@link IshiharaPlate#ishiharaPlateDrawable}
+     * @param shape {@link #shape}
+     * @param style {@link #style}
+     * @param ishiharaPlateDrawable {@link #ishiharaPlateDrawable}
      */
     public IshiharaPlate(String shape, int style, int ishiharaPlateDrawable){
         this.shape = shape;

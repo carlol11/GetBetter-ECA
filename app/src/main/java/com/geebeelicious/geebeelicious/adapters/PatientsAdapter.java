@@ -40,8 +40,8 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
 
     /**
      * Constructs a Patient ArrayAdapter using the {@code context} and {@code patient}.
-     * Copy all the patients to both {@link PatientsAdapter#patientList}
-     * and {@link PatientsAdapter#arrayPatientList}
+     * Copy all the patients to both {@link #patientList}
+     * and {@link #arrayPatientList}
      *
      * @param context current context.
      * @param patients all patients from the school specified in device storage.
@@ -57,7 +57,7 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
 
     /**
      * Gets the number of patients represented by the adapter
-     * @return size of {@link PatientsAdapter#patientList}
+     * @return size of {@link #patientList}
      */
     @Override
     public int getCount() {
@@ -65,8 +65,8 @@ public class PatientsAdapter extends ArrayAdapter<Patient> {
     }
 
     /**
-     * Gets the Patient associated with the specified position from the {@link PatientsAdapter#patientList}
-     * @param position position of the desired Patient in the {@link PatientsAdapter#patientList}
+     * Gets the Patient associated with the specified position from the {@link #patientList}
+     * @param position position of the desired Patient in the {@link #patientList}
      * @return Patient with the given position.
      */
     @Override

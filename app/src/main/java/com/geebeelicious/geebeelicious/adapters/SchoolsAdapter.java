@@ -41,7 +41,7 @@ public class SchoolsAdapter extends ArrayAdapter<School>{
 
     /**
      * {@inheritDoc}
-     * Sets the font of the view as {@link SchoolsAdapter#chalkFont}
+     * Sets the font of the view as {@link #chalkFont}
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

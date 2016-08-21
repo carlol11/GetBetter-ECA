@@ -23,7 +23,6 @@ import com.geebeelicious.geebeelicious.models.monitoring.TakePictureHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * The PatientPictureFragment class serves as the fragment for
@@ -164,7 +163,7 @@ public class PatientPictureFragment extends Fragment {
      * Overrides the method.
      * Handles the return from the Android Camera application.
      *
-     * @see PatientPictureFragment#onActivityResult(int, int, Intent)
+     * @see #onActivityResult(int, int, Intent)
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

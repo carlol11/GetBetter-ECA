@@ -105,7 +105,7 @@ public class MonitoringConsultationChoice extends ECAActivity{
     }
 
     /**
-     * Saves {@link MonitoringConsultationChoice#hasSpoken} inside {@code outState}
+     * Saves {@link #hasSpoken} inside {@code outState}
      *
      * @see android.app.Activity#onSaveInstanceState(Bundle)
      */

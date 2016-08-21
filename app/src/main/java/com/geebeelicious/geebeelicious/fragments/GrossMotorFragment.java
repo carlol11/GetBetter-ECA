@@ -162,8 +162,8 @@ public class GrossMotorFragment extends MonitoringTestFragment {
 
     /**
      * Updates the end test attributes of the test fragment namely
-     * {@link GrossMotorFragment#isEndEmotionHappy}, {@link GrossMotorFragment#endStringResource},
-     * and {@link GrossMotorFragment#endTime} depending on the result of the test.
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime} depending on the result of the test.
      *
      * @param result test result of the patient. 0 if passed, 1 if fail, 2 if n/a.
      * @see MonitoringTestFragment
@@ -254,9 +254,9 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     }
 
     /**
-     * Get the html code used for the {@link GrossMotorFragment#gifWebView}
-     * @param imageURL URL of the image to be shown in the {@link GrossMotorFragment#gifWebView}
-     * @return html code to show the image in the {@link GrossMotorFragment#gifWebView}.
+     * Get the html code used for the {@link #gifWebView}
+     * @param imageURL URL of the image to be shown in the {@link #gifWebView}
+     * @return html code to show the image in the {@link #gifWebView}.
      */
     private String getHTMLData(String imageURL) {
         String head = "<head><style>img{max-width: 100%; width:auto; height: auto; margin : auto;}" +

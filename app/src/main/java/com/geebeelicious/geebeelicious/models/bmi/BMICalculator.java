@@ -1,17 +1,24 @@
 package com.geebeelicious.geebeelicious.models.bmi;
 
 /**
- * Created by mgmalana.
  * BMICalculator class is used by the monitoringFragment
  * for calculating BMI.
- * BMI percentile data retrieved from http://www.who.int/growthref/who2007_bmi_for_age/en/
+ * BMI percentile data retrieved from <a href="http://www.who.int/growthref/who2007_bmi_for_age/en/">WHO 2007</a>
+ *
+ * @author Mary Grace Malana
  */
 public class BMICalculator {
-    /*
-        bmi[x][y]
-            x: 0 = P3, 1 = P85, 2 = P97 //P3 = 3rd percentile
-            y: age - 5
-    */
+
+    /**
+     * Array of BMI percentile values for underweight, overweight, and obese for boys with
+     * ages 5-19 years old. The limit for underweight is 5th percentile, overweight is 85th percentile,
+     * and obese is 95th percentile.
+     *
+     * bmi[x][y]
+     *      x: 0 = P5, 1 = P85, 2 = P95 //P5 = 3rd percentile
+     *      y: age - 5
+     *
+     */
     private final static float[][] boyBMI = {
             {13.1f, 13.2f, 13.3f, 13.4f, 13.6f,
                     14.9f, 14.2f, 14.6f, 15.1f, 15.6f,
@@ -24,6 +31,16 @@ public class BMICalculator {
                     26.4f, 27.3f, 28.0f, 28.6f, 29.1f}
     };
 
+    /**
+     * Array of BMI percentile values for underweight, overweight, and obese for girls with
+     * ages 5-19 years old. The limit for underweight is 5th percentile, overweight is 85th percentile,
+     * and obese is 95th percentile.
+     *
+     * bmi[x][y]
+     *      x: 0 = P5, 1 = P85, 2 = P95 //P5 = 3rd percentile
+     *      y: age - 5
+     *
+     */
     private final static float[][] girlBMI = {
             {12.9f, 12.8f, 12.9f, 13.0f, 13.3f,
                     13.6f, 14.0f, 14.6f, 15.1f, 15.6f,
@@ -36,6 +53,16 @@ public class BMICalculator {
                     27.6f, 28.2f, 28.6f, 28.9f, 29.0f}
     };
 
+    /**
+     * Compute the BMI of the person given the {@code height}
+     * and {@code weight}.
+     *
+     * The method uses the metric system as its unit of measurement.
+     *
+     * @param height height of person in centimeters.
+     * @param weight weight of person in kilograms.
+     * @return BMI of the person.
+     */
     public static float computeBMIMetric(int height, int weight){
         if (height == 0){
             return 0;
@@ -45,6 +72,16 @@ public class BMICalculator {
         }
     }
 
+    /**
+     * Get the weight category of the person given the parameters.
+     * Calls {@link BMICalculator#getBMIResult(int, float, float[][])}
+     * @param isGirl gender of the person, true if female, false if male.
+     * @param age age of the person
+     * @param patientBMI BMI of the person
+     * @return corresponding int value of the weight category of the person.
+     *
+     * @see BMICalculator#getBMIResultString(boolean, int, float)
+     */
     public static int getBMIResult(boolean isGirl, int age, float patientBMI){
         int ageIndex = age - 5;
 
@@ -58,6 +95,14 @@ public class BMICalculator {
         }
     }
 
+    /**
+     * Get the weight category of the person given the parameters.
+     * Calls {@link BMICalculator#getBMIResult(boolean, int, float)}
+     * @param isGirl gender of the person, true if female, false if male.
+     * @param age age of the person
+     * @param patientBMI BMI of the person
+     * @return weight category of the person.
+     */
     public static String getBMIResultString(boolean isGirl, int age, float patientBMI){
         int result = getBMIResult(isGirl, age, patientBMI);
 
@@ -75,6 +120,17 @@ public class BMICalculator {
         return "N/A";
     }
 
+    /**
+     * Get the weight category of the person given the parameters.
+     * @param ageIndex index adjusted age of the person.
+     * @param patientBMI BMI of the person
+     * @param bmiChart bmiChart can either be {@link BMICalculator#boyBMI} or  {@link BMICalculator#girlBMI}
+     *                 depending on the age of the person
+     * @return weight category of the person.
+     *
+     * @see BMICalculator#getBMIResultString(boolean, int, float)
+     * @see BMICalculator#getBMIResult(boolean, int, float)
+     */
     private static int getBMIResult(int ageIndex, float patientBMI, float bmiChart[][]){
         if (patientBMI < bmiChart[0][ageIndex]){ //less than 5P
             return 0;

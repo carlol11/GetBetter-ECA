@@ -168,7 +168,7 @@ public class HearingMainFragment extends MonitoringTestFragment {
     /**
      * Updates the end test attributes of the test fragment namely
      * {@link FineMotorFragment#isEndEmotionHappy}, {@link FineMotorFragment#endStringResource},
-     * and {@link FineMotorFragment#endTime}, and ends the test.
+     * and {@link FineMotorFragment#endTime} depending on the result of the test, and ends the test.
      *
      * @see MonitoringTestFragment
      */

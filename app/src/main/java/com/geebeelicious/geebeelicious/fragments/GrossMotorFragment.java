@@ -163,7 +163,7 @@ public class GrossMotorFragment extends MonitoringTestFragment {
     /**
      * Updates the end test attributes of the test fragment namely
      * {@link GrossMotorFragment#isEndEmotionHappy}, {@link GrossMotorFragment#endStringResource},
-     * and {@link GrossMotorFragment#endTime}.
+     * and {@link GrossMotorFragment#endTime} depending on the result of the test.
      *
      * @param result test result of the patient. 0 if passed, 1 if fail, 2 if n/a.
      * @see MonitoringTestFragment

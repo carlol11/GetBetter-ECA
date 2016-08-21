@@ -80,8 +80,7 @@ public class IshiharaPlate {
     }
 
     /**
-     * Gets {@link #setAdded}
-     * @return {@link #setAdded}
+     * Sets {@link #isAdded} to true
      */
     public void setAdded(){
         isAdded = true;

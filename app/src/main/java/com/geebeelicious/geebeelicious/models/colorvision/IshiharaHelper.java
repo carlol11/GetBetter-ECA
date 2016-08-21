@@ -17,7 +17,7 @@ import com.geebeelicious.geebeelicious.R;
 public class IshiharaHelper {
 
     /**
-     * Array of all Ishihara plates that may be shown to the user.
+     * Array of all possible Ishihara plates that may be shown to the user.
      */
     private IshiharaPlate[] ishiharaPlates;
 

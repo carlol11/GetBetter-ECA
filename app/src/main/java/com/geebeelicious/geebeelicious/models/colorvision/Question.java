@@ -10,18 +10,38 @@ package com.geebeelicious.geebeelicious.models.colorvision;
  */
 public class Question {
 
+    /**
+     * IshiharaPlate used for the question
+     */
     private IshiharaPlate ishiharaPlate;
+
+    /**
+     * Possible answers for {@link #ishiharaPlate}. 1 correct option, 4 wrong option.
+     */
     private Option[] options;
 
+    /**
+     * Constructor.
+     * @param ishiharaPlate {@link #ishiharaPlate}
+     * @param options {@link #options}
+     */
     public Question(IshiharaPlate ishiharaPlate, Option[] options){
         this.ishiharaPlate = ishiharaPlate;
         this.options = options;
     }
 
+    /**
+     * Gets {@link #ishiharaPlate}
+     * @return {@link #options}
+     */
     public IshiharaPlate getIshiharaPlate() {
         return ishiharaPlate;
     }
 
+    /**
+     * Gets {@link #options}
+     * @return {@link #options}
+     */
     public Option[] getOptions() {
         return options;
     }

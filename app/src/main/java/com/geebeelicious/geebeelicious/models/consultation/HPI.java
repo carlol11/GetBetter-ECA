@@ -118,7 +118,7 @@ public class HPI {
     /**
      * Gets string that contains the {@link HPI} attributes and
      * corresponding value.
-     * @return
+     * @return HPI info string
      */
     public String getCompleteHPIRecord(){
         return "hpiID: " + hpi_id + ", patientID: " + patientId +

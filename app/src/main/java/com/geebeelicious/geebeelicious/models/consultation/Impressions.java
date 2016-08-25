@@ -3,14 +3,7 @@ package com.geebeelicious.geebeelicious.models.consultation;
 import java.util.ArrayList;
 
 /**
- * The Impressions class represents the impressions to be
- * tested given the chief complaint. This is mainly used by
- * the {@link ExpertSystem}.
- *
- * @see ChiefComplaint
- * @see Symptom
- * @see SymptomFamily
- *
+ * Getbetter.
  * @author Mike Dayupay
  * @since 9/21/15
  */

@@ -1,7 +1,10 @@
 package com.geebeelicious.geebeelicious.models.consultation;
 
 /**
- * GetBetter. Created by Mike Dayupay on 11/12/15.
+ * GetBetter.
+ *
+ * @author Mike Dayupay
+ * @since 11/12/15.
  */
 public class PatientAnswers {
 

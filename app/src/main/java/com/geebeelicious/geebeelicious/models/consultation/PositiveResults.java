@@ -2,7 +2,7 @@ package com.geebeelicious.geebeelicious.models.consultation;
 
 /**
  * GetBetter.
- * 
+ *
  * @author Mike Dayupay
  * @since 11/19/15.
  */

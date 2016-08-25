@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by mgmalana on 21/05/2016.
  * TakePictureHelper class contains the functionality to take a picture
  *
  * @author Mary Grace Malana

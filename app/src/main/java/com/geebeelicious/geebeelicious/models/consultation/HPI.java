@@ -11,47 +11,47 @@ package com.geebeelicious.geebeelicious.models.consultation;
 public class HPI {
 
     /**
-     * Database table name for HPI
+     * Database table name for HPI.
      */
     public final static String TABLE_NAME = "tbl_hpi";
 
     /**
-     * Database column name for storing {@link #hpi_id}
+     * Database column name for storing {@link #hpi_id}.
      */
     public final static String C_HPI_ID = "hpi_id";
 
     /**
-     * Database column name for storing {@link #patientId}
+     * Database column name for storing {@link #patientId}.
      */
     public final static String C_PATIENT_ID = "patient_id";
 
     /**
-     * Database column name for storing {@link #hpiText}
+     * Database column name for storing {@link #hpiText}.
      */
     public final static String C_HPI_TEXT = "hpi";
 
     /**
-     * Database column name for storing {@link #dateCreated}
+     * Database column name for storing {@link #dateCreated}.
      */
     public final static String C_DATE_CREATED = "date_created";
 
     /**
-     * ID of the HPI
+     * ID of the HPI.
      */
     private int hpi_id;
 
     /**
-     * ID of the patient with the HPI
+     * ID of the patient with the HPI.
      */
     private int patientId;
 
     /**
-     * HPI of the patient
+     * HPI of the patient.
      */
     private String hpiText;
 
     /**
-     * Date when the HPI was created
+     * Date when the HPI was created.
      */
     private String dateCreated;
 

@@ -158,7 +158,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             chartHelper.setIsRightTested();
             chartHelper.startTest();
             displayResults(rightEyeResult);
-            record.setVisualActuityRight(rightEyeResult.getVisualAcuity());
+            record.setVisualAcuityRight(rightEyeResult.getVisualAcuity());
 
             fragmentInteraction.setInstructions(R.string.visualAcuity_instruction_right);
         }

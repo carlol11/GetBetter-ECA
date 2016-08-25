@@ -507,7 +507,7 @@ public class DatabaseAdapter {
         values.put(Record.C_HEIGHT, record.getHeight());
         values.put(Record.C_WEIGHT, record.getWeight());
         values.put(Record.C_VISUAL_ACUITY_LEFT, record.getVisualAcuityLeft());
-        values.put(Record.C_VISUAL_ACUITY_RIGHT, record.getVisualActuityRight());
+        values.put(Record.C_VISUAL_ACUITY_RIGHT, record.getVisualAcuityRight());
         values.put(Record.C_COLOR_VISION, record.getColorVision());
         values.put(Record.C_HEARING_LEFT, record.getHearingLeft());
         values.put(Record.C_HEARING_RIGHT, record.getHearingRight());

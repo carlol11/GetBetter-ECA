@@ -1,7 +1,10 @@
 package com.geebeelicious.geebeelicious.models.consultation;
 
 /**
- * GetBetter. Created by Mike Dayupay on 10/17/15.
+ * GetBetter.
+ *
+ * @author Mike Dayupay
+ * @since 10/17/15
  */
 public class Symptom {
 

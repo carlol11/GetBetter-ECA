@@ -16,7 +16,6 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 /**
- * Created by Kate on 03/07/2016.
  * The Calibrator class functions to calibrate
  * the earphones used by the device. The
  * volume will be adjusted depending on the
@@ -26,6 +25,10 @@ import static java.lang.Math.sqrt;
  * Reece Stevens (2014). The source code is available under the MIT License and
  * is published through a public GitHub repository:
  * https://github.com/ReeceStevens/ut_ewh_audiometer_2014/blob/master/app/src/main/java/ut/ewh/audiometrytest/Calibration.java
+ *
+ * @author Reece Stevens
+ * @author Katrina Lacsamana
+ * @version  03/07/2016
  */
 
 public class Calibrator {

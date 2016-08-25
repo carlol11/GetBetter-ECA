@@ -23,25 +23,56 @@ import com.geebeelicious.geebeelicious.models.monitoring.TakePictureHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
- * Created by MG.
  * The PatientPictureFragment class serves as the fragment for
- * taking picture of the patient
+ * taking picture of the patient.
+ *
+ * @author Mary Grace Malana
  */
 public class PatientPictureFragment extends Fragment {
+
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "PatientPictureFragment";
+
+    /**
+     * Request code to know in the {@link PatientPictureFragment}
+     * that the result comes from the desired activity.
+     */
     private static final int REQUEST_TAKE_PHOTO = 1;
 
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+
+    /**
+     * Contains the activity this fragment is attached to.
+     */
     private Activity activity;
 
+    /**
+     * Contains the helper class object used for taking patient picture.
+     */
     private TakePictureHelper patientPictureHelper;
 
+    /**
+     * Clicked if the user want to skip taking picture.
+     */
     private Button skipButton;
+
+    /**
+     * Clicked if the user want to take a picture of the patient.
+     */
     private Button pictureButton;
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
@@ -91,6 +122,10 @@ public class PatientPictureFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Starts the existing Android camera application to
+     * be able to take a picture.
+     */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -112,14 +147,26 @@ public class PatientPictureFragment extends Fragment {
         }
     }
 
+
+    /**
+     * Saves the path of the picture inside {@code outState}.
+     * To know where to save the picture.
+     *
+     * @see Fragment#onSaveInstanceState(Bundle)
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("photoPath", patientPictureHelper.getmCurrentPhotoPath());
     }
 
+    /**
+     * Overrides the method.
+     * Handles the return from the Android Camera application.
+     *
+     * @see #onActivityResult(int, int, Intent)
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        InputStream stream = null;
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             patientPictureHelper.setPic();
             skipButton.setText(R.string.continueWord);
@@ -128,6 +175,15 @@ public class PatientPictureFragment extends Fragment {
         }
     }
 
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

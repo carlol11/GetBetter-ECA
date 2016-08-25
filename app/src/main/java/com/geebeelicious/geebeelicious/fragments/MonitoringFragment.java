@@ -21,33 +21,79 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import java.util.Random;
 
 /**
- * Created by Kate.
  * The MonitoringFragment class serves as the first fragment
  * that users will encounter when they choose to perform a
  * monitoring activity. The fragment will allow users to
  * input updates for certain health determinants such as
  * height and weight.
  *
- * Default height and weight were chosen using the data from the World Health Organization
+ * Default height and weight were chosen using the data from the World Health Organization.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class MonitoringFragment extends MonitoringTestFragment {
+
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "MonitoringFragment";
 
+    /**
+     * Used to show the monitoring question
+     */
     private TextView questionView;
+
+    /**
+     * Used for getting the weight and height of the patient.
+     */
     private NumberPicker numberPicker;
+
+    /**
+     * Used to show the unit of measurement to be entered.
+     */
     private TextView unitView;
 
+    /**
+     * List of string resource of the questions to be shown in {@link #questionView}
+     */
     private final int[] questions = {R.string.monitoring_height, R.string.monitoring_weight};
+
+    /**
+     * List of string resource of the unit of measurement to be shown in {@link #unitView}
+     */
     private final int[] questionUnit = {R.string.centimeters, R.string.kilograms};
+
+    /**
+     * List of default values for the {@link #numberPicker} for each monitoring question.
+     */
     private final int[] defaultValues = {132, 28};
+
+    /**
+     * Number of questions to be asked to the user.
+     */
     private final int numberOfQuestions = 2;
+
+    /**
+     * Serves as the index counter for the question asked to the user
+     */
     private int questionsCounter = 0;
 
+    /**
+     * Used for updating the records of the patient.
+     */
     private Record record;
 
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,11 +144,27 @@ public class MonitoringFragment extends MonitoringTestFragment {
         return view;
     }
 
+    /**
+     * Sets the question shown to the user and sent to the activity
+     * this fragment is attached to.
+     *
+     * @see OnMonitoringFragmentInteractionListener#setInstructions(int)
+     * @param resID string resource of the question.
+     */
     private void setQuestion(int resID) {
         questionView.setText(resID);
         fragmentInteraction.setInstructions(resID);
     }
 
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -117,19 +179,35 @@ public class MonitoringFragment extends MonitoringTestFragment {
         }
     }
 
-
+    /**
+     * Overrides method. Gets a reference of the record of
+     * the patient from the Activity this fragment
+     * is attached to.
+     *
+     * @see android.app.Fragment#onActivityCreated(Bundle)
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         record = fragmentInteraction.getRecord();
     }
 
+    /**
+     * Ends the monitoring session.
+     */
     private void endMonitoring(){
         questionsCounter = 0;
         updateTestEndRemark();
         fragmentInteraction.doneFragment();
     }
 
+    /**
+     * Updates the end test attributes of the test fragment namely
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime} depending on the BMI result, and ends the test.
+     *
+     * @see MonitoringTestFragment
+     */
     private void updateTestEndRemark(){
         boolean isGirl = fragmentInteraction.isGirl();
         int age = fragmentInteraction.getAge();

@@ -26,29 +26,54 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by MG.
  * The VaccinationFragment class serves as the fragment for
  * the taking a picture of the vaccination of a patient.
+ *
+ * @author Mary Grace Malana
  */
 public class VaccinationFragment extends Fragment {
+
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "VaccinationFragment";
+
+    /**
+     * Request code to know in the {@link PatientPictureFragment}
+     * that the result comes from the desired activity.
+     */
     private static final int REQUEST_TAKE_PHOTO = 1;
 
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+
+    /**
+     * Contains the activity this fragment is attached to.
+     */
     private Activity activity;
 
+    /**
+     * Contains the helper class object used for taking vaccination picture.
+     */
     private TakePictureHelper vaccinationHelper;
 
+    /**
+     * Clicked if the user want to skip taking picture.
+     */
     private Button skipButton;
-    private Button pictureButton;
 
-    private View view;
+    /**
+     * Clicked if the user want to take a picture of the vaccination record.
+     */
+    private Button pictureButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_vaccination, container, false);
+        final View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
         skipButton = (Button) view.findViewById(R.id.skipButton);
         pictureButton = (Button) view.findViewById(R.id.takePictureButton);
         Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
@@ -93,6 +118,10 @@ public class VaccinationFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Starts the existing Android camera application to
+     * be able to take a picture.
+     */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -114,11 +143,23 @@ public class VaccinationFragment extends Fragment {
         }
     }
 
+    /**
+     * Saves the path of the picture inside {@code outState}.
+     * To know where to save the picture.
+     *
+     * @see Fragment#onSaveInstanceState(Bundle)
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("photoPath", vaccinationHelper.getmCurrentPhotoPath());
     }
 
+    /**
+     * Overrides the method.
+     * Handles the return from the Android Camera application.
+     *
+     * @see PatientPictureFragment#onActivityResult(int, int, Intent)
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         InputStream stream = null;
@@ -130,6 +171,15 @@ public class VaccinationFragment extends Fragment {
         }
     }
 
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

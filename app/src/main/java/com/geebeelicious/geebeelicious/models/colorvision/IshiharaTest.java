@@ -4,20 +4,46 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Created by Kate on 03/04/2016.
  * The IshiharaTest class is generated and
  * will contain the generated test items
  * composed of plates and options. The class
  * also keeps track of the score of the user.
+ *
+ * @author Katrina Lacsamana
+ * @since 03/04/2016
  */
 public class IshiharaTest {
 
+    /**
+     * Map of questions that contains the ishihara plate and options.
+     */
     private HashMap<Integer, Question> generatedTest;
+
+    /**
+     * Used for generating random numbers.
+     */
     private Random randomGenerator;
+
+    /**
+     * Array of all possible Ishihara plates that may be shown to the user.
+     */
     private IshiharaPlate[] ishiharaPlates;
+
+    /**
+     * List of possible options for the user to choose from.
+     */
     private Option[] options;
+
+    /**
+     * Current score of the user.
+     */
     private int score;
 
+    /**
+     * Constructor
+     * @param ishiharaPlates {@link #ishiharaPlates}
+     * @param options {@link #options}
+     */
     public IshiharaTest(IshiharaPlate[] ishiharaPlates, Option[] options){
         randomGenerator = new Random((int)System.nanoTime());
         this.ishiharaPlates = ishiharaPlates;
@@ -25,7 +51,10 @@ public class IshiharaTest {
         this.score = 0;
     }
 
-    //Returns generated IshiharaTest by choosing random plates and generating choices for each chosen plate
+    /**
+     * Gets generated IshiharaTest by choosing random plates and generating choices for each chosen plate
+     * @return {@link #generatedTest}
+     */
     public HashMap<Integer, Question> generateTest(){
         generatedTest = new HashMap<Integer, Question>();
         IshiharaPlate plate;
@@ -39,7 +68,11 @@ public class IshiharaTest {
         return generatedTest;
     }
 
-    //Returns IshiharaPlate based on question index on which the necessary plate style is based
+    /**
+     * Gets IshiharaPlate based on question index on which the necessary plate style is based
+     * @param i question index
+     * @return IshiharaPlate with the necessary plate style.
+     */
     private IshiharaPlate makeQuestion(int i){
         IshiharaPlate plate;
 
@@ -53,7 +86,11 @@ public class IshiharaTest {
         return plate;
     }
 
-    //Returns IshiharaPlate based on selected style that has not yet been added in the generated test
+    /**
+     * Gets IshiharaPlate based on selected style that has not yet been added in the generated test
+     * @param i style
+     * @return IshiharaPlate with the necessary plate style.
+     */
     private IshiharaPlate getPlateWithStyle(int i){
         boolean isFound = false;
         int index;
@@ -68,7 +105,11 @@ public class IshiharaTest {
         return null;
     }
 
-    //Returns an Option based on given shape
+    /**
+     * Gets an Option based on given shape
+     * @param shape Shape of the option needed
+     * @return Option with the given shape.
+     */
     private Option getOptionWithShape(String shape){
         for(Option o : options){
             if(o.getShape().equals(shape)){
@@ -79,7 +120,10 @@ public class IshiharaTest {
         return null;
     }
 
-    //Returns a random Option
+    /**
+     * Gets a random Option.
+     * @return random Option.
+     */
     private Option getRandomOption(){
         boolean isFound = false;
         int index;
@@ -95,7 +139,11 @@ public class IshiharaTest {
         return null;
     }
 
-    //Returns Option[5] for a given plate, 1 correct option and 4 random options
+    /**
+     * Gets Option[5] for a given plate, 1 correct option and 4 random options
+     * @param plate Plate to generate options for.
+     * @return List of possible answers
+     */
     private Option[] makeAnswers(IshiharaPlate plate){
         Option[] generatedOptions = new Option[5];
         int correctAnswer = randomGenerator.nextInt(5);
@@ -112,22 +160,41 @@ public class IshiharaTest {
         return generatedOptions;
     }
 
-    //Return IshiharaPlate from generated test based on index
+    /**
+     * Gets IshiharaPlate from generated test based on index
+     * @param i index of the {@link Question} in {@link #generatedTest}
+     * @return IshiharaPlate of the {@link Question} with index {@code i} in {@link #generatedTest}
+     */
     public IshiharaPlate getPlate(int i){
         return generatedTest.get(i).getIshiharaPlate();
     }
 
-    //Return Option[] from generated test based on index
+    /**
+     * Gets Option[] from generated test based on index
+     * @param i index of the {@link Question} in {@link #generatedTest}
+     * @return Options of the {@link Question} with index {@code i} in {@link #generatedTest}
+     */
     public Option[] getOptions(int i){
         return generatedTest.get(i).getOptions();
     }
 
-    //Return an Option from given questionNumber and optionNumber
+    /**
+     * Gets the Option from given questionNumber and optionNumber
+     * @param questionNumber index of the {@link Question} in {@link #generatedTest}
+     * @param optionNumber index of option to be retrieved.
+     * @return Option from given questionNumber and optionNumber
+     */
     private Option getOption(int questionNumber, int optionNumber){
         return getOptions(questionNumber)[optionNumber];
     }
 
-    //Return correct Option based on index of generated test
+    //
+
+    /**
+     * Gets correct Option based on index of generated test
+     * @param i index of the {@link Question} in {@link #generatedTest}
+     * @return Option with the same shape as the current question's shape.
+     */
     private Option getCorrectAnswer(int i){
         for(Option o : getOptions(i)){
             if(o.getShape().equals(getPlate(i).getShape())){
@@ -137,7 +204,12 @@ public class IshiharaTest {
         return null;
     }
 
-    //Return boolean based on comparison of user-selected Option and correct Option
+    /**
+     * Return boolean based on comparison of user-selected Option and correct Option
+     * @param a user's chosen option
+     * @param b correct option
+     * @return true if the user's choosen option matches the correct option, else return false.
+     */
     private boolean isCorrect(Option a, Option b){
         if(a.getShape().equals(b.getShape())){
             return true;
@@ -147,16 +219,26 @@ public class IshiharaTest {
         }
     }
 
-    //Increments score by 1
+    /**
+     * Increment score by 1
+     */
     private void addScore(){
         score++;
     }
 
+    /**
+     * Gets {@link #score}
+     * @return {@link #score}
+     */
     public int getScore(){
         return score;
     }
 
-    //Checks answer of given question given the questionNumber and the user-selected answer
+    /**
+     * Checks answer of given question given the questionNumber and the user-selected answer
+     * @param questionNumber index of the {@link Question} in {@link #generatedTest}
+     * @param answer index of user's chosen option.
+     */
     public void checkAnswer(int questionNumber, int answer){
         Option userAnswer = getOption(questionNumber, answer);
         Option correctAnswer = getCorrectAnswer(questionNumber);

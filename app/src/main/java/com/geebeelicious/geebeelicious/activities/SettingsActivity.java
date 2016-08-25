@@ -25,20 +25,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Kate.
  * The SettingsActivity serves as the activity containing
  * the various settings and preferences for the app.
  * These include school settings and hearing calibration.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class SettingsActivity extends ActionBarActivity {
 
+    /**
+     * School chosen by the user.
+     */
     private School chosenSchool = null;
+
+    /**
+     * VisualAcuity chart chosen by the user. Can either be Snellen or Tumbling E eye chart.
+     */
     private int chosenVisualAcuityChart;
+
+    /**
+     * Contains all the schools from the database.
+     */
     private ArrayList<School> schools;
 
+    /**
+     * Used as font for the different UI properties.
+     */
     private Typeface chalkFont;
 
+    /**
+     * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +91,9 @@ public class SettingsActivity extends ActionBarActivity {
         });
     }
 
-    //Adds option to select a school to the Settings screen
+    /**
+     * Adds option to select a school to the Settings screen.
+     */
     private void addChooseSchoolSetting(){
         DatabaseAdapter getBetterDb = new DatabaseAdapter(SettingsActivity.this);
         try {
@@ -99,7 +121,9 @@ public class SettingsActivity extends ActionBarActivity {
         });
     }
 
-    //Saves schoolID of preferred school to device storage
+    /**
+     * Saves schoolID of preferred school to device storage
+     */
     private void saveSchool(){
         ByteBuffer b = ByteBuffer.allocate(4);
         b.putInt(chosenSchool.getSchoolId());
@@ -118,7 +142,9 @@ public class SettingsActivity extends ActionBarActivity {
         }
     }
 
-    //Add option to select visual acuity chart to be used in test
+    /**
+     * Add option to select visual acuity chart to be used in test
+     */
     private void addVisualAcuityChartSetting(){
         ArrayList<String> chartNames = new ArrayList<>();
         chartNames.add("Snellen Eye Chart");
@@ -141,7 +167,9 @@ public class SettingsActivity extends ActionBarActivity {
         });
     }
 
-    //Save visual acuity chart preference
+    /**
+     * Save visual acuity chart preference
+     */
     private void saveVisualAcuityChart(){
         ByteBuffer b = ByteBuffer.allocate(4);
         b.putInt(chosenVisualAcuityChart);
@@ -159,8 +187,10 @@ public class SettingsActivity extends ActionBarActivity {
 
         }
     }
-
-    //Adds option to calibrate hearing test
+    
+    /**
+     * Adds option to calibrate hearing test
+     */
     private void addCalibrationSetting(){
         Button calibrateButton = (Button)findViewById(R.id.calibrateHearingTestButton);
         calibrateButton.setTypeface(chalkFont);

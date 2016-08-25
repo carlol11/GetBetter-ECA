@@ -14,14 +14,22 @@ import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import java.sql.SQLException;
 
 /**
- * Created by Kate.
  * The MainActivity serves as the activity containing
  * the welcome screen and allows access to the Settings activity.
+ * @author Katrina Lacsamana
  */
 
 public class MainActivity extends ECAActivity{
+    /**
+     * Used as a flag whether the ECA has spoken.
+     */
     private boolean hasSpoken;
 
+    /**
+     * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +71,13 @@ public class MainActivity extends ECAActivity{
             }
         });
     }
-    
+
+    /**
+     * Called when the current Window of the activity gains or loses focus.
+     * @param hasFocus whether the window of this activity has focus
+     *
+     * @see android.app.Activity#onWindowFocusChanged(boolean)
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -76,6 +90,11 @@ public class MainActivity extends ECAActivity{
         }
     }
 
+    /**
+     * Saves {@link #hasSpoken} inside {@code outState}
+     *
+     * @see android.app.Activity#onSaveInstanceState(Bundle)
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

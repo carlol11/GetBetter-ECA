@@ -17,17 +17,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Kate.
  * The MonitoringConsultationChoice class serves as the activity
  * allowing the user to choose between the monitoring or
  * consultation modules.
+ * @author Katrina Lacsamana
  */
 
 public class MonitoringConsultationChoice extends ECAActivity{
+    /**
+     * Used as a flag whether the ECA has spoken.
+     */
     private boolean hasSpoken;
 
+    /**
+     * keeps the string format for the date
+     */
     private DateFormat dateFormat;
 
+    /**
+     * Initializes views and other activity objects.
+     *
+     * @see android.app.Activity#onCreate(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +86,12 @@ public class MonitoringConsultationChoice extends ECAActivity{
         });
     }
 
+    /**
+     * Called when the current Window of the activity gains or loses focus.
+     * @param hasFocus whether the window of this activity has focus
+     *
+     * @see android.app.Activity#onWindowFocusChanged(boolean)
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -87,12 +104,21 @@ public class MonitoringConsultationChoice extends ECAActivity{
 
     }
 
+    /**
+     * Saves {@link #hasSpoken} inside {@code outState}
+     *
+     * @see android.app.Activity#onSaveInstanceState(Bundle)
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("hasSpoken", hasSpoken);
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * Starts {@link PatientListActivity} and ends the current activity.
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(MonitoringConsultationChoice.this, PatientListActivity.class);

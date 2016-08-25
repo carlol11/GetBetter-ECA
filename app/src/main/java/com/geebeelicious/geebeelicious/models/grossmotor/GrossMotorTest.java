@@ -14,7 +14,6 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Kate on 03/21/2016.
  * The GrossMotorTest class represents the
  * gross motor test that the child will
  * take. It generates a short list of skills
@@ -23,16 +22,42 @@ import java.util.concurrent.TimeUnit;
  * allows the test to be generated for each
  * user and allows the user to perform
  * the skill.
+ *
+ * @author Katrina Lacsamana
+ * @since 03/21/2016
  */
 public class GrossMotorTest {
 
+    /**
+     * List of all possible grossmotor skills to be tested.
+     */
     private GrossMotorSkill[] grossMotorSkills;
+
+    /**
+     * List of grossmotor skills to be tested.
+     */
     private GrossMotorSkill[] testSkills;
+
+    /**
+     * Musicplayer to be used for playing music
+     * while running the skillset.
+     */
     private MusicPlayer musicPlayer;
+
+    /**
+     * Index of the current skill tested from {@link #testSkills}.
+     */
     private int currentSkill;
 
+    /**
+     * Used in counting down the remaining time.
+     */
     private CountDownTimer countDownTimer;
 
+    /**
+     * Constructor.
+     * @param context current context.
+     */
     public GrossMotorTest(Context context){
         musicPlayer = new MusicPlayer(context);
         grossMotorSkills = new GrossMotorSkill[8];
@@ -48,7 +73,11 @@ public class GrossMotorTest {
         grossMotorSkills[7] = new GrossMotorSkill("Jog in Place", "Jogging", "Jog in place", 40000, R.drawable.grossmotor_jog);
     }
 
-    private GrossMotorSkill getRandomSkill(int testSkillCounter){
+    /**
+     * Gets a random skill that hasnt been tested yet.
+     * @return skill to be tested next.
+     */
+    private GrossMotorSkill getRandomSkill(){
         Random random = new Random((int)System.nanoTime());
         boolean isFound = false;
         GrossMotorSkill temp = null;
@@ -56,13 +85,18 @@ public class GrossMotorTest {
         while(!isFound){
             temp = grossMotorSkills[random.nextInt(grossMotorSkills.length - 1)];
             if(!checkSkillDuplicates(testSkills, temp)){
-                isFound = true;
                 break;
             }
         }
         return temp;
     }
 
+    /**
+     * Check whether the {@code array} contains {@code key}
+     * @param array List of skills to be examined
+     * @param key to be searched inside the {@code array}
+     * @return
+     */
     private boolean checkSkillDuplicates(GrossMotorSkill[] array, GrossMotorSkill key){
         for(GrossMotorSkill gms : array){
             if(key == gms){
@@ -72,16 +106,30 @@ public class GrossMotorTest {
         return false;
     }
 
+    /**
+     * Initialize the values for {@link #testSkills}.
+     */
     public void makeTest() {
         for (int i = 0; i < 3; i++) {
-            testSkills[i] = getRandomSkill(i);
+            testSkills[i] = getRandomSkill();
         }
     }
 
+    /**
+     * Sets {@link #currentSkill}.
+     * @param skillNumber new value
+     */
     public void setCurrentSkill(int skillNumber){
         currentSkill = skillNumber;
     }
 
+    /**
+     * Perform the skill with index {@code skillNumber}
+     * @param skillNumber Index of the skill in {@link #testSkills} to be performed.
+     * @param timerView where time is shown.
+     * @param answers contains the yes and no buttons.
+     * @param NAButton to be pressed when the user cant perform skill.
+     */
     public void performSkill(int skillNumber, final TextView timerView, final LinearLayout answers, final Button NAButton){
         GrossMotorSkill skill = testSkills[skillNumber];
         musicPlayer.setRandomSong(skill.getDuration());
@@ -114,14 +162,26 @@ public class GrossMotorTest {
         musicPlayer.playMusic();
     }
 
+    /**
+     * Gets the skill at index {@link #currentSkill} in {@link #testSkills}.
+     * @return
+     */
     public GrossMotorSkill getCurrentSkill(){
         return testSkills[currentSkill];
     }
 
+    /**
+     * Gets {@link #currentSkill}.
+     * @return {@link #currentSkill}
+     */
     public int getCurrentSkillNumber(){
         return currentSkill;
     }
 
+    /**
+     * Get all the results of all the skills done.
+     * @return result string.
+     */
     public String getAllResults(){
         String result = "";
         for(GrossMotorSkill gms : testSkills){
@@ -130,6 +190,10 @@ public class GrossMotorTest {
         return result;
     }
 
+    /**
+     * Gets the overall result of the test in string form.
+     * @return overall result.
+     */
     public String getFinalResult(){
         int result = getIntFinalResult();
 
@@ -143,6 +207,10 @@ public class GrossMotorTest {
         }
     }
 
+    /**
+     * Gets the overall result of the test in int form.
+     * @return overall result.
+     */
     public int getIntFinalResult(){
         int pass = 0;
         int na = 0;
@@ -164,11 +232,17 @@ public class GrossMotorTest {
         }
     }
 
+    /**
+     * Ends the test.
+     */
     public void endTest(){
         musicPlayer.stopMusic();
     }
 
-
+    /**
+     * Skips the test
+     * @param timerView shows the remaining time.
+     */
     public void skipTest(TextView timerView) {
         if(countDownTimer != null){
             countDownTimer.cancel();

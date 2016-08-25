@@ -16,18 +16,49 @@ import java.sql.SQLException;
 /*
 * The original code was created by Mike Dayupay.
 * For the purpose of integration, the code was modified.
+* This class serves as the helper class and main
+* connection to the database. It initializes, opens, and
+* closes the database.
+*
+* @author Mike Dayupay
+* @author Mary Grace Malana
 */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    /**
+     * Directory path of the database
+     */
     private static String DB_PATH = "";
+
+    /**
+     * Name of the database
+     */
     private static String DB_NAME = "get_better";
+
+    /**
+     * Version number of the database
+     */
     private static int DB_VERSION = 1;
 
+    /**
+     * Used to identify the source of a log message
+     */
     private static String TAG = "DatabaseHelper";
 
+    /**
+     * Context of the database
+     */
     private final Context myContext;
+
+    /**
+     * Database of the application
+     */
     private SQLiteDatabase getBetterDatabase;
 
+    /**
+     * Constructor. Initializes class attributes.
+     * @param context used by the database.
+     */
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
 
@@ -39,6 +70,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.myContext = context;
     }
 
+    /**
+     * Creates the database
+     * @throws IOException if database creation problem occurs.
+     */
     public void createDatabase() throws IOException {
 
         boolean databaseExists = checkDatabase();
@@ -56,12 +91,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Checks whether an application database already exist.
+     * @return true if application database exist, else false.
+     */
     private boolean checkDatabase() {
 
         File dbFile = new File(DB_PATH + DB_NAME);
         return dbFile.exists();
     }
 
+    /**
+     * Copies the database from the assets folder of
+     * the application.
+     * @throws IOException if a InputStream/OutputStream problem
+     *         is encountered.
+     */
     private void copyDatabase() throws IOException {
 
         InputStream mInput = myContext.getAssets().open(DB_NAME);
@@ -80,6 +125,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         mInput.close();
     }
 
+    /**
+     * Opens the database. A readable or writeable database
+     * can now be retrieved.
+     * @throws SQLException if database does not exist
+     *          or encounters other opening database problem.
+     */
     public void openDatabase() throws SQLException {
 
         String myPath = DB_PATH + DB_NAME;
@@ -87,6 +138,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Closes the database. The database is no longer available for
+     * read or write. The database must be opened again in order
+     * to have access again.
+     */
     @Override
     public synchronized void close() {
 
@@ -97,11 +153,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super.close();
     }
 
+    /**
+     * @see SQLiteOpenHelper#onCreate(SQLiteDatabase)
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
 
     }
 
+    /**
+     * @see SQLiteOpenHelper#onUpgrade(SQLiteDatabase, int, int)
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

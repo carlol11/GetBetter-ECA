@@ -16,20 +16,41 @@ import edu.usc.ict.vhmobile.VHMobileMain;
 import edu.usc.ict.vhmobile.VHMobileSurfaceView;
 
 /**
- * Created by MG.
  * The ECAFragment serves as the fragment that contains the
  * ECA. This fragment uses VHMobile library to implement the ECA
+ *
+ * @author Mary Grace Malana
  */
 public class ECAFragment extends Fragment {
-
+    /**
+     * Used to identify the source of a log message
+     */
     private static final String TAG = "ECAFragment";
 
+    /**
+     * Activity this fragment is attached to
+     */
     private Activity activity;
+
+    /**
+     * Latest string the ECA has spoken.
+     */
     private String ecaString;
 
+    /**
+     * Used for initializing the ECA
+     */
     protected VHMobileMain vhmain = null;
+
+    /**
+     * View that contains the ECA character
+     */
     protected VHMobileSurfaceView _VHview = null;
-    
+
+    /**
+     * The enum Emotion is a list of possible emotions
+     * that the ECA can emote.
+     */
     public enum Emotion {
         HAPPY, CONCERN
     }
@@ -38,6 +59,11 @@ public class ECAFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,20 +112,33 @@ public class ECAFragment extends Fragment {
         return view;
     }
 
-
-
+    /**
+     * Overrides method. Keeps a reference of the activity
+     * that the fragment is attached to in {@link #activity}
+     * @param activity activity that the fragment is attached to.
+     *
+     * @see Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
     }
 
+    /**
+     * Overrides method. Frees the reference of the activity.
+     * @see Fragment#onDetach()
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         activity = null;
     }
 
+    /**
+     * Overrides method. Prints a log on start.
+     * @see Fragment#onStart()
+     */
     @Override
     public void onStart()
     {
@@ -107,6 +146,10 @@ public class ECAFragment extends Fragment {
         super.onStart();
     }
 
+    /**
+     * Overrides method. Prints a log on resume.
+     * @see Fragment#onResume() ()
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -120,6 +163,10 @@ public class ECAFragment extends Fragment {
 
     }
 
+    /**
+     * Overrides method. Prints a log on pause.
+     * @see Fragment#onPause() ()
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -133,20 +180,31 @@ public class ECAFragment extends Fragment {
 
     }
 
-    /** Called when the activity is no longer visible. */
+    /**
+     * Overrides method. Prints a log on stop.
+     * @see Fragment#onStop()
+     */
     @Override
     public void onStop() {
         super.onStop();
         Log.d(TAG, "The onStop() event");
     }
 
-    /** Called just before the activity is destroyed. */
-    @Override
+    /**
+     * Overrides method. Prints a log on destroy.
+     * @see Fragment#onDestroy()
+     */    @Override
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "The onDestroy() event");
     }
 
+    /**
+     * Sends the parameter {@code sentence} to {@link VHMobileLib} to be executed.
+     * @param sentence sentence to be spoken by the ECA
+     *
+     * @see VHMobileLib#executeSB(String)
+     */
     public void sendToECAToSpeak(String sentence){
         ecaString = sentence;
 
@@ -154,11 +212,21 @@ public class ECAFragment extends Fragment {
         VHMobileLib.executeSB("saySomething(characterName, \""+ sentence+"\")");
     }
 
+    /**
+     * Sends the string resource with ID {@code resID} to {@link VHMobileLib} to be executed.
+     * @param resID string resource ID of the sentence to be spoken by the ECA.
+     */
     public void sendToECAToSPeak(int resID){
         String sentence = getString(resID);
         sendToECAToSpeak(sentence);
     }
 
+    /**
+     * Sends the emotion and intensity to {@link VHMobileLib} to be executed.
+     * The higher the intensity, the more prominent the emotion is.
+     * @param emotion type of emotion to be executed by the ECA
+     * @param i intensity of {@code emotion}
+     */
     public void sendToECAToEmote(Emotion emotion, int i){
         switch (emotion){
             case HAPPY:

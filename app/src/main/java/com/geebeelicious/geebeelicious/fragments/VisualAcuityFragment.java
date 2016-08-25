@@ -23,24 +23,47 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
- * Created by Kate.
  * The VisualAcuityFragment serves as the fragment
  * for the visual acuity test. It uses the ChartHelper,
  * DistanceCalculator, and VisualAcuityResult classes
  * to perform the visual acuity test.
+ *
+ * @author Katrina Lacsamana
  */
 
 public class VisualAcuityFragment extends MonitoringTestFragment {
+
+    /**
+     * Used for interacting with the Activity this fragment is attached to.
+     */
     private OnMonitoringFragmentInteractionListener fragmentInteraction;
+
+    /**
+     * Used for updating the records of the patient.
+     */
     private Record record;
 
+    /**
+     * where the eye chart is shown
+     */
     private ImageView chartView;
 
+    /**
+     * Constructor.
+     *
+     * @see MonitoringTestFragment#intro
+     * @see MonitoringTestFragment#hasEarlyInstruction
+     */
     public VisualAcuityFragment(){
         this.intro = R.string.visualAcuity_intro;
         this.hasEarlyInstruction = true;
     }
 
+    /**
+     * Initializes views and other fragment objects.
+     *
+     * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +104,15 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         return view;
     }
 
+    /**
+     * Overrides method. Makes sure that the container activity
+     * has implemented the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * If not, it throws an exception.
+     * @param activity Activity this fragment is attached to.
+     * @throws ClassCastException if the container activity has not implemented
+     *         the callback interface {@link OnMonitoringFragmentInteractionListener}.
+     * @see android.support.v4.app.Fragment#onAttach(Activity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -95,6 +127,11 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         }
     }
 
+    /**
+     * Overrides method. Initializes the distance calculator and
+     * sends the resulting instruction to the activity
+     * this fragment is attached to.
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -107,6 +144,11 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         fragmentInteraction.appendTransitionIntructions(instructions);
     }
 
+    /**
+     * Gets the result from the {@code chartHelper} and sends it to the
+     * activity that this fragment is attached to.
+     * @param chartHelper
+     */
     private void updateResults(ChartHelper chartHelper){
         VisualAcuityResult rightEyeResult = null;
         VisualAcuityResult leftEyeResult = null;
@@ -116,7 +158,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             chartHelper.setIsRightTested();
             chartHelper.startTest();
             displayResults(rightEyeResult);
-            record.setVisualActuityRight(rightEyeResult.getVisualAcuity());
+            record.setVisualAcuityRight(rightEyeResult.getVisualAcuity());
 
             fragmentInteraction.setInstructions(R.string.visualAcuity_instruction_right);
         }
@@ -126,12 +168,16 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             displayResults(leftEyeResult);
             record.setVisualAcuityLeft(leftEyeResult.getVisualAcuity());
 
-            updateTestEndRemark(leftEyeResult.getLineNumber());
+            updateTestEndRemark(leftEyeResult.getLineNumber(), rightEyeResult.getLineNumber());
 
             fragmentInteraction.doneFragment();
         }
     }
 
+    /**
+     * Displays the results to the user.
+     * @param result visual acuity test result.
+     */
     private void displayResults(VisualAcuityResult result){
         String resultString = "";
         resultString += (result.getEye().toUpperCase() + "\nLine Number: " +
@@ -140,6 +186,11 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         fragmentInteraction.setResults(resultString);
     }
 
+    /**
+     * Gets the chart preference from the device storage.
+     * @return the chartPreference. If IOException is thrown, returns 1 as the
+     * default chartPreference.
+     */
     private int getChartPreference(){
         int chartPreference = 0; //default is 0 for Snellen chart
         byte[] byteArray = new byte[4];
@@ -157,10 +208,22 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         return chartPreference;
     }
 
-    private void updateTestEndRemark(String lineNumber) {
-        int lineNum = Integer.parseInt(lineNumber);
+    /**
+     * Updates the end test attributes of the test fragment namely
+     * {@link #isEndEmotionHappy}, {@link #endStringResource},
+     * and {@link #endTime} depending on the result of the test.
+     *
+     * @param lineNumberLeft line number in the eye chart that the user is able to read correctly last using
+     *                       just her left eye.
+     * @param lineNumberRight line number in the eye chart that the user is able to read correctly last using
+     *                       just her right eye.
+     * @see MonitoringTestFragment
+     */
+    private void updateTestEndRemark(String lineNumberLeft, String lineNumberRight) {
+        int lineNumLeft = Integer.parseInt(lineNumberLeft);
+        int lineNumRight = Integer.parseInt(lineNumberRight);
 
-        if (lineNum < 8){
+        if (lineNumLeft < 8 || lineNumRight < 8){
             this.isEndEmotionHappy = false;
             this.endStringResource = R.string.visual_acuity_fail;
             this.endTime = 6000;

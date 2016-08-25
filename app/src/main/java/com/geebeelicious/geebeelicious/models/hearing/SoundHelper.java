@@ -5,20 +5,40 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 /**
- * Created by Kate on 03/11/2016.
  * The SoundHelper class contains functionality to
  * generate and play sounds for the hearing test.
+ *
+ * @author Katrina Lacsamana
+ * @since 03/11/2016
  */
 public class SoundHelper {
 
+    /**
+     * Number of samples.
+     */
     private int numSamples;
+
+    /**
+     * Sample rate of the test.
+     */
     private int sampleRate;
 
+    /**
+     * Constructor.
+     * @param numSamples {@link #numSamples}
+     * @param sampleRate {@link #sampleRate}
+     */
     public SoundHelper(int numSamples, int sampleRate){
         this.numSamples = numSamples;
         this.sampleRate = sampleRate;
     }
 
+    /**
+     * Generate sound.
+     * @param increment increment value for the sound
+     * @param volume volume of the sound.
+     * @return generated sound.
+     */
     public byte[] generateSound(float increment, int volume){
         float angle = 0;
         double sample[] = new double[numSamples];
@@ -38,12 +58,23 @@ public class SoundHelper {
         return generatedSound;
     }
 
+    /**
+     * Get AudioTrack to be played
+     * @param generatedSound generated sound made for the test.
+     * @return sound to be played.
+     */
     public AudioTrack playSound(byte[] generatedSound){
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSound.length, AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSound, 0, generatedSound.length);
         return audioTrack;
     }
 
+    /**
+     * Play sound.
+     * @param generatedSound generated sound made for the test.
+     * @param ear ear tested
+     * @return track played.
+     */
     public AudioTrack playSound(byte[] generatedSound, int ear){
         AudioTrack audioTrack = playSound(generatedSound);
         if(ear == 0){

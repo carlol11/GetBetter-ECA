@@ -5,12 +5,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
- * Created by Kate on 02/23/2016.
  * The DistanceCalculator class determines
  * the size of the visual acuity chart to be used (maximum size depending on tablet)
  * and the required distance the user must be to perform the test.
  *
  * @author Katrina Lacsmana
+ * @since 02/23/2016.
  */
 public class DistanceCalculator {
 

@@ -13,44 +13,119 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
 
-/*
-* The original code was created by Mike Dayupay 2015.
-* For the purpose of integration, the code was modified by Mary Grace Malana (2015).
-* The ExpertSystem class gives specific questions depending on the input of the user
-* It uses the DatabaseAdapter class to connect with the database.
-*/
-
+/**
+ * The original code was created by Mike Dayupay 2015.
+ * For the purpose of integration, the code was modified.
+ * The ExpertSystem class gives specific questions depending on the input of the user
+ * It uses the DatabaseAdapter class to connect with the database.
+ *
+ * @author Mike Dayupay
+ * @author Mary Grace Malana
+ *
+ * @since 2015
+ * */
 
 public class ExpertSystem {
+
+    /**
+     * Used to identify the source of a log message
+     */
     private final static String TAG = "ExpertSystem";
 
+    /**
+     * List of all Impressions to be probed depending on
+     * {@link #patientChiefComplaints}
+     */
     private ArrayList<Impressions> impressionsSymptoms;
-    private ArrayList<String> ruledOutImpressionList;
-    private ArrayList<String> plausibleImpressionList;
+
+    /**
+     * List of symptom's names that the user has
+     * answered 'Yes' to its corresponding question.
+     */
     private ArrayList<String> positiveSymptomList;
+
+    /**
+     * List of symptom's names that the user has
+     * answered 'No' to its corresponding question.
+     */
     private ArrayList<String> ruledOutSymptomList;
+
+    /**
+     * List of symptoms to be asked about depending
+     * on the current impression being probed.
+     *
+     * @see #impressionsSymptoms
+     * @see #currentImpressionIndex
+     */
     private ArrayList<Symptom> questions;
+
+    /**
+     * List of patient answers.
+     */
     private ArrayList<PatientAnswers> answers;
+
+    /**
+     * List of all the chief complaints of the patient.
+     */
     private ArrayList<ChiefComplaint> patientChiefComplaints;
+
+    /**
+     * Patient information of the one currently taking the test
+     */
     private Patient patient;
 
+    /**
+     * Index counter for the current impression
+     * from {@link #impressionsSymptoms} being probed.
+     */
     private int currentImpressionIndex;
+
+    /**
+     * Index counter for the current Symptom from
+     * {@link #questions}.
+     */
     private int currentSymptomIndex;
-    private int symptomFamilyId;
+
+    /**
+     * Just used for placeholder, since the old code saves the users' answers
+     * to the database.
+     */
     private int caseRecordId;
 
+    /**
+     * Whether the SymptomFamily of the current symptom
+     * from {@link #questions} was asked about. If true,
+     * the SymptomFamily question was already asked. Else,
+     * the SymptomFamily question hasn't been asked yet.
+     *
+     * @see #getQuestion()
+     */
     private boolean flag;
 
+    /**
+     * Used in accessing the database.
+     */
     private DatabaseAdapter getBetterDb;
+
+    /**
+     * Current SymptomFamily to be asked about
+     */
     private SymptomFamily generalQuestion;
 
-
+    /**
+     * String format for the date
+     */
     private DateFormat dateFormat;
 
+    /**
+     * Constructor.
+     * Initializes the values of the object's attributes.
+     *
+     * @param context context for the object.
+     * @param patient {@link #patient}
+     */
     public ExpertSystem(Context context, Patient patient){
         ruledOutSymptomList = new ArrayList<>();
-        ruledOutImpressionList = new ArrayList<>();
-        plausibleImpressionList = new ArrayList<>();
         positiveSymptomList = new ArrayList<>();
         questions = new ArrayList<>();
         answers = new ArrayList<>();
@@ -65,6 +140,12 @@ public class ExpertSystem {
         caseRecordId = 0; //just used for placeholder, since the old code saves the users' answers
     }
 
+    /**
+     * Starts the expert system. Prepares the
+     * the questions to be asked.
+     * @param patientChiefComplaints {@link #patientChiefComplaints}
+     * @return question to be asked.
+     */
     public Question startExpertSystem(ArrayList<ChiefComplaint> patientChiefComplaints){
         this.patientChiefComplaints = patientChiefComplaints;
 
@@ -79,13 +160,19 @@ public class ExpertSystem {
         return getQuestion();
     }
 
+    /**
+     * Saves the data from {@code hpi} to the database.
+     * @param hpi HPI to be saved.
+     */
     public void saveToDatabase(HPI hpi) {
         getBetterDb.insertHPI(hpi);
         getBetterDb.closeDatabase(); //closes the database
     }
 
-
-
+    /**
+     * Initializes and returns chief complaints.
+     * @return list of all chief complaints.
+     */
     public ArrayList<ChiefComplaint> getChiefComplaintsQuestions(){
         ArrayList <ChiefComplaint> chiefComplaints = new ArrayList<>();
 
@@ -100,6 +187,11 @@ public class ExpertSystem {
         return chiefComplaints;
     }
 
+    /**
+     * Initialize the database and opens it for
+     * read and write manipulation.
+     * @param context
+     */
     private void initializeDatabase (Context context) {
 
         getBetterDb = new DatabaseAdapter(context);
@@ -111,11 +203,19 @@ public class ExpertSystem {
         }
     }
 
+    /**
+     * Reset the value of the database flags
+     * to default value.
+     */
     private void resetDatabaseFlags() {
         getBetterDb.resetSymptomAnsweredFlag();
         getBetterDb.resetSymptomFamilyFlags();
     }
 
+    /**
+     * Initialize {@link #impressionsSymptoms}. Add the impression and its
+     * symptoms.
+     */
     private void initializeImpressionList () {
 
         impressionsSymptoms = new ArrayList<>();
@@ -129,6 +229,12 @@ public class ExpertSystem {
         }
     }
 
+    /**
+     * Update the answered status for the SymptomFamily for
+     * each ChiefComplaint in {@link #patientChiefComplaints}.
+     *
+     * @see DatabaseAdapter#updateAnsweredStatusSymptomFamily(int)
+     */
     private void updateAnsweredStatusSymptomFamily() {
 
         for(ChiefComplaint c: patientChiefComplaints){
@@ -136,16 +242,34 @@ public class ExpertSystem {
         }
     }
 
+    /**
+     * Update the answered status for the SymptomFamily with
+     * the answer status as {@code answer}.
+     * @param answer
+     */
     private void updateAnsweredStatusSymptomFamily(int answer) {
         getBetterDb.updateAnsweredStatusSymptomFamily(generalQuestion.getSymptomFamilyId(), answer);
     }
 
+    /**
+     * Update the value of {@link #questions} to
+     * symptoms that are related to the specified impression.
+     * @param impressionId
+     *
+     * @see DatabaseAdapter#getQuestions(int)
+     */
     private void getQuestions(int impressionId) {
         questions.clear();
         questions.addAll(getBetterDb.getQuestions(impressionId));
         //Log.d("questions size", questions.size() + "");
     }
 
+    /**
+     * Get either symptom or symptom family question depending
+     * on the value of calling {@link #isSymptomFamilyQuestionAnswered(int)}
+     * @return SymptomFamily question if {@link #isSymptomFamilyQuestionAnswered(int)} returns false, else
+     * return Symptom question.
+     */
     private Question getQuestion() {
         Question questionAsked;
 
@@ -156,22 +280,35 @@ public class ExpertSystem {
         } else {
             getGeneralQuestion(questions.get(currentSymptomIndex).getSymptomFamilyId());
             questionAsked = new Question(2, generalQuestion.getGeneralQuestionEnglish());
-            symptomFamilyId = generalQuestion.getSymptomFamilyId();
             flag = false;
         }
 
         return questionAsked;
     }
 
+    /**
+     * Gets whether the question of symptom family with id {@code symptomFamilyId} was already answered.
+     * @param symptomFamilyId {@link SymptomFamily#symptomFamilyId}
+     * @return true if the question was already answered, else return false.
+     */
     private boolean isSymptomFamilyQuestionAnswered(int symptomFamilyId) {
-        boolean value = getBetterDb.symptomFamilyIsAnswered(symptomFamilyId);
-        return value;
+        return getBetterDb.symptomFamilyIsAnswered(symptomFamilyId);
     }
 
+    /**
+     *
+     * @param symptomFamilyId
+     */
     private void getGeneralQuestion (int symptomFamilyId) {
         generalQuestion = getBetterDb.getGeneralQuestion(symptomFamilyId);
     }
 
+    /**
+     * Called after the user answers the question. Gets the next
+     * question to be asked.
+     * @param isYes answer of the user from the previous question.
+     * @return next question to be asked. If no more question, return null.
+     */
     public Question getNextQuestion(boolean isYes) { //returns null if no more question
 
 
@@ -204,8 +341,6 @@ public class ExpertSystem {
             currentSymptomIndex++;
 
             if(currentSymptomIndex >= questions.size()) {
-
-                checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
                 currentSymptomIndex = 0;
                 currentImpressionIndex++;
 
@@ -225,7 +360,6 @@ public class ExpertSystem {
 
                             return null;
                         }
-                        checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
                     }
 
                     return getQuestion();
@@ -239,8 +373,6 @@ public class ExpertSystem {
             if(!isSymptomFamilyPositive(questions.get(currentSymptomIndex).getSymptomFamilyId())){
                 currentSymptomIndex++;
                 if(currentSymptomIndex >= questions.size()) {
-
-                    checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
                     currentSymptomIndex = 0;
                     currentImpressionIndex++;
 
@@ -254,8 +386,6 @@ public class ExpertSystem {
 
                         while (questions.size() == 0) {
                             currentImpressionIndex++;
-                            checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
-
                             if(currentImpressionIndex >= impressionsSymptoms.size()) {
                                 currentImpressionIndex = impressionsSymptoms.size() - 1;
 
@@ -277,10 +407,18 @@ public class ExpertSystem {
         }
     }
 
+    /**
+     * Update the answered flag of the symptom with ID {@code symptomId}.
+     * @param symptomId
+     */
     private void updateAnsweredFlagPositive(int symptomId) {
         getBetterDb.updateAnsweredFlagPositive(symptomId);
     }
 
+    /**
+     * Add {@code answer} in {@link #answers}.
+     * @param answer to be added.
+     */
     private void addToAnswers(PatientAnswers answer) {
 
         if(!answers.contains(answer)) {
@@ -289,23 +427,18 @@ public class ExpertSystem {
 
     }
 
-    private void checkForRuledOutImpression(int impressionId) {
-
-        ArrayList<String> hardSymptoms = getBetterDb.getHardSymptoms(impressionId);
-
-        if(ruledOutSymptomList.containsAll(hardSymptoms)) {
-            ruledOutImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
-        } else {
-            plausibleImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
-        }
-    }
-
+    /**
+     * Update the answer status of the symptom family with ID {@code symptomFamilyId}.
+     * @param symptomFamilyId
+     */
     private boolean isSymptomFamilyPositive (int symptomFamilyId) {
-
-        boolean value = getBetterDb.symptomFamilyAnswerStatus(symptomFamilyId);
-        return value;
+        return getBetterDb.symptomFamilyAnswerStatus(symptomFamilyId);
     }
 
+    /**
+     * Generate HPI using the information and answers of patient.
+     * @return HPI of the patient.
+     */
     public String getHPI(){
         StringBuilder HPI = new StringBuilder(generateIntroductionSentence());
 
@@ -336,6 +469,10 @@ public class ExpertSystem {
         return HPI.toString();
     }
 
+    /**
+     * Get introduction sentence for the HPI generation.
+     * @return introduction sentence of the patient's HPI.
+     */
     private String generateIntroductionSentence () {
         String introductionSentence;
         String patientGender = getGender(patient.getGender());
@@ -353,6 +490,13 @@ public class ExpertSystem {
         return introductionSentence;
     }
 
+    /**
+     * Put together the chief complaints of the
+     * patient into a phrase.
+     * @return phrase that contains the chief complaints of the patient.
+     *
+     * @see #generateIntroductionSentence()
+     */
     private String attachComplaints () {
 
         StringBuilder complaints = new StringBuilder("");
@@ -375,6 +519,12 @@ public class ExpertSystem {
         return complaints.toString();
     }
 
+    /**
+     * Get the list of english phrases of the patient's chief complaints.
+     * @return list of english phrases of the patient's chief complaints.
+     *
+     * @see DatabaseAdapter#getChiefComplaints(int)
+     */
     private String[] getChiefComplaints () {
         String [] chiefComplaints = new String[patientChiefComplaints.size()];
 
@@ -385,11 +535,20 @@ public class ExpertSystem {
         return chiefComplaints;
     }
 
+    /**
+     * Gets the string gender of the patient.
+     * @param gender int gender of the patient.
+     * @return "male" if {@code gender} is equal to 0, else return "female"
+     */
     private String getGender(int gender){
         return (gender == 0 ? "male" : "female");
     }
 
-    //Returns the age depending on the birthdate
+    /**
+     * Gets the age depending on the birthdate
+     * @param birthdayString birthday of the patient.
+     * @return age of the patient.
+     */
     private int getAge(String birthdayString){
         Calendar birthday = Calendar.getInstance();
         Calendar currentDate = Calendar.getInstance();

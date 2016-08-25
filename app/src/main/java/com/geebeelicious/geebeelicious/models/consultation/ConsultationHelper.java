@@ -6,7 +6,6 @@ import android.util.Log;
 import java.util.ArrayList;
 
 /**
- * Created by MG on
  * The ConsultationHelper class serves to generate chief complaint
  * questions, and retrieves succeeding questions from the ExpertSystem.
  *
@@ -64,7 +63,7 @@ public class ConsultationHelper {
      * Constructor.
      * Initializes the values of the object's attributes.
      *
-     * @param context Activity context
+     * @param context context for the object.
      * @param patient {@link #patient}
      * @param dateConsultation {@link #dateConsultation}
      */

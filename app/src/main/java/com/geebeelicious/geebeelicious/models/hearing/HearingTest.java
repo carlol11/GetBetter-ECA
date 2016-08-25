@@ -8,16 +8,18 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
- * Created by Kate on 03/11/2016.
- *
  * The HearingTest class functions
  * to help manage the proctoring of the
  * audiometry hearing test.
  *
- *  * The following class is based on the TestProctoring.java class created by
+ * The following class is based on the TestProctoring.java class created by
  * Reece Stevens (2014). The source code is available under the MIT License and
  * is published through a public GitHub repository:
  * https://github.com/ReeceStevens/ut_ewh_audiometer_2014/blob/master/app/src/main/java/ut/ewh/audiometrytest/TestProctoring.java
+ *
+ * @author Reece Stevens
+ * @author Katrina Lacsamana
+ * @version 03/11/2016
  */
 public class HearingTest {
 
@@ -29,17 +31,49 @@ public class HearingTest {
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
 
+    /**
+     * Whether the sound was heard or not.
+     */
     private boolean isHeard = false;
+
+    /**
+     * Whether the sound is in loop or not.
+     */
     private boolean inLoop = true;
+
+    /**
+     * Whether the test is done or not.
+     */
     private boolean isDone = false;
+
+    /**
+     * Whether the test is inside the gap between samples or not.
+     */
     private boolean isGap = false;
+
+    /**
+     * Number of times the user responded within the gap.
+     */
     private int hasCheated = 0;
 
-    private int tempResponse;
+    /**
+     * Whether sound is currently played.
+     */
     private static boolean isRunning = true;
+
+    /**
+     * Threshold for the right ear.
+     */
     private double[] thresholdsRight = {0, 0, 0};
+
+    /**
+     * Threshold for the left ear.
+     */
     private double[] thresholdsLeft = {0, 0, 0};
 
+    /**
+     * Constructor.
+     */
     public HearingTest(){
         this.isHeard = false;
         this.inLoop = true;
@@ -49,6 +83,10 @@ public class HearingTest {
         thresholdsLeft = new double[]{0, 0, 0};
     }
 
+    /**
+     * Get random gap time between sounds.
+     * @return gap time.
+     */
     private int getRandomGapDuration() {
         int time;
         double random = Math.random();
@@ -76,6 +114,11 @@ public class HearingTest {
         return time;
     }
 
+    /**
+     * Gets calibration data.
+     * @param context current context.
+     * @return calibration data.
+     */
     public double[] getCalibrationData(Context context){
         byte calibrationByteData[] = new byte[24];
 
@@ -99,8 +142,14 @@ public class HearingTest {
         return calibrationArray;
     }
 
+    /**
+     * Run the test.
+     * @param calibrationArray calibration data.
+     */
     public void performTest(double[] calibrationArray) {
         SoundHelper soundHelper = new SoundHelper(numSamples, sampleRate);
+        int tempResponse;
+
         for (int e = 0; e < 2; e++) {
             for (int i = 0; i < testingFrequencies.length; i++) {
                 int frequency = testingFrequencies[i];
@@ -174,42 +223,80 @@ public class HearingTest {
         isDone = true;
     }
 
+    /**
+     * Gets {@link #hasCheated}.
+     * @return {@link #hasCheated}
+     */
     public int hasCheated(){
         return hasCheated;
     }
 
+    /**
+     * Sets {@link #hasCheated}.
+     */
     public void setCheated(){
         hasCheated++;
     }
 
+    /**
+     * Gets {@link #isGap}
+     * @return {@link #isGap}
+     */
     public boolean isGap(){
         return isGap;
     }
 
+    /**
+     * Sets {@link #isHeard} to true.
+     */
     public void setHeard(){
         isHeard = true;
     }
 
+    /**
+     * Gets {@link #isHeard}.
+     * @return {@link #isHeard}.
+     */
     public boolean isHeard(){
         return isHeard;
     }
 
+    /**
+     * Gets {@link #isDone}
+     * @return {@link #isDone}
+     */
     public boolean isDone(){
         return isDone;
     }
 
+    /**
+     * Gets {@link #inLoop}.
+     * @return {@link #inLoop}
+     */
     public boolean isInLoop(){
         return inLoop;
     }
 
+    /**
+     * Sets {@link #isRunning} to false.
+     */
     public void setIsNotRunning(){
         isRunning = false;
     }
 
+    /**
+     * Gets {@link #isRunning}.
+     * @return {@link #isRunning}
+     */
     public boolean isRunning(){
         return isRunning;
     }
 
+    /**
+     * Get the average of the test results.
+     * @param testResults results of the test
+     * @return average of the results
+     */
     private double getPureToneAverage(double[] testResults){
         double result = 0;
         for(double d : testResults){
@@ -218,6 +305,11 @@ public class HearingTest {
         return (result / testResults.length);
     }
 
+    /**
+     * Get string results per frequency.
+     * @param testResults
+     * @return
+     */
     private String getResultsPerFrequency(double[] testResults){
         String result = "";
 
@@ -228,6 +320,11 @@ public class HearingTest {
         return result;
     }
 
+    /**
+     * Get the string value of the result.
+     * @param result result of the test
+     * @return result
+     */
     private String interpretPureToneAverage(double result){
         if(result <= 20){
             return "Normal Hearing";
@@ -244,6 +341,13 @@ public class HearingTest {
         }
     }
 
+    /**
+     * Get the average result.
+     * @param testResults results
+     * @return average result
+     *
+     * @see #getResults()
+     */
     private String getPureToneAverageResults(double[] testResults){
         double ptaResult = getPureToneAverage(testResults);
         String result = "Pure Tone Average: " + String.format("%.2f",ptaResult) + " dB HL" +
@@ -251,12 +355,21 @@ public class HearingTest {
         return result;
     }
 
+    /**
+     * Get results for both ears.
+     * @return results for both ears.
+     */
     public String getResults(){
         String result = "Right Ear\n" + getResultsPerFrequency(thresholdsRight) + getPureToneAverageResults(thresholdsRight)
                         + "\n\nLeft Ear\n" + getResultsPerFrequency(thresholdsLeft) + getPureToneAverageResults(thresholdsLeft);
         return result;
     }
 
+    /**
+     * Get the results for the specific ear
+     * @param ear ear you want to get the results of
+     * @return results for the ear.
+     */
     public String getPureToneAverageInterpretation(String ear){
         double[] thresholds;
         if(ear.equals("Right")){

@@ -12,7 +12,7 @@ import java.util.Random;
 
 
 /**
- * serves as the helper class of FineMotorActivity
+ * Serves as the helper class of FineMotorActivity
  * sets the conditions for each round of the test
  *
  * @author Mary Grace Malana

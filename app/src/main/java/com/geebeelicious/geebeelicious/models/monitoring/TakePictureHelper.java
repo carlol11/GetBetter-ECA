@@ -15,29 +15,62 @@ import java.util.Date;
 /**
  * Created by mgmalana on 21/05/2016.
  * TakePictureHelper class contains the functionality to take a picture
+ *
+ * @author Mary Grace Malana
+ * @since 21/05/2016.
  */
 public class TakePictureHelper {
+
+    /**
+     * Where the picture will be shown.
+     */
     private ImageView imageViewPlaceholder;
+
+    /**
+     * Path where the picture is saved.
+     */
     private String mCurrentPhotoPath;
 
+    /**
+     * Constructor.
+     * @param imageViewPlaceholder {@link #imageViewPlaceholder}
+     */
     public TakePictureHelper(ImageView imageViewPlaceholder) {
         this.imageViewPlaceholder = imageViewPlaceholder;
     }
 
+    /**
+     * Gets {@link #mCurrentPhotoPath}.
+     * @return {@link #mCurrentPhotoPath}
+     */
     public String getmCurrentPhotoPath() {
         return mCurrentPhotoPath;
     }
 
+    /**
+     * Sets {@link #mCurrentPhotoPath}.
+     * @param mCurrentPhotoPath new value
+     */
     public void setmCurrentPhotoPath(String mCurrentPhotoPath) {
         this.mCurrentPhotoPath = mCurrentPhotoPath;
     }
 
+    /**
+     * Convert bitmap to byte[].
+     * @param bitmap to be converted
+     * @return byte[] value of the {@code bitmap}.
+     */
     private byte[] getBytesFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         return stream.toByteArray();
     }
 
+    /**
+     * Creates the image.
+     * @return image file
+     * @throws IOException
+     */
     public File createImageFile() throws IOException {
         //this is android code
         // Create an image file name
@@ -56,6 +89,9 @@ public class TakePictureHelper {
         return image;
     }
 
+    /**
+     * Show in {@link #imageViewPlaceholder} the picture taken.
+     */
     public void setPic() {
         // Get the dimensions of the View
         imageViewPlaceholder.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -82,6 +118,10 @@ public class TakePictureHelper {
         imageViewPlaceholder.setImageBitmap(bitmap);
     }
 
+    /**
+     * Get the picture.
+     * @return picture.
+     */
     public byte[] getPicture() {
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         Bitmap vaccination = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);

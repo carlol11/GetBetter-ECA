@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -206,6 +207,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
                         RelativeLayout saveCancelLayout = (RelativeLayout) findViewById(R.id.saveCancelLayout);
                         questionView.setVisibility(View.GONE);
                         saveCancelLayout.setVisibility(View.GONE);
+                        FrameLayout remarksLayout = (FrameLayout)findViewById(R.id.remarksFragmentContainer);
+                        remarksLayout.setVisibility(View.VISIBLE);
 
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();

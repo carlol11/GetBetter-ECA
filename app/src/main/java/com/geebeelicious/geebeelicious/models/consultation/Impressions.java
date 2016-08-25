@@ -3,10 +3,6 @@ package com.geebeelicious.geebeelicious.models.consultation;
 import java.util.ArrayList;
 
 /**
- * GetBetter. Created by Mike Dayupay on 9/21/15.
- */
-
-/**
  * The Impressions class represents the impressions to be
  * tested given the chief complaint. This is mainly used by
  * the {@link ExpertSystem}.
@@ -14,6 +10,9 @@ import java.util.ArrayList;
  * @see ChiefComplaint
  * @see Symptom
  * @see SymptomFamily
+ *
+ * @author Mike Dayupay
+ * @since 9/21/15
  */
 public class Impressions {
 

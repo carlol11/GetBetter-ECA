@@ -1,0 +1,61 @@
+\data\
+ngram 1=11
+ngram 2=18
+ngram 3=20
+
+\1-grams:
+-1.0000 </s> -0.3010
+-1.0000 <s> -0.2218
+-1.1761 a -0.2553
+-1.6021 circle -0.2553
+-1.4771 i -0.2863
+-1.4771 is -0.2711
+-1.4771 see -0.2711
+-1.6021 square -0.2553
+-1.6021 star -0.2553
+-1.4771 this -0.2863
+-1.6021 triangle -0.2553
+
+\2-grams:
+-1.3802 <s> circle 0.0000
+-0.7782 <s> i 0.0000
+-1.3802 <s> square 0.0000
+-1.3802 <s> star 0.0000
+-0.7782 <s> this 0.0000
+-1.3802 <s> triangle 0.0000
+-0.9031 a circle 0.0000
+-0.9031 a square 0.0000
+-0.9031 a star 0.0000
+-0.9031 a triangle 0.0000
+-0.3010 circle </s> -0.3010
+-0.3010 i see 0.0000
+-0.3010 is a 0.0000
+-0.3010 see a 0.0000
+-0.3010 square </s> -0.3010
+-0.3010 star </s> -0.3010
+-0.3010 this is 0.0000
+-0.3010 triangle </s> -0.3010
+
+\3-grams:
+-0.3010 <s> circle </s>
+-0.3010 <s> i see
+-0.3010 <s> square </s>
+-0.3010 <s> star </s>
+-0.3010 <s> this is
+-0.3010 <s> triangle </s>
+-0.3010 a circle </s>
+-0.3010 a square </s>
+-0.3010 a star </s>
+-0.3010 a triangle </s>
+-0.3010 i see a
+-0.9031 is a circle
+-0.9031 is a square
+-0.9031 is a star
+-0.9031 is a triangle
+-0.9031 see a circle
+-0.9031 see a square
+-0.9031 see a star
+-0.9031 see a triangle
+-0.3010 this is a
+
+\end\

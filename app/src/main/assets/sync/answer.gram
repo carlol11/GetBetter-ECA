@@ -1,0 +1,10 @@
+#JSGF V1.0;
+
+grammar answers;
+
+<answer> = oo	|
+		   hindi|
+		   yes	|
+		   no	;
+
+public <answers> = <answer>+;

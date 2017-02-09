@@ -48,6 +48,9 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
      */
     private ImageView chartView;
 
+
+    private VisualAcuityResult rightEyeResult;
+    private VisualAcuityResult leftEyeResult;
     /**
      * Constructor.
      *
@@ -57,6 +60,9 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     public VisualAcuityFragment(){
         this.intro = R.string.visualAcuity_intro;
         this.hasEarlyInstruction = true;
+
+        rightEyeResult = null;
+        leftEyeResult = null;
     }
 
     /**
@@ -150,8 +156,10 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
      * @param chartHelper
      */
     private void updateResults(ChartHelper chartHelper){
+        /*
         VisualAcuityResult rightEyeResult = null;
         VisualAcuityResult leftEyeResult = null;
+        */
 
         if(!chartHelper.isRightTested() && rightEyeResult == null){
             rightEyeResult = new VisualAcuityResult("Right", chartHelper.getResult());

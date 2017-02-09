@@ -188,6 +188,8 @@ public class ECAFragment extends Fragment {
     public void onStop() {
         super.onStop();
         Log.d(TAG, "The onStop() event");
+        VHMobileLib.executeSB("stopTalking(characterName)");
+
     }
 
     /**

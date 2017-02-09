@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxInterpreter;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
 import java.sql.SQLException;
 
@@ -38,6 +40,9 @@ public class MainActivity extends ECAActivity{
         Typeface chalkFont = Typeface.createFromAsset(getAssets(), "fonts/DJBChalkItUp.ttf");
         startButton.setTypeface(chalkFont);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
+
+        // initialize SphinxRecognizer
+        SphinxRecognizer.getInstance(this);
 
         integrateECA();
 

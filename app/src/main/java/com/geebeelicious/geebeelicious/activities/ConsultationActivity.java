@@ -16,6 +16,8 @@ import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.ConsultationHelper;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.consultation.Question;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxInterpreter;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
 /**
  * The ConsultationActivity class is the main activity for consultation.
@@ -25,7 +27,7 @@ import com.geebeelicious.geebeelicious.models.consultation.Question;
  * @author Mary Grace Malana
  */
 
-public class ConsultationActivity extends ECAActivity{
+public class ConsultationActivity extends ECAActivity implements SphinxInterpreter{
     /**
      * Used to identify the source of a log message
      */
@@ -57,6 +59,11 @@ public class ConsultationActivity extends ECAActivity{
     private Typeface chalkFont;
 
     /**
+     * Object for speech recognition
+     */
+    private SphinxRecognizer recognizer;
+
+    /**
      * Initializes views and other activity objects.
      *
      * @see android.app.Activity#onCreate(Bundle)
@@ -80,6 +87,10 @@ public class ConsultationActivity extends ECAActivity{
         consultationHelper = new ConsultationHelper(this, patient, dateConsultation);
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         ECAText.setTypeface(chalkFont);
+
+        recognizer = recognizer.getInstance();
+        recognizer.clearInterpreters();
+        recognizer.addInterpreter(this);
 
         integrateECA();
 
@@ -123,6 +134,7 @@ public class ConsultationActivity extends ECAActivity{
      * Performed when consultation is done; Saves generated HPI to database if patient has complaints
      */
     private synchronized void doWhenConsultationDone(){
+        recognizer.stopRecognizer();
         if(isOnGoingFlag){
             isOnGoingFlag = false;
 
@@ -144,6 +156,7 @@ public class ConsultationActivity extends ECAActivity{
      * Shows the hpi to user; Ends consultation activity.
      */
     private void doneConsultation() {
+
         CountDownTimer timer;
         LinearLayout hpiLayout = (LinearLayout) findViewById(R.id.hpiLayout);
         RelativeLayout choicesLayout = (RelativeLayout) findViewById(R.id.choicesLayout);
@@ -175,6 +188,8 @@ public class ConsultationActivity extends ECAActivity{
         String questionString = question.getQuestionstring();
         int emotion = question.getEmotion();
 
+        recognizer.startSearch(SphinxRecognizer.DIGITS_SEARCH);
+
         ECAText.setText(questionString);
         ecaFragment.sendToECAToSpeak(questionString);
 
@@ -184,5 +199,17 @@ public class ConsultationActivity extends ECAActivity{
             ecaFragment.sendToECAToEmote(ECAFragment.Emotion.CONCERN, emotion - 4);
         }
 
+    }
+
+    @Override
+    public void resultReceived(String result) {
+        if(result.equals("yes") || result.equals("oo") || result.equals("meron")) {
+            Log.d(TAG,"yes");
+            onAnswer(true);
+        }
+        else {
+            Log.d(TAG,"no");
+            onAnswer(false);
+    }
     }
 }

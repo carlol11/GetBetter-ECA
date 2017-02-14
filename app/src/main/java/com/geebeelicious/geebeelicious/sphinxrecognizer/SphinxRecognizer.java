@@ -23,6 +23,9 @@ public class SphinxRecognizer implements RecognitionListener {
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
+    
+    /* for logging purposes */
+    public static final String TAG = "SphinxRecognizer";
 
     /* Named searches allow to quickly reconfigure the decoder */
     public static final String KWS_SEARCH = "wakeup";
@@ -75,6 +78,10 @@ public class SphinxRecognizer implements RecognitionListener {
         interpreters.add(interp);
     }
 
+    public void clearInterpreters(){
+        interpreters.clear();
+    }
+
     private void notifyInterpreters(String result){
         for(int i=0; i<interpreters.size(); i++){
             interpreters.get(i).resultReceived(result);
@@ -100,6 +107,7 @@ public class SphinxRecognizer implements RecognitionListener {
                     File assetDir = assets.syncAssets();
                     setupRecognizer(assetDir);
                 } catch (IOException e) {
+                    e.printStackTrace();
                     return e;
                 }
                 return null;
@@ -160,9 +168,9 @@ public class SphinxRecognizer implements RecognitionListener {
 
     public void startSearch(String searchName) {
         recognizer.stop();
-        Log.d("SphinxRecognizer","startsearch1");
+        Log.d(TAG,"startsearch1");
         recognizer.startListening(searchName);
-        Log.d("SphinxRecognizer","startsearch2");
+        Log.d(TAG,"startsearch2");
     }
 
     public void startSearch(String searchName, int duration) {
@@ -170,7 +178,11 @@ public class SphinxRecognizer implements RecognitionListener {
         recognizer.startListening(searchName, duration);
     }
 
-    public  void closeRecognizer(){
+    public void stopRecognizer(){
+        recognizer.stop();
+    }
+
+    public void closeRecognizer(){
         if (recognizer != null) {
             recognizer.cancel();
             recognizer.shutdown();
@@ -207,6 +219,7 @@ public class SphinxRecognizer implements RecognitionListener {
         String text = hypothesis.getHypstr();
         text = text.trim();
         text = text.substring(text.lastIndexOf(' ') + 1);
+        Log.d(TAG,"partialResult: "+text);
         notifyInterpreters(text);
     }
 
@@ -216,19 +229,24 @@ public class SphinxRecognizer implements RecognitionListener {
      */
     @Override
     public void onResult(Hypothesis hypothesis) {
+        /*
         if (hypothesis != null) {
-            Log.d("SphinxRecognizer","RESULT");
+            Log.d(TAG,"RESULT");
             String text = hypothesis.getHypstr();
             text = text.trim();
             text = text.substring(text.lastIndexOf(' ') + 1);
             notifyInterpreters(text);
         }
-
+        */
     }
 
     @Override
     public void onError(Exception e) {
-
+        try {
+            throw e;
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 
     @Override

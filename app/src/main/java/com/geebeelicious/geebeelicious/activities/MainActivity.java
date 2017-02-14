@@ -3,6 +3,7 @@ package com.geebeelicious.geebeelicious.activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,7 +11,6 @@ import android.widget.ImageView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
-import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxInterpreter;
 import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
 import java.sql.SQLException;
@@ -22,6 +22,11 @@ import java.sql.SQLException;
  */
 
 public class MainActivity extends ECAActivity{
+
+    /**
+     * Used to determine the source of Log
+     */
+    public final String TAG = "MainActivity";
     /**
      * Used as a flag whether the ECA has spoken.
      */
@@ -41,10 +46,13 @@ public class MainActivity extends ECAActivity{
         startButton.setTypeface(chalkFont);
         ImageView settingsButton = (ImageView)findViewById(R.id.settingsButton);
 
-        // initialize SphinxRecognizer
-        SphinxRecognizer.getInstance(this);
 
         integrateECA();
+
+        // initialize SphinxRecognizer
+        Log.d(TAG,"before SphinxRecogInstance");
+        SphinxRecognizer recog = SphinxRecognizer.getInstance(this);
+        Log.d(TAG,",after SphinxRecogInstance");
 
         if(savedInstanceState == null){
             hasSpoken = false;
@@ -75,6 +83,9 @@ public class MainActivity extends ECAActivity{
                 startActivity(intent);
             }
         });
+
+        if(recog!=null)
+            Log.d(TAG,"Successful initialization");
     }
 
     /**

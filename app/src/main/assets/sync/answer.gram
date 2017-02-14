@@ -5,6 +5,8 @@ grammar answers;
 <answer> = oo	|
 		   hindi|
 		   yes	|
-		   no	;
+		   no	|
+		   meron|
+		   wala ;
 
 public <answers> = <answer>+;

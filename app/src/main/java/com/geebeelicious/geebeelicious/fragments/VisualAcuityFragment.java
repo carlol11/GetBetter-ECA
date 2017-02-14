@@ -60,9 +60,6 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
     public VisualAcuityFragment(){
         this.intro = R.string.visualAcuity_intro;
         this.hasEarlyInstruction = true;
-
-        rightEyeResult = null;
-        leftEyeResult = null;
     }
 
     /**
@@ -156,7 +153,6 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
      * @param chartHelper
      */
     private void updateResults(ChartHelper chartHelper){
-
         if(!chartHelper.isRightTested() && rightEyeResult == null){
             rightEyeResult = new VisualAcuityResult("Right", chartHelper.getResult());
             chartHelper.setIsRightTested();

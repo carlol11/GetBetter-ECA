@@ -1,11 +1,13 @@
 package com.geebeelicious.geebeelicious.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -145,6 +147,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard(v);
+
                 switch(questionCounter){
                     case 0:
                         firstName = getEditText();
@@ -305,6 +309,8 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         onDoneRemarks();
     }
 
+
+
     /**
      * Implemented from the RemarksFragment.OnFragmentInteractionListener interface.
      * Calls {@link #savePatientToDatabase(Patient)} and starts the {@link PatientListActivity}.
@@ -328,5 +334,14 @@ public class AddPatientActivity extends ECAActivity implements RemarksFragment.O
         int question = R.string.remarks_add_patient;
         remarksFragment.setRemarkQuestion(question);
         ecaFragment.sendToECAToSPeak(question);
+    }
+
+    /**
+     * Hides the keyboard
+     * @param v View to be used for hiding
+     */
+    private void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

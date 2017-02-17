@@ -188,7 +188,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         String questionString = question.getQuestionstring();
         int emotion = question.getEmotion();
 
-        recognizer.startSearch(SphinxRecognizer.DIGITS_SEARCH);
+        recognizer.startSearch(SphinxRecognizer.GRAMMAR_SEARCH);
 
         ECAText.setText(questionString);
         ecaFragment.sendToECAToSpeak(questionString);
@@ -210,6 +210,6 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         else {
             Log.d(TAG,"no");
             onAnswer(false);
-    }
+        }
     }
 }

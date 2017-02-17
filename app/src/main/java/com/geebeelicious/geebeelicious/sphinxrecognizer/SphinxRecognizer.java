@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class SphinxRecognizer implements RecognitionListener {
     /* Named searches allow to quickly reconfigure the decoder */
     public static final String KWS_SEARCH = "wakeup";
     public static final String FORECAST_SEARCH = "forecast";
-    public static final String DIGITS_SEARCH = "test";
+    public static final String GRAMMAR_SEARCH = "test";
     public static final String PHONE_SEARCH = "phones";
     public static final String MENU_SEARCH = "menu";
 
@@ -151,7 +152,7 @@ public class SphinxRecognizer implements RecognitionListener {
 
         // Create grammar-based search for digit recognition
         File answerGrammar = new File(assetsDir, "answer.gram");
-        recognizer.addGrammarSearch(DIGITS_SEARCH, answerGrammar);
+        recognizer.addGrammarSearch(GRAMMAR_SEARCH, answerGrammar);
 
 
         // Create language model search
@@ -220,6 +221,7 @@ public class SphinxRecognizer implements RecognitionListener {
         text = text.trim();
         text = text.substring(text.lastIndexOf(' ') + 1);
         Log.d(TAG,"partialResult: "+text);
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
         notifyInterpreters(text);
     }
 

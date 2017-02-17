@@ -177,7 +177,7 @@ public class ECAFragment extends Fragment {
         if (_VHview != null)
             _VHview.onPause();
         Log.d(TAG, "The onPause() event");
-
+        VHMobileLib.executeSB("stopTalking(characterName)");
     }
 
     /**
@@ -188,8 +188,6 @@ public class ECAFragment extends Fragment {
     public void onStop() {
         super.onStop();
         Log.d(TAG, "The onStop() event");
-        VHMobileLib.executeSB("stopTalking(characterName)");
-
     }
 
     /**

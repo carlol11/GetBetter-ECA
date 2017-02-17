@@ -105,6 +105,7 @@ public class PatientPictureFragment extends Fragment {
                 if (patientPictureHelper.getmCurrentPhotoPath() != null) {
                     Record record = fragmentInteraction.getRecord();
                     record.setPatientPicture(patientPictureHelper.getPicture());
+                    patientPictureHelper.deleteImage();
                 }
 
                 fragmentInteraction.doneFragment();
@@ -167,11 +168,15 @@ public class PatientPictureFragment extends Fragment {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-            patientPictureHelper.setPic();
-            skipButton.setText(R.string.continueWord);
-            pictureButton.setText(R.string.retake);
-            fragmentInteraction.setInstructions(R.string.patientPicture_confirm);
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            if(resultCode == Activity.RESULT_OK){
+                patientPictureHelper.setPic();
+                skipButton.setText(R.string.continueWord);
+                pictureButton.setText(R.string.retake);
+                fragmentInteraction.setInstructions(R.string.patientPicture_confirm);
+            } else if(resultCode == Activity.RESULT_CANCELED) {
+                patientPictureHelper.setmCurrentPhotoPath(null);
+            }
         }
     }
 

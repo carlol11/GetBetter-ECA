@@ -101,6 +101,7 @@ public class VaccinationFragment extends Fragment {
                 if (vaccinationHelper.getmCurrentPhotoPath() != null) {
                     Record record = fragmentInteraction.getRecord();
                     record.setVaccination(vaccinationHelper.getPicture());
+                    vaccinationHelper.deleteImage();
                 }
                 view.setVisibility(View.GONE);
                 fragmentInteraction.doneFragment();
@@ -163,11 +164,15 @@ public class VaccinationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         InputStream stream = null;
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-            vaccinationHelper.setPic();
-            skipButton.setText(R.string.continueWord);
-            pictureButton.setText(R.string.retake);
-            fragmentInteraction.setInstructions(R.string.vaccination_confirm);
+        if (requestCode == REQUEST_TAKE_PHOTO ) {
+            if(resultCode == Activity.RESULT_OK){
+                vaccinationHelper.setPic();
+                skipButton.setText(R.string.continueWord);
+                pictureButton.setText(R.string.retake);
+                fragmentInteraction.setInstructions(R.string.vaccination_confirm);
+            } else if(resultCode == Activity.RESULT_CANCELED) {
+                vaccinationHelper.setmCurrentPhotoPath(null);
+            }
         }
     }
 

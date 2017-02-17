@@ -3,6 +3,7 @@ package com.geebeelicious.geebeelicious.models.monitoring;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -19,6 +20,10 @@ import java.util.Date;
  * @since 21/05/2016.
  */
 public class TakePictureHelper {
+    /**
+     * Used to identify the source of a log message
+     */
+    private final static String TAG = "TakePictureHelper";
 
     /**
      * Where the picture will be shown.
@@ -71,6 +76,9 @@ public class TakePictureHelper {
      * @throws IOException
      */
     public File createImageFile() throws IOException {
+
+        deleteImage(); //delete old picture if exists
+
         //this is android code
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -126,5 +134,18 @@ public class TakePictureHelper {
         Bitmap vaccination = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
         return getBytesFromBitmap(vaccination);
+    }
+
+    public void deleteImage(){
+        try {
+            if(mCurrentPhotoPath != null) {
+                File file = new File(mCurrentPhotoPath);
+                file.delete();
+            }
+        } catch (SecurityException e){
+            Log.e(TAG, "Cannot delete file", e);
+        }
+
+
     }
 }

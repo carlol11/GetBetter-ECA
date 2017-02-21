@@ -211,8 +211,12 @@ public class SphinxRecognizer implements RecognitionListener {
             return;
 
         String text = hypothesis.getHypstr();
-        text = text.trim();
-        text = text.substring(text.lastIndexOf(' ') + 1);
+
+        if(recognizer.getSearchName().equals(SphinxRecognizer.BINANSWER_SEARCH)) {
+            text = text.trim();
+            text = text.split(" ")[0];
+        }
+
         Log.d(TAG,"partialResult: "+text);
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
         notifyInterpreters(text);

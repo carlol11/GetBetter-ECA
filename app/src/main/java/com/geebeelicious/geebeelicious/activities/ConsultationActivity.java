@@ -188,7 +188,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         String questionString = question.getQuestionstring();
         int emotion = question.getEmotion();
 
-        recognizer.startSearch(SphinxRecognizer.GRAMMAR_SEARCH);
+        recognizer.startSearch(SphinxRecognizer.BINANSWER_SEARCH);
 
         ECAText.setText(questionString);
         ecaFragment.sendToECAToSpeak(questionString);

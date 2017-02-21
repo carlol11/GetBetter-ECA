@@ -29,9 +29,7 @@ public class SphinxRecognizer implements RecognitionListener {
     public static final String TAG = "SphinxRecognizer";
 
     /* Named searches allow to quickly reconfigure the decoder */
-    public static final String KWS_SEARCH = "wakeup";
-    public static final String FORECAST_SEARCH = "forecast";
-    public static final String GRAMMAR_SEARCH = "test";
+    public static final String BINANSWER_SEARCH = "binary";
     public static final String PHONE_SEARCH = "phones";
     public static final String MENU_SEARCH = "menu";
 
@@ -150,14 +148,9 @@ public class SphinxRecognizer implements RecognitionListener {
         File menuGrammar = new File(assetsDir, "menu.gram");
         recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
 
-        // Create grammar-based search for digit recognition
-        File answerGrammar = new File(assetsDir, "answer.gram");
-        recognizer.addGrammarSearch(GRAMMAR_SEARCH, answerGrammar);
-
-
-        // Create language model search
-        File languageModel = new File(assetsDir, "shape.lm");
-        recognizer.addNgramSearch(FORECAST_SEARCH, languageModel);
+        // Create keyword search for binary answers (e.g. yes, no)
+        File binAnswer = new File(assetsDir, "answer.kws");
+        recognizer.addGrammarSearch(BINANSWER_SEARCH, binAnswer);
 
         // Phonetic search
         File phoneticModel = new File(assetsDir, "en-phone.dmp");

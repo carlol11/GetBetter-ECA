@@ -82,8 +82,10 @@ public class SphinxRecognizer implements RecognitionListener {
     }
 
     private void notifyInterpreters(String result){
-        for(int i=0; i<interpreters.size(); i++){
-            interpreters.get(i).resultReceived(result);
+        if(!interpreters.isEmpty()) {
+            for (int i = 0; i < interpreters.size(); i++) {
+                interpreters.get(i).resultReceived(result);
+            }
         }
     }
 
@@ -149,8 +151,8 @@ public class SphinxRecognizer implements RecognitionListener {
         recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
 
         // Create keyword search for binary answers (e.g. yes, no)
-        File binAnswer = new File(assetsDir, "answer.kws");
-        recognizer.addGrammarSearch(BINANSWER_SEARCH, binAnswer);
+        File binAnswer = new File(assetsDir, "answer_kws.txt");
+        recognizer.addKeywordSearch(BINANSWER_SEARCH, binAnswer);
 
         // Phonetic search
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
@@ -218,7 +220,6 @@ public class SphinxRecognizer implements RecognitionListener {
         }
 
         Log.d(TAG,"partialResult: "+text);
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
         notifyInterpreters(text);
     }
 

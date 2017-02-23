@@ -1,6 +1,3 @@
-yes /1e-1/
-oo /1e-5/
-meron /1e-5/
-no /1e-1/
-hindi /1e-5/
-wala /1e-5/
+yes /1e-5/
+no /1e-5/
+next /1e-10/

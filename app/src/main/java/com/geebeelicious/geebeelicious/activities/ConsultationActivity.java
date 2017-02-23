@@ -71,7 +71,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
     /**
      * The latest answer detected by speechrecognition
      */
-    private String latestAnswer;
+    private String latestAnswer = null;
 
     /**
      * Initializes views and other activity objects.
@@ -134,6 +134,8 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
     private void onAnswer(boolean isYes) {
         Question nextQuestion = consultationHelper.getNextQuestion(isYes);
         if(nextQuestion == null) {
+            recognizer.stopRecognizer();
+            recognizer.clearInterpreters();;
             doWhenConsultationDone();
         }
         else {
@@ -145,7 +147,6 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
      * Performed when consultation is done; Saves generated HPI to database if patient has complaints
      */
     private synchronized void doWhenConsultationDone(){
-        recognizer.stopRecognizer();
         if(isOnGoingFlag){
             isOnGoingFlag = false;
 
@@ -214,13 +215,15 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
 
     @Override
     public void resultReceived(String result) {
-        if(result.equals("next") && latestAnswer!=null) {
-            if (latestAnswer.matches("yes|oo|meron")) {
-                Log.d(TAG, "yes");
-                onAnswer(true);
-            } else {
-                Log.d(TAG, "no");
-                onAnswer(false);
+        if(result.equals("next")) {
+            if(latestAnswer!=null) {
+                if (latestAnswer.matches("yes|oo|meron")) {
+                    Log.d(TAG, "yes");
+                    onAnswer(true);
+                } else {
+                    Log.d(TAG, "no");
+                    onAnswer(false);
+                }
             }
             latestAnswer = null;
             confirmatoryText.setText("");

@@ -64,6 +64,16 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
     private SphinxRecognizer recognizer;
 
     /**
+     * TextView that displays the detected speech
+     */
+    private TextView confirmatoryText;
+
+    /**
+     * The latest answer detected by speechrecognition
+     */
+    private String latestAnswer;
+
+    /**
      * Initializes views and other activity objects.
      *
      * @see android.app.Activity#onCreate(Bundle)
@@ -91,6 +101,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         recognizer = recognizer.getInstance();
         recognizer.clearInterpreters();
         recognizer.addInterpreter(this);
+        confirmatoryText = (TextView) findViewById(R.id.confirmatoryText);
 
         integrateECA();
 
@@ -203,13 +214,21 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
 
     @Override
     public void resultReceived(String result) {
-        if(result.equals("yes") || result.equals("oo") || result.equals("meron")) {
-            Log.d(TAG,"yes");
-            onAnswer(true);
+        if(result.equals("next") && latestAnswer!=null) {
+            if (latestAnswer.matches("yes|oo|meron")) {
+                Log.d(TAG, "yes");
+                onAnswer(true);
+            } else {
+                Log.d(TAG, "no");
+                onAnswer(false);
+            }
+            latestAnswer = null;
+            confirmatoryText.setText("");
         }
         else {
-            Log.d(TAG,"no");
-            onAnswer(false);
+            latestAnswer = result;
+            String confirmStr = "Did you say\n'"+result+"' ?\nIf this is your answer,\nsay 'next' to continue";
+            confirmatoryText.setText(confirmStr);
         }
     }
 }

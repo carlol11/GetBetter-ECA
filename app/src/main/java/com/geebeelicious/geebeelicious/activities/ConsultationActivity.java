@@ -98,7 +98,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         ECAText = (TextView) findViewById(R.id.placeholderECAText);
         ECAText.setTypeface(chalkFont);
 
-        recognizer = recognizer.getInstance();
+        recognizer = SphinxRecognizer.getInstance();
         recognizer.clearInterpreters();
         recognizer.addInterpreter(this);
         confirmatoryText = (TextView) findViewById(R.id.confirmatoryText);

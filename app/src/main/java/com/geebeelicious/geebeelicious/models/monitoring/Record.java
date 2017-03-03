@@ -114,6 +114,11 @@ public class Record implements Parcelable {
     public final static String C_REMARKS_AUDIO = "remarks_audio";
 
     /**
+     * Database column name for storing {@link #drawingPicture}.
+     */
+    public final static String C_DRAWING_PICTURE = "drawing_picture";
+
+    /**
      * ID of the record.
      */
     private int recordID;
@@ -205,6 +210,11 @@ public class Record implements Parcelable {
     private byte[] remarksAudio;
 
     /**
+     * Picture of the drawing of the patient.
+     */
+    private byte[] drawingPicture;
+
+    /**
      * Constructor.
      */
     public Record(){
@@ -235,7 +245,8 @@ public class Record implements Parcelable {
     public Record(int recordID, int patient_id, String dateCreated, double height, double weight,
                   String visualAcuityLeft, String visualAcuityRight, String colorVision, String hearingLeft,
                   String hearingRight, int grossMotor, int fineMotorNDominant, int fineMotorDominant,
-                  int fineMotorHold, byte[] vaccination, byte[] patientPicture, String remarksString, byte[] remarksAudio) {
+                  int fineMotorHold, byte[] vaccination, byte[] patientPicture, String remarksString, byte[] remarksAudio,
+                  byte[] drawingPicture) {
         this.recordID = recordID;
         this.patient_id = patient_id;
         this.dateCreated = dateCreated;
@@ -254,6 +265,7 @@ public class Record implements Parcelable {
         this.patientPicture = patientPicture;
         this.remarksString = remarksString;
         this.remarksAudio = remarksAudio;
+        this.drawingPicture = drawingPicture;
     }
 
     /**
@@ -425,6 +437,14 @@ public class Record implements Parcelable {
     }
 
     /**
+     * Gets {@link #drawingPicture}
+     * @return {@link #drawingPicture}
+     */
+    public byte[] getDrawingPicture(){
+        return drawingPicture;
+    }
+
+    /**
      * Sets {@link #recordID}.
      * @param recordID new value
      */
@@ -569,6 +589,14 @@ public class Record implements Parcelable {
     }
 
     /**
+     * Sets {@link #drawingPicture}.
+     * @param drawingPicture new value
+     */
+    public void setDrawingPicture(byte[] drawingPicture) {
+        this.drawingPicture = drawingPicture;
+    }
+
+    /**
      * Prints the contents of the Record object.
      */
     public void printRecord(){
@@ -588,7 +616,7 @@ public class Record implements Parcelable {
                 ", fineMotorDominant: " + fineMotorDominant + ", fineMotorNonDominant: " + fineMotorNDominant +
                 ", fineMotorPen: " + fineMotorHold + ", vaccination: " + vaccination +
                 ", patientPicture: " + patientPicture + ", remarksString: " + remarksString +
-                ", remarksAudio: " + remarksAudio;
+                ", remarksAudio: " + remarksAudio + ", drawingPicture: " + drawingPicture;
     }
 
     /**
@@ -623,6 +651,7 @@ public class Record implements Parcelable {
         dest.writeByteArray(patientPicture);
         dest.writeString(remarksString);
         dest.writeByteArray(remarksAudio);
+        dest.writeByteArray(drawingPicture);
     }
 
     /**
@@ -648,5 +677,6 @@ public class Record implements Parcelable {
         patientPicture = in.createByteArray();
         remarksString = in.readString();
         remarksAudio = in.createByteArray();
+        drawingPicture = in.createByteArray();
     }
 }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
 import com.geebeelicious.geebeelicious.fragments.ColorVisionFragment;
+import com.geebeelicious.geebeelicious.fragments.DrawingFragment;
 import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.fragments.FineMotorFragment;
 import com.geebeelicious.geebeelicious.fragments.GrossMotorFragment;
@@ -138,12 +139,13 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
                 MonitoringFragment.class.getName(),
                 PatientPictureFragment.class.getName(),
                 VaccinationFragment.class.getName(),
+                DrawingFragment.class.getName(),
                 VisualAcuityFragment.class.getName(),
                 ColorVisionFragment.class.getName(),
                 HearingMainFragment.class.getName(),
                 GrossMotorFragment.class.getName(),
                 FineMotorFragment.class.getName(),
-                RemarksFragment.class.getName()
+                RemarksFragment.class.getName(),
         };
 
         fragmentManager = getSupportFragmentManager();

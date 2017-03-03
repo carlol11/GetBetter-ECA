@@ -579,7 +579,8 @@ public class DatabaseAdapter {
                         c.getInt(c.getColumnIndex(Record.C_GROSS_MOTOR)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_N_DOMINANT)),
                         c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_DOMINANT)), c.getInt(c.getColumnIndex(Record.C_FINE_MOTOR_HOLD)),
                         c.getBlob(c.getColumnIndex(Record.C_VACCINATION)), c.getBlob(c.getColumnIndex(Record.C_PATIENT_PICTURE)),
-                        c.getString(c.getColumnIndex(Record.C_REMARKS_STRING)), c.getBlob(c.getColumnIndex(Record.C_REMARKS_AUDIO)));
+                        c.getString(c.getColumnIndex(Record.C_REMARKS_STRING)), c.getBlob(c.getColumnIndex(Record.C_REMARKS_AUDIO)),
+                        c.getBlob(c.getColumnIndex(Record.C_DRAWING_PICTURE)));
 
                 record.printRecord();
                 records.add(record);

@@ -32,6 +32,7 @@ public class SphinxRecognizer implements RecognitionListener {
     public static final String BINANSWER_SEARCH = "binary";
     public static final String PHONE_SEARCH = "phones";
     public static final String MENU_SEARCH = "menu";
+    public static final String SHAPE_SEARCH = "shape";
 
     /* Singleton attribute */
     private static SphinxRecognizer instance;
@@ -158,7 +159,9 @@ public class SphinxRecognizer implements RecognitionListener {
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
 
-        // Dictionary search
+        //TODO: Shape search
+        File shapekws = new File(assetsDir,"shapes_kws.txt");
+        recognizer.addKeywordSearch(SHAPE_SEARCH,shapekws);
     }
 
 
@@ -214,9 +217,15 @@ public class SphinxRecognizer implements RecognitionListener {
 
         String text = hypothesis.getHypstr();
 
-        if(recognizer.getSearchName().equals(SphinxRecognizer.BINANSWER_SEARCH)) {
+        Log.d(TAG,"full-partialResult: "+text);
+
+        if(recognizer.getSearchName().equals(SphinxRecognizer.BINANSWER_SEARCH) || recognizer.getSearchName().equals(SphinxRecognizer.SHAPE_SEARCH)) {
             text = text.trim();
-            text = text.split(" ")[0];
+            String textTokens[] = text.split(" ");
+            if(textTokens[0].matches("semi|half"))
+                text = textTokens[0].concat(" "+textTokens[1]);
+            else
+                text = textTokens[0];
         }
 
         Log.d(TAG,"partialResult: "+text);

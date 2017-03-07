@@ -1,0 +1,20 @@
+circle /1e-12/
+cloud /1e-11/
+crescent /1e-10/
+moon /1e-2/
+cross /1e-5/
+plus /1e-5/
+diamond /1e-10/
+kite /1e-6/
+ellipse /1e-12/
+oblong /1e-15/
+heart /1e-8/
+rectangle /1e-13/
+box /1e-7/
+semi circle /1e-14/
+half circle /1e-14/
+square /1e-12/
+star /1e-7/
+triangle /1e-18/
+
+next /1e-15/

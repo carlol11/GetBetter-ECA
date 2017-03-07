@@ -84,6 +84,8 @@
     <string name="monitoring_ready">Assistant, press ready button when the child is ready.</string>
     <string name="remarks_monitoring">Assistant, do you want to add remarks regarding the child\'s monitoring tests?</string>
     <string name="remarks_add_patient">Assistant, do you want to add remarks to the child\'s profile?</string>
+    <string name="drawing_instruction">Do you have a drawing to show me? If not, just press skip.</string>
+    <string name="drawing_confirm">Is the picture okay? If yes, press continue.</string>
 
     <!-- ECA Remarks-->
     <string name="monitoring_remark_normal1">Keep eating healthy food!</string>
@@ -107,5 +109,8 @@
     <string name="finemotor_fail">You may need to work on your fine motor skills!</string>
     <string name="finemotor_pass">Your fine motor skills are great!</string>
     <string name="recording_in_progress">Recording...</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

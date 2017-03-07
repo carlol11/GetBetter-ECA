@@ -104,7 +104,7 @@
         <ListView
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:id="@+id/patientListView" />
+            android:id="@+id/patientListView"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -116,7 +116,8 @@
                 android:id="@+id/patientDetailsTV"
                 android:padding="20dp"
                 android:textSize="50sp"
-                android:layout_above="@+id/patientRecordsTextView" />
+                android:layout_above="@+id/patientRecordsTextView"
+                android:gravity="center_horizontal"/>
 
             <TextView
                 android:layout_width="match_parent"

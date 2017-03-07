@@ -248,6 +248,17 @@ public class IshiharaTest {
         }
     }
 
+    /**
+     * Checks answer of given question given the questionNumber and the user-selected answer (in String)
+     * @param questionNumber index of the {@link Question} in {@link #generatedTest}
+     * @param answer user's answer in String
+     */
+    public void checkAnswer(int questionNumber, String answer){
+        String correctAnswer = getCorrectAnswer(questionNumber).getShape();
+
+        if(correctAnswer.equals(answer))
+            addScore();
+    }
 
 
 }

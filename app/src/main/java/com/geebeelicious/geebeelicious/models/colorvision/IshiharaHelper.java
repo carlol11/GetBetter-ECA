@@ -186,6 +186,14 @@ public class IshiharaHelper {
     }
 
     /**
+     * Sets the answer of the user for the current plate
+     * @param answer answer of the user in String
+     */
+    public void answerQuestion(String answer){
+        ishiharaTest.checkAnswer(currentPlate, answer);
+    }
+
+    /**
      * Get {@link #isDone()}
      * @return {@link #isDone()}
      */

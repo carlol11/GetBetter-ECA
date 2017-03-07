@@ -234,4 +234,12 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
             confirmatoryText.setText(confirmStr);
         }
     }
+
+    @Override
+    public void onDestroy(){
+        recognizer.clearInterpreters();
+        recognizer.stopRecognizer();
+        Log.d(TAG,"cleared SphinxInterpreter list");
+        super.onDestroy();
+    }
 }

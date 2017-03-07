@@ -36,6 +36,7 @@ import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -627,5 +628,12 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
             ecaFragment.sendToECAToSPeak(question);
 
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        SphinxRecognizer.getInstance().clearInterpreters();
+        SphinxRecognizer.getInstance().stopRecognizer();
+        super.onDestroy();
     }
 }

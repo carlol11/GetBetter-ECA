@@ -14,6 +14,8 @@ import com.geebeelicious.geebeelicious.interfaces.MonitoringTestFragment;
 import com.geebeelicious.geebeelicious.interfaces.OnMonitoringFragmentInteractionListener;
 import com.geebeelicious.geebeelicious.models.colorvision.IshiharaHelper;
 import com.geebeelicious.geebeelicious.models.monitoring.Record;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxInterpreter;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
 /**
  * The ColorVisionMainFragment serves as the main fragment for
@@ -22,7 +24,7 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
  *
  * @author Katrina Lacsamana
  * */
-public class ColorVisionFragment extends MonitoringTestFragment {
+public class ColorVisionFragment extends MonitoringTestFragment implements SphinxInterpreter {
 
     /**
      * Used for interacting with the Activity this fragment is attached to.
@@ -44,6 +46,21 @@ public class ColorVisionFragment extends MonitoringTestFragment {
     }
 
     /**
+     * Speech recognizer instance
+     */
+    private SphinxRecognizer recognizer;
+
+    /**
+     * latest speech recognized
+     */
+    private String latestSpeech;
+
+    /**
+     * references to ishiharaHelper
+     */
+    private IshiharaHelper helperPointer;
+
+    /**
      * Initializes views and other fragment objects.
      *
      * @see android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)
@@ -61,8 +78,12 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         ImageButton option5 = (ImageButton) view.findViewById(R.id.cvt_option5);
         final ImageButton[] buttonList = {option1, option2, option3, option4, option5};
         final IshiharaHelper ishiharaHelper = new IshiharaHelper((ImageView) view.findViewById(R.id.ishiharaPlate), buttonList);
-
+        helperPointer = ishiharaHelper;     //TODO: check for better implementation
         isTestOngoing = true;
+
+        recognizer = SphinxRecognizer.getInstance();
+        recognizer.addInterpreter(this);
+        latestSpeech = null;
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +126,7 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         });
 
         ishiharaHelper.startTest();
+        recognizer.startSearch(SphinxRecognizer.SHAPE_SEARCH);
 
         return view;
     }
@@ -115,11 +137,16 @@ public class ColorVisionFragment extends MonitoringTestFragment {
      */
     private synchronized void updateResults(IshiharaHelper ishiharaHelper){
         ishiharaHelper.goToNextQuestion();
+        latestSpeech = null;
         if(ishiharaHelper.isDone() && isTestOngoing){
             isTestOngoing = false;
             Record record = fragmentInteraction.getRecord();
             record.setColorVision(ishiharaHelper.getResult());
             displayResults(ishiharaHelper.getScore());
+
+            recognizer.clearInterpreters();
+            recognizer.stopRecognizer();
+
 
             updateTestEndRemark(ishiharaHelper.isNormal());
             fragmentInteraction.doneFragment();
@@ -185,4 +212,19 @@ public class ColorVisionFragment extends MonitoringTestFragment {
         }
     }
 
+    @Override
+    public void resultReceived(String result) {
+        if(result.equals("next")){
+            if(latestSpeech != null) {
+                helperPointer.answerQuestion(latestSpeech);
+                updateResults(helperPointer);
+                fragmentInteraction.setInstructions("");
+                latestSpeech = null;
+            }
+        }else{
+            latestSpeech = result;
+            String confirmStr = "Did you say '" + result + "' ?\nIf this is your answer, say 'next' to continue";
+            fragmentInteraction.setInstructions(confirmStr);
+        }
+    }
 }

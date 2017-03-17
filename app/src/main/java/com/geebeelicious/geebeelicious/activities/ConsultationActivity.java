@@ -103,6 +103,8 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         recognizer.addInterpreter(this);
         confirmatoryText = (TextView) findViewById(R.id.confirmatoryText);
 
+        recognizer.startSearch(SphinxRecognizer.BINANSWER_SEARCH);
+
         integrateECA();
 
         setQuestion(consultationHelper.getFirstQuestion());
@@ -200,8 +202,6 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         String questionString = question.getQuestionstring();
         int emotion = question.getEmotion();
 
-        recognizer.startSearch(SphinxRecognizer.BINANSWER_SEARCH);
-
         ECAText.setText(questionString);
         ecaFragment.sendToECAToSpeak(questionString);
 
@@ -233,6 +233,14 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
             String confirmStr = "Did you say\n'"+result+"' ?\nIf this is your answer,\nsay 'next' to continue";
             confirmatoryText.setText(confirmStr);
         }
+    }
+
+    @Override
+    public void onStop(){
+        recognizer.clearInterpreters();
+        recognizer.stopRecognizer();
+        Log.d(TAG,"cleared SphinxInterpreter list");
+        super.onStop();
     }
 
     @Override

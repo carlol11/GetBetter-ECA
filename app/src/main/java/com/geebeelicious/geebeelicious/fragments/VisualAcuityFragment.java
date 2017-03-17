@@ -4,6 +4,7 @@ package com.geebeelicious.geebeelicious.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.geebeelicious.geebeelicious.models.monitoring.Record;
 import com.geebeelicious.geebeelicious.models.visualacuity.ChartHelper;
 import com.geebeelicious.geebeelicious.models.visualacuity.DistanceCalculator;
 import com.geebeelicious.geebeelicious.models.visualacuity.VisualAcuityResult;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxInterpreter;
+import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,7 +34,7 @@ import java.nio.ByteBuffer;
  * @author Katrina Lacsamana
  */
 
-public class VisualAcuityFragment extends MonitoringTestFragment {
+public class VisualAcuityFragment extends MonitoringTestFragment implements SphinxInterpreter{
 
     /**
      * Used for interacting with the Activity this fragment is attached to.
@@ -50,6 +53,11 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
 
     private VisualAcuityResult rightEyeResult = null;
     private VisualAcuityResult leftEyeResult = null;
+
+    private SphinxRecognizer recognizer;
+    private String latestSpeech = null;
+
+    private ChartHelper chartHelperPtr;
 
     /**
      * Constructor.
@@ -75,6 +83,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
 
         chartView = (ImageView)view.findViewById(R.id.chartLine);
         final ChartHelper chartHelper = new ChartHelper(chartView, getChartPreference());
+        chartHelperPtr = chartHelper;
         Button yesButton = (Button) view.findViewById(R.id.YesButton);
         Button noButton = (Button) view.findViewById(R.id.NoButton);
         Typeface chalkFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DJBChalkItUp.ttf");
@@ -103,6 +112,10 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
         chartHelper.startTest();
 
         fragmentInteraction.showTransitionTextLayout();
+
+        recognizer = SphinxRecognizer.getInstance();
+        recognizer.addInterpreter(this);
+        recognizer.startSearch(SphinxRecognizer.BINANSWER_SEARCH);
 
         return view;
     }
@@ -232,5 +245,30 @@ public class VisualAcuityFragment extends MonitoringTestFragment {
             this.endStringResource = R.string.visual_acuity_pass;
             this.endTime = 3000;
         }
+    }
+
+    @Override
+    public void resultReceived(String result) {
+        Log.d("VisualAcuityFragment","result received: "+result);
+        if (result.equals("next")) {
+            if (latestSpeech != null) {
+                if (latestSpeech.matches("yes")) {
+                    chartHelperPtr.goToNextLine();
+                    if (chartHelperPtr.isDone() && !chartHelperPtr.isBothTested())
+                        updateResults(chartHelperPtr);
+                } else {
+                    chartHelperPtr.setResult();
+                    if (chartHelperPtr.isDone() && !chartHelperPtr.isBothTested())
+                        updateResults(chartHelperPtr);
+                }
+                fragmentInteraction.setInstructions("");
+                latestSpeech = null;
+            }
+        }else {
+            latestSpeech = result;
+            String confirmStr = "Did you say '" + result + "' ?\nIf this is your answer, say 'next' to continue";
+            fragmentInteraction.setInstructions(confirmStr);
+        }
+
     }
 }

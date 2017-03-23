@@ -27,6 +27,10 @@ public class ECAFragment extends Fragment {
      */
     private static final String TAG = "ECAFragment";
 
+    public static final int FULLBODY = 1;
+    public static final int CLOSEUP = 0;
+
+
     /**
      * Activity this fragment is attached to
      */
@@ -236,6 +240,15 @@ public class ECAFragment extends Fragment {
             case CONCERN:
                 Log.d(TAG, "setToConcern");
                 VHMobileLib.executeSB("setToConcern(characterName, "+i+")");
+                break;
+        }
+    }
+
+    public void setCameraPosition(int cameraPosition){
+        switch(cameraPosition){
+            case FULLBODY: VHMobileLib.executeSB("IntroductionCamera()");
+                break;
+            case CLOSEUP: VHMobileLib.executeSB("ResetCamera()");
                 break;
         }
     }

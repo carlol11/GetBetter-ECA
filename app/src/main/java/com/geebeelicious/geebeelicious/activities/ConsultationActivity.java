@@ -106,6 +106,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         recognizer.startSearch(SphinxRecognizer.BINANSWER_SEARCH);
 
         integrateECA();
+        ecaFragment.setCameraPosition(ECAFragment.FULLBODY);
 
         setQuestion(consultationHelper.getFirstQuestion());
 

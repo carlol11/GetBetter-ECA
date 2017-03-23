@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.geebeelicious.geebeelicious.R;
 import com.geebeelicious.geebeelicious.database.DatabaseAdapter;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.sphinxrecognizer.SphinxRecognizer;
 
@@ -53,6 +54,8 @@ public class MainActivity extends ECAActivity{
         Log.d(TAG,"before SphinxRecogInstance");
         SphinxRecognizer recog = SphinxRecognizer.getInstance(this);
         Log.d(TAG,",after SphinxRecogInstance");
+
+        ecaFragment.setCameraPosition(ECAFragment.FULLBODY);
 
         if(savedInstanceState == null){
             hasSpoken = false;

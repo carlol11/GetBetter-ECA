@@ -97,6 +97,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment implements Sphi
                 if (chartHelper.isDone() && !chartHelper.isBothTested()) {
                     updateResults(chartHelper);
                 }
+                fragmentInteraction.setInstructions(" ");
             }
         });
 
@@ -107,6 +108,7 @@ public class VisualAcuityFragment extends MonitoringTestFragment implements Sphi
                 if (chartHelper.isDone() && !chartHelper.isBothTested()) {
                     updateResults(chartHelper);
                 }
+                fragmentInteraction.setInstructionsText(" ");
             }
         });
         chartHelper.startTest();
@@ -261,13 +263,14 @@ public class VisualAcuityFragment extends MonitoringTestFragment implements Sphi
                     if (chartHelperPtr.isDone() && !chartHelperPtr.isBothTested())
                         updateResults(chartHelperPtr);
                 }
-                fragmentInteraction.setInstructions("");
+                fragmentInteraction.setInstructionsText(" ");
                 latestSpeech = null;
+                fragmentInteraction.setInstructionsText(" ");
             }
         }else {
             latestSpeech = result;
             String confirmStr = "Did you say '" + result + "' ?\nIf this is your answer, say 'next' to continue";
-            fragmentInteraction.setInstructions(confirmStr);
+            fragmentInteraction.setInstructionsText(confirmStr);
         }
 
     }

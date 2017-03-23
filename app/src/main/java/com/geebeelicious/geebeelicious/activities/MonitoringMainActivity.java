@@ -220,6 +220,10 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         ecaFragment.sendToECAToSpeak(instructions);
     }
 
+    public void setInstructionsText(String instructions){
+        ecaText.setText(instructions);
+    }
+
     /**
      * Sets text of {@link #ecaText} and sends instructions to ECA.
      * @param resID String resource ID of the instructions to be sent.

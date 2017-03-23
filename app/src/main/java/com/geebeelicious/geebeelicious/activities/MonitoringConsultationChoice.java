@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.geebeelicious.geebeelicious.R;
+import com.geebeelicious.geebeelicious.fragments.ECAFragment;
 import com.geebeelicious.geebeelicious.interfaces.ECAActivity;
 import com.geebeelicious.geebeelicious.models.consultation.Patient;
 
@@ -64,6 +65,8 @@ public class MonitoringConsultationChoice extends ECAActivity{
         }
 
         integrateECA();
+
+        ecaFragment.setCameraPosition(ECAFragment.CLOSEUP);
 
         mButton.setOnClickListener(new OnClickListener() {
             @Override

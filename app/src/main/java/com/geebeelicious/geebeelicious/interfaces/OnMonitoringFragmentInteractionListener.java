@@ -26,6 +26,8 @@ public interface OnMonitoringFragmentInteractionListener {
      */
     public void setInstructions(String instructions);
 
+    public void setInstructionsText(String instructions);
+
     /**
      * Sets the instruction of the monitoring test
      * @param resID string resource of new instruction to be set

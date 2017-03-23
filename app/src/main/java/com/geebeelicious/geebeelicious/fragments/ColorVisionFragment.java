@@ -126,7 +126,10 @@ public class ColorVisionFragment extends MonitoringTestFragment implements Sphin
         });
 
         ishiharaHelper.startTest();
+        //TODO: add delay after ECA talks
         recognizer.startSearch(SphinxRecognizer.SHAPE_SEARCH);
+
+        fragmentInteraction.setInstructions(" ");
 
         return view;
     }
@@ -136,6 +139,7 @@ public class ColorVisionFragment extends MonitoringTestFragment implements Sphin
      * @param ishiharaHelper helper class of the fragment.
      */
     private synchronized void updateResults(IshiharaHelper ishiharaHelper){
+        fragmentInteraction.setInstructions("");
         ishiharaHelper.goToNextQuestion();
         latestSpeech = null;
         if(ishiharaHelper.isDone() && isTestOngoing){

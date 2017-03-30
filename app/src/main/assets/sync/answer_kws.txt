@@ -1,3 +1,9 @@
 yes /1e-3/
+opo /1e-3/
+meron /1e-17/
+
 no /1e-3/
-next /1e-18/
+hindi /1e-17/
+wala /1e-10/
+
+next /1e-13/

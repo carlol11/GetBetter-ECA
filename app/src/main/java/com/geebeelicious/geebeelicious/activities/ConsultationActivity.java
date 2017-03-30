@@ -106,7 +106,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
         recognizer.startSearch(SphinxRecognizer.BINANSWER_SEARCH);
 
         integrateECA();
-        ecaFragment.setCameraPosition(ECAFragment.FULLBODY);
+        ecaFragment.setCameraPosition(ECAFragment.CLOSEUP);
 
         setQuestion(consultationHelper.getFirstQuestion());
 
@@ -218,7 +218,7 @@ public class ConsultationActivity extends ECAActivity implements SphinxInterpret
     public void resultReceived(String result) {
         if(result.equals("next")) {
             if(latestAnswer!=null) {
-                if (latestAnswer.matches("yes|oo|meron")) {
+                if (latestAnswer.matches("yes|opo|meron")) {
                     Log.d(TAG, "yes");
                     onAnswer(true);
                 } else {

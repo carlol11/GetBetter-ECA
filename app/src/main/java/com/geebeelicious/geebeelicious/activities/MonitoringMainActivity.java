@@ -168,6 +168,7 @@ public class MonitoringMainActivity extends ECAActivity implements OnMonitoringF
         }
 
         integrateECA();
+        ecaFragment.setCameraPosition(ECAFragment.CLOSEUP);
         initializeOldFragment();
     }
 

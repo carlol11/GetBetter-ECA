@@ -66,8 +66,6 @@ public class MonitoringConsultationChoice extends ECAActivity{
 
         integrateECA();
 
-        ecaFragment.setCameraPosition(ECAFragment.CLOSEUP);
-
         mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

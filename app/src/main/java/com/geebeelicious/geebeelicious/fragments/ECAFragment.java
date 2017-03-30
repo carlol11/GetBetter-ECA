@@ -27,8 +27,8 @@ public class ECAFragment extends Fragment {
      */
     private static final String TAG = "ECAFragment";
 
-    public static final int FULLBODY = 1;
-    public static final int CLOSEUP = 0;
+    public static final int FULLBODY = 0;
+    public static final int CLOSEUP = 1;
 
 
     /**

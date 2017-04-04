@@ -42,8 +42,15 @@ public class SphinxRecognizer implements RecognitionListener {
     private SpeechRecognizer recognizer;
     private Context context;
 
+    /**
+     * the observers(listeners) of the recognizer
+     */
     private ArrayList<SphinxInterpreter> interpreters;
 
+    /**
+     * Constructor for the recognizer. Only called by getInstance method
+     * @param context - the context of the mobile device
+     */
     private SphinxRecognizer(Context context){
 
         // Check if user has given permission to record audio
@@ -60,6 +67,12 @@ public class SphinxRecognizer implements RecognitionListener {
         runRecognizerSetup();
     }
 
+
+    /**
+     * returns an instance of SphinxRecognizer. Use this when instantiating the recognizer for the first time.
+     * @param c - the context of the mobile app
+     * @return returns the instance of the SphinxRecognizer
+     */
     public static SphinxRecognizer getInstance(Context c){
         if(instance == null)
             instance = new SphinxRecognizer(c);
@@ -67,6 +80,10 @@ public class SphinxRecognizer implements RecognitionListener {
         return instance;
     }
 
+    /**
+     * returns an instance of SphinxRecognizer. Use this when instantiating the recognizer.
+     * @return returns the instance of the SphinxRecognizer
+     */
     public static SphinxRecognizer getInstance(){
         if(instance != null)
             return instance;
@@ -74,14 +91,25 @@ public class SphinxRecognizer implements RecognitionListener {
             return null;
     }
 
+    /**
+     * adds an interpreter to the list of observers which are notified everytime a result is received.
+     * @param interp the interpreter to be added
+     */
     public void addInterpreter(SphinxInterpreter interp){
         interpreters.add(interp);
     }
 
+    /**
+     * removes all interpreters from the list of observers
+     */
     public void clearInterpreters(){
         interpreters.clear();
     }
 
+    /**
+     * Notifies the interpreters in the list that a result is received.
+     * @param result the result that is recognized by the recognizer
+     */
     private void notifyInterpreters(String result){
         if(!interpreters.isEmpty()) {
             for (int i = 0; i < interpreters.size(); i++) {
@@ -146,41 +174,44 @@ public class SphinxRecognizer implements RecognitionListener {
          * They are added here for demonstration. You can leave just one.
          */
 
-
-        // Create grammar-based search for selection between demos
-        File menuGrammar = new File(assetsDir, "menu.gram");
-        recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
-
         // Create keyword search for binary answers (e.g. yes, no)
         File binAnswer = new File(assetsDir, "answer_kws.txt");
         recognizer.addKeywordSearch(BINANSWER_SEARCH, binAnswer);
-
-        // Phonetic search
-        File phoneticModel = new File(assetsDir, "en-phone.dmp");
-        recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
 
         //TODO: Shape search
         File shapekws = new File(assetsDir,"shapes_kws.txt");
         recognizer.addKeywordSearch(SHAPE_SEARCH,shapekws);
     }
 
-
+    /**
+     * Starts the speech recognition with the specified search mode
+     * @param searchName - the name of the search mode to be used
+     */
     public void startSearch(String searchName) {
         recognizer.stop();
-        Log.d(TAG,"startsearch1");
         recognizer.startListening(searchName);
-        Log.d(TAG,"startsearch2");
     }
 
+    /**
+     * Starts the speech recognition with the specified search mode and duration
+     * @param searchName - the name of the search mode to be used
+     * @param duration - the duration of how long (in milliseconds) the search would last
+     */
     public void startSearch(String searchName, int duration) {
         recognizer.stop();
         recognizer.startListening(searchName, duration);
     }
 
+    /**
+     * stops the recognizer search
+     */
     public void stopRecognizer(){
         recognizer.stop();
     }
 
+    /**
+     * closes the recognizer -- ONLY USE WHEN CLOSING THE APPLICATION
+     */
     public void closeRecognizer(){
         if (recognizer != null) {
             recognizer.cancel();
@@ -188,10 +219,17 @@ public class SphinxRecognizer implements RecognitionListener {
         }
     }
 
+    /**
+     * checks if the recognizer is ready for searching
+     * @return true if the recognizer is ready, otherwise returns false
+     */
     public boolean isReady(){
         return isReady;
     }
 
+    /**
+     * called when the recognizer detects the beginning of speech
+     */
     @Override
     public void onBeginningOfSpeech() {
 
@@ -249,6 +287,10 @@ public class SphinxRecognizer implements RecognitionListener {
         */
     }
 
+    /**
+     * called when an exception occurs while searching
+     * @param e
+     */
     @Override
     public void onError(Exception e) {
         try {
@@ -258,6 +300,9 @@ public class SphinxRecognizer implements RecognitionListener {
         }
     }
 
+    /**
+     * called when the search duration is finished
+     */
     @Override
     public void onTimeout() {
         recognizer.stop();
